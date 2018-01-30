@@ -1,0 +1,23 @@
+{
+  "name": "black-forum-backend",
+  "version": "1.0.0",
+  "description": "Backend for CaptionThis",
+  "main": "index.js",
+  "dependencies": {
+    "mysql": "*",
+    "hapi": "latest",
+    "winston": "next"
+  },
+  "devDependencies": {
+    "babel-cli": "latest",
+    "babel-preset-env": "latest",
+    "jest": "^22.1.4",
+    "nodemon": "latest"
+  },
+  "scripts": {
+    "start": "nodemon app/index.js --exec babel-node --presets env",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  server:
+    build:
+      context: ./server/
+      dockerfile: Dockerfile.prod
+    container_name: server-prod
+    environment:
+      - TZ=America/Montreal
+    ports:
+      - "80:80"
+      - "16085:16085"
+    restart: always
+
+  backend:
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile.prod
+    container_name: backend-prod
+    environment:
+      - TZ=America/Montreal
+    ports:
+      - "8000:8000"
+    restart: always

@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  server:
+    build: ./server
+    container_name: server
+    environment:
+      - TZ=America/Montreal
+    ports:
+      - "80:80"
+      - "16085:16085"
+    restart: always
+    volumes:
+      - ./frontend:/var/www
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    environment:
+      - TZ=America/Montreal
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+      - ./frontend/public:/usr/src/app/public
+
+  backend:
+    build: ./backend
+    container_name: backend
+    environment:
+      - TZ=America/Montreal
+    ports:
+      - "8000:8000"
+    restart: always
+    volumes:
+      - ./backend/app:/usr/src/app
