@@ -6,7 +6,7 @@
 
 #### Contributors
 * Justin Cotarla - 40027609
-* 
+* Yasmine Ghassemi - 40028336
 * 
 * 
 * Jeremiah-David Wreh - 40028325
