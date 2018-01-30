@@ -10,6 +10,6 @@
 * Derek Yu - 40022110
 * Constantina Roumeliotis - 40002536
 * Jeremiah-David Wreh - 40028325
-* 
+* Krishna Patel - 40031019
 * 
 * 
