@@ -5,11 +5,11 @@
 2. Clone repo: ```git clone https://github.com/justin-cotarla/CaptionThis.git```
 
 #### Contributors
-*
-*
+* Justin Cotarla - 40027609
+* 
 * Derek Yu - 40022110
-*
-*
-*
-*
-*
+* 
+* Jeremiah-David Wreh - 40028325
+* 
+* 
+* 
