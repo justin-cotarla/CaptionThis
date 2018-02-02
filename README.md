@@ -3,6 +3,16 @@
 ## Setup
 1. Install Docker
 2. Clone repo: ```git clone https://github.com/justin-cotarla/CaptionThis.git```
+3. Setup npm for frontend and backend from respective folders: ```npm install```
+
+## Runnning
+Start docker from project root: ```docker-compose up --build```
+
+Development server URLs:
+* Frontend: http://localhost
+* Backend: https://localhost:16085/api/
+
+Press ctrl-c to shutdown.
 
 #### Contributors
 * Justin Cotarla - 40027609
