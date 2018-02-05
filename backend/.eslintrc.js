@@ -7,6 +7,7 @@ module.exports = {
     },
 
     'rules': {
+        "indent": ["error", 4],
         'no-console': 0,
         'no-plusplus': 0,
         'import/no-unresolved': 0,
