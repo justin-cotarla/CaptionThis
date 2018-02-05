@@ -18,7 +18,7 @@ docker-volume-watcher
 
 Hot-reloading should work now.
 
-## Runnning
+## Running
 Start docker from project root: ```docker-compose up --build```
 
 Development server URLs:
