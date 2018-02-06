@@ -5,16 +5,23 @@
     padding-left: 0px;
     padding-top: 0px;
     width: 50%;
+    height: 20%;
+    background-color: rgba(48, 44, 44, 0.282);
   }
 
   .photo {
-    height: 100%;
+    width:23%;
+  }
+
+  .Moment-text-container {
+    float: right;
+    width: 77%;
   }
 
   .Moment-title {
-    float: right;
-    margin-right: 15%;
     font-size: 150%;
+    text-align: left;
+    margin-left: 4%;
   }
 
   
