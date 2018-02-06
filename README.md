@@ -5,7 +5,20 @@
 2. Clone repo: ```git clone https://github.com/justin-cotarla/CaptionThis.git```
 3. Setup npm for frontend and backend from respective folders: ```npm install```
 
-## Runnning
+## Note: Hot-reloading on Windows
+Hot-reloading does not work on Windows. To fix this issue, first install ```docker-windows-volume-watcher``` (requires ```python2``` or ```python3```):
+```
+pip install docker-windows-volume-watcher
+pip install docker==2.7.0
+```
+Then, run the script from your terminal: 
+```
+docker-volume-watcher
+``` 
+
+Hot-reloading should work now.
+
+## Running
 Start docker from project root: ```docker-compose up --build```
 
 Development server URLs:
