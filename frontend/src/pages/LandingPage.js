@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Moment from '../components/Moment';
-// import sample from '../resources/sample-moment.jpg';
-// import logo from '../resources/logo.svg';
-// import tai from '../resources/TaiLopez.png';
 
 class LandingPage extends Component {
     constructor(props){
