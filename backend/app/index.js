@@ -6,6 +6,9 @@ import databaseUtil from './utility/DatabaseUtil';
 const server = new Hapi.Server({
     port: 8000,
     host: 'backend',
+    routes: {
+        cors: true,
+    },
 });
 
 // Test handler
