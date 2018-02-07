@@ -7,7 +7,8 @@ import sample from './resources/sample-moment.jpg';
 //import Moment from './components/Moment'
 import registerServiceWorker from './registerServiceWorker';
 
-//ReactDOM.render(<App id="app"/>, document.getElementById('root'));
-ReactDOM.render(<Moment Description={"Find me a cool caption!"} Image={sample} />, document.getElementById('root'));
+ReactDOM.render(
+    <Moment Description={"Find me a cool caption!"} Image={sample} Date={"06/02/2018"}/>, document.getElementById('root')
+);
 registerServiceWorker();
 
