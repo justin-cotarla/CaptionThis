@@ -6,7 +6,8 @@
   "dependencies": {
     "mysql": "*",
     "hapi": "latest",
-    "winston": "next"
+    "bcrypt": "latest",
+    "jsonwebtoken": "latest"
   },
   "devDependencies": {
     "babel-cli": "latest",
