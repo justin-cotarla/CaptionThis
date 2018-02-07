@@ -19,7 +19,7 @@ const getMomentsByDate = {
         limit = parseInt(limit, 10);
 
         // Create db query
-        const query = 'SELECT * FROM MOMENT LIMIT ?';
+        const query = 'SELECT * FROM MOMENT ORDER BY DATE_ADDED DESC LIMIT ?';
         return databaseUtil.sendQuery(query, [limit]).then((result) => {
             const moments = result.rows.map(moment => ({
                 moment_id: moment.ID,
