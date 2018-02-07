@@ -5,24 +5,24 @@ const getMomentsByDate = {
     method: 'GET',
     path: '/api/moments',
     handler: (request, reply) => {
-        // Get limit query param
+        // Get limit query param, Hapi parses params as strings
         let { limit } = request.query;
 
-        // Check if limit param is a number
-        limit = parseInt('5', 10);
-
-        // Build string for db query
-        if (!Number.isNaN(limit)) {
-            limit = ` LIMIT ${limit}`;
-        } else {
-            limit = '';
+        // If param is absent, it is undefined. If present but not specified, it is the empty string
+        if (limit === undefined || limit === '') {
+            limit = 20; // Default value for limit is 20
+        } else if (!/^\d+$/.test(limit)) { // Test if string is only digits
+            return reply.response({ code: 2, moments: [] }).code(400); // Code 2 means invalid input
         }
 
+        // Parse limit to number to prep for db query
+        limit = parseInt(limit, 10);
+
         // Create db query
-        const query = `SELECT * FROM MOMENT${limit}`;
-        return databaseUtil.sendQuery(query).then((result) => {
+        const query = 'SELECT * FROM MOMENT LIMIT ?';
+        return databaseUtil.sendQuery(query, [limit]).then((result) => {
             const moments = result.rows.map(moment => ({
-                id: moment.ID,
+                moment_id: moment.ID,
                 user_id: moment.USER_ID,
                 img: moment.IMG_URL,
                 description: moment.DESCRIPTION,
@@ -39,7 +39,7 @@ const getMomentsByDate = {
             return reply.response(data).code(200);
         }).catch((error) => {
             console.log(error);
-            return reply.response({ code: 2, error: 'Internal Server Error' }).code(500);
+            return reply.response({ code: 3, moments: [] }).code(500); // Code 3 means unknown error
         });
     },
 };
