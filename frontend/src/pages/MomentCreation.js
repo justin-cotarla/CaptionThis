@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 
-class LandingPage extends Component {
+class MomentCreation extends Component {
 
     render() {
-        
+        return (<h1>aad</h1>);
     }
 }
   
