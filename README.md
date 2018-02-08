@@ -27,6 +27,25 @@ Development server URLs:
 
 Press ctrl-c to shutdown.
 
+## Coding Process for Repo
+
+1. Create new branch locally
+  * Branch name should be a condensed version of the task name
+  * Use ```git checkout -b branch_name``` to create branch locally
+
+2. Commit changes to branch
+  * ```git add name_of_file_to_add``` to add file (* for all files)
+  * ```git commit -m "commit_message"``` to commit changes 
+  * commit_message should start with the task number in square brackets
+  
+3. Push changes to branch
+  * ```push remote origin branch_name```
+  
+4. Pull request
+  * When the task is finished, open a pull request on the branch
+  * Set someone as a reviewer
+  * Once the review is complete, merge into dev.
+
 #### Contributors
 * Justin Cotarla - 40027609
 * Yasmine Ghassemi - 40028336
