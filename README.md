@@ -30,7 +30,7 @@ Press ctrl-c to shutdown.
 ## Coding Process for Repo
 
 1. Create new branch locally
-  * Branch name should be a condensed version of the task name
+  * Branch name should "feature/" followed by a condensed version of the task name 
   * Use ```git checkout -b branch_name``` to create branch locally
 
 2. Commit changes to branch
