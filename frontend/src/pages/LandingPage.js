@@ -1,19 +1,47 @@
 import React, { Component } from 'react';
-import Moment from '../components/Moment';
-import sample from '../resources/sample-moment.jpg';
-import logo from '../resources/logo.svg';
-import tai from '../resources/TaiLopez.png';
+import axios from 'axios';
+import MomentsList from '../components/MomentsList';
 
 class LandingPage extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            moments: null,
+            error: null,
+        };
+    };
+
+    componentWillMount(){
+        axios.get('http://localhost:16085/api/moments').then(response => {
+            let moments = response.data.moments;
+            this.setState({
+                moments,
+            });
+        }).catch(error => {
+            console.log(error);
+            this.setState({
+                error: 'Oops! Something went wrong...'
+            });
+        });
+    };
+
     render() {
-      return (
-        <ul>
-            <li><Moment Description={"Find me a cool caption!"} Image={sample} Date={"06/02/2018"} /></ li>
-            <li><Moment Description={"Good caption to go with this?"} Image={logo} Date={"04/01/2018"} /></ li>
-            <li><Moment Description={"Me in my garage"} Image={tai} Date={"02/11/2017"} /></ li>
-        </ul>
-      );
+        const moments = this.state.moments;
+        const error = this.state.error;
+
+        // Return an error message if moments could not be loaded
+        if (error) {
+            return <div className="landing-page-container">
+                <h1>{error}</h1>
+            </div>
+        }
+
+        return (
+            <div className="landing-page-container">
+                <MomentsList Moments={moments}/>
+            </div>
+        );
     }
-  }
+}
   
   export default LandingPage;
