@@ -1,5 +1,5 @@
 import React from 'react';
-import MomentPreview from './MomentPreview';
+import Moment from './Moment';
 import '../styles/MomentsList.css';
 
 const MomentsList = props => {
@@ -9,7 +9,7 @@ const MomentsList = props => {
                 props.Moments && props.Moments.map(moment => {
                     return (
                         <li key={moment.moment_id}>
-                            <MomentPreview Image={ moment.img } Date={ formatDate(moment.date_added) } Description={ moment.description } User={ moment.user_id }/>
+                            <Moment Image={ moment.img } Date={ formatDate(moment.date_added) } Description={ moment.description } User={ moment.user_id }/>
                         </li>
                     )
                 })
