@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Moment from '../components/Moment';
+import MomentsList from '../components/MomentsList';
 
 class LandingPage extends Component {
     constructor(props){
@@ -38,17 +38,7 @@ class LandingPage extends Component {
 
         return (
             <div className="landing-page-container">
-                <ul className="moments-list">
-                    {
-                        moments && moments.map(moment => {
-                            return (
-                                <li key={moment.moment_id} className="moment-list-item">
-                                    <Moment Image={ moment.img } Date={ moment.date_added } Description={ moment.description } />
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
+                <MomentsList Moments={moments}/>
             </div>
         );
     }
