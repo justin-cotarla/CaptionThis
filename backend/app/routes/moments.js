@@ -1,4 +1,6 @@
 import databaseUtil from '../utility/DatabaseUtil';
+import fs from '../fs';
+// import AWS from '../aws-sdk';
 
 // GET moments sorted by date
 const getMomentsByDate = {
@@ -44,6 +46,29 @@ const getMomentsByDate = {
     },
 };
 
+// POST new moments created by user
+const createMoment = {
+    method: 'POST',
+    path: '/api/moments/upload',
+    options: {
+        payload: {
+            output: 'stream',
+            parse: 'true',
+            allow: 'multipart/form-data',
+            maxBytes: 5 * 1000 * 1000, // Max upload size 5MB
+        },
+    },
+    handler: (request) => {
+        // Get the uploaded file
+        const imageFile = request.payload.file;
+        const imageName = imageFile.hapi.filename;
+        const imagePath = `${__dirname}/uploads/${imageName}`;
+        // Write the file to local disk
+        imageFile.pipe(fs.createWriteStream(imagePath));
+    },
+};
+
 export default [
     getMomentsByDate,
+    createMoment,
 ];
