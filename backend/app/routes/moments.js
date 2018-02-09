@@ -1,5 +1,4 @@
 import databaseUtil from '../utility/DatabaseUtil';
-import fs from '../fs';
 import AWS from '../aws-sdk';
 
 // GET moments sorted by date
@@ -65,29 +64,22 @@ const createMoment = {
             secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
             region: process.env.S3_REGION,
         });
-        // Get the uploaded file
+        // Get the uploaded file from request
         const imageFile = request.payload.file;
         const imageName = imageFile.hapi.filename;
-        const imagePath = `${__dirname}/uploads/${imageName}`;
-        // Write the file to local disk
-        imageFile.pipe(fs.createWriteStream(imagePath));
-        // Upload to S3 bucket after reading the image from local disk
-        fs.readFile(imagePath, (err, data) => {
-            if (err) {
-                console.log(err);
+        // Stream upload the image directly to AWS S3 bucket
+        const params = {
+            Bucket: process.env.S3_BUCKET,
+            Key: imageName,
+            Body: imageFile._data,
+            ACL: 'public-read',
+        };
+        s3.upload(params, (uerr, ures) => {
+            if (uerr) {
+                console.log('Error uploading image. ', uerr);
+            } else {
+                console.log('Successfully uploaded image to S3. ', ures);
             }
-            s3.upload({
-                Bucket: process.env.S3_BUCKET,
-                Key: imageName,
-                Body: data,
-                ACL: 'public-read',
-            }, (uerr, ures) => {
-                if (uerr) {
-                    console.log('Error uploading data.', uerr);
-                } else {
-                    console.log('Successfully uploaded data to S3.', ures);
-                }
-            });
         });
     },
 };
