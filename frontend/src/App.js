@@ -6,8 +6,8 @@ import MomentCreation from './pages/MomentCreation';
 class App extends Component {
   render() {
     return (
-     // <LandingPage />
-        <MomentCreation />
+      //<LandingPage />
+       <MomentCreation />
     );
   }
 }
