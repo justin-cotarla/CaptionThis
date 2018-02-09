@@ -1,6 +1,6 @@
 import databaseUtil from '../utility/DatabaseUtil';
 import fs from '../fs';
-// import AWS from '../aws-sdk';
+import AWS from '../aws-sdk';
 
 // GET moments sorted by date
 const getMomentsByDate = {
@@ -59,12 +59,36 @@ const createMoment = {
         },
     },
     handler: (request) => {
+        // Define S3 bucket
+        const s3 = new AWS.S3({
+            accessKeyId: process.env.S3_ACCESS_KEY_ID,
+            secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+            region: process.env.S3_REGION,
+        });
         // Get the uploaded file
         const imageFile = request.payload.file;
         const imageName = imageFile.hapi.filename;
         const imagePath = `${__dirname}/uploads/${imageName}`;
         // Write the file to local disk
         imageFile.pipe(fs.createWriteStream(imagePath));
+        // Upload to S3 bucket after reading the image from local disk
+        fs.readFile(imagePath, (err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            s3.upload({
+                Bucket: process.env.S3_BUCKET,
+                Key: imageName,
+                Body: data,
+                ACL: 'public-read',
+            }, (uerr, ures) => {
+                if (uerr) {
+                    console.log('Error uploading data.', uerr);
+                } else {
+                    console.log('Successfully uploaded data to S3.', ures);
+                }
+            });
+        });
     },
 };
 
