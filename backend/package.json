@@ -4,11 +4,10 @@
   "description": "Backend for CaptionThis",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.17.1",
-    "bcrypt": "latest",
+    "mysql": "*",
     "hapi": "latest",
-    "jsonwebtoken": "latest",
-    "mysql": "*"
+    "bcrypt": "latest",
+    "jsonwebtoken": "latest"
   },
   "devDependencies": {
     "babel-cli": "latest",
