@@ -6,8 +6,10 @@
   "dependencies": {
     "mysql": "*",
     "hapi": "latest",
+    "winston": "next",
     "bcrypt": "latest",
-    "jsonwebtoken": "latest"
+    "jsonwebtoken": "latest",
+    "aws-sdk": "^2.190.0"
   },
   "devDependencies": {
     "babel-cli": "latest",
