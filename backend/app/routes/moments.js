@@ -63,7 +63,7 @@ const createMoment = {
         const momentDesc = request.payload.description;
 
         // Other parameters for db query
-        const userId = 1;
+        const userId = 1; // Placeholder id
         let imageURL;
 
         // Get the uploaded file from request
@@ -85,18 +85,15 @@ const createMoment = {
             ACL: 'public-read',
         };
 
-        s3.upload(params, (uerr, ures) => {
-            if (uerr) {
-                console.log('Error uploading image. ', uerr);
-            } else {
-                console.log('Successfully uploaded image to S3.');
-                imageURL = ures.Location; // Get the URL of the uploaded image
-            }
+        s3.upload(params).promise().then((data) => {
+            console.log('Successfully uploaded image to S3.');
+            imageURL = data.Location; // Get image URL after uploading
+            // Create db query
+            const query = 'INSERT INTO MOMENT (IMG_URL, DESC, USER_ID) VALUES (?, ?, ?)';
+            return databaseUtil.sendQuery(query, [imageURL, momentDesc, userId]);
+        }).catch((error) => {
+            console.log('Error uploading image. ', error);
         });
-
-        // Create db query
-        const query = 'INSERT INTO MOMENT (IMG_URL, DESC, USER_ID) VALUES (?, ?, ?)';
-        return databaseUtil.sendQuery(query, [imageURL, momentDesc, userId]);
     },
 };
 
