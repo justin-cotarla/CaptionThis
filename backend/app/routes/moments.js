@@ -45,10 +45,10 @@ const getMomentsByDate = {
     },
 };
 
-// POST new moments created by user
+// PUT new moments created by user
 const createMoment = {
-    method: 'POST',
-    path: '/api/moments/upload',
+    method: 'PUT',
+    path: '/api/moments/',
     options: {
         payload: {
             output: 'stream',
@@ -58,15 +58,25 @@ const createMoment = {
         },
     },
     handler: (request) => {
+        // Get the form data from request
+        // const momentTitle = request.payload.title;
+        const momentDesc = request.payload.description;
+
+        // Other parameters for db query
+        const userId = 1;
+        let imageURL;
+
+        // Get the uploaded file from request
+        const imageFile = request.payload.file;
+        const imageName = imageFile.hapi.filename;
+
         // Define S3 bucket
         const s3 = new AWS.S3({
             accessKeyId: process.env.S3_ACCESS_KEY_ID,
             secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
             region: process.env.S3_REGION,
         });
-        // Get the uploaded file from request
-        const imageFile = request.payload.file;
-        const imageName = imageFile.hapi.filename;
+
         // Stream upload the image directly to AWS S3 bucket
         const params = {
             Bucket: process.env.S3_BUCKET,
@@ -74,13 +84,19 @@ const createMoment = {
             Body: imageFile._data,
             ACL: 'public-read',
         };
+
         s3.upload(params, (uerr, ures) => {
             if (uerr) {
                 console.log('Error uploading image. ', uerr);
             } else {
-                console.log('Successfully uploaded image to S3. ', ures);
+                console.log('Successfully uploaded image to S3.');
+                imageURL = ures.Location; // Get the URL of the uploaded image
             }
         });
+
+        // Create db query
+        const query = 'INSERT INTO MOMENT (IMG_URL, DESC, USER_ID) VALUES (?, ?, ?)';
+        return databaseUtil.sendQuery(query, [imageURL, momentDesc, userId]);
     },
 };
 
