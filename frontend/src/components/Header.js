@@ -19,7 +19,7 @@ class Header extends Component{
         }
 
         return (
-        <h style={headerStyle}>{this.props.text}</h>
+        <h1 style={headerStyle}>{this.props.text}</h1>
         )
     }   
 }
