@@ -85,7 +85,7 @@ const createMoment = {
             ACL: 'public-read',
         };
 
-        s3.upload(params).promise().then((data) => {
+        return s3.upload(params).promise().then((data) => {
             console.log('Successfully uploaded image to S3.');
             imageURL = data.Location; // Get image URL after uploading
             // Create db query
