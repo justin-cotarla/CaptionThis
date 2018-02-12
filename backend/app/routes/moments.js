@@ -1,5 +1,5 @@
+import AWS from 'aws-sdk';
 import databaseUtil from '../utility/DatabaseUtil';
-import AWS from '../aws-sdk';
 
 // GET moments sorted by date
 const getMomentsByDate = {
