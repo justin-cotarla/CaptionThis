@@ -7,9 +7,7 @@ class CreateMoment extends Component{
         return(
             <h1>Placeholder</h1>
         );
-
     }
-
 }
 
 export default CreateMoment;

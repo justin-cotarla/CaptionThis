@@ -17,17 +17,16 @@ class MomentCreation extends Component {
       body: data,
     });
   }
-    
     render(){
         return(
             <div className = "CreateMoment">
                 <form onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
                     <div className = "content-container">
                         <label className="label">Title</label>
-                        <input id="title" type="text" className="title" required/>
+                        <input name="title" type="text" className="title" required/>
                     </div>
                     <div className = "content-container">
-                        <input type="file" required></input>
+                        <input type="file" name="file" required></input>
                     </div>
                     <div className = "content-container">
                         <label className="label">Description</label>
@@ -39,8 +38,7 @@ class MomentCreation extends Component {
                 </form>
             </div>
         );
-
     }
 }
   
-  export default MomentCreation;
+export default MomentCreation;
