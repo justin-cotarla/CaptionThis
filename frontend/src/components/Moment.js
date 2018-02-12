@@ -6,7 +6,7 @@ const Moment = props => {
         <div className="Moment-preview-container">     
             <ul className="Moment-preview-layout">
                 <li>
-                    <div className="Moment-thumbnail" style={{backgroundImage: `url(${props.Image})`}}></div>      
+                    <div className="Moment-thumbnail" style={{backgroundImage: `url(${props.Image})`}} onClick={props.onClick}></div>      
                 </li>
                 <li className="Moment-preview-info">
                     <h1 className='header-medium-2'>{ props.Description }</h1>
