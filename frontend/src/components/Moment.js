@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../styles/Moment.css';
 
-class Moment extends Component {
-    render() {
-      return (
-        <div className="Moment">
-            <img src={this.props.Image} className="photo" alt="logo" />
-            <div className="Moment-text-container">
-              <p className="date">
-                {this.props.Date}
-              </p>
-              <h1 className="Moment-title">
-                {this.props.Description}
-              </h1>
-            </div>
+const Moment = props => {
+    return (
+        <div className="Moment-preview-container">     
+            <ul className="Moment-preview-layout">
+                <li>
+                    <div className="Moment-thumbnail" style={{backgroundImage: `url(${props.Image})`}}></div>      
+                </li>
+                <li className="Moment-preview-info">
+                    <h1 className='header-medium-2'>{ props.Description }</h1>
+                    <h1 className="header-medium-1">Posted on { props.Date }</h1>
+                    <h1 className="header-small">Submitted by { props.User }</h1>
+                </li>
+            </ul>      
         </div>
-      );
-    }
-  }
-  
-  export default Moment;
+    )
+}
+
+export default Moment;
