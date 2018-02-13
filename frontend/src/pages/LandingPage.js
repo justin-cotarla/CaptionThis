@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import MomentsList from '../components/MomentsList';
+import Header from '../components/Header';
 
 class LandingPage extends Component {
     constructor(props){
@@ -32,7 +33,7 @@ class LandingPage extends Component {
         // Return an error message if moments could not be loaded
         if (error) {
             return <div className="landing-page-container">
-                <h1>{error}</h1>
+                <Header textSize={4} text={error} />
             </div>
         }
 

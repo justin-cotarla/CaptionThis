@@ -36,7 +36,6 @@ const register = (username, password) => new Promise((resolve, reject) => {
             resolve({
                 id: result.rows.insertId,
                 username,
-                functionId: 1,
             });
         })
         .catch((err) => {
