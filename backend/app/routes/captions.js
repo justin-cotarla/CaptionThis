@@ -17,9 +17,9 @@ const createCaption = {
         }
 
         // Create db query
-        const query = 'INSERT INTO CAPTION (CONTENT, VOTE_COUNT, SELECTED, USER_ID, MOMENT_ID) VALUES (?, ?, ?, ?, ?)';
+        const query = 'INSERT INTO CAPTION (CONTENT, USER_ID, MOMENT_ID) VALUES (?, ?, ?)';
         return databaseUtil
-            .sendQuery(query, [content, voteCount, selected, userId, momentId])
+            .sendQuery(query, [content, userId, momentId])
             .then(() => reply.response({ code: 1 }).code(200))
             .catch((error) => {
                 console.log(error);
