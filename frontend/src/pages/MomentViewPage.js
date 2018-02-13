@@ -9,8 +9,9 @@ class MomentViewPage extends Component{
     };
 
     render() {
+      console.log(this.state.momentID);
       return (
-        <h1>MOMENTVIEW</h1>
+        <h1>{this.state.momentID}</h1>
       );
     }
   }

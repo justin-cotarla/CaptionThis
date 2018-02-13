@@ -9,17 +9,18 @@ class MomentsList extends Component {
         super(props);
         this.state = {
             switchPages: false,
+            currMoment: null,
         };
     };
 
     viewMoment(moment) {
+        this.state.currMoment = moment;
         this.setState({redirect: true});
-        console.log(this.state.redirect);
     }
 
     render() {
         if (this.state.redirect) {
-            return <Redirect push to="/momentview/momentID" />;
+            return <Redirect to={"/momentview/" + this.state.currMoment.moment_id} />;
         }
 
         return (
