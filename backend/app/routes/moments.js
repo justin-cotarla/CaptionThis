@@ -57,7 +57,7 @@ const createMoment = {
             maxBytes: 5 * 1000 * 1000, // Max upload size 5MB
         },
     },
-    handler: (request) => {
+    handler: (request, reply) => {
         // Get the form data from request
         // const momentTitle = request.payload.title;
         const momentDesc = request.payload.description;
@@ -85,14 +85,20 @@ const createMoment = {
             ACL: 'public-read',
         };
 
-        s3.upload(params).promise().then((data) => {
+        return s3.upload(params).promise().then((data) => {
             console.log('Successfully uploaded image to S3.');
             imageURL = data.Location; // Get image URL after uploading
             // Create db query
-            const query = 'INSERT INTO MOMENT (IMG_URL, DESC, USER_ID) VALUES (?, ?, ?)';
-            return databaseUtil.sendQuery(query, [imageURL, momentDesc, userId]);
+            const query = 'INSERT INTO MOMENT (IMG_URL, DESCRIPTION, USER_ID) VALUES (?, ?, ?)';
+            return databaseUtil.sendQuery(query, [imageURL, momentDesc, userId])
+                .then(() => reply.response({ code: 1 }).code(200))
+                .catch((error) => {
+                    console.log(error);
+                    return reply.response({ code: 3 }).code(500);
+                });
         }).catch((error) => {
             console.log('Error uploading image. ', error);
+            return reply.response({ code: 3 }).code(500);
         });
     },
 };
