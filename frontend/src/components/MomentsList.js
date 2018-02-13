@@ -14,7 +14,7 @@ class MomentsList extends Component {
     };
 
     viewMoment(moment) {
-        this.state.currMoment = moment;
+        this.setState({currMoment: moment});
         this.setState({redirect: true});
     }
 
