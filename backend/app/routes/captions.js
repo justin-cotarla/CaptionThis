@@ -53,12 +53,16 @@ const getCaptionsByMoment = {
 
         let check = 'SELECT * FROM MOMENT WHERE ID=?'; // To check if the moment exists
         let query = 'SELECT * FROM CAPTION WHERE MOMENT_ID=? ORDER BY DATE_ADDED DESC LIMIT ?'; // The actual query
-        return databaseUtil.sendQuery(check, [momentid]).then(result => {
-            // If the length is 0, it does not exist
-            if(result.rows.length === 0) {
-                return reply.response({ code: 2 }).code(404);
-            }
-            return databaseUtil.sendQuery(query, [momentid, limit]).then((result) => {
+        return databaseUtil.sendQuery(check, [momentid])
+            .then(result => {
+                // If the length is 0, it does not exist
+                if(result.rows.length === 0) {
+                    return reply.response({ code: 2 }).code(404);
+                }
+
+                return databaseUtil.sendQuery(query, [momentid, limit])    
+            })
+            .then((result) => {
                 const captions = result.rows.map(caption => ({
                     user_id: caption.USER_ID,
                     moment_id: caption.MOMENT_ID,
@@ -79,12 +83,8 @@ const getCaptionsByMoment = {
                 return reply.response(data).code(200);
             }).catch((error) => {
                 console.log(error);
-                return reply.response({ code: 3 }).code(500); // Code 3 means unknown error
-            });
-        }).catch((error) => {
-            console.log(error);
-            return reply.response({ code: 3 }).code(500);
-        })
+                return reply.response({ code: 3 }).code(500);
+            })
     }
 }
 
