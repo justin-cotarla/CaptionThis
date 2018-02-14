@@ -119,13 +119,18 @@ const voteCaption = {
         if (!request.auth.credentials) {
             return reply.response({ code: 4 }).code(401);
         }
-        // Get the caption id and parse it to an integer
-        const captionId = parseInt(request.params.id, 10);
+
+        // Get the caption id
+        let captionId = request.params.id;
 
         // Check if the caption id is valid
-        if (captionId === 0) {
-            return reply.response({ code: 2 });
+        if (captionId === undefined || captionId === '' || captionId === '0' || !/^\d+$/.test(captionId)) {
+            return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
         }
+
+        // Parse the caption id to an integer
+        captionId = parseInt(captionId, 10);
+
         // Create update query depending on the option parameter
         let updateQuery = '';
         if (request.params.option === 'upvote') {
@@ -138,7 +143,7 @@ const voteCaption = {
             .then(() => reply.response({ code: 1 }).code(200))
             .catch((error) => {
                 console.log(error);
-                return reply.response({ code: 3 });
+                return reply.response({ code: 3 }).code(500);
             });
     },
 };
