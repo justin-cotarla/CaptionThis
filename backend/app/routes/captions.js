@@ -4,10 +4,6 @@ const createCaption = {
     method: 'PUT',
     path: '/api/captions',
     handler: (request, reply) => {
-        // If not authorized
-        if (!request.auth.credentials) {
-            return reply.response({ code: 4 }).code(401);
-        }
         // Get the caption from request
         const { content } = request.payload;
         const userId = request.auth.credentials.user.id;
