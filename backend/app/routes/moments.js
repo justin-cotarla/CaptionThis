@@ -123,7 +123,7 @@ const getMomentById = {
         return databaseUtil.sendQuery(query, [id]).then((result) => {
 
             if (!result.rows[0]) {
-                reply.response({code: 3, moment: null}).code(404);
+                reply.response({ code: 3 }).code(404);
             }
 
             const moment = {
