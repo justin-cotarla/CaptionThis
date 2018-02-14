@@ -2,13 +2,15 @@ import databaseUtil from '../utility/DatabaseUtil';
 
 const createCaption = {
     method: 'PUT',
-    path: '/api/captions/',
+    path: '/api/captions',
     handler: (request, reply) => {
+        // If not authorized
+        if (!request.auth.credentials) {
+            return reply.response({ code: 4 }).code(401);
+        }
         // Get the caption from request
         const { content } = request.payload;
-        const voteCount = 0; // Count of newly created caption is 0
-        const selected = 0; // 0 for not seleted, 1 for selected
-        const userId = 1; // Placeholder user ID
+        const userId = request.auth.credentials.user.id;
         const momentId = 1; // Placeholder moment ID
 
         // Check if the caption content is valid
