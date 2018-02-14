@@ -2,6 +2,7 @@ import Hapi from 'hapi';
 
 import routes from './routes';
 import databaseUtil from './utility/DatabaseUtil';
+import * as AuthUtil from './utility/AuthUtil';
 
 const server = new Hapi.Server({
     port: 8000,
@@ -10,6 +11,26 @@ const server = new Hapi.Server({
         cors: true,
     },
 });
+
+const scheme = () => ({
+    authenticate: (request, h) => {
+        // No token
+        if (!request.headers.authorization) {
+            return h.unauthenticated();
+        }
+        const token = request.headers.authorization.substring(7);
+        return AuthUtil.validateToken(token)
+            .then(decoded => h.authenticated({ credentials: { user: decoded } }))
+            .catch((err) => {
+                console.log(err);
+                return h.unauthenticated();
+            });
+    },
+});
+
+server.auth.scheme('custom', scheme);
+server.auth.strategy('default', 'custom');
+server.auth.default('default');
 
 // Test handler
 const helloworld = (request, h) => {
