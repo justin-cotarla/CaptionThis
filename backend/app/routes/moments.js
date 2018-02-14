@@ -8,7 +8,6 @@ const getMomentsByDate = {
     handler: (request, reply) => {
         // Get limit query param, Hapi parses params as strings
         let { limit } = request.query;
-
         // If param is absent, it is undefined. If present but not specified, it is the empty string
         if (limit === undefined || limit === '') {
             limit = 20; // Default value for limit is 20
@@ -56,7 +55,7 @@ const getMomentsByDate = {
 // PUT new moments created by user
 const createMoment = {
     method: 'PUT',
-    path: '/api/moments/',
+    path: '/api/moments',
     options: {
         payload: {
             output: 'stream',
@@ -113,27 +112,24 @@ const createMoment = {
 
 const getMomentById = {
     method: 'GET',
-    path: '/api/moments/{moment-id}',
+    path: '/api/moments/{momentid}',
     handler: (request, reply) => {
         // Get limit query param, Hapi parses params as strings
-        let {moment-id} = request.params.moment-id;
 
-        } else if (!/^\d+$/.test(moment-id)) { // Test if string is only digits
-            return reply.response({ code: 2, moment: null }).code(400); // Code 2 means invalid input
-        }
+        const id = parseInt(request.params.momentid, 10);
 
         // Create db query
-        const query = 'SELECT * FROM MOMENT WHERE ID=?';
-        return databaseUtil.sendQuery(query, [moment-id]).then((result) => {
-            const moment {
-                ID,
-                IMG_URL,
-                DESCRIPTON,
-                DATE_ADDED,
-                USER_ID,
-            } = result.row[0];
+        const query = 'SELECT * FROM MOMENT WHERE ID =?';
+        return databaseUtil.sendQuery(query, [id]).then((result) => {
+            const moment = {
+                moment_id: result.rows[0].ID,
+                img_url: result.rows[0].IMG_URL,
+                description: result.rows[0].DESCRIPTON,
+                date_added: result.rows[0].DATE_ADDED,
+                user_id: result.rows[0].USER_ID,
+            };
 
-            // The response data includes a status code and the array of moments
+            // The response data includes a status code and the moment
             const data = {
                 code: 1,
                 moment,
