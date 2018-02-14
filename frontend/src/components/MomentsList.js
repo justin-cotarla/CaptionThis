@@ -1,21 +1,42 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 import Moment from './Moment';
 import '../styles/MomentsList.css';
 
-const MomentsList = props => {
-    return (
-        <ul className="Moments-list">
-            {
-                props.Moments && props.Moments.map(moment => {
-                    return (
-                        <li key={moment.moment_id}>
-                            <Moment Image={ moment.img } Date={ formatDate(moment.date_added) } Description={ moment.description } User={ moment.user_id }/>
-                        </li>
-                    )
-                })
-            }
-        </ul>
-    )
+class MomentsList extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            switchPages: false,
+            currMoment: null,
+        };
+    };
+
+    viewMoment(moment) {
+        this.setState({currMoment: moment});
+        this.setState({redirect: true});
+    }
+
+    render() {
+        if (this.state.redirect) {
+            return <Redirect to={"/momentview/" + this.state.currMoment.moment_id} />;
+        }
+
+        return (
+            <ul className="Moments-list">
+                {
+                    this.props.Moments && this.props.Moments.map(moment => {
+                        return (
+                            <li key={moment.moment_id}>
+                                <Moment onClick={() => this.viewMoment(moment)} Image={ moment.img } Date={ formatDate(moment.date_added) } Description={ moment.description } User={ moment.user_id }/>
+                            </li>
+                        )
+                    })
+                }
+            </ul>
+        )
+    }
 }
 
 // Exact formatting of date will be handled later
