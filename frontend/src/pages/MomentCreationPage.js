@@ -8,7 +8,7 @@ import Header from '../components/Header';
 class MomentCreation extends Component {
     constructor() {
         super();
-        
+
         this.state = {
             redirect: null,
         }
@@ -63,5 +63,5 @@ class MomentCreation extends Component {
         );
     }
 }
-  
+
 export default MomentCreation;

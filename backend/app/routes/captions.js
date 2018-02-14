@@ -111,28 +111,20 @@ const getCaptionsByMoment = {
     },
 };
 
-const upvoteCaption = {
+const voteCaption = {
     method: 'POST',
     path: '/api/captions/{id}/{option}',
     handler: (request, reply) => {
         // Check if authorized
         if (!request.auth.credentials) {
-            return reply.response({
-                code: 4,
-                caption_id: 0,
-                votes: 0,
-            }).code(401);
+            return reply.response({ code: 4 }).code(401);
         }
         // Get the caption id and parse it to an integer
         const captionId = parseInt(request.params.id, 10);
 
         // Check if the caption id is valid
         if (captionId === 0) {
-            return reply.response({
-                code: 2,
-                caption_id: 0,
-                votes: 0,
-            });
+            return reply.response({ code: 2 });
         }
         // Create update query depending on the option parameter
         let updateQuery = '';
@@ -142,30 +134,17 @@ const upvoteCaption = {
             updateQuery = 'UPDATE CAPTION SET VOTE_COUNT=VOTE_COUNT-1 WHERE ID=?';
         }
 
-        return databaseUtil.sendQuery(updateQuery, [captionId]).then(() => {
-            // Get the updated vote count from db
-            const query = 'SELECT VOTE_COUNT FROM CAPTION WHERE ID=?';
-            return databaseUtil.sendQuery(query, [captionId]).then((result) => {
-                const data = {
-                    code: 1,
-                    caption_id: captionId,
-                    votes: result.rows[0].VOTE_COUNT,
-                };
-                return reply.response(data).code(200);
+        return databaseUtil.sendQuery(updateQuery, [captionId])
+            .then(() => reply.response({ code: 1 }).code(200))
+            .catch((error) => {
+                console.log(error);
+                return reply.response({ code: 3 });
             });
-        }).catch((error) => {
-            console.log(error);
-            return reply.response({
-                code: 3,
-                caption_id: captionId,
-                votes: 0,
-            });
-        });
     },
 };
 
 export default [
     createCaption,
-    upvoteCaption,
     getCaptionsByMoment,
+    voteCaption,
 ];
