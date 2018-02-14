@@ -5,6 +5,7 @@ import LandingPage from './pages/LandingPage';
 import RegistrationPage from './pages/RegistrationPage';
 import MomentCreationPage from './pages/MomentCreationPage';
 import MomentViewPage from './pages/MomentViewPage';
+import LoginPage from './pages/LoginPage';
 
 import './App.css';
 
@@ -15,6 +16,7 @@ class App extends Component {
             <Switch>
                 <Route exact path="/" component={LandingPage}/>
                 <Route path="/register" component={RegistrationPage}/>
+                <Route path="/login" component={LoginPage}/>
                 <Route path="/submit" component={MomentCreationPage}/>
                 <Route path="/momentview/:momentID" component={MomentViewPage}/>
             </Switch>

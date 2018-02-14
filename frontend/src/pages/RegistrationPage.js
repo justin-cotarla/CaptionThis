@@ -9,7 +9,7 @@ class RegistrationPage extends Component{
         this.state = {
             userField: '',
             passField: '',
-            redirectToMain: false,
+            redirect: null,
         }
     }
 
@@ -22,6 +22,12 @@ class RegistrationPage extends Component{
     onPassChange = (event) => {
         this.setState({
             passField: event.target.value,
+        });
+    }
+
+    onLoginClick = () => {
+        this.setState({
+            redirect: '/login',
         });
     }
 
@@ -40,7 +46,7 @@ class RegistrationPage extends Component{
                 const cookies = new Cookies();
                 cookies.set('token', data.token);
                 this.setState({
-                    redirectToMain: true,
+                    redirect: '/',
                 })
             }
         });
@@ -49,7 +55,7 @@ class RegistrationPage extends Component{
     render() {
         return (
             <div>
-                {this.state.redirectToMain && <Redirect to="/" />}
+                {this.state.redirect && <Redirect to={this.state.redirect} />}
                 <h1>Sign Up</h1>
                 <form
                     onSubmit={this.onSubmit}
@@ -75,7 +81,11 @@ class RegistrationPage extends Component{
                     <input type="submit" value="Sign Up" />
                 </form>
                 <label name="loginMessage">If you already have an account, please login: </label>
-                <input type="button" value="Login" />
+                <input
+                    type="button"
+                    value="Login"
+                    onClick={this.onLoginClick}
+                />
             </div>
         );
     }
