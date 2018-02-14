@@ -34,7 +34,7 @@ const getCaptionsByMoment = {
     method: 'GET',
     path: '/api/captions',
     handler: (request, reply) => {
-        let momentid = request.query['moment-id'];
+        const momentid = request.query['moment-id'];
         let { limit } = request.query;
 
         // Check if moment id is valid
@@ -52,14 +52,28 @@ const getCaptionsByMoment = {
         limit = parseInt(limit, 10);
 
         // To check if the moment exists
-        let check = 'SELECT * FROM MOMENT WHERE ID=?'; 
+        const check = 'SELECT * FROM MOMENT WHERE ID=?'; 
 
         // The actual query
-        let query = `SELECT USER_ID, MOMENT_ID, CAPTION.ID AS CAPTION_ID, 
-            CONTENT, VOTE_COUNT, USER.USERNAME FROM CAPTION 
-            JOIN USER ON USER_ID = USER.ID 
-            WHERE MOMENT_ID=? ORDER BY DATE_ADDED DESC 
-            LIMIT 5`;
+        const query = `
+            SELECT 
+                USER_ID, 
+                MOMENT_ID, 
+                CAPTION.ID AS CAPTION_ID, 
+                CONTENT, 
+                VOTE_COUNT, 
+                SELECTED,
+                DATE_ADDED,
+                USER.USERNAME FROM CAPTION 
+            JOIN 
+                USER
+            ON
+                USER_ID = USER.ID 
+            WHERE 
+                MOMENT_ID=? 
+            ORDER BY DATE_ADDED DESC 
+            LIMIT ?
+        `;
     
         return databaseUtil.sendQuery(check, [momentid])
             .then(result => {
@@ -71,14 +85,13 @@ const getCaptionsByMoment = {
                 return databaseUtil.sendQuery(query, [momentid, limit])    
             })
             .then((result) => {
-                console.log(result.rows)
                 const captions = result.rows.map(caption => ({
                     user: {
                         user_id: caption.USER_ID,
                         username: caption.USERNAME,
                     },   
                     moment_id: caption.MOMENT_ID,
-                    caption_id: caption.ID,
+                    caption_id: caption.CAPTION_ID,
                     caption: caption.CONTENT,
                     upvotes: caption.VOTE_COUNT,
                     selected: caption.SELECTED,
