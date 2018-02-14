@@ -139,12 +139,21 @@ const voteCaption = {
             updateQuery = 'UPDATE CAPTION SET VOTE_COUNT=VOTE_COUNT-1 WHERE ID=?';
         }
 
-        return databaseUtil.sendQuery(updateQuery, [captionId])
-            .then(() => reply.response({ code: 1 }).code(200))
-            .catch((error) => {
-                console.log(error);
-                return reply.response({ code: 3 }).code(500);
-            });
+        // Check if the caption exists in db
+        const checkQuery = 'SELECT * FROM CAPTION WHERE ID=?';
+        return databaseUtil.sendQuery(checkQuery, [captionId]).then((result) => {
+            // If the result contains the caption, update the vote count
+            if (result.rows[0]) {
+                return databaseUtil.sendQuery(updateQuery, [captionId])
+                    .then(() => reply.response({ code: 1 }).code(200))
+                    .catch((error) => {
+                        console.log(error);
+                        return reply.response({ code: 5 }).code(500); // Code 5 means unknown error
+                    });
+            }
+            console.log('Caption does not exist.');
+            return reply.response({ code: 3 }).code(404);
+        });
     },
 };
 
