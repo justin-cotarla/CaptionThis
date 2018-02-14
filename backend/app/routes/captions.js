@@ -39,13 +39,13 @@ const getCaptionsByMoment = {
 
         // Check if moment id is valid
         if (momentid === undefined || momentid === '' || momentid == 0 || !/^\d+$/.test(momentid)) {
-            return reply.response({ code: 2, moments: [] }).code(400); // Code 2 means invalid input
+            return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
         }
         
         if (limit === undefined || limit === '') {
             limit = 20; // Default value for limit is 20
         } else if (!/^\d+$/.test(limit)) { // Test if string is only digits
-            return reply.response({ code: 2, moments: [] }).code(400); // Code 2 means invalid input
+            return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
         }
 
         // Parse limit to number to prep for db query
@@ -79,11 +79,11 @@ const getCaptionsByMoment = {
                 return reply.response(data).code(200);
             }).catch((error) => {
                 console.log(error);
-                return reply.response({ code: 3, captions: [] }).code(500); // Code 3 means unknown error
+                return reply.response({ code: 3 }).code(500); // Code 3 means unknown error
             });
         }).catch((error) => {
             console.log(error);
-            return reply.response({ code: 3, captions: [] }).code(500);
+            return reply.response({ code: 3 }).code(500);
         })
     }
 }
