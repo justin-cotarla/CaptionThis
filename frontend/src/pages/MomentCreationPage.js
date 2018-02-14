@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import '../styles/CreateMoment.css';
 
 class MomentCreation extends Component {
@@ -6,18 +7,23 @@ class MomentCreation extends Component {
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            redirect: false,
+        }
     }
-
     handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-    
-    fetch('/api/URL', {
-      method: 'POST',
-      body: data,
-    });
-  }
+        fetch('http://localhost:16085/api/moments/', {
+            method: 'PUT',
+            body: data,
+        });
+        this.setState({redirect: true});
+    }
     render(){
+        if (this.state.redirect) {
+            return <Redirect to={"/"} />; 
+        }
         return(
             <div className = "CreateMoment">
                 <form onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
