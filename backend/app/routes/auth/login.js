@@ -1,6 +1,5 @@
 import * as AuthUtil from '../../utility/AuthUtil';
 
-// GET moments sorted by date
 const loginUser = {
     method: 'POST',
     path: '/api/auth/login',

@@ -1,6 +1,6 @@
 import * as AuthUtil from '../../utility/AuthUtil';
 
-// GET moments sorted by date
+// Register user
 const registerUser = {
     method: 'POST',
     path: '/api/auth/register',
