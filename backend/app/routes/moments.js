@@ -23,7 +23,7 @@ const getMomentsByDate = {
         SELECT MOMENT.ID AS MOMENT_ID, 
         IMG_URL, DESCRIPTION, DATE_ADDED, USER.USERNAME, 
         USER.ID AS USER_ID FROM MOMENT 
-        JOIN USER ON MOMENT.USER_ID = USER.ID LIMIT ?
+        JOIN USER ON MOMENT.USER_ID = USER.ID ORDER BY DATE_ADDED DESC LIMIT ?
         `;
         return databaseUtil.sendQuery(query, [limit]).then((result) => {
             const moments = result.rows.map(moment => ({
@@ -65,12 +65,16 @@ const createMoment = {
         },
     },
     handler: (request, reply) => {
+        // If not authorized
+        if (!request.auth.credentials) {
+            return reply.response({ code: 4 }).code(401);
+        }
         // Get the form data from request
         // const momentTitle = request.payload.title;
         const momentDesc = request.payload.description;
 
         // Other parameters for db query
-        const userId = 1; // Placeholder id
+        const userId = request.auth.credentials.user.id;
         let imageURL;
 
         // Get the uploaded file from request
