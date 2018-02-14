@@ -111,7 +111,45 @@ const createMoment = {
     },
 };
 
+const getMomentById = {
+    method: 'GET',
+    path: '/api/moments/{moment-id}',
+    handler: (request, reply) => {
+        // Get limit query param, Hapi parses params as strings
+        let {moment-id} = request.params.moment-id;
+
+        } else if (!/^\d+$/.test(moment-id)) { // Test if string is only digits
+            return reply.response({ code: 2, moment: null }).code(400); // Code 2 means invalid input
+        }
+
+        // Create db query
+        const query = 'SELECT * FROM MOMENT WHERE ID=?';
+        return databaseUtil.sendQuery(query, [moment-id]).then((result) => {
+            const moment {
+                ID,
+                IMG_URL,
+                DESCRIPTON,
+                DATE_ADDED,
+                USER_ID,
+            } = result.row[0];
+
+            // The response data includes a status code and the array of moments
+            const data = {
+                code: 1,
+                moment,
+            };
+
+            // The request was successful
+            return reply.response(data).code(200);
+        }).catch((error) => {
+            console.log(error);
+            return reply.response({ code: 3, moment: null }).code(500); // Code 3 means unknown error
+        });
+    },
+};
+
 export default [
     getMomentsByDate,
     createMoment,
+    getMomentById,
 ];
