@@ -15,8 +15,8 @@ class MomentCreation extends Component {
         event.preventDefault();
         const data = new FormData(event.target);
         fetch('http://localhost:16085/api/moments/', {
-        method: 'PUT',
-        body: data,
+            method: 'PUT',
+            body: data,
         });
         this.setState({redirect: true});
     }
