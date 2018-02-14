@@ -10,15 +10,15 @@ import './App.css';
 
 class App extends Component {
   render() {
-    return ( 
+    return (
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={LandingPage}/>
                 <Route path="/register" component={RegistrationPage}/>
                 <Route path="/submit" component={MomentCreationPage}/>
                 <Route path="/momentview/:momentID" component={MomentViewPage}/>
-            </Switch> 
-        </BrowserRouter>    
+            </Switch>
+        </BrowserRouter>
     );
   }
 }
