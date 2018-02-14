@@ -40,27 +40,22 @@ class LandingPage extends Component {
     }
 
     return (
-
-      <div className="landing-page-container">
+        
         <body bgcolor="#303030">
           <div id="header">
             <div id="left">
-              <input type="image" id="personIcon" alt="Pic Loading..." src="personIcon.png" width="20"/>
+              <img id="personIcon" alt="Pic Loading..." src="personIcon.png" width="20"/>
             </div>
             <div id="right">
               <p align="right">
-                <input type="button" onclick="location.href='http://google.com';" align="right" width= "100"value="Sign Up | Sign In" style={{border:"1px",height:"40px", width:"100px"}} />
+                <button onclick="location.href='http://google.com';" align="right" width= "100"value="Sign Up | Sign In" style={{border:"1px",height:"40px", width:"100px"}} />
               </p>
             </div>
           </div>
           <center><img src="logo.png" alt="Logo" width="340"/></center>
           <MomentsList Moments={moments}/>
-          <ScrollApp>
-          <div id="app">
-          </div>
-          </ScrollApp>
+          <ScrollApp id="app"/>
         </body>
-      </div>
 
     );
   }
