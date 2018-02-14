@@ -1,0 +1,19 @@
+.caption-container {
+    display: inline-block;
+}
+
+.caption-container > ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    list-style-type: none;
+}
+
+.upvoter-container > ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0 1em;
+    padding: 0;
+}
