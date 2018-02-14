@@ -24,7 +24,7 @@ const getMomentsByDate = {
         SELECT MOMENT.ID AS MOMENT_ID, 
         IMG_URL, DESCRIPTION, DATE_ADDED, USER.USERNAME, 
         USER.ID AS USER_ID FROM MOMENT 
-        JOIN USER ON MOMENT.USER_ID = USER.ID LIMIT ?
+        JOIN USER ON MOMENT.USER_ID = USER.ID ORDER BY DATE_ADDED DESC LIMIT ?
         `;
         return databaseUtil.sendQuery(query, [limit]).then((result) => {
             const moments = result.rows.map(moment => ({
