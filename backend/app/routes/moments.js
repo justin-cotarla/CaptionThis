@@ -66,12 +66,16 @@ const createMoment = {
         },
     },
     handler: (request, reply) => {
+        // If not authorized
+        if (!request.auth.credentials) {
+            return reply.response({ code: 4 }).code(401);
+        }
         // Get the form data from request
         // const momentTitle = request.payload.title;
         const momentDesc = request.payload.description;
 
         // Other parameters for db query
-        const userId = 1; // Placeholder id
+        const userId = request.auth.credentials.user.id;
         let imageURL;
 
         // Get the uploaded file from request
