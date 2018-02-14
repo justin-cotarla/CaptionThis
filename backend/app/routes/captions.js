@@ -115,6 +115,14 @@ const upvoteCaption = {
     method: 'POST',
     path: '/api/captions/{id}/{option}',
     handler: (request, reply) => {
+        // Check if authorized
+        if (!request.auth.credentials) {
+            return reply.response({
+                code: 4,
+                caption_id: 0,
+                votes: 0,
+            }).code(401);
+        }
         // Get the caption id and parse it to an integer
         const captionId = parseInt(request.params.id, 10);
 
