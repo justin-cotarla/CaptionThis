@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './Header';
 import '../styles/Moment.css';
 
 const Moment = props => {
@@ -9,9 +10,9 @@ const Moment = props => {
                     <div className="Moment-thumbnail" style={{backgroundImage: `url(${props.Image})`}} onClick={props.onClick}></div>
                 </li>
                 <li className="Moment-preview-info">
-                    <h1 className='header-medium-2'>{ props.Description }</h1>
-                    <h1 className="header-medium-1">Posted on { props.Date }</h1>
-                    <h1 className="header-small">Submitted by { props.User }</h1>
+                    <Header textSize={4} text={ props.Description } />
+                    <Header textSize={3} text={'Posted on ' + props.date } />
+                    <Header textSize={1} text={ 'Submitted by ' + props.User } />
                 </li>
             </ul>
         </div>

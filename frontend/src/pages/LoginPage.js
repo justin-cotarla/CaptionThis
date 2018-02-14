@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import Header from '../components/Header';
 
 class LoginPage extends Component{
     constructor(props) {
@@ -56,7 +57,7 @@ class LoginPage extends Component{
         return (
             <div>
                 {this.state.redirect && <Redirect to={this.state.redirect} />}
-                <h1>Login</h1>
+                <Header textSize={4} text="Login" />
 
                 <form
                     onSubmit={this.onSubmit}
