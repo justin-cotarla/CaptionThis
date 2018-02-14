@@ -51,8 +51,16 @@ const getCaptionsByMoment = {
         // Parse limit to number to prep for db query
         limit = parseInt(limit, 10);
 
-        let check = 'SELECT * FROM MOMENT WHERE ID=?'; // To check if the moment exists
-        let query = 'SELECT * FROM CAPTION WHERE MOMENT_ID=? ORDER BY DATE_ADDED DESC LIMIT ?'; // The actual query
+        // To check if the moment exists
+        let check = 'SELECT * FROM MOMENT WHERE ID=?'; 
+
+        // The actual query
+        let query = `SELECT USER_ID, MOMENT_ID, CAPTION.ID AS CAPTION_ID, 
+            CONTENT, VOTE_COUNT, USER.USERNAME FROM CAPTION 
+            JOIN USER ON USER_ID = USER.ID 
+            WHERE MOMENT_ID=? ORDER BY DATE_ADDED DESC 
+            LIMIT 5`;
+    
         return databaseUtil.sendQuery(check, [momentid])
             .then(result => {
                 // If the length is 0, it does not exist
@@ -63,8 +71,12 @@ const getCaptionsByMoment = {
                 return databaseUtil.sendQuery(query, [momentid, limit])    
             })
             .then((result) => {
+                console.log(result.rows)
                 const captions = result.rows.map(caption => ({
-                    user_id: caption.USER_ID,
+                    user: {
+                        user_id: caption.USER_ID,
+                        username: caption.USERNAME,
+                    },   
                     moment_id: caption.MOMENT_ID,
                     caption_id: caption.ID,
                     caption: caption.CONTENT,
