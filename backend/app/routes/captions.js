@@ -30,12 +30,8 @@ const getCaptionsByMoment = {
     method: 'GET',
     path: '/api/captions',
     handler: (request, reply) => {
-        // If not authorized
-        if (!request.auth.credentials) {
-            return reply.response({ code: 4 }).code(401);
-        }
-        console.log(request.query)
-        let { momentid, limit } = request.query;
+        let momentid = request.query['moment-id'];
+        let { limit } = request.query;
 
         // Check if moment id is valid
         if (momentid === undefined || momentid === '' || momentid == 0 || !/^\d+$/.test(momentid)) {
