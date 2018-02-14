@@ -121,6 +121,11 @@ const getMomentById = {
         // Create db query
         const query = 'SELECT * FROM MOMENT WHERE ID =?';
         return databaseUtil.sendQuery(query, [id]).then((result) => {
+
+            if (!result.rows[0]) {
+                reply.response({code: 3, moment: null}).code(404);
+            }
+
             const moment = {
                 moment_id: result.rows[0].ID,
                 img_url: result.rows[0].IMG_URL,
