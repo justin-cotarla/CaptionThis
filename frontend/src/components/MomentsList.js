@@ -20,7 +20,7 @@ class MomentsList extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to={"/momentview/" + this.state.currMoment.moment_id} />;
+            return <Redirect push to={"/momentview/" + this.state.currMoment.moment_id} />;
         }
 
         return (
