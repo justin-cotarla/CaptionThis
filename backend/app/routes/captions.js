@@ -148,11 +148,11 @@ const voteCaption = {
                     .then(() => reply.response({ code: 1 }).code(200))
                     .catch((error) => {
                         console.log(error);
-                        return reply.response({ code: 5 }).code(500); // Code 5 means unknown error
+                        return reply.response({ code: 3 }).code(500); // Code 3 means unknown error
                     });
             }
             console.log('Caption does not exist.');
-            return reply.response({ code: 3 }).code(404);
+            return reply.response({ code: 2 }).code(404);
         });
     },
 };
