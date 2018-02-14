@@ -20,11 +20,19 @@ const getMomentsByDate = {
         limit = parseInt(limit, 10);
 
         // Create db query
-        const query = 'SELECT * FROM MOMENT ORDER BY DATE_ADDED DESC LIMIT ?';
+        const query = `
+        SELECT MOMENT.ID AS MOMENT_ID, 
+        IMG_URL, DESCRIPTION, DATE_ADDED, USER.USERNAME, 
+        USER.ID AS USER_ID FROM MOMENT 
+        JOIN USER ON MOMENT.USER_ID = USER.ID
+        `;
         return databaseUtil.sendQuery(query, [limit]).then((result) => {
             const moments = result.rows.map(moment => ({
-                moment_id: moment.ID,
-                user_id: moment.USER_ID,
+                moment_id: moment.MOMENT_ID,
+                user: {
+                    user_id: moment.USER_ID,
+                    username: moment.USERNAME,
+                },
                 img: moment.IMG_URL,
                 description: moment.DESCRIPTION,
                 date_added: moment.DATE_ADDED,
