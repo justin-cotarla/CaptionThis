@@ -48,6 +48,12 @@ class LandingPage extends Component {
         });
     };
     
+    logout = () => {
+        const cookies = new Cookies();
+        cookies.remove('token');
+        window.location.reload();
+    }
+
     onLoginClick = () => {
         this.setState({
             redirect: '/login',
@@ -56,7 +62,7 @@ class LandingPage extends Component {
     }
 
     onProfileClick = () => {
-        
+        this.logout();
     }
     
     render() {
@@ -75,7 +81,9 @@ class LandingPage extends Component {
                 {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
                 <div className="header">
                 {this.state.user && 
-                    <div className="profile-button">
+                    <div
+                        className="profile-button"
+                        onClick={this.onProfileClick}>
                         <img
                             alt="Profile"
                             src="personIcon.png"
