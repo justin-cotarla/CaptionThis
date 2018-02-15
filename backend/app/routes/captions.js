@@ -120,8 +120,9 @@ const voteCaption = {
             return reply.response({ code: 4 }).code(401);
         }
 
-        // Get the caption id
+        // Get the caption id and user id
         let captionId = request.params.id;
+        let userId = request.auth.credentials.user.id;
 
         // Check if the caption id is valid
         if (captionId === undefined || captionId === '' || captionId === '0' || !/^\d+$/.test(captionId)) {
@@ -130,30 +131,38 @@ const voteCaption = {
 
         // Parse the caption id to an integer
         captionId = parseInt(captionId, 10);
+        userId = parseInt(userId, 10);
 
-        // Create update query depending on the option parameter
-        let updateQuery = '';
-        if (request.params.option === 'upvote') {
-            updateQuery = 'UPDATE CAPTION SET VOTE_COUNT=VOTE_COUNT+1 WHERE ID=?';
-        } else if (request.params.option === 'downvote') {
-            updateQuery = 'UPDATE CAPTION SET VOTE_COUNT=VOTE_COUNT-1 WHERE ID=?';
-        }
-
-        // Check if the caption exists in db
-        const checkQuery = 'SELECT * FROM CAPTION WHERE ID=?';
-        return databaseUtil.sendQuery(checkQuery, [captionId]).then((result) => {
-            // If the result contains the caption, update the vote count
+        const checkQuery = 'SELECT * FROM CAPTION_VOTE WHERE CAPTION_ID=? AND USER_ID=?';
+        return databaseUtil.sendQuery(checkQuery, [captionId, userId]).then((result) => {
+            // Actual query to update db
+            let updateQuery;
+            // If the user has already voted on this particular caption
             if (result.rows[0]) {
-                return databaseUtil.sendQuery(updateQuery, [captionId])
-                    .then(() => reply.response({ code: 1 }).code(200))
-                    .catch((error) => {
-                        console.log(error);
-                        return reply.response({ code: 3 }).code(500); // Code 3 means unknown error
-                    });
+                if ((request.params.option === 'upvote' && result.rows[0].VALUE === -1)
+            || (request.params.option === 'downvote' && result.rows[0].VALUE === 1)) {
+                    updateQuery = 'UPDATE CAPTION_VOTE SET VALUE=0';
+                } else if (request.params.option === 'upvote') {
+                    updateQuery = 'UPDATE CAPTION_VOTE SET VALUE=1';
+                } else {
+                    updateQuery = 'UPDATE CAPTION_VOTE SET VALUE=-1';
+                }
+                return databaseUtil.sendQuery(updateQuery);
             }
-            console.log('Caption does not exist.');
-            return reply.response({ code: 2 }).code(404);
-        });
+            let voteValue;
+            updateQuery = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?)';
+            // If the user has not voted on this caption yet
+            if (request.params.option === 'upvote') {
+                voteValue = 1;
+            } else {
+                voteValue = -1;
+            }
+            return databaseUtil.sendQuery(updateQuery, [captionId, userId, voteValue]);
+        }).then(() => reply.response({ code: 1 }).code(200))
+            .catch((error) => {
+                console.log(error);
+                return reply.response({ code: 3 }).code(300);
+            });
     },
 };
 
