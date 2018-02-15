@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 import '../styles/CreateMoment.css';
+import Header from '../components/Header';
 
 class MomentCreation extends Component {
     constructor() {
@@ -44,14 +45,14 @@ class MomentCreation extends Component {
                 {this.state.redirect && <Redirect to={this.state.redirect} />}
                 <form onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
                     <div className = "content-container">
-                        <label className="label">Title</label>
+                        <Header textSize={2} text="Title" />
                         <input name="title" type="text" className="title" required/>
                     </div>
                     <div className = "content-container">
                         <input type="file" name="file" required></input>
                     </div>
                     <div className = "content-container">
-                        <label className="label">Description</label>
+                        <Header textSize={2} text="Description" />
                         <textarea name="description" rows="8" cols="90"></textarea>
                     </div>
                     <div className = "content-container">
