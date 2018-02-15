@@ -154,7 +154,17 @@ const voteCaption = {
                 const query = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE VALUE=?';
                 return databaseUtil.sendQuery(query, [captionId, userId, vote, vote]);
             })
-            .then(() => reply.response({ code: 1 }).code(200))
+            .then(() => {
+                const getVotes = 'SELECT SUM(VALUE) AS VOTECOUNT FROM CAPTION_VOTE WHERE CAPTION_ID=?';
+                return databaseUtil.sendQuery(getVotes, [captionId]);
+            })
+            .then((result) => {
+                const voteCount = result.rows[0].VOTECOUNT;
+                return reply.response({
+                    code: 1,
+                    votes: voteCount,
+                }).code(200);
+            })
             .catch((error) => {
                 console.log(error);
                 if (error.message === 'Caption ID does not exist.') {
