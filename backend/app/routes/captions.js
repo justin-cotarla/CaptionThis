@@ -153,7 +153,8 @@ const voteCaption = {
                 // If it exists, proceed with actual query to store caption vote
                 const query = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE VALUE=?';
                 return databaseUtil.sendQuery(query, [captionId, userId, vote, vote]);
-            }).then(() => reply.response({ code: 1 }).code(200))
+            })
+            .then(() => reply.response({ code: 1 }).code(200))
             .catch((error) => {
                 console.log(error);
                 if (error.message === 'Caption ID does not exist.') {
