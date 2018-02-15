@@ -4,7 +4,7 @@ import axios from 'axios';
 import MomentsList from '../components/MomentsList';
 import ScrollApp from '../components/ScrollerComponents'
 import Cookies from 'universal-cookie';
-import base64url from 'base64-url';
+import base64url from 'base64url';
 
 import Header from '../components/Header';
 import '../styles/LandingPage.css';
