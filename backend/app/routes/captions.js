@@ -61,7 +61,6 @@ const getCaptionsByMoment = {
                 MOMENT_ID, 
                 CAPTION.ID AS CAPTION_ID, 
                 CONTENT, 
-                VOTE_COUNT, 
                 SELECTED,
                 DATE_ADDED,
                 USER.USERNAME FROM CAPTION 
@@ -93,7 +92,6 @@ const getCaptionsByMoment = {
                     moment_id: caption.MOMENT_ID,
                     caption_id: caption.CAPTION_ID,
                     caption: caption.CONTENT,
-                    upvotes: caption.VOTE_COUNT,
                     selected: caption.SELECTED,
                     date_added: caption.DATE_ADDED,
                 }));
