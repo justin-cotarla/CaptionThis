@@ -38,7 +38,7 @@ class MomentViewPage extends Component{
         </div>);
       } else if (moment) {
         return (
-          <Moment Image={ moment.img_url } Date={ formatDate(moment.date_added) } Description={ moment.description } User={ moment.user_id }/>
+          <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
         );
       } else {
         return <h1>MOMENTVIEW</h1>
