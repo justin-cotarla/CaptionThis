@@ -143,16 +143,17 @@ const voteCaption = {
         vote = parseInt(vote, 10);
 
         const checkCaption = 'SELECT * FROM CAPTION WHERE ID=?';
-        return databaseUtil.sendQuery(checkCaption, [captionId]).then((result) => {
-            // If the caption id is not in the db, throw error
-            if (result.rows[0] === undefined) {
-                throw new Error('Caption ID does not exist.');
-            }
+        return databaseUtil.sendQuery(checkCaption, [captionId])
+            .then((result) => {
+                // If the caption id is not in the db, throw error
+                if (result.rows[0] === undefined) {
+                    throw new Error('Caption ID does not exist.');
+                }
 
-            // If it exists, proceed with actual query to store caption vote
-            const query = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE VALUE=?';
-            return databaseUtil.sendQuery(query, [captionId, userId, vote, vote]);
-        }).then(() => reply.response({ code: 1 }).code(200))
+                // If it exists, proceed with actual query to store caption vote
+                const query = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE VALUE=?';
+                return databaseUtil.sendQuery(query, [captionId, userId, vote, vote]);
+            }).then(() => reply.response({ code: 1 }).code(200))
             .catch((error) => {
                 console.log(error);
                 if (error.message === 'Caption ID does not exist.') {
