@@ -1,73 +1,51 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html, body{
   height: 100%;
+  background: #303030;
 }
 
 a {
   color: white;
 }
 
-.arrow-up {
-  color: white;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -9px;
-  margin-left: -5px;
-}
-
-.personIcon{
-  display:inline-block;
-  background:url('https://78.media.tumblr.com/0a0b8a0d63b1274826767943db7cb56d/tumblr_p3wyqmbEWs1qkc2ydo1_100.png')no-repeat;
-  width: 50px;
+div.header {
+  padding: 15px;
+  display: block;
   height: 20px;
-  }
-  .personIcon.okay{
-  background:url('https://68.media.tumblr.com/cb05a8064d4bc379103dc75dc3510471/tumblr_p3wdd6ARrN1qkc2ydo1_1280.png')no-repeat;
 }
 
-.personIcon {
-  background:url('https://68.media.tumblr.com/cb05a8064d4bc379103dc75dc3510471/tumblr_p3wdd6ARrN1qkc2ydo1_1280.png')no-repeat;
-  color: white;
-  padding: 20px 20px;
-  border-radius: 4px;
-  border-color: #000000;
-}
-
-#myIcon {
-  position: left;
-  bottom: 4px;
-  right: 10px;
-}
-.btn {
-  position: right;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0px;
-  text-shadow: 2px 0px 3px #000000;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 21px;
-  background: #ffffff;
-  padding: 7px 20px 10px 20px;
-  text-decoration: none;
-  img src: url("https://68.media.tumblr.com/1f9b2648cc5cae283be3b7aeb1a2bb04/tumblr_p3w2xtCV2u1qkc2ydo1_1280.png");
-}
-#btn{
-  position: right;
-  top: 6px;
-  right: 10px;
-}
-
-.btn:hover {
-  background: #000000;
-  text-decoration: none;
-}
-
-#left {
-  display: inline-block;
-}
-
-#right {
+div.login-button {
   float: right;
+  padding: 5px;
+  color: #1DE28F;
+  font-weight: bold;
+  cursor: pointer;
+  border: #1DE28F 2px solid;
+  border-radius: 10px;
+}
+
+div.profile-button {
   display: inline-block;
+  padding: 4px 8px;
+  color: #1DE28F;
+  cursor: pointer;
+  border: #1DE28F 2px solid;
+  border-radius: 10px;
+}
+
+div.profile-button img {
+  width: 20px;
+}
+
+div.logo {
+  text-align: center;
+}
+
+div.logo img {
+  border: #1DE28F 2px solid;
+  border-radius: 10px;
 }

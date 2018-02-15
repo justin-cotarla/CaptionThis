@@ -1,34 +1,48 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+
 import '../styles/CreateMoment.css';
 import Header from '../components/Header';
 
 class MomentCreation extends Component {
-
     constructor() {
         super();
-        this.handleSubmit = this.handleSubmit.bind(this);
+        
         this.state = {
-            redirect: false,
+            redirect: null,
         }
     }
-    handleSubmit(event) {
+
+    componentDidMount() {
+        const cookies = new Cookies();
+        const token = cookies.get('token');
+        if(token) {
+            this.setState({
+                token: cookies.get('token'),
+            });
+        } else {
+            this.setState({
+                redirect: '/',
+            })
+        }
+    }
+
+    handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.target);
-        fetch(`http://${process.env.REACT_APP_IP}:16085/api/moments/`, {
+        fetch(`http://${process.env.REACT_APP_IP}:16085/api/moments`, {
             method: 'PUT',
             body: data,
             // Hardcoded to user 'test'
-            headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTE4NTc3NTk3LCJleHAiOjE1MTkxODIzOTd9.d5I5aLFSw2_YYTimTB7hny-i664E7tgBYgHa9hnQ110'}
+            headers: {'Authorization': `Bearer ${this.state.token}`}
         });
-        this.setState({redirect: true});
+        this.setState({redirect: '/'});
     }
     render(){
-        if (this.state.redirect) {
-            return <Redirect to={"/"} />; 
-        }
         return(
             <div className = "CreateMoment">
+                {this.state.redirect && <Redirect to={this.state.redirect} />}
                 <form onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
                     <div className = "content-container">
                         <Header textSize={2} text="Title" />

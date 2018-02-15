@@ -1,64 +1,110 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import axios from 'axios';
 import MomentsList from '../components/MomentsList';
 import ScrollApp from '../components/ScrollerComponents'
+import Cookies from 'universal-cookie';
+import base64url from 'base64url';
+
 import Header from '../components/Header';
 import '../styles/LandingPage.css';
 
 class LandingPage extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      moments: null,
-      error: null,
+    constructor(props){
+        super(props);
+        this.state = {
+            moments: null,
+            error: null,
+            redirect: null,
+            allowBack: false,
+            user: null,
+        };
     };
-  };
-
-  componentWillMount(){
-    axios.get(`http://${process.env.REACT_APP_IP}:16085/api/moments`).then(response => {
-      let moments = response.data.moments;
-      this.setState({
-        moments,
-      });
-    }).catch(error => {
-      console.log(error);
-      this.setState({
-        error: 'Oops! Something went wrong...'
-      });
-    });
-  };
-
-  render() {
-    const moments = this.state.moments;
-    const error = this.state.error;
-
-    // Return an error message if moments could not be loaded
-    if (error) {
-      return <div className="landing-page-container">
-        <Header textSize={4} text={error} />
-      </div>
+    
+    loadUser = () => {
+        const cookies = new Cookies();
+        const token =  cookies.get('token');
+        if (token) {
+            this.setState({
+                user: base64url.decode(token.split('.')[1]),
+            })
+        }
     }
 
-    return (
-        
-        <body bgcolor="#303030">
-          <div id="header">
-            <div id="left">
-              <img id="personIcon" alt="Pic Loading..." src="personIcon.png" width="20"/>
-            </div>
-            <div id="right">
-              <p align="right">
-                <button onclick="location.href='http://google.com';" align="right" width= "100"value="Sign Up | Sign In" style={{border:"1px",height:"40px", width:"100px"}} />
-              </p>
-            </div>
-          </div>
-          <center><img src="logo.png" alt="Logo" width="340"/></center>
-          <MomentsList Moments={moments}/>
-          <ScrollApp id="app"/>
-        </body>
+    componentDidMount(){
+        this.loadUser();
+        axios.get(`http://${process.env.REACT_APP_IP}:16085/api/moments`)
+        .then(response => {
+            let moments = response.data.moments;
+            this.setState({
+                moments,
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            this.setState({
+                error: 'Oops! Something went wrong...'
+            });
+        });
+    };
+    
+    onLoginClick = () => {
+        this.setState({
+            redirect: '/login',
+            allowBack: true,
+        })
+    }
 
-    );
-  }
+    onProfileClick = () => {
+        
+    }
+    
+    render() {
+        const moments = this.state.moments;
+        const error = this.state.error;
+        
+        // Return an error message if moments could not be loaded
+        if (error) {
+            return <div className="landing-page-container">
+            <Header textSize={4} text={error} />
+            </div>
+        }
+
+        return (
+            <div>
+                {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
+                <div className="header">
+                {this.state.user && 
+                    <div className="profile-button">
+                        <img
+                            alt="Profile"
+                            src="personIcon.png"
+                        />
+                    </div>
+                }
+                {this.state.user === null && 
+                    <div
+                        className="login-button"
+                        onClick={this.onLoginClick}
+                    >
+                    Login
+                    </div>
+                }
+                </div>
+                <div className="logo">
+                    <img
+                        src="logo.png"
+                        alt="Logo"
+                        width="340"
+                    />
+                </div>
+                <div>
+                    <MomentsList Moments={moments}/>
+                    <ScrollApp id="app"/>
+                </div>
+            </div>
+        );
+    }
 }
 
 
