@@ -133,11 +133,20 @@ const voteCaption = {
         captionId = parseInt(captionId, 10);
         userId = parseInt(userId, 10);
 
-        const checkQuery = 'SELECT * FROM CAPTION_VOTE WHERE CAPTION_ID=? AND USER_ID=?';
-        return databaseUtil.sendQuery(checkQuery, [captionId, userId]).then((result) => {
+        // Query to check that a caption exists in the db
+        const checkCaption = 'SELECT * FROM CAPTION WHERE ID=?';
+        return databaseUtil.sendQuery(checkCaption, [captionId]).then((result) => {
+            // If the caption id is not in the db, throw error
+            if (result.rows[0] === undefined) {
+                throw new Error('Caption ID does not exist.');
+            }
+            // If it exists, check if the user has already voted on this particular caption
+            const checkQuery = 'SELECT * FROM CAPTION_VOTE WHERE CAPTION_ID=? AND USER_ID=?';
+            return databaseUtil.sendQuery(checkQuery, [captionId, userId]);
+        }).then((result) => {
             // Actual query to update db
             let updateQuery;
-            // If the user has already voted on this particular caption
+            // If the user has already voted
             if (result.rows[0]) {
                 if ((request.params.option === 'upvote' && result.rows[0].VALUE === -1)
             || (request.params.option === 'downvote' && result.rows[0].VALUE === 1)) {
@@ -149,9 +158,9 @@ const voteCaption = {
                 }
                 return databaseUtil.sendQuery(updateQuery);
             }
+            // If the user has not voted on this caption yet
             let voteValue;
             updateQuery = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?)';
-            // If the user has not voted on this caption yet
             if (request.params.option === 'upvote') {
                 voteValue = 1;
             } else {
@@ -161,6 +170,9 @@ const voteCaption = {
         }).then(() => reply.response({ code: 1 }).code(200))
             .catch((error) => {
                 console.log(error);
+                if (error.message === 'Caption ID does not exist.') {
+                    return reply.response({ code: 2 }).code(400);
+                }
                 return reply.response({ code: 3 }).code(300);
             });
     },
