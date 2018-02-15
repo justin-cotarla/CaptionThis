@@ -113,60 +113,45 @@ const getCaptionsByMoment = {
 
 const voteCaption = {
     method: 'POST',
-    path: '/api/captions/{id}/{option}',
+    path: '/api/captions/{id}',
     handler: (request, reply) => {
         // Check if authorized
         if (!request.auth.credentials) {
             return reply.response({ code: 4 }).code(401);
         }
 
-        // Get the caption id and user id
+        // Get the caption id, user id, and vote
         let captionId = request.params.id;
         let userId = request.auth.credentials.user.id;
+        let vote = request.payload.value;
 
         // Check if the caption id is valid
-        if (captionId === undefined || captionId === '' || captionId === '0' || !/^\d+$/.test(captionId)) {
+        if (captionId === undefined || captionId === '' || !/^\d+$/.test(captionId)) {
+            console.log('Invalid caption ID');
+            return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
+        }
+
+        // Check if the vote is valid
+        if (vote === undefined || vote === '' || !/^-*[01]$/.test(vote)) {
+            console.log('Invalid vote.');
             return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
         }
 
         // Parse the caption id to an integer
         captionId = parseInt(captionId, 10);
         userId = parseInt(userId, 10);
+        vote = parseInt(vote, 10);
 
-        // Query to check that a caption exists in the db
         const checkCaption = 'SELECT * FROM CAPTION WHERE ID=?';
         return databaseUtil.sendQuery(checkCaption, [captionId]).then((result) => {
             // If the caption id is not in the db, throw error
             if (result.rows[0] === undefined) {
                 throw new Error('Caption ID does not exist.');
             }
-            // If it exists, check if the user has already voted on this particular caption
-            const checkQuery = 'SELECT * FROM CAPTION_VOTE WHERE CAPTION_ID=? AND USER_ID=?';
-            return databaseUtil.sendQuery(checkQuery, [captionId, userId]);
-        }).then((result) => {
-            // Actual query to update db
-            let updateQuery;
-            // If the user has already voted
-            if (result.rows[0]) {
-                if ((request.params.option === 'upvote' && result.rows[0].VALUE === -1)
-            || (request.params.option === 'downvote' && result.rows[0].VALUE === 1)) {
-                    updateQuery = 'UPDATE CAPTION_VOTE SET VALUE=0';
-                } else if (request.params.option === 'upvote') {
-                    updateQuery = 'UPDATE CAPTION_VOTE SET VALUE=1';
-                } else {
-                    updateQuery = 'UPDATE CAPTION_VOTE SET VALUE=-1';
-                }
-                return databaseUtil.sendQuery(updateQuery);
-            }
-            // If the user has not voted on this caption yet
-            let voteValue;
-            updateQuery = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?)';
-            if (request.params.option === 'upvote') {
-                voteValue = 1;
-            } else {
-                voteValue = -1;
-            }
-            return databaseUtil.sendQuery(updateQuery, [captionId, userId, voteValue]);
+
+            // If it exists, proceed with actual query to store caption vote
+            const query = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE VALUE=?';
+            return databaseUtil.sendQuery(query, [captionId, userId, vote, vote]);
         }).then(() => reply.response({ code: 1 }).code(200))
             .catch((error) => {
                 console.log(error);
