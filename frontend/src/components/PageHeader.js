@@ -25,6 +25,11 @@ class PageHeader extends Component{
                     user,
                 });
             })
+            .catch((err) => {
+                this.setState({
+                    user: null,
+                });
+            })
     };
 
     onLoginClick = () => {

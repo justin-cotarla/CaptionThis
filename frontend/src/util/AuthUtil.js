@@ -7,9 +7,10 @@ const authenticate = () => new Promise((resolve, reject) => {
     const token =  cookies.get('token');
 
     if(!token) {
-        reject('no token');
+        return reject('no token');
     }
-    resolve(axios({
+
+    return resolve(axios({
         url: `http://${process.env.REACT_APP_IP}:16085/api/auth/tokens`,
         method: 'post',
         data: {
@@ -23,7 +24,7 @@ const authenticate = () => new Promise((resolve, reject) => {
         }
         // TODO: do stuff based on error code
         return Promise.reject(data.code);
-    });
+    })
 
 const logout = () => {
     const cookies = new Cookies();
