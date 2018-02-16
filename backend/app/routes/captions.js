@@ -55,22 +55,38 @@ const getCaptionsByMoment = {
 
         // The actual query
         const query = `
-            SELECT
-                USER_ID,
-                MOMENT_ID,
-                CAPTION.ID AS CAPTION_ID,
-                CONTENT,
-                SELECTED,
-                DATE_ADDED,
-                USER.USERNAME FROM CAPTION
-            JOIN
-                USER
-            ON
-                USER_ID = USER.ID
-            WHERE
-                MOMENT_ID=?
-            ORDER BY DATE_ADDED DESC
-            LIMIT ?
+        SELECT
+            CAPTION.USER_ID AS USER_ID,
+            MOMENT_ID,
+            CAPTION.ID AS CAPTION_ID,
+            CONTENT,
+            SELECTED,
+            DATE_ADDED,
+            SUM(VALUE) AS VOTES,
+            USERNAME 
+        FROM
+            CAPTION
+        JOIN 
+            USER 
+        ON 
+            USER_ID = USER.ID
+        JOIN 
+            CAPTION_VOTE 
+        ON 
+            CAPTION_ID = CAPTION.ID
+        WHERE
+            MOMENT_ID=?
+        GROUP BY
+            USER_ID, 
+            MOMENT_ID, 
+            CAPTION_ID, 
+            CONTENT, 
+            SELECTED, 
+            DATE_ADDED, 
+            USERNAME
+        ORDER BY 
+            DATE_ADDED DESC
+        LIMIT ?
         `;
 
         return databaseUtil.sendQuery(check, [momentid])
@@ -91,6 +107,7 @@ const getCaptionsByMoment = {
                     moment_id: caption.MOMENT_ID,
                     caption_id: caption.CAPTION_ID,
                     caption: caption.CONTENT,
+                    votes: caption.VOTES,
                     selected: caption.SELECTED,
                     date_added: caption.DATE_ADDED,
                 }));

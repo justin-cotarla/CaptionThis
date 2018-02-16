@@ -5,6 +5,7 @@ import ScrollApp from '../components/ScrollerComponents'
 
 import Header from '../components/Header';
 import PageHeader from '../components/PageHeader';
+import Loading from '../components/Loading';
 
 class LandingPage extends Component {
     constructor(props){
@@ -41,16 +42,19 @@ class LandingPage extends Component {
             <Header textSize={4} text={error} />
             </div>
         }
-
         return (
             <div>
                 <PageHeader />
                 <div>
-                    <MomentsList Moments={moments}/>
+                    {moments ? (
+                        <MomentsList Moments={moments}/>
+                    ) : (
+                        <Loading />
+                    )}
                     <ScrollApp id="app"/>
                 </div>
             </div>
-        );
+        )
     }
 }
 

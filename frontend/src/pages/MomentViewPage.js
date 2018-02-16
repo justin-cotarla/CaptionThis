@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Moment from '../components/Moment';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 
 class MomentViewPage extends Component{
     constructor(props){
@@ -41,7 +42,7 @@ class MomentViewPage extends Component{
           <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
         );
       } else {
-        return <h1>MOMENTVIEW</h1>
+        return <Loading />
       }
     }
   }
