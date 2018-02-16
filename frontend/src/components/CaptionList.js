@@ -6,6 +6,7 @@ import Caption from './Caption';
 import Header from './Header';
 
 import '../styles/CaptionList.css';
+import Loading from './Loading';
 
 class CaptionList extends React.Component {
     constructor(props){
@@ -236,7 +237,7 @@ class CaptionList extends React.Component {
             return (
                 <div className="caption-list-container">
                     <CaptionCreator handleSubmit={this.handleSubmit} authorized={token ? 'Submit' : 'Login to submit a caption'}/>
-                    <Header textSize={3} text="Loading"/>
+                    <Loading/>
                 </div>
             )
         }
