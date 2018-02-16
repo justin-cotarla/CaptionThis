@@ -256,7 +256,7 @@ class CaptionList extends React.Component {
                 <CaptionCreator handleSubmit={this.handleSubmit} authorized={token ? 'Submit' : 'Login to submit a caption'}/>
                 <ul>
                     {
-                        this.state.captions.length > 0 ? <li><Header textSize={3} text={`${this.state.captions.length} Caption(s)`}/></li> 
+                        this.state.captions.length > 0 ? <li><Header textSize={3} text={`${this.state.captions.length} Caption${this.state.captions.length > 1 ? 's' : ''}`}/></li> 
                         : <li><Header textSize={3} text="Looks like there's nothing here (yet) :("/></li>
                     }
                     { 
