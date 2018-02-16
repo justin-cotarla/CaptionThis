@@ -1,0 +1,34 @@
+@-webkit-keyframes rotate {
+    from {
+      -webkit-transform: rotate(360deg);
+    }
+    to { 
+      -webkit-transform: rotate(0deg);
+    }
+}
+
+@keyframes rotate {
+    from {
+      -webkit-transform: rotate(360deg);
+    }
+    to { 
+      -webkit-transform: rotate(0deg);
+    }
+}
+
+img.loadicon
+{
+    -webkit-animation-name:             rotate; 
+    -webkit-animation-duration:         1s; 
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-animation-timing-function:  linear;
+    animation-name: rotate;
+    animation-duration:         1s; 
+    animation-iteration-count:  infinite;
+    animation-timing-function:  linear;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+    width: 200px;
+}
