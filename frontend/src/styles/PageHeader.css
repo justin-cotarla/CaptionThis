@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body{
+    height: 100%;
+    background: #303030;
+  }
+  
+  .main-container{
+      height: 250px;
+  }
+  
+  a {
+    color: white;
+  }
+  
+  div.header {
+    padding: 15px;
+    display: block;
+    height: 20px;
+  }
+  
+  div.login-button {
+    float: right;
+    padding: 5px;
+    color: #1DE28F;
+    font-weight: bold;
+    cursor: pointer;
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+  }
+  
+  div.profile-button {
+    display: inline-block;
+    padding: 4px 8px;
+    color: #1DE28F;
+    cursor: pointer;
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+  }
+  
+  div.profile-button img {
+    width: 20px;
+  }
+  
+  div.logo {
+    text-align: center;
+  }
+  
+  div.logo img {
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+  }
+  

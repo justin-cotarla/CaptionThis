@@ -20,9 +20,9 @@ const getMomentsByDate = {
 
         // Create db query
         const query = `
-        SELECT MOMENT.ID AS MOMENT_ID, 
-        IMG_URL, DESCRIPTION, DATE_ADDED, USER.USERNAME, 
-        USER.ID AS USER_ID FROM MOMENT 
+        SELECT MOMENT.ID AS MOMENT_ID,
+        IMG_URL, DESCRIPTION, DATE_ADDED, USER.USERNAME,
+        USER.ID AS USER_ID FROM MOMENT
         JOIN USER ON MOMENT.USER_ID = USER.ID ORDER BY DATE_ADDED DESC LIMIT ?
         `;
         return databaseUtil.sendQuery(query, [limit]).then((result) => {
@@ -125,7 +125,6 @@ const getMomentById = {
         // Create db query
         const query = 'SELECT * FROM MOMENT WHERE ID =?';
         return databaseUtil.sendQuery(query, [id]).then((result) => {
-
             if (!result.rows[0]) {
                 reply.response({ code: 3 }).code(404);
             }
