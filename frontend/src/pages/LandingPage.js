@@ -43,7 +43,7 @@ class LandingPage extends Component {
             </div>
         }
 
-        if (false) {
+        if (moments) {
             return (
                 <div>
                     <PageHeader />
