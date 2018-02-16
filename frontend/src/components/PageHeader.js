@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import '../styles/PageHeader.css';
 import { Redirect } from 'react-router';
-import Cookies from 'universal-cookie';
+
+import '../styles/PageHeader.css';
 import logo from '../resources/logo.png';
-import base64url from 'base64url';
+import * as AuthUtil from '../util/AuthUtil';
+
 
 class PageHeader extends Component{
     constructor(props){
@@ -17,25 +18,19 @@ class PageHeader extends Component{
         };
     };
 
-    loadUser = () => {
-        const cookies = new Cookies();
-        const token =  cookies.get('token');
-        if (token) {
-            this.setState({
-                user: base64url.decode(token.split('.')[1]),
-            })
-        }
-    }
-
     componentDidMount(){
-        this.loadUser();
+        AuthUtil.authenticate()
+            .then((user) => {
+                this.setState({
+                    user,
+                });
+            })
+            .catch((err) => {
+                this.setState({
+                    user: null,
+                });
+            })
     };
-
-    logout = () => {
-        const cookies = new Cookies();
-        cookies.remove('token');
-        window.location.reload();
-    }
 
     onLoginClick = () => {
         this.setState({
@@ -45,7 +40,7 @@ class PageHeader extends Component{
     }
 
     onProfileClick = () => {
-        this.logout();
+        AuthUtil.logout();
     }
     
     onLoginClick = () => {
