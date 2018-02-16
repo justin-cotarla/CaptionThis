@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Moment from '../components/Moment';
 import Header from '../components/Header';
-import PageHeader from '../components/PageHeader';
 
 class MomentViewPage extends Component{
     constructor(props){
@@ -39,10 +38,7 @@ class MomentViewPage extends Component{
         </div>);
       } else if (moment) {
         return (
-          <div>
-            <PageHeader/>
-            <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
-          </div>
+          <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
         );
       } else {
         return <h1>MOMENTVIEW</h1>
