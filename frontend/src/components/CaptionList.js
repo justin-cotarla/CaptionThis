@@ -40,7 +40,7 @@ class CaptionList extends React.Component {
         switch(action) {
             case '+': 
                 if(caption.user_vote === 0 || caption.user_vote === -1){
-                    axios.post(`http://${process.env.REACT_APP_IP}:16085/api/captions/${captionid}`, { operation: 'vote', value: 1 }, {
+                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: 1 }, {
                         headers: {'Authorization': `Bearer ${this.state.token}`}
                     })
                     .then(response => {
@@ -55,7 +55,7 @@ class CaptionList extends React.Component {
                         })
                     })
                 } else if(caption.user_vote === 1) {
-                    axios.post(`http://${process.env.REACT_APP_IP}:16085/api/captions/${captionid}`, { operation: 'vote', value: 0 }, {
+                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: 0 }, {
                         headers: {'Authorization': `Bearer ${this.state.token}`}
                     })
                     .then(response => {
@@ -73,7 +73,7 @@ class CaptionList extends React.Component {
             break;
             case '-': 
                 if(caption.user_vote === 0 || caption.user_vote === 1){
-                    axios.post(`http://${process.env.REACT_APP_IP}:16085/api/captions/${captionid}`, { operation: 'vote', value: -1 }, {
+                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: -1 }, {
                         headers: {'Authorization': `Bearer ${this.state.token}`}
                     })
                     .then(response => {
@@ -88,7 +88,7 @@ class CaptionList extends React.Component {
                         })
                     })
                 } else if(caption.user_vote === -1){
-                    axios.post(`http://${process.env.REACT_APP_IP}:16085/api/captions/${captionid}`, { operation: 'vote', value: 0 }, {
+                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: 0 }, {
                         headers: {'Authorization': `Bearer ${this.state.token}`}
                     })
                     .then(response => {
@@ -118,7 +118,7 @@ class CaptionList extends React.Component {
         switch(action) {
             case 'accept': 
                 if(caption.selected === -1 || caption.selected === 0){
-                    axios.post(`http://${process.env.REACT_APP_IP}:16085/api/captions/${captionid}`, { operation: 'select', value: 1 }, {
+                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'select', value: 1 }, {
                         headers: {'Authorization': `Bearer ${this.state.token}`}
                     })
                     .then(response => {
@@ -136,7 +136,7 @@ class CaptionList extends React.Component {
                         console.log(error);
                     });
                 } else {
-                    axios.post(`http://${process.env.REACT_APP_IP}:16085/api/captions/${captionid}`, { operation: 'select', value: 0 }, {
+                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'select', value: 0 }, {
                         headers: {'Authorization': `Bearer ${this.state.token}`}
                     })
                     .then(response => {
@@ -157,7 +157,7 @@ class CaptionList extends React.Component {
             break;
             case 'reject': 
                 if(caption.selected === 1 || caption.selected === 0){
-                    axios.post(`http://${process.env.REACT_APP_IP}:16085/api/captions/${captionid}`, { operation: 'select', value: -1 }, {
+                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'select', value: -1 }, {
                         headers: {'Authorization': `Bearer ${this.state.token}`}
                     })
                     .then(response => {
@@ -175,7 +175,7 @@ class CaptionList extends React.Component {
                         console.log(error);
                     });
                 } else {
-                    axios.post(`http://${process.env.REACT_APP_IP}:16085/api/captions/${captionid}`, { operation: 'select', value: 0 }, {
+                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'select', value: 0 }, {
                         headers: {'Authorization': `Bearer ${this.state.token}`}
                     })
                     .then(response => {
@@ -201,7 +201,7 @@ class CaptionList extends React.Component {
     handleSubmit = (caption) => {
         const data = { content: caption, moment_id: this.props.momentId };
         if(this.state.token){
-            axios.put(`http://${process.env.REACT_APP_IP}:16085/api/captions`, data, {
+            axios.put(`http://${process.env.REACT_APP_IP}/api/captions`, data, {
                 headers: {'Authorization': `Bearer ${this.state.token}`}
             })
             .then(() => this.fetchCaptions())
@@ -212,7 +212,7 @@ class CaptionList extends React.Component {
     }
 
     fetchCaptions = () => {
-        axios.get(`http://${process.env.REACT_APP_IP}:16085/api/captions?moment-id=${this.props.momentId}`)
+        axios.get(`http://${process.env.REACT_APP_IP}/api/captions?moment-id=${this.props.momentId}`)
             .then(response => {
                 this.setState({
                     captions: response.data.captions,
