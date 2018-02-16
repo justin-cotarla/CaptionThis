@@ -18,7 +18,7 @@ class App extends Component {
                 <Route path="/register" component={RegistrationPage}/>
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/submit" component={MomentCreationPage}/>
-                <Route path="/view/moment/:momentID" component={MomentViewPage}/>
+                <Route path="/moment/:momentID" component={MomentViewPage}/>
             </Switch>
         </BrowserRouter>
     );
