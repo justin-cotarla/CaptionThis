@@ -42,28 +42,19 @@ class LandingPage extends Component {
             <Header textSize={4} text={error} />
             </div>
         }
-
-        if (moments) {
-            return (
+        return (
+            <div>
+                <PageHeader />
                 <div>
-                    <PageHeader />
-                    <div>
+                    {moments ? (
                         <MomentsList Moments={moments}/>
-                        <ScrollApp id="app"/>
-                    </div>
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    <PageHeader />
-                    <div>
+                    ) : (
                         <Loading />
-                        <ScrollApp id="app"/>
-                    </div>
+                    )}
+                    <ScrollApp id="app"/>
                 </div>
-            );
-        }
+            </div>
+        )
     }
 }
 
