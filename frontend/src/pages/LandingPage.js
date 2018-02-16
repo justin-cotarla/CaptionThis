@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
 import axios from 'axios';
 import MomentsList from '../components/MomentsList';
 import ScrollApp from '../components/ScrollerComponents'
-import Cookies from 'universal-cookie';
-import base64url from 'base64url';
 
 import Header from '../components/Header';
-import '../styles/LandingPage.css';
+import PageHeader from '../components/PageHeader';
 
 class LandingPage extends Component {
     constructor(props){
@@ -15,24 +12,10 @@ class LandingPage extends Component {
         this.state = {
             moments: null,
             error: null,
-            redirect: null,
-            allowBack: false,
-            user: null,
         };
     };
-    
-    loadUser = () => {
-        const cookies = new Cookies();
-        const token =  cookies.get('token');
-        if (token) {
-            this.setState({
-                user: base64url.decode(token.split('.')[1]),
-            })
-        }
-    }
 
     componentDidMount(){
-        this.loadUser();
         axios.get(`http://${process.env.REACT_APP_IP}:16085/api/moments`)
         .then(response => {
             let moments = response.data.moments;
@@ -48,23 +31,6 @@ class LandingPage extends Component {
         });
     };
     
-    logout = () => {
-        const cookies = new Cookies();
-        cookies.remove('token');
-        window.location.reload();
-    }
-
-    onLoginClick = () => {
-        this.setState({
-            redirect: '/login',
-            allowBack: true,
-        })
-    }
-
-    onProfileClick = () => {
-        this.logout();
-    }
-    
     render() {
         const moments = this.state.moments;
         const error = this.state.error;
@@ -78,34 +44,7 @@ class LandingPage extends Component {
 
         return (
             <div>
-                {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
-                <div className="header">
-                {this.state.user && 
-                    <div
-                        className="profile-button"
-                        onClick={this.onProfileClick}>
-                        <img
-                            alt="Profile"
-                            src="personIcon.png"
-                        />
-                    </div>
-                }
-                {this.state.user === null && 
-                    <div
-                        className="login-button"
-                        onClick={this.onLoginClick}
-                    >
-                    Login
-                    </div>
-                }
-                </div>
-                <div className="logo">
-                    <img
-                        src="logo.png"
-                        alt="Logo"
-                        width="340"
-                    />
-                </div>
+                <PageHeader />
                 <div>
                     <MomentsList Moments={moments}/>
                     <ScrollApp id="app"/>
