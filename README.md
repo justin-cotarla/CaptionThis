@@ -23,7 +23,7 @@ Start docker from project root: ```docker-compose up --build```
 
 Development server URLs:
 * Frontend: http://localhost
-* Backend: https://localhost:16085/api/
+* Backend: https://localhost/api/
 
 Press ctrl-c to shutdown.
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 
 import '../styles/PageHeader.css';
-import logo from '../resources/logo.png';
 import * as AuthUtil from '../util/AuthUtil';
 
 
@@ -61,7 +60,7 @@ class PageHeader extends Component{
                         onClick={this.onProfileClick}>
                         <img
                             alt="Profile"
-                            src="personIcon.png"
+                            src={`http://${process.env.REACT_APP_IP}/res/personIcon.png`}
                         />
                     </div>
                 }
@@ -76,7 +75,7 @@ class PageHeader extends Component{
                 </div>
                 <div className="logo">
                     <img
-                        src={logo}
+                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
                         alt="Logo"
                         width="340"
                     />

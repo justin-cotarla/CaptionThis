@@ -11,7 +11,7 @@ const authenticate = () => new Promise((resolve, reject) => {
     }
 
     return resolve(axios({
-        url: `http://${process.env.REACT_APP_IP}:16085/api/auth/tokens`,
+        url: `http://${process.env.REACT_APP_IP}/api/auth/tokens`,
         method: 'post',
         data: {
             token,

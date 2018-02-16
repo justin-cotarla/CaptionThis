@@ -14,21 +14,18 @@ class MomentViewPage extends Component{
         };
     };
     
-    componentDidMount(){
-        const momentID = this.props.match.params.momentID;
-        
-        axios.get(`http://${process.env.REACT_APP_IP}:16085/api/moments/${momentID}`)
-            .then(response => {
-                let moment = response.data.moment;
-                    this.setState({
-                       moment,
-                     });
-            })
-            .catch(error => {
-                console.log(error);
-                this.setState({
-                    error: 'Oops! Something went wrong...'
-                });
+    componentWillMount(){
+      const momentID = this.props.match.params.momentID;
+
+      axios.get(`http://${process.env.REACT_APP_IP}/api/moments/${momentID}`).then(response => {
+        let moment = response.data.moment;
+        this.setState({
+          moment,
+        });
+      }).catch(error => {
+        console.log(error);
+        this.setState({
+          error: 'Oops! Something went wrong...'
         });
     };
 
