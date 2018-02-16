@@ -9,9 +9,8 @@ const createCaption = {
             return reply.response({ code: 4 }).code(401);
         }
         // Get the caption from request
-        const { content } = request.payload;
+        const { content, moment_id } = request.payload;
         const userId = request.auth.credentials.user.id;
-        const momentId = 1; // Placeholder moment ID
 
         // Check if the caption content is valid
         if (content === '') {
@@ -21,7 +20,7 @@ const createCaption = {
         // Create db query
         const query = 'INSERT INTO CAPTION (CONTENT, USER_ID, MOMENT_ID) VALUES (?, ?, ?)';
         return databaseUtil
-            .sendQuery(query, [content, userId, momentId])
+            .sendQuery(query, [content, userId, moment_id])
             .then(() => reply.response({ code: 1 }).code(200)) // Code 1 means successful
             .catch((error) => {
                 console.log(error);
