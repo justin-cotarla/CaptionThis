@@ -4,6 +4,10 @@ const loginUser = {
     method: 'POST',
     path: '/api/auth/login',
     handler: (request, reply) => {
+        if (!request.payload) {
+            return reply.response({ code: 2 }).code(400);
+        }
+
         const { username, password } = request.payload;
 
         if (username === undefined || username === ''
