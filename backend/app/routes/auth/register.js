@@ -5,6 +5,10 @@ const registerUser = {
     method: 'POST',
     path: '/api/auth/register',
     handler: (request, reply) => {
+        if (!request.payload) {
+            return reply.response({ code: 2 }).code(400);
+        }
+
         const { username, password } = request.payload;
 
         if (username === undefined || username === ''
