@@ -5,6 +5,7 @@ import ScrollApp from '../components/ScrollerComponents'
 
 import Header from '../components/Header';
 import PageHeader from '../components/PageHeader';
+import Loading from '../components/Loading';
 
 class LandingPage extends Component {
     constructor(props){
@@ -42,15 +43,27 @@ class LandingPage extends Component {
             </div>
         }
 
-        return (
-            <div>
-                <PageHeader />
+        if (false) {
+            return (
                 <div>
-                    <MomentsList Moments={moments}/>
-                    <ScrollApp id="app"/>
+                    <PageHeader />
+                    <div>
+                        <MomentsList Moments={moments}/>
+                        <ScrollApp id="app"/>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div>
+                    <PageHeader />
+                    <div>
+                        <Loading />
+                        <ScrollApp id="app"/>
+                    </div>
+                </div>
+            );
+        }
     }
 }
 
