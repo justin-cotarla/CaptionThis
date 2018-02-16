@@ -5,7 +5,7 @@ import '../styles/Loading.css';
 class Loading extends Component{
     render() {
         return (
-            <img className="loadicon" src={loader} />
+            <img className="loadicon" src={loader} alt="Loading..."/>
         )
     }   
 }
