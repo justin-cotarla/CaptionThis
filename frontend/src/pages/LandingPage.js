@@ -17,7 +17,7 @@ class LandingPage extends Component {
     };
 
     componentDidMount(){
-        axios.get(`http://${process.env.REACT_APP_IP}:16085/api/moments`)
+        axios.get(`http://${process.env.REACT_APP_IP}/api/moments`)
         .then(response => {
             let moments = response.data.moments;
             this.setState({

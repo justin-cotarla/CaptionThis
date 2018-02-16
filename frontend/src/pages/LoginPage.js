@@ -35,7 +35,7 @@ class LoginPage extends Component{
     onSubmit = (event) => {
         event.preventDefault();
         axios({
-            url: `http://${process.env.REACT_APP_IP}:16085/api/auth/login`,
+            url: `http://${process.env.REACT_APP_IP}/api/auth/login`,
             method: 'post',
             data: {
                 username: this.state.userField,
