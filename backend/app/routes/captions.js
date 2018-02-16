@@ -35,9 +35,9 @@ const selectCaption = (request, reply, captionId) => {
     // Get the selection value
     let { value: selection } = request.payload;
 
-    // Check if the vote is valid
+    // Check if the selection is valid
     if (selection === undefined || selection === '' || !/^-*[01]$/.test(selection)) {
-        console.log('Invalid vote.');
+        console.log('Invalid selection.');
         return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
     }
 
@@ -114,28 +114,28 @@ const getCaptionsByMoment = {
             SELECTED,
             DATE_ADDED,
             SUM(VALUE) AS VOTES,
-            USERNAME 
+            USERNAME
         FROM
             CAPTION
-        JOIN 
-            USER 
-        ON 
+        JOIN
+            USER
+        ON
             USER_ID = USER.ID
-        JOIN 
-            CAPTION_VOTE 
-        ON 
+        JOIN
+            CAPTION_VOTE
+        ON
             CAPTION_ID = CAPTION.ID
         WHERE
             MOMENT_ID=?
         GROUP BY
-            USER_ID, 
-            MOMENT_ID, 
-            CAPTION_ID, 
-            CONTENT, 
-            SELECTED, 
-            DATE_ADDED, 
+            USER_ID,
+            MOMENT_ID,
+            CAPTION_ID,
+            CONTENT,
+            SELECTED,
+            DATE_ADDED,
             USERNAME
-        ORDER BY 
+        ORDER BY
             DATE_ADDED DESC
         LIMIT ?
         `;
