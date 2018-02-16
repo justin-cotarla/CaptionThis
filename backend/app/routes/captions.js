@@ -87,6 +87,10 @@ const getCaptionsByMoment = {
         const momentid = request.query['moment-id'];
         let { limit } = request.query;
 
+        const userId = (request.auth.credentials)
+            ? parseInt(request.auth.credentials.user.id, 10)
+            : 'null';
+
         // Check if moment id is valid
         if (momentid === undefined || momentid === '' || momentid === 0 || !/^\d+$/.test(momentid)) {
             return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
@@ -107,24 +111,29 @@ const getCaptionsByMoment = {
         // The actual query
         const query = `
         SELECT
-            CAPTION.USER_ID AS USER_ID,
             MOMENT_ID,
+            CAPTION.USER_ID AS USER_ID,
+            USERNAME,
             CAPTION.ID AS CAPTION_ID,
             CONTENT,
             SELECTED,
-            DATE_ADDED,
-            SUM(VALUE) AS VOTES,
-            USERNAME
+            COALESCE(SUM(TV.VALUE),0) AS TOTAL_VOTES,
+            COALESCE(UV.VALUE, 0) AS USER_VOTE,
+            DATE_ADDED
         FROM
             CAPTION
         JOIN
             USER
         ON
             USER_ID = USER.ID
-        JOIN
-            CAPTION_VOTE
+        LEFT JOIN
+            CAPTION_VOTE TV
         ON
-            CAPTION_ID = CAPTION.ID
+            TV.CAPTION_ID = CAPTION.ID
+        LEFT JOIN
+            CAPTION_VOTE UV
+        ON
+            UV.CAPTION_ID = CAPTION. ID AND UV.USER_ID = ?
         WHERE
             MOMENT_ID=?
         GROUP BY
@@ -136,8 +145,8 @@ const getCaptionsByMoment = {
             DATE_ADDED,
             USERNAME
         ORDER BY
-            DATE_ADDED DESC
-        LIMIT ?
+            SELECTED DESC, DATE_ADDED DESC
+        LIMIT ?;
         `;
 
         return databaseUtil.sendQuery(check, [momentid])
@@ -147,19 +156,20 @@ const getCaptionsByMoment = {
                     return reply.response({ code: 2 }).code(404);
                 }
 
-                return databaseUtil.sendQuery(query, [momentid, limit]);
+                return databaseUtil.sendQuery(query, [userId, momentid, limit]);
             })
             .then((result) => {
                 const captions = result.rows.map(caption => ({
+                    moment_id: caption.MOMENT_ID,
                     user: {
                         user_id: caption.USER_ID,
                         username: caption.USERNAME,
                     },
-                    moment_id: caption.MOMENT_ID,
                     caption_id: caption.CAPTION_ID,
                     caption: caption.CONTENT,
-                    votes: caption.VOTES,
                     selected: caption.SELECTED,
+                    total_votes: caption.TOTAL_VOTES,
+                    user_vote: caption.USER_VOTE,
                     date_added: caption.DATE_ADDED,
                 }));
 
