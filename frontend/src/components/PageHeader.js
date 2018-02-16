@@ -49,6 +49,15 @@ class PageHeader extends Component{
         })
     }
 
+    onLogoClick = () => {
+        if(this.state.user) {
+            this.setState({
+                redirect: '/submit',
+                allowBack: true,
+            });
+        }    
+    }
+
     render() {
         return (
             <div className="main-container">
@@ -78,6 +87,7 @@ class PageHeader extends Component{
                         src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
                         alt="Logo"
                         width="340"
+                        onClick={this.onLogoClick}
                     />
                 </div>
             </div>

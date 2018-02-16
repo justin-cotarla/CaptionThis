@@ -52,5 +52,6 @@
   div.logo img {
     border: #1DE28F 2px solid;
     border-radius: 10px;
+    cursor: pointer;
   }
   
