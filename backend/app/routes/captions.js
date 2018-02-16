@@ -1,5 +1,56 @@
 import databaseUtil from '../utility/DatabaseUtil';
 
+// ******Handlers for the updateCaption endpoint******
+const updateVote = (request, reply, captionId) => {
+    // Get the user id and vote
+    let userId = request.auth.credentials.user.id;
+    let { value: vote } = request.payload;
+
+    // Check if the vote is valid
+    if (vote === undefined || vote === '' || !/^-*[01]$/.test(vote)) {
+        console.log('Invalid vote.');
+        return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
+    }
+
+    // Parse the user id and vote to an integer
+    userId = parseInt(userId, 10);
+    vote = parseInt(vote, 10);
+
+    const query = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE VALUE=?';
+    return databaseUtil.sendQuery(query, [captionId, userId, vote, vote])
+        .then(() => {
+            const getVotes = 'SELECT SUM(VALUE) AS VOTECOUNT FROM CAPTION_VOTE WHERE CAPTION_ID=?';
+            return databaseUtil.sendQuery(getVotes, [captionId]);
+        })
+        .then((result) => {
+            const voteCount = result.rows[0].VOTECOUNT;
+            return reply.response({
+                code: 1,
+                votes: voteCount,
+            }).code(200);
+        });
+};
+
+const selectCaption = (request, reply, captionId) => {
+    // Get the selection value
+    let { value: selection } = request.payload;
+
+    // Check if the selection is valid
+    if (selection === undefined || selection === '' || !/^-*[01]$/.test(selection)) {
+        console.log('Invalid selection.');
+        return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
+    }
+
+    // Parse the selection to an integer
+    selection = parseInt(selection, 10);
+
+    const query = 'UPDATE CAPTION SET SELECTED=? WHERE ID=?';
+    return databaseUtil.sendQuery(query, [selection, captionId])
+        .then(() => reply.response({ code: 1 }).code(200));
+};
+
+/* --------ENDPOINTS------- */
+
 const createCaption = {
     method: 'PUT',
     path: '/api/captions',
@@ -63,28 +114,28 @@ const getCaptionsByMoment = {
             SELECTED,
             DATE_ADDED,
             SUM(VALUE) AS VOTES,
-            USERNAME 
+            USERNAME
         FROM
             CAPTION
-        JOIN 
-            USER 
-        ON 
+        JOIN
+            USER
+        ON
             USER_ID = USER.ID
-        JOIN 
-            CAPTION_VOTE 
-        ON 
+        JOIN
+            CAPTION_VOTE
+        ON
             CAPTION_ID = CAPTION.ID
         WHERE
             MOMENT_ID=?
         GROUP BY
-            USER_ID, 
-            MOMENT_ID, 
-            CAPTION_ID, 
-            CONTENT, 
-            SELECTED, 
-            DATE_ADDED, 
+            USER_ID,
+            MOMENT_ID,
+            CAPTION_ID,
+            CONTENT,
+            SELECTED,
+            DATE_ADDED,
             USERNAME
-        ORDER BY 
+        ORDER BY
             DATE_ADDED DESC
         LIMIT ?
         `;
@@ -127,7 +178,7 @@ const getCaptionsByMoment = {
     },
 };
 
-const voteCaption = {
+const updateCaption = {
     method: 'POST',
     path: '/api/captions/{id}',
     handler: (request, reply) => {
@@ -136,10 +187,9 @@ const voteCaption = {
             return reply.response({ code: 4 }).code(401);
         }
 
-        // Get the caption id, user id, and vote
+        // Get the caption id and operation
         let captionId = request.params.id;
-        let userId = request.auth.credentials.user.id;
-        let vote = request.payload.value;
+        const { operation } = request.payload;
 
         // Check if the caption id is valid
         if (captionId === undefined || captionId === '' || !/^\d+$/.test(captionId)) {
@@ -147,16 +197,8 @@ const voteCaption = {
             return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
         }
 
-        // Check if the vote is valid
-        if (vote === undefined || vote === '' || !/^-*[01]$/.test(vote)) {
-            console.log('Invalid vote.');
-            return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
-        }
-
         // Parse the caption id to an integer
         captionId = parseInt(captionId, 10);
-        userId = parseInt(userId, 10);
-        vote = parseInt(vote, 10);
 
         const checkCaption = 'SELECT * FROM CAPTION WHERE ID=?';
         return databaseUtil.sendQuery(checkCaption, [captionId])
@@ -165,23 +207,19 @@ const voteCaption = {
                 if (result.rows[0] === undefined) {
                     throw new Error('Caption ID does not exist.');
                 }
-
-                // If it exists, proceed with actual query to store caption vote
-                const query = 'INSERT INTO CAPTION_VOTE (CAPTION_ID, USER_ID, VALUE) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE VALUE=?';
-                return databaseUtil.sendQuery(query, [captionId, userId, vote, vote]);
-            })
-            .then(() => {
-                const getVotes = 'SELECT SUM(VALUE) AS VOTECOUNT FROM CAPTION_VOTE WHERE CAPTION_ID=?';
-                return databaseUtil.sendQuery(getVotes, [captionId]);
-            })
-            .then((result) => {
-                const voteCount = result.rows[0].VOTECOUNT;
-                return reply.response({
-                    code: 1,
-                    votes: voteCount,
-                }).code(200);
-            })
-            .catch((error) => {
+                switch (operation) {
+                case 'vote': {
+                    return updateVote(request, reply, captionId);
+                }
+                case 'select': {
+                    return selectCaption(request, reply, captionId);
+                }
+                default: {
+                    console.log('Invalid operation');
+                    return reply.response({ code: 2 }).code(400);
+                }
+                }
+            }).catch((error) => {
                 console.log(error);
                 if (error.message === 'Caption ID does not exist.') {
                     return reply.response({ code: 2 }).code(400);
@@ -194,5 +232,5 @@ const voteCaption = {
 export default [
     createCaption,
     getCaptionsByMoment,
-    voteCaption,
+    updateCaption,
 ];
