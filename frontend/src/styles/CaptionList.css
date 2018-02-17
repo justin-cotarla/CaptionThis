@@ -7,39 +7,24 @@
     padding: 1em;
 }
 
-.caption-creator-container {
+.caption-creator-form {
+    display: flex;
+    flex-direction: row;
     margin: 1em 0; 
 }
 
-.caption-creator-container textarea {
-    width: 100%;
+.caption-creator-input {
+    width: 85%;
     font-size: 16px;
     border-radius: 3px;
     margin-right: 1em;
     padding: 1em;
-    resize: none;
-}
-
-.caption-creator-container button {
-    width: 100%;
-    font-size: 16px;
-    border-radius: 3px;
-    border: none;
-}
-
-.caption-creator-container > ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.caption-creator-textarea {
-    display: flex;
-    flex-grow: 20;
 }
 
 .caption-creator-submit {
-    display: flex;
-    flex-grow: 1;
+    width: 15%;
+    font-size: 16px;
+    border-radius: 3px;
+    border: none;
 }
 

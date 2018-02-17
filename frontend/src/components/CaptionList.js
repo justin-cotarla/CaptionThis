@@ -296,19 +296,18 @@ class CaptionCreator extends React.Component {
         event.preventDefault();
     }
 
-    onSubmit = () => {
+    onSubmit = (event) => {
+        event.preventDefault();
         this.props.handleSubmit(this.state.caption);
         this.setState({ caption: '' });
     }
 
     render(){
         return (
-            <div className="caption-creator-container">
-                <ul>
-                    <li className="caption-creator-textarea"><textarea value={this.state.caption} placeholder="Write something good..." onChange={this.handleChange}/></li>
-                    <li className="caption-creator-submit"><button value="Submit" onClick={this.onSubmit}>{this.props.authorized}</button></li>
-                </ul>
-            </div>
+            <form className="caption-creator-form" onSubmit={this.onSubmit}>
+                <input className="caption-creator-input" type="text" value={this.state.caption} placeholder="Write something good..." onChange={this.handleChange}/>
+                <button className="caption-creator-submit" type="submit" disabled={!this.state.caption}>{this.props.authorized}</button>
+            </form>
         )
     }
 
