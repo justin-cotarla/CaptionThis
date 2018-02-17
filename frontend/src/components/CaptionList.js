@@ -3,6 +3,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 import Caption from './Caption';
+import CaptionCreatorForm from './CaptionCreatorForm';
 import Header from './Header';
 
 import '../styles/CaptionList.css';
@@ -236,7 +237,7 @@ class CaptionList extends React.Component {
         if(loading) {
             return (
                 <div className="caption-list-container">
-                    <CaptionCreator handleSubmit={this.handleSubmit} authorized={token ? 'Submit' : 'Login to submit a caption'}/>
+                    <CaptionCreatorForm handleSubmit={this.handleSubmit} authorized={token ? 'Submit' : 'Login to submit a caption'}/>
                     <Loading/>
                 </div>
             )
@@ -245,7 +246,7 @@ class CaptionList extends React.Component {
         if(error) {
             return ( 
                 <div className="caption-list-container">
-                    <CaptionCreator handleSubmit={this.handleSubmit} authorized={token ? 'Submit' : 'Login to submit a caption'}/>
+                    <CaptionCreatorForm handleSubmit={this.handleSubmit} authorized={token ? 'Submit' : 'Login to submit a caption'}/>
                     <Header textSize={3} text={error}/>
                 </div>
             )
@@ -253,7 +254,7 @@ class CaptionList extends React.Component {
 
         return (
             <div className="caption-list-container">
-                <CaptionCreator handleSubmit={this.handleSubmit} authorized={token ? 'Submit' : 'Login to submit a caption'}/>
+                <CaptionCreatorForm handleSubmit={this.handleSubmit} authorized={token ? 'Submit' : 'Login to submit a caption'}/>
                 <ul>
                     {
                         this.state.captions.length > 0 ? <li><Header textSize={3} text={`${this.state.captions.length} Caption${this.state.captions.length > 1 ? 's' : ''}`}/></li> 
@@ -280,37 +281,6 @@ class CaptionList extends React.Component {
             </div>
         )
     }
-}
-
-class CaptionCreator extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            caption: '',
-        }
-    }
-
-    handleChange = (event) => {
-        const caption = event.target.value;
-        this.setState({ caption });
-        event.preventDefault();
-    }
-
-    onSubmit = (event) => {
-        event.preventDefault();
-        this.props.handleSubmit(this.state.caption);
-        this.setState({ caption: '' });
-    }
-
-    render(){
-        return (
-            <form className="caption-creator-form" onSubmit={this.onSubmit}>
-                <input className="caption-creator-input" type="text" value={this.state.caption} placeholder="Write something good..." onChange={this.handleChange}/>
-                <button className="caption-creator-submit" type="submit" disabled={!this.state.caption}>{this.props.authorized}</button>
-            </form>
-        )
-    }
-
 }
 
 export default CaptionList;
