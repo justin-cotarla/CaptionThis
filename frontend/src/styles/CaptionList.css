@@ -6,25 +6,3 @@
     background-color: rgba(196, 196, 196, 0.282);
     padding: 1em;
 }
-
-.caption-creator-form {
-    display: flex;
-    flex-direction: row;
-    margin: 1em 0; 
-}
-
-.caption-creator-input {
-    width: 85%;
-    font-size: 16px;
-    border-radius: 3px;
-    margin-right: 1em;
-    padding: 1em;
-}
-
-.caption-creator-submit {
-    width: 15%;
-    font-size: 16px;
-    border-radius: 3px;
-    border: none;
-}
-
