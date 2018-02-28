@@ -48,16 +48,6 @@ describe('api/auth/register endpoint', () => {
     });
   });
 
-  it('handles existing user with wrong password', () => {
-    AuthUtil.register = jest.fn(() => new Promise(() => {
-      throw new Error('Wrong password');
-    }));
-    return registerRoute[0].handler(request, reply)
-    .then(() => {
-      expect(reply.response.mock.calls[0][0].code).toBe(4);
-    });
-  });
-
   it('handles users that do exist', () => {
     AuthUtil.register = jest.fn(() => new Promise(() => {
       throw new Error('User exists');
