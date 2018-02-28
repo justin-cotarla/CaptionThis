@@ -64,7 +64,7 @@ class LoginPage extends Component{
                 <PageHeader />
                 <div className="login-box-container">
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
-                    <Header textSize={4} text="Login" />
+                    <p><font size ="5" color="#1DE28F"> Login </font></p>
 
                     <form
                         onSubmit={this.onSubmit}
@@ -72,6 +72,7 @@ class LoginPage extends Component{
                         <p>
                         <input
                             type="text"
+                            className="text-line"
                             name="username"
                             size="12"
                             placeholder="Username"
@@ -81,6 +82,7 @@ class LoginPage extends Component{
                     
                         <input
                             type="password"
+                            className="text-line"
                             name="password"
                             size="12"
                             placeholder="Password"                       
@@ -88,18 +90,17 @@ class LoginPage extends Component{
                             onChange={this.onPassChange}
                         />
 
-                        <input
+                        <p><input
                             type="submit"
                             name="login"
                             className="login2-button"
-                        / >
+                        /></p>
                     </form>
-                    <label name="loginMessage">If you don't have an account, please sign up! </label>
                     <div
                         className="registration-button"
                         onClick={this.onRegisterClick}
                         >
-                        Sign up
+                        Sign up for CaptionThis
                         </div>
                     </div>
             </div>

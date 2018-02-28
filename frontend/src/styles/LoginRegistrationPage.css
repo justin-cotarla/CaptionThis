@@ -1,3 +1,8 @@
+div.loginHeader {
+  font-size: 40px;
+  color: #1DE28F;
+}
+
 div.login2-button {
     width: 43px;
     float: none;
@@ -11,9 +16,10 @@ div.login2-button {
   }
 
   div.registration-button {
-    width: 59px;
+    width: 200px;
     float: none;
     margin: 0 auto;
+    margin-top: 20px;
     padding: 5px;
     color: #1DE28F;
     font-weight: bold;
@@ -34,4 +40,18 @@ div.login2-button {
     align-content: center;
     border: #1DE28F 2px solid;
     border-radius: 10px;
+}
+
+.text-line {
+  background-color: transparent;
+  text-align: center;
+  color: #eeeeee;
+  outline: none;
+  outline-style: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: #1DE28F 2px solid;
+  width: 185px;
+  padding: 3px 10px;
 }
