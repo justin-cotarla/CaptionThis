@@ -49,7 +49,13 @@ class MomentViewPage extends Component{
     }
 
     fetchCaptions = (momentid) => {
-        axios.get(`http://${process.env.REACT_APP_IP}/api/captions?moment-id=${momentid}`)
+        const token = this.state.token;
+        const config = { 
+            headers: { 
+                'Authorization': `Bearer ${token}` 
+            },
+        };
+        axios.get(`http://${process.env.REACT_APP_IP}/api/captions?moment-id=${momentid}`, token ? config : {})
             .then(response => {
                 this.setState({
                     captions: response.data.captions,

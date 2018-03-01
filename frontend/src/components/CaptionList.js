@@ -8,6 +8,7 @@ import '../styles/CaptionList.css';
 
 class CaptionList extends React.Component {
     handleVote = (event) => {
+        console.log(this.props.token)
         const captionid = event.target.value;
         const action = event.target.id;
 
