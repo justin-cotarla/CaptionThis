@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+
 import Moment from '../components/Moment';
+import CaptionCreatorForm from '../components/CaptionCreatorForm';
 import CaptionList from '../components/CaptionList';
+
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 
@@ -9,12 +13,23 @@ class MomentViewPage extends Component{
     constructor(props){
         super(props);
         this.state = {
+            token: null,
             moment: null,
+            captions: [],
+            loading: true,
             error: null,
         };
     };
     
-    componentWillMount(){
+    componentDidMount(){
+        const cookies = new Cookies();
+        const token = cookies.get('token');
+        if(token) {
+            this.setState({
+                token: cookies.get('token'),
+            });
+        }
+
         const momentID = this.props.match.params.momentID;
         
         axios.get(`http://${process.env.REACT_APP_IP}/api/moments/${momentID}`)
@@ -24,6 +39,7 @@ class MomentViewPage extends Component{
                 moment,
             });
         })
+        .then(() => this.fetchCaptions(momentID))
         .catch((error) => {
             console.log(error);
             this.setState({
@@ -31,12 +47,41 @@ class MomentViewPage extends Component{
             });
         });
     }
-    
+
+    fetchCaptions = (momentid) => {
+        axios.get(`http://${process.env.REACT_APP_IP}/api/captions?moment-id=${momentid}`)
+            .then(response => {
+                this.setState({
+                    captions: response.data.captions,
+                    loading: false,
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({
+                    error,
+                    loading: false,
+                });
+            })
+    }
+
+    onCaptionUpdate = (newcaption) => {
+        this.setState({
+            captions: this.state.captions.map(caption => {
+                if(newcaption.caption_id === caption.caption_id){
+                    return newcaption;
+                }
+                return caption;
+            })
+        })
+    }
+
     render() {
+        const token = this.state.token;
         const moment = this.state.moment;
         const error = this.state.error;
         
-        if (error) {
+        if(error) {
             return (
                 <div>
                 <Header textSize={4} text={error} />
@@ -44,11 +89,12 @@ class MomentViewPage extends Component{
             )
         }
         
-        if (moment) {
+        if(moment) {
             return (
                 <div className="moment-view-container">
                 <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
-                <CaptionList momentId={this.props.match.params.momentID}/>
+                <CaptionCreatorForm momentId={this.props.match.params.momentID} onSubmit={this.fetchCaptions} token={token}/>
+                <CaptionList captions={this.state.captions} token={token} onCaptionUpdate={this.onCaptionUpdate}/>
                 </div>
             )
         }

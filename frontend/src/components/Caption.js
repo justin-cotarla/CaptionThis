@@ -19,9 +19,9 @@ const Caption = props => {
                 </li>
                 <li>
                 <ul className="accept-reject">
-                    { props.authorized && <li id="accept" value={props.id} onClick={props.acceptHandler}>Accept</li> }
-                    { props.authorized && <li>|</li> }
-                    { props.authorized && <li id="reject" value={props.id} onClick={props.acceptHandler}>Reject</li> }        
+                    { props.token && <li id="accept" value={props.id} onClick={props.acceptHandler}>Accept</li> }
+                    { props.token && <li>|</li> }
+                    { props.token && <li id="reject" value={props.id} onClick={props.acceptHandler}>Reject</li> }        
                     <li>{acceptStatus}</li>
                 </ul>
                     <Header textSize={2} text={props.caption}/>  
