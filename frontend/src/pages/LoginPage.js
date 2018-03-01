@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import Header from '../components/Header';
 import PageHeader from '../components/PageHeader';
 import '../styles/LoginRegistrationPage.css';
 
