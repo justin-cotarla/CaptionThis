@@ -1,7 +1,7 @@
 .caption-creator-form {
     display: flex;
     flex-direction: row;
-    margin: 1em 0; 
+    margin: 20px;
 }
 
 .caption-creator-input {

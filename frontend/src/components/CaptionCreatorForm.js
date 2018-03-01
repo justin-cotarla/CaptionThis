@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+
 import '../styles/CaptionCreatorForm.css';
 
 class CaptionCreatorForm extends React.Component {
@@ -17,7 +19,18 @@ class CaptionCreatorForm extends React.Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.handleSubmit(this.state.caption);
+        const momentId = this.props.momentId;
+        const caption = this.state.caption;
+        const data = { content: caption, moment_id: momentId };
+        if(this.props.token){
+            axios.put(`http://${process.env.REACT_APP_IP}/api/captions`, data, {
+                headers: {'Authorization': `Bearer ${this.props.token}`}
+            })
+            .then(() => this.props.onSubmit(momentId))
+            .catch(error => {
+                console.log(error);
+            })
+        }   
         this.setState({ caption: '' });
     }
 
@@ -25,7 +38,7 @@ class CaptionCreatorForm extends React.Component {
         return (
             <form className="caption-creator-form" onSubmit={this.onSubmit}>
                 <input className="caption-creator-input" type="text" value={this.state.caption} placeholder="Write something good..." onChange={this.handleChange}/>
-                <button className="caption-creator-submit" type="submit" disabled={!this.state.caption}>{this.props.authorized}</button>
+                <button className="caption-creator-submit" type="submit" disabled={!this.state.caption}>{ this.props.token ? 'Submit' : 'Login to submit a caption'}</button>
             </form>
         )
     }
