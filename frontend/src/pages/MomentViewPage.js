@@ -24,14 +24,14 @@ class MomentViewPage extends Component{
     componentDidMount(){
         const cookies = new Cookies();
         const token = cookies.get('token');
+
         if(token) {
             this.setState({
                 token: cookies.get('token'),
             });
         }
 
-        const momentID = this.props.match.params.momentID;
-        
+        const momentID = this.props.match.params.momentID; 
         axios.get(`http://${process.env.REACT_APP_IP}/api/moments/${momentID}`)
         .then((response) => {
             let moment = response.data.moment;
@@ -65,6 +65,7 @@ class MomentViewPage extends Component{
             })
     }
 
+    // A callback to update the caption list after a vote or acception/rejection
     onCaptionUpdate = (newcaption) => {
         this.setState({
             captions: this.state.captions.map(caption => {
@@ -72,7 +73,7 @@ class MomentViewPage extends Component{
                     return newcaption;
                 }
                 return caption;
-            })
+            }),
         })
     }
 
@@ -93,7 +94,7 @@ class MomentViewPage extends Component{
             return (
                 <div className="moment-view-container">
                 <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
-                <CaptionCreatorForm momentId={this.props.match.params.momentID} onSubmit={this.fetchCaptions} token={token}/>
+                <CaptionCreatorForm momentId={this.props.match.params.momentID} onCaptionSubmit={this.fetchCaptions} token={token}/>
                 <CaptionList captions={this.state.captions} token={token} onCaptionUpdate={this.onCaptionUpdate}/>
                 </div>
             )

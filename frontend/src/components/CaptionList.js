@@ -10,101 +10,78 @@ class CaptionList extends React.Component {
     handleVote = (event) => {
         const captionid = event.target.value;
         const action = event.target.id;
+
         const captions = this.props.captions;
-
         const caption = captions.filter(caption => caption.caption_id === captionid)[0];
+        const previousVote = caption.user_vote;
 
-        switch(action) {
-            case '+': 
-                if(caption.user_vote === 0 || caption.user_vote === -1){
-                    if(caption.user_vote === 0){
-                        this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes + 1, user_vote: 1 })
-                    } else if(caption.user_vote === -1){
-                        this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes + 2, user_vote: 1 })
-                    }
-                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: 1 }, {
-                        headers: {'Authorization': `Bearer ${this.props.token}`}
-                    })
-                    .catch(error => console.log(error));
-                } else if(caption.user_vote === 1) {
-                    this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes - 1, user_vote: 0 })
-                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: 0 }, {
-                        headers: {'Authorization': `Bearer ${this.props.token}`}
-                    })
-                    .catch(error => console.log(error));
-                }           
-            break;
-            case '-': 
-                if(caption.user_vote === 0 || caption.user_vote === 1){
-                    if(caption.user_vote === 0){
-                        this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes - 1, user_vote: -1 })
-                    } else if(caption.user_vote === 1){
-                        this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes - 2, user_vote: -1 })
-                    }
-                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: -1 }, {
-                        headers: {'Authorization': `Bearer ${this.props.token}`}
-                    })
-                    .catch(error => console.log(error));
-                } else if(caption.user_vote === -1){
-                    this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes + 1, user_vote: 0 })
-                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: 0 }, {
-                        headers: {'Authorization': `Bearer ${this.props.token}`}
-                    })
-                    .catch(error => console.log(error));
-                } 
-            break;
+        let newVote;
+        switch (previousVote) {
+            case 0:
+                newVote = (action === '+') ? 1 : -1; 
+                break;
+            case 1:
+                newVote = (action === '+') ? 0 : -1;
+                break;
+            case -1:
+                newVote = (action === '+') ? 1 : 0;
+                break;
             default: break;
         }
+        this.props.onCaptionUpdate({
+            ...caption,
+            total_votes: caption.total_votes + (newVote - previousVote),
+            user_vote: newVote,
+        });
+        const data = { 
+            operation: 'vote', 
+            value: newVote,
+        };
+        const config = { 
+            headers: { 
+                'Authorization': `Bearer ${this.props.token}` 
+            },
+        };
+        return axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, data, config)
+        .catch(error => console.log(error)); 
     }
 
     handleAccept = (event) => {
         const captionid = event.target.value;
         const action = event.target.id;
+
         const captions = this.props.captions;
-
         const caption = captions.filter(caption => caption.caption_id === captionid)[0];
+        const previousAcceptState = caption.selected;
 
-        switch(action) {
-            case 'accept': 
-                if(caption.selected === -1 || caption.selected === 0){
-                    this.props.onCaptionUpdate({ ...caption, selected: 1 })
-                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'select', value: 1 }, {
-                        headers: {'Authorization': `Bearer ${this.props.token}`}
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-                } else {
-                    this.props.onCaptionUpdate({ ...caption, selected: 0 })
-                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'select', value: 0 }, {
-                        headers: {'Authorization': `Bearer ${this.props.token}`}
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-                }  
-            break;
-            case 'reject': 
-                if(caption.selected === 1 || caption.selected === 0){
-                    this.props.onCaptionUpdate({ ...caption, selected: -1 });
-                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'select', value: -1 }, {
-                        headers: {'Authorization': `Bearer ${this.props.token}`}
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-                } else {
-                    this.props.onCaptionUpdate({ ...caption, selected: 0 });
-                    axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'select', value: 0 }, {
-                        headers: {'Authorization': `Bearer ${this.props.token}`}
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-                }
-            break;
+        let newAcceptState;
+        switch (previousAcceptState) {
+            case 0:
+                newAcceptState = (action === 'accept') ? 1 : -1;
+                break;
+            case 1:
+                newAcceptState = (action === 'accept') ? 0 : -1;
+                break;
+            case -1:
+                newAcceptState = (action === 'accept') ? 1 : 0;
+                break;
             default: break;
         }
+        this.props.onCaptionUpdate({
+            ...caption,
+            selected: newAcceptState,
+        });
+        const data = { 
+            operation: 'select', 
+            value: newAcceptState, 
+        };
+        const config = { 
+            headers: { 
+                'Authorization': `Bearer ${this.props.token}` 
+            }
+        };
+        axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, data, config)
+        .catch(error => console.log(error)); 
     }
 
     render(){
@@ -129,8 +106,7 @@ class CaptionList extends React.Component {
                                 voteHandler={this.handleVote}
                                 acceptHandler={this.handleAccept}/>
                             </li>
-                        })
-                    
+                        })                  
                     }
                 </ul>    
             </div>
