@@ -32,7 +32,10 @@ class MomentViewPage extends Component{
         }
 
         const momentID = this.props.match.params.momentID; 
-        axios.get(`http://${process.env.REACT_APP_IP}/api/moments/${momentID}`)
+        axios({
+            method: 'get',
+            url: `http://${process.env.REACT_APP_IP}/api/moments/${momentID}`
+        })
         .then((response) => {
             let moment = response.data.moment;
             this.setState({
@@ -50,25 +53,28 @@ class MomentViewPage extends Component{
 
     fetchCaptions = (momentid) => {
         const token = this.state.token;
-        const config = { 
-            headers: { 
-                'Authorization': `Bearer ${token}` 
-            },
+        const headers = { 
+            'Authorization': `Bearer ${token}` 
         };
-        axios.get(`http://${process.env.REACT_APP_IP}/api/captions?moment-id=${momentid}`, token ? config : {})
-            .then(response => {
-                this.setState({
-                    captions: response.data.captions,
-                    loading: false,
-                });
-            })
-            .catch(error => {
-                console.log(error);
-                this.setState({
-                    error,
-                    loading: false,
-                });
-            })
+        axios({
+            method: 'get',
+            url: `http://${process.env.REACT_APP_IP}/api/captions?moment-id=${momentid}`,
+            headers: token ? headers : {}
+        })
+        .then(response => {
+            console.log(response)
+            this.setState({
+                captions: response.data.captions,
+                loading: false,
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            this.setState({
+                error,
+                loading: false,
+            });
+        })
     }
 
     // A callback to update the caption list after a vote or acception/rejection

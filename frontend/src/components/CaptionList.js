@@ -29,25 +29,32 @@ class CaptionList extends React.Component {
                 break;
             default: break;
         }
+
         this.props.onCaptionUpdate({
             ...caption,
             total_votes: caption.total_votes + (newVote - previousVote),
             user_vote: newVote,
         });
+
         const data = { 
             operation: 'vote', 
             value: newVote,
         };
-        const config = { 
-            headers: { 
-                'Authorization': `Bearer ${this.props.token}` 
-            },
+        const headers = { 
+            'Authorization': `Bearer ${this.props.token}` 
         };
-        return axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, data, config)
+
+        axios({
+            method: 'post',
+            url: `http://${process.env.REACT_APP_IP}/api/captions/${captionid}`,
+            data: data,
+            headers: headers,
+        })
         .catch(error => console.log(error)); 
     }
 
     handleAccept = (event) => {
+        const token = this.props.token;
         const captionid = event.target.value;
         const action = event.target.id;
 
@@ -68,20 +75,26 @@ class CaptionList extends React.Component {
                 break;
             default: break;
         }
+
         this.props.onCaptionUpdate({
             ...caption,
             selected: newAcceptState,
         });
+
         const data = { 
             operation: 'select', 
             value: newAcceptState, 
         };
-        const config = { 
-            headers: { 
-                'Authorization': `Bearer ${this.props.token}` 
-            }
+        const headers = { 
+            'Authorization': `Bearer ${token}` 
         };
-        axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, data, config)
+
+        axios({
+            method: 'post',
+            url: `http://${process.env.REACT_APP_IP}/api/captions/${captionid}`,
+            data: data,
+            headers: token ? headers : {}
+        })
         .catch(error => console.log(error)); 
     }
 
