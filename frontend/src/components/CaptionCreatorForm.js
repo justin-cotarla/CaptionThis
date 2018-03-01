@@ -19,6 +19,7 @@ class CaptionCreatorForm extends React.Component {
 
     onSubmit = (event) => {
         event.preventDefault();
+        const token = this.props.token;
         const momentId = this.props.momentId;
         const caption = this.state.caption;
 
@@ -26,14 +27,17 @@ class CaptionCreatorForm extends React.Component {
             content: caption, 
             moment_id: momentId,
         };
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${this.props.token}`
-            },
+        const headers = { 
+            'Authorization': `Bearer ${token}` 
         };
 
-        if(this.props.token){
-            axios.put(`http://${process.env.REACT_APP_IP}/api/captions`, data, config)
+        if(token){
+            axios({
+                method: 'put',
+                url: `http://${process.env.REACT_APP_IP}/api/captions`,
+                data: data,
+                headers: token ? headers : {}
+            })
             .then(() => this.props.onCaptionSubmit(momentId))
             .catch(error => {
                 console.log(error);
