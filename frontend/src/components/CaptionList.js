@@ -17,37 +17,40 @@ class CaptionList extends React.Component {
         switch(action) {
             case '+': 
                 if(caption.user_vote === 0 || caption.user_vote === -1){
+                    if(caption.user_vote === 0){
+                        this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes + 1, user_vote: 1 })
+                    } else if(caption.user_vote === -1){
+                        this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes + 2, user_vote: 1 })
+                    }
                     axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: 1 }, {
                         headers: {'Authorization': `Bearer ${this.props.token}`}
                     })
-                    .then(response => {
-                        this.props.onCaptionUpdate({ ...caption, total_votes: response.data.votes, user_vote: 1 })
-                    })
+                    .catch(error => console.log(error));
                 } else if(caption.user_vote === 1) {
+                    this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes - 1, user_vote: 0 })
                     axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: 0 }, {
                         headers: {'Authorization': `Bearer ${this.props.token}`}
                     })
-                    .then(response => {
-                        this.props.onCaptionUpdate({ ...caption, total_votes: response.data.votes, user_vote: 0 })
-                    })
+                    .catch(error => console.log(error));
                 }           
             break;
             case '-': 
                 if(caption.user_vote === 0 || caption.user_vote === 1){
+                    if(caption.user_vote === 0){
+                        this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes - 1, user_vote: -1 })
+                    } else if(caption.user_vote === 1){
+                        this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes - 2, user_vote: -1 })
+                    }
                     axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: -1 }, {
                         headers: {'Authorization': `Bearer ${this.props.token}`}
                     })
-                    .then(response => {
-                        this.props.onCaptionUpdate({ ...caption, total_votes: response.data.votes, user_vote: -1 })
-                    })
+                    .catch(error => console.log(error));
                 } else if(caption.user_vote === -1){
-                    
+                    this.props.onCaptionUpdate({ ...caption, total_votes: caption.total_votes + 1, user_vote: 0 })
                     axios.post(`http://${process.env.REACT_APP_IP}/api/captions/${captionid}`, { operation: 'vote', value: 0 }, {
                         headers: {'Authorization': `Bearer ${this.props.token}`}
                     })
-                    .then(response => {
-                        this.props.onCaptionUpdate({ ...caption, total_votes: response.data.votes, user_vote: 0 })
-                    })
+                    .catch(error => console.log(error));
                 } 
             break;
             default: break;
