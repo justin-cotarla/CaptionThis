@@ -1,6 +1,6 @@
-import * as AuthUtil from '../../utility/AuthUtil';
+import * as AuthUtil from '../../../utility/AuthUtil';
 
-const validateToken = {
+const postTokens = {
     method: 'POST',
     path: '/api/auth/tokens',
     handler: (request, reply) => {
@@ -26,6 +26,5 @@ const validateToken = {
     },
 };
 
-export default [
-    validateToken,
-];
+export default postTokens;
+

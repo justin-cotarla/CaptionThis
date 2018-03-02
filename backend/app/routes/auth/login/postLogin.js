@@ -1,6 +1,6 @@
-import * as AuthUtil from '../../utility/AuthUtil';
+import * as AuthUtil from '../../../utility/AuthUtil';
 
-const loginUser = {
+const postLogin = {
     method: 'POST',
     path: '/api/auth/login',
     handler: (request, reply) => {
@@ -20,7 +20,7 @@ const loginUser = {
             .then(user => AuthUtil.generateToken(user))
             .then(token => reply.response({ code: 1, token }).code(200))
             .catch((err) => {
-                if (err.message === 'User does not exists') {
+                if (err.message === 'User does not exist') {
                     // User does not exist
                     return reply.response({ code: 3 }).code(404);
                 } else if (err.message === 'Wrong password') {
@@ -33,6 +33,4 @@ const loginUser = {
     },
 };
 
-export default [
-    loginUser,
-];
+export default postLogin;

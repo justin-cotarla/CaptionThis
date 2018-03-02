@@ -1,7 +1,7 @@
-import * as AuthUtil from '../../utility/AuthUtil';
+import * as AuthUtil from '../../../utility/AuthUtil';
 
 // Register user
-const registerUser = {
+const postRegister = {
     method: 'POST',
     path: '/api/auth/register',
     handler: (request, reply) => {
@@ -31,6 +31,4 @@ const registerUser = {
     },
 };
 
-export default [
-    registerUser,
-];
+export default postRegister;
