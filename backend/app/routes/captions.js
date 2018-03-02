@@ -107,10 +107,7 @@ const createCaption = {
         return databaseUtil
             .sendQuery(query, [content, userId, momentId])
             .then(() => reply.response({ code: 1 }).code(200)) // Code 1 means successful
-            .catch((error) => {
-                console.log(error);
-                return reply.response({ code: 3 }).code(500); // Code 3 means unknown error
-            });
+            .catch(() => reply.response({ code: 3 }).code(500)); // Code 3 means unknown error
     },
 };
 

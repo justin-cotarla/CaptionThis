@@ -25,7 +25,7 @@ class CaptionCreatorForm extends React.Component {
 
         const data = { 
             content: caption, 
-            moment_id: momentId,
+            momentId: momentId,
         };
         const headers = { 
             'Authorization': `Bearer ${token}` 

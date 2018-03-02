@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import Header from '../components/Header';
+import PageHeader from '../components/PageHeader';
 
 class RegistrationPage extends Component{
     constructor(props) {
@@ -56,37 +56,46 @@ class RegistrationPage extends Component{
     render() {
         return (
             <div>
-                {this.state.redirect && <Redirect to={this.state.redirect} />}
-                <Header textSize={4} text="Sign up" />
-                <form
-                    onSubmit={this.onSubmit}
-                >
-                    <label name="userid">Username: </label>
-                    <input
-                        type="text"
-                        name="username"
-                        size="12"
-                        value={this.state.userField}
-                        onChange={this.onUserChange}
-                    />
-                    
-                    <label name="passid"> Password: </label>
-                    <input
-                        type="password"
-                        name="password"
-                        size="12"
-                        value={this.state.passField}
-                        onChange={this.onPassChange}
-                    />
+                <PageHeader />
+                <div className="login-box-container">
+                    {this.state.redirect && <Redirect to={this.state.redirect} />}
+                    <p><font size ="5" color="#1DE28F"> Sign Up </font></p>
+                    <form
+                        onSubmit={this.onSubmit}
+                    >
+                        <p>
+                        <input
+                            type="text"
+                            className="text-line"
+                            name="username"
+                            placeholder="Username"
+                            size="12"
+                            value={this.state.userField}
+                            onChange={this.onUserChange}
+                        />
+                        </p>
 
-                    <input type="submit" value="Sign Up" />
-                </form>
-                <label name="loginMessage">If you already have an account, please login: </label>
-                <input
-                    type="button"
-                    value="Login"
-                    onClick={this.onLoginClick}
-                />
+                        <p>
+                        <input
+                            type="password"
+                            className="text-line"
+                            name="password"
+                            placeholder="Password"
+                            size="12"
+                            value={this.state.passField}
+                            onChange={this.onPassChange}
+                        />
+                        </p>
+
+                        <input type="submit" value="Sign Up" />
+                    </form>
+                    <div
+                        className="login2-button"
+                        onClick={this.onLoginClick}
+                        >
+                        Login to CaptionThis
+                    </div>
+                </div>
             </div>
         );
     }
