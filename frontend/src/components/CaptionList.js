@@ -11,10 +11,7 @@ const CaptionList = (props) => {
     return (
         <div className="caption-list-container">
             <ul>
-                {
-                    props.captions.length > 0 ? <li><Header textSize={3} text={`${props.captions.length} Caption${props.captions.length > 1 ? 's' : ''}`}/></li> 
-                    : <li><Header textSize={3} text="Looks like there's nothing here (yet) :("/></li>
-                }
+                { props.children }
                 { 
                     props.captions.map(caption => {
                         return <li key={caption.caption_id}>
