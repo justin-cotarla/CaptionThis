@@ -55,8 +55,6 @@ class Caption extends React.Component {
             headers: headers,
         })
         .catch(error => console.log(error)); 
-        
-        console.log(data)
     }
 
     handleAccept = (event) => {
