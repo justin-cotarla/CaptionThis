@@ -1,5 +1,10 @@
 .caption-container {
+    width: 100%;
     display: inline-block;
+    margin: 3px 0;
+    padding: 0.5em 0;
+    border: solid 1px rgba(65, 65, 65, 0.8);
+    background-color: rgba(196, 196, 196, 0.282);
 }
 
 .caption-container > ul {
@@ -9,7 +14,12 @@
     list-style-type: none;
 }
 
-.caption-container {
+.upvoter-container {
+    width: 50px;
+}
+
+.upvoter-container li {
+    font-weight: 600;
     margin: 3px 0;
 }
 
@@ -18,7 +28,7 @@
     flex-direction: column;
     justify-content: space-between;
     list-style-type: none;
-    margin: 0 1em;
+    text-align: center;
     padding: 0;
 }
 
@@ -40,15 +50,6 @@
 
 #reject:hover {
     cursor: pointer;
-}
-
-.upvoter-container {
-    width: 50px;
-}
-
-.upvoter-container li {
-    font-weight: 600;
-    margin: 3px 0;
 }
 
 .accept-reject {
