@@ -4,16 +4,16 @@
   "description": "Backend for CaptionThis",
   "main": "index.js",
   "dependencies": {
-    "mysql": "*",
+    "aws-sdk": "^2.190.0",
+    "bcrypt": "^1.0.3",
     "hapi": "latest",
-    "winston": "next",
-    "bcrypt": "latest",
-    "jsonwebtoken": "latest",
-    "aws-sdk": "^2.190.0"
+    "jsonwebtoken": "^8.1.1",
+    "mysql": "*",
+    "winston": "next"
   },
   "devDependencies": {
     "babel-cli": "latest",
-    "babel-preset-env": "latest",
+    "babel-preset-env": "^1.6.1",
     "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
