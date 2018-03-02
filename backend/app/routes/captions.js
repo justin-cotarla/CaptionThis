@@ -179,7 +179,6 @@ const getCaptions = {
                 return databaseUtil.sendQuery(query, allQueryValues);
             })
             .then((result) => {
-                console.log('now here here');
                 const captions = result.rows.map(caption => ({
                     moment_id: caption.MOMENT_ID,
                     user: {
