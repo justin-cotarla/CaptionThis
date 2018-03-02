@@ -50,7 +50,7 @@ beforeEach(() => {
 });
 
 describe('/api/captions Endpoint', () => {
-    it('Successfully creates a caption for a given moment', () => {
+    it('Handles successful caption creation for a given moment', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
             resolve({
                 rows: {},
@@ -62,15 +62,15 @@ describe('/api/captions Endpoint', () => {
                 expect(reply.response.mock.calls[0][0].code).toBe(1);
             });
     });
-    it('Unable to create caption due to empty content', () => {
+    it('Handles unable to create caption due to empty content', () => {
         captionsRoute[0].handler(emptyCaptionRequest, reply);
         expect(reply.response.mock.calls[0][0].code).toBe(2);
     });
-    it('Request with blank authentication', () => {
+    it('Handles request with blank authentication', () => {
         captionsRoute[0].handler(emptyAuthRequest, reply);
         expect(reply.response.mock.calls[0][0].code).toBe(4);
     });
-    it('Unknown error', () => {
+    it('Handles unknown error', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise(() => {
             throw new Error();
         }));
