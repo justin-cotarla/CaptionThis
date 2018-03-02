@@ -1,5 +1,5 @@
 {
-  "name": "black-forum-backend",
+  "name": "caption-this-backend",
   "version": "1.0.0",
   "description": "Backend for CaptionThis",
   "main": "index.js",
@@ -23,6 +23,9 @@
   "scripts": {
     "start": "nodemon app/index.js --exec babel-node --presets env",
     "test": "jest"
+  },
+  "jest": {
+    "collectCoverage": true
   },
   "author": "",
   "license": "ISC"

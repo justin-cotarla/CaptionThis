@@ -6,12 +6,10 @@ server {
     location / {
         root /var/www/;
     }
-}
 
-server {
-    listen 16085;
-    
-    charset utf-8;
+    location /res {
+        alias /var/static/;
+    }
 
     location /api {
         proxy_pass http://backend-prod:8000;

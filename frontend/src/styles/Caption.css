@@ -1,0 +1,62 @@
+.caption-container {
+    display: inline-block;
+}
+
+.caption-container > ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    list-style-type: none;
+}
+
+.caption-container {
+    margin: 3px 0;
+}
+
+.upvoter-container > ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0 1em;
+    padding: 0;
+}
+
+.vote-count {
+    font-size: 16px;
+}
+
+.vote-ticker {
+    font-size: 12px;
+}
+
+.vote-ticker:hover{
+    cursor: pointer;
+}
+
+#accept:hover {
+    cursor: pointer;
+}
+
+#reject:hover {
+    cursor: pointer;
+}
+
+.upvoter-container {
+    width: 50px;
+}
+
+.upvoter-container li {
+    font-weight: 600;
+    margin: 3px 0;
+}
+
+.accept-reject {
+    display: flex;
+    flex-direction: row;
+}
+
+.accept-reject li {
+    font-size: 14px;
+    margin: 5px 10px 5px 0;
+}

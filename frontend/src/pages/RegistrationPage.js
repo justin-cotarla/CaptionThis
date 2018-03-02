@@ -35,7 +35,7 @@ class RegistrationPage extends Component{
     onSubmit = (event) => {
         event.preventDefault();
         axios({
-            url: `http://${process.env.REACT_APP_IP}:16085/api/auth/register`,
+            url: `http://${process.env.REACT_APP_IP}/api/auth/register`,
             method: 'post',
             data: {
                 username: this.state.userField,

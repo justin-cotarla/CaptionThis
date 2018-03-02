@@ -3,9 +3,9 @@ module.exports = {
         'airbnb-base'
     ],
     'env': {
-      'browser': true
+      'browser': true,
+      'jest': true
     },
-
     'rules': {
         "indent": ["error", 4],
         'no-console': 0,

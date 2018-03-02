@@ -10,7 +10,6 @@ services:
       - TZ=America/Montreal
     ports:
       - "80:80"
-      - "16085:16085"
     restart: always
 
   backend:

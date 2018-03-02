@@ -1,3 +1,7 @@
+.Moment-preview-container:hover {
+    cursor: pointer;
+}
+
 .Moment-preview-container {
     text-align: left;
     margin: 20px;

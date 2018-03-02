@@ -31,7 +31,7 @@ class MomentCreation extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.target);
-        fetch(`http://${process.env.REACT_APP_IP}:16085/api/moments`, {
+        fetch(`http://${process.env.REACT_APP_IP}/api/moments`, {
             method: 'PUT',
             body: data,
             // Hardcoded to user 'test'
