@@ -62,7 +62,6 @@ class MomentViewPage extends Component{
             headers: token ? headers : {}
         })
         .then(response => {
-            console.log(response)
             this.setState({
                 captions: response.data.captions,
                 loading: false,
