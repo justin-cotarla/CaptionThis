@@ -4,9 +4,10 @@ div.loginHeader {
 }
 
 div.login2-button {
-    width: 43px;
+    width: 175px;
     float: none;
     margin: 0 auto;
+    margin-top: 20px;
     padding: 5px;
     color: #1DE28F;
     font-weight: bold;
