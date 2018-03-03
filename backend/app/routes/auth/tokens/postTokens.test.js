@@ -56,12 +56,12 @@ describe('api/auth/tokens endpoint', () => {
       expect(reply.response.mock.calls[0][0].code).toBe(2);
     });
 
-    it('handles requests with missing params', () => {
+    it('handles token requests with missing params', () => {
       postTokens.handler(emptyRequest,reply);
       expect(reply.response.mock.calls[0][0].code).toBe(2);
     });
 
-    it('invalid token signature ', () => {
+    it('handles invalid tokens', () => {
         AuthUtil.validateToken = jest.fn(() => new Promise(() => {
             throw new Error('invalid signature');
         }));
