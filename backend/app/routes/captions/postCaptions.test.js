@@ -121,18 +121,9 @@ const emptyOperationRequest = {
     },
 };
 
-// Reply for testing accepting/rejecting captions. Also used for testing the general endpoint.
-const selectionReply = {
+const reply = {
     response: jest.fn(() => ({
         code: () => {},
-    })),
-};
-
-// Reply for testing voting on captions.
-const voteReply = {
-    response: jest.fn(() => ({
-        code: () => {},
-        votes: () => {},
     })),
 };
 
@@ -152,45 +143,45 @@ databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
 // Test the acceptance/rejection of a caption functionality
 describe('/api/captions/:id Endpoint (Accepting/Rejecting)', () => {
     it('Handles successful acceptance or rejection of a caption', () =>
-        postCaptions.handler(selectionRequest, selectionReply)
+        postCaptions.handler(selectionRequest, reply)
             .then(() => {
-                expect(selectionReply.response.mock.calls[0][0].code).toBe(1);
+                expect(reply.response.mock.calls[0][0].code).toBe(1);
             }));
     it('Handles request with invalid or missing selection value', () =>
-        postCaptions.handler(emptySelectionRequest, selectionReply)
+        postCaptions.handler(emptySelectionRequest, reply)
             .then(() => {
-                expect(selectionReply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(2);
             }));
 });
 
 // Test the caption voting captionality. Does not test for the vote count.
 describe('/api/captions/:id Endpoint (Voting)', () => {
     it('Handles successful acceptance or rejection of a caption', () =>
-        postCaptions.handler(voteRequest, voteReply)
+        postCaptions.handler(voteRequest, reply)
             .then(() => {
-                expect(voteReply.response.mock.calls[0][0].code).toBe(1);
+                expect(reply.response.mock.calls[0][0].code).toBe(1);
             }));
     it('Handles request with invalid or missing vote value', () =>
-        postCaptions.handler(emptyVoteRequest, voteReply)
+        postCaptions.handler(emptyVoteRequest, reply)
             .then(() => {
-                expect(voteReply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(2);
             }));
 });
 
 // Test the generic functionality of the endpoint
 describe('/api/captions/:id Endpoint (Common)', () => {
     it('Handles request with invalid or missing operation value', () =>
-        postCaptions.handler(emptyOperationRequest, selectionReply)
+        postCaptions.handler(emptyOperationRequest, reply)
             .then(() => {
-                expect(selectionReply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(2);
             }));
     it('Handles request with blank authentication', () => {
-        postCaptions.handler(emptyAuthRequest, selectionReply);
-        expect(selectionReply.response.mock.calls[0][0].code).toBe(4);
+        postCaptions.handler(emptyAuthRequest, reply);
+        expect(reply.response.mock.calls[0][0].code).toBe(4);
     });
     it('Handles request that is missing the caption ID', () => {
-        postCaptions.handler(emptyIdRequest, selectionReply);
-        expect(selectionReply.response.mock.calls[0][0].code).toBe(2);
+        postCaptions.handler(emptyIdRequest, reply);
+        expect(reply.response.mock.calls[0][0].code).toBe(2);
     });
     it('Handles non-existent caption ID in the database', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
@@ -199,18 +190,18 @@ describe('/api/captions/:id Endpoint (Common)', () => {
                 fields: {},
             });
         }));
-        return postCaptions.handler(selectionRequest, selectionReply)
+        return postCaptions.handler(selectionRequest, reply)
             .then(() => {
-                expect(selectionReply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(2);
             });
     });
     it('Handles an unknown error', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise(() => {
             throw new Error();
         }));
-        return postCaptions.handler(selectionRequest, selectionReply)
+        return postCaptions.handler(selectionRequest, reply)
             .then(() => {
-                expect(selectionReply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(3);
             });
     });
 });
