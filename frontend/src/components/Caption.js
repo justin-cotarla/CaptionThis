@@ -106,6 +106,7 @@ class Caption extends React.Component {
                 <ul>
                     <li>
                         <CaptionVotes 
+                            token={this.state.token}
                             upvotes={this.state.total_votes}
                             voteHandler={this.handleVote} 
                             id={this.state.caption_id}/>
