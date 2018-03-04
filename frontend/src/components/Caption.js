@@ -115,7 +115,7 @@ class Caption extends React.Component {
                     </li>
                     <li className="caption-content">
                         <Acceptor 
-                            token={this.state.token} 
+                            isReadOnly={this.state.token} 
                             captionId={this.state.caption_id} 
                             status={this.state.selected} 
                             acceptHandler={this.handleAccept} />
