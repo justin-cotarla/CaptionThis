@@ -8,10 +8,6 @@ html, body{
   background: #303030;
 }
 
-a {
-  color: white;
-}
-
 div.header {
   padding: 15px;
   display: block;
