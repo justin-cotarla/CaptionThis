@@ -16,47 +16,49 @@ class Caption extends React.Component {
     }
 
     handleVote = (event) => {
-        const action = event.target.id;
         const token = this.state.token;
-        const previousVote = this.state.user_vote;
+        if (token) {    
+            const action = event.target.id;
+            const previousVote = this.state.user_vote;
 
-        let newVote;
-        switch (previousVote) {
-            case 0:
-                newVote = (action === '+') ? 1 : -1; 
-                break;
-            case 1:
-                newVote = (action === '+') ? 0 : -1;
-                break;
-            case -1:
-                newVote = (action === '+') ? 1 : 0;
-                break;
-            default: break;
-        }
-
-        this.setState(prevState => {
-            return {
-                total_votes: prevState.total_votes + (newVote - previousVote),
-                user_vote: newVote,
+            let newVote;
+            switch (previousVote) {
+                case 0:
+                    newVote = (action === '+') ? 1 : -1; 
+                    break;
+                case 1:
+                    newVote = (action === '+') ? 0 : -1;
+                    break;
+                case -1:
+                    newVote = (action === '+') ? 1 : 0;
+                    break;
+                default: break;
             }
-        });
 
-        const captionid = this.state.caption_id;
-        const data = { 
-            operation: 'vote', 
-            value: newVote,
-        };
-        const headers = { 
-            'Authorization': `Bearer ${token}` 
-        };
+            this.setState(prevState => {
+                return {
+                    total_votes: prevState.total_votes + (newVote - previousVote),
+                    user_vote: newVote,
+                }
+            });
 
-        axios({
-            method: 'post',
-            url: `http://${process.env.REACT_APP_IP}/api/captions/${captionid}`,
-            data: data,
-            headers: headers,
-        })
-        .catch(error => console.log(error)); 
+            const captionid = this.state.caption_id;
+            const data = { 
+                operation: 'vote', 
+                value: newVote,
+            };
+            const headers = { 
+                'Authorization': `Bearer ${token}` 
+            };
+
+            axios({
+                method: 'post',
+                url: `http://${process.env.REACT_APP_IP}/api/captions/${captionid}`,
+                data: data,
+                headers: headers,
+            })
+            .catch(error => console.log(error));
+        } 
     }
 
     handleAccept = (event) => {
@@ -108,7 +110,7 @@ class Caption extends React.Component {
                         <CaptionVotes 
                             token={this.state.token}
                             upvotes={this.state.total_votes}
-                            voteHandler={this.state.token && this.handleVote} 
+                            voteHandler={this.handleVote} 
                             id={this.state.caption_id}/>
                     </li>
                     <li className="caption-content">
