@@ -113,7 +113,7 @@ class MomentViewPage extends Component{
             <div className="moment-view-container">
             <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
             <CaptionCreatorForm momentId={this.props.match.params.momentID} onCaptionSubmit={this.fetchCaptions} token={token}/>
-            <CaptionList captions={captions} linkedToMoment={false} token={token} onCaptionUpdate={this.onCaptionUpdate}>
+            <CaptionList captions={captions} isLinkedToMoment={false} token={token} onCaptionUpdate={this.onCaptionUpdate}>
                 {
                     captions.length > 0 ? <Header textSize={3} text={`${captions.length} Caption${captions.length > 1 ? 's' : ''}`}/>
                     : <Header textSize={3} text="Looks like there's nothing here (yet) :("/>

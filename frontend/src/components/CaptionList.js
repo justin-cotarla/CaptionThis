@@ -13,9 +13,9 @@ const CaptionList = (props) => {
             <ul>
                 { 
                     props.captions.map(caption => {
-                        return <li key={caption.caption_id} style={props.linkedToMoment ? {cursor: 'pointer'} : {}}>
+                        return <li key={caption.caption_id} style={props.isLinkedToMoment ? {cursor: 'pointer'} : {}}>
                             <ConditionalWrap
-                                condition={props.linkedToMoment}
+                                condition={props.isLinkedToMoment}
                                 wrap={children => <Link className="linked-caption" to={`/moment/${caption.moment_id}`}>{children}</Link>}
                             >
                                 <Caption caption={caption} token={token} />
