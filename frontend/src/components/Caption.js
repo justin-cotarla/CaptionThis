@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Header from './Header';
 import Upvoter from './Upvoter';
+import Acceptor from './Acceptor';
 
 import '../styles/Caption.css';
 
@@ -100,26 +101,21 @@ class Caption extends React.Component {
     }
 
     render(){
-        let acceptStatus = '';
-        if(this.state.selected === -1){
-            acceptStatus = 'REJECTED';
-        } else if(this.state.selected === 1){
-            acceptStatus = 'ACCEPTED';
-        }
-
         return (
             <div className="caption-container">
                 <ul>
                     <li>
-                        <Upvoter upvotes={this.state.total_votes} voteHandler={this.handleVote} id={this.state.caption_id}/>
+                        <Upvoter 
+                            upvotes={this.state.total_votes}
+                            voteHandler={this.handleVote} 
+                            id={this.state.caption_id}/>
                     </li>
                     <li>
-                    <ul className="accept-reject">
-                        { this.state.token && <li id="accept" value={this.state.caption_id} onClick={this.handleAccept}>Accept</li> }
-                        { this.state.token && <li>|</li> }
-                        { this.state.token && <li id="reject" value={this.state.caption_id} onClick={this.handleAccept}>Reject</li> }        
-                        <li>{acceptStatus}</li>
-                    </ul>
+                        <Acceptor 
+                            token={this.state.token} 
+                            captionId={this.state.caption_id} 
+                            status={this.state.selected} 
+                            acceptHandler={this.handleAccept} />
                         <Header textSize={2} text={this.state.caption}/>  
                         <Header text={`Posted by ${this.state.user.username} on ${this.state.date_added}`}/> 
                     </li>
