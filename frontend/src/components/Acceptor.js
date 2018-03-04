@@ -1,9 +1,10 @@
 import React from 'react';
+import '../styles/Acceptor.css';
 
 const Acceptor = (props) => {
-    const previousAcceptState = this.state.selected;
+    const acceptState = props.status;
     let acceptStatus = '';
-    switch(previousAcceptState){
+    switch(acceptState){
         case 1:
             acceptStatus = 'ACCEPTED';
             break;
@@ -12,13 +13,13 @@ const Acceptor = (props) => {
             break;
         default: break;
     }
-    
+
     return (
         <ul className="accept-reject">
             { props.token && <li id="accept" value={props.caption_id} onClick={props.handleAccept}>Accept</li> }
             { props.token && <li>|</li> }
             { props.token && <li id="reject" value={props.caption_id} onClick={props.handleAccept}>Reject</li> }        
-            <li>{props.status}</li>
+            <li>{acceptStatus}</li>
         </ul>
     )
 }

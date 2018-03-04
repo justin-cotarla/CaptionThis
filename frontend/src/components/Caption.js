@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Header from './Header';
-import Upvoter from './Upvoter';
+import CaptionVotes from './CaptionVotes';
 import Acceptor from './Acceptor';
 
 import '../styles/Caption.css';
@@ -105,7 +105,7 @@ class Caption extends React.Component {
             <div className="caption-container">
                 <ul>
                     <li>
-                        <Upvoter 
+                        <CaptionVotes 
                             upvotes={this.state.total_votes}
                             voteHandler={this.handleVote} 
                             id={this.state.caption_id}/>
