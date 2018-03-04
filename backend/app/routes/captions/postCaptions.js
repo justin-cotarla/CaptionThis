@@ -36,7 +36,6 @@ const selectCaption = (request, reply, captionId) => {
 
     // Check if the selection is valid
     if (selection === undefined || selection === '' || !/^-*[01]$/.test(selection)) {
-        console.log('Invalid selection.');
         return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
     }
 
@@ -64,7 +63,6 @@ const postCaptions = {
 
         // Check if the caption id is valid
         if (captionId === undefined || captionId === '' || !/^\d+$/.test(captionId)) {
-            console.log('Invalid caption ID');
             return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
         }
 
@@ -86,12 +84,10 @@ const postCaptions = {
                     return selectCaption(request, reply, captionId);
                 }
                 default: {
-                    console.log('Invalid operation');
                     return reply.response({ code: 2 }).code(400);
                 }
                 }
             }).catch((error) => {
-                console.log(error);
                 if (error.message === 'Caption ID does not exist.') {
                     return reply.response({ code: 2 }).code(400);
                 }
