@@ -16,9 +16,9 @@ const Acceptor = (props) => {
 
     return (
         <ul className="accept-reject">
-            { props.token && <li id="accept" value={props.caption_id} onClick={props.handleAccept}>Accept</li> }
+            { props.token && <li id="accept" value={props.caption_id} onClick={props.acceptHandler}>Accept</li> }
             { props.token && <li>|</li> }
-            { props.token && <li id="reject" value={props.caption_id} onClick={props.handleAccept}>Reject</li> }        
+            { props.token && <li id="reject" value={props.caption_id} onClick={props.acceptHandler}>Reject</li> }        
             <li>{acceptStatus}</li>
         </ul>
     )
