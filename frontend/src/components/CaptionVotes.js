@@ -1,8 +1,9 @@
 import React from 'react';
+import '../styles/CaptionVotes.css';
 
-const Upvoter = props => {
+const CaptionVotes = props => {
     return (
-        <div className="upvoter-container">
+        <div className="caption-votes-container">
             <ul>
                 <li className="vote-ticker" id="+" onClick={props.voteHandler}>+</li>
                 <li className="vote-count">{props.upvotes}</li>
@@ -12,4 +13,4 @@ const Upvoter = props => {
     )
 }
 
-export default Upvoter;
+export default CaptionVotes;

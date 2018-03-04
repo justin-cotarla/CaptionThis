@@ -7,57 +7,13 @@
     background-color: rgba(196, 196, 196, 0.282);
 }
 
+.caption-container ul li {
+    margin: auto 0;
+}
+
 .caption-container > ul {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     list-style-type: none;
-}
-
-.upvoter-container {
-    width: 50px;
-}
-
-.upvoter-container li {
-    font-weight: 600;
-    margin: 3px 0;
-}
-
-.upvoter-container > ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    list-style-type: none;
-    text-align: center;
-    padding: 0;
-}
-
-.vote-count {
-    font-size: 16px;
-}
-
-.vote-ticker {
-    font-size: 12px;
-}
-
-.vote-ticker:hover{
-    cursor: pointer;
-}
-
-#accept:hover {
-    cursor: pointer;
-}
-
-#reject:hover {
-    cursor: pointer;
-}
-
-.accept-reject {
-    display: flex;
-    flex-direction: row;
-}
-
-.accept-reject li {
-    font-size: 14px;
-    margin: 5px 10px 5px 0;
 }
