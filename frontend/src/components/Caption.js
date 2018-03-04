@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Header from './Header';
+import Upvoter from './Upvoter';
 
 import '../styles/Caption.css';
 
@@ -126,18 +127,6 @@ class Caption extends React.Component {
             </div>
         )
     }
-}
-
-const Upvoter = props => {
-    return (
-        <div className="upvoter-container">
-            <ul>
-                <li className="vote-ticker" id="+" onClick={props.voteHandler}>+</li>
-                <li className="vote-count">{props.upvotes}</li>
-                <li className="vote-ticker" id="-" onClick={props.voteHandler}>-</li>
-            </ul>
-        </div>
-    )
 }
 
 export default Caption;
