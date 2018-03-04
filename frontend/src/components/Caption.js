@@ -110,7 +110,7 @@ class Caption extends React.Component {
                             voteHandler={this.handleVote} 
                             id={this.state.caption_id}/>
                     </li>
-                    <li>
+                    <li className="caption-content">
                         <Acceptor 
                             token={this.state.token} 
                             captionId={this.state.caption_id} 
