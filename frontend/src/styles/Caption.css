@@ -21,3 +21,8 @@
 .caption-container li > * {
     padding: 1px 0;
 }
+
+.linked-caption {
+    text-decoration: none;
+    color: black;
+}
