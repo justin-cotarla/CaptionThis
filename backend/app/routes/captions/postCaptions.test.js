@@ -140,20 +140,50 @@ beforeEach(() => {
     jest.clearAllMocks();
 });
 
-// Test the generic functionality of the endpoint
-describe('/api/captions/:id Endpoint (Common)', () => {
-    it('Handles request with invalid or missing operation value', () => {
-        databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
-            resolve({
-                rows: [{}],
-                fields: {},
-            });
-        }));
-        return postCaptions.handler(emptyOperationRequest, selectionReply)
+// Override the sendQuery
+databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
+    resolve({
+        rows: [{}],
+        fields: {},
+    });
+}));
+
+
+// Test the acceptance/rejection of a caption functionality
+describe('/api/captions/:id Endpoint (Accepting/Rejecting)', () => {
+    it('Handles successful acceptance or rejection of a caption', () =>
+        postCaptions.handler(selectionRequest, selectionReply)
+            .then(() => {
+                expect(selectionReply.response.mock.calls[0][0].code).toBe(1);
+            }));
+    it('Handles request with invalid or missing selection value', () =>
+        postCaptions.handler(emptySelectionRequest, selectionReply)
             .then(() => {
                 expect(selectionReply.response.mock.calls[0][0].code).toBe(2);
-            });
-    });
+            }));
+});
+
+// Test the caption voting captionality. Does not test for the vote count.
+describe('/api/captions/:id Endpoint (Voting)', () => {
+    it('Handles successful acceptance or rejection of a caption', () =>
+        postCaptions.handler(voteRequest, voteReply)
+            .then(() => {
+                expect(voteReply.response.mock.calls[0][0].code).toBe(1);
+            }));
+    it('Handles request with invalid or missing vote value', () =>
+        postCaptions.handler(emptyVoteRequest, voteReply)
+            .then(() => {
+                expect(voteReply.response.mock.calls[0][0].code).toBe(2);
+            }));
+});
+
+// Test the generic functionality of the endpoint
+describe('/api/captions/:id Endpoint (Common)', () => {
+    it('Handles request with invalid or missing operation value', () =>
+        postCaptions.handler(emptyOperationRequest, selectionReply)
+            .then(() => {
+                expect(selectionReply.response.mock.calls[0][0].code).toBe(2);
+            }));
     it('Handles request with blank authentication', () => {
         postCaptions.handler(emptyAuthRequest, selectionReply);
         expect(selectionReply.response.mock.calls[0][0].code).toBe(4);
@@ -181,62 +211,6 @@ describe('/api/captions/:id Endpoint (Common)', () => {
         return postCaptions.handler(selectionRequest, selectionReply)
             .then(() => {
                 expect(selectionReply.response.mock.calls[0][0].code).toBe(3);
-            });
-    });
-});
-
-// Test the acceptance/rejection of a caption functionality
-describe('/api/captions/:id Endpoint (Accepting/Rejecting)', () => {
-    it('Handles successful acceptance or rejection of a caption', () => {
-        databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
-            resolve({
-                rows: [{}],
-                fields: {},
-            });
-        }));
-        return postCaptions.handler(selectionRequest, selectionReply)
-            .then(() => {
-                expect(selectionReply.response.mock.calls[0][0].code).toBe(1);
-            });
-    });
-    it('Handles request with invalid or missing selection value', () => {
-        databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
-            resolve({
-                rows: [{}],
-                fields: {},
-            });
-        }));
-        return postCaptions.handler(emptySelectionRequest, selectionReply)
-            .then(() => {
-                expect(selectionReply.response.mock.calls[0][0].code).toBe(2);
-            });
-    });
-});
-
-// Test the caption voting captionality. Does not test for the vote count.
-describe('/api/captions/:id Endpoint (Voting)', () => {
-    it('Handles successful acceptance or rejection of a caption', () => {
-        databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
-            resolve({
-                rows: [{}],
-                fields: {},
-            });
-        }));
-        return postCaptions.handler(voteRequest, voteReply)
-            .then(() => {
-                expect(voteReply.response.mock.calls[0][0].code).toBe(1);
-            });
-    });
-    it('Handles request with invalid or missing vote value', () => {
-        databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
-            resolve({
-                rows: [{}],
-                fields: {},
-            });
-        }));
-        return postCaptions.handler(emptyVoteRequest, voteReply)
-            .then(() => {
-                expect(voteReply.response.mock.calls[0][0].code).toBe(2);
             });
     });
 });
