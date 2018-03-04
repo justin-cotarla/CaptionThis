@@ -7,7 +7,6 @@ const updateVote = (request, reply, captionId) => {
 
     // Check if the vote is valid
     if (vote === undefined || vote === '' || !/^-*[01]$/.test(vote)) {
-        console.log('Invalid vote.');
         return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
     }
 
