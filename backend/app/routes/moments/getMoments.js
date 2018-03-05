@@ -1,5 +1,32 @@
 import databaseUtil from '../../utility/DatabaseUtil';
 
+const getMomentsBuilder = (params) => {
+    const conditions = [];
+    const values = [];
+
+    // To get captions by moment id, user-id, with a limit
+    const userid = params['user-id'];
+    let { limit } = params;
+
+    if (!(userid === undefined || userid === '' || userid === 0 || !/^\d+$/.test(userid))) {
+        conditions.push('MOMENT.USER_ID=?');
+        values.push(momentid);
+    }
+
+    if (limit === undefined || limit === '' || !/^\d+$/.test(limit)) {
+        limit = 15; // Default value for limit is 15
+    }
+
+    // Parse limit to number
+    limit = parseInt(limit, 10);
+    values.push(limit);
+
+    return {
+        where: conditions ? conditions[0] : 'TRUE',
+        values,
+    };
+};
+
 const getMoments = {
     method: 'GET',
     path: '/api/moments',
@@ -9,21 +36,32 @@ const getMoments = {
         // If param is absent, it is undefined. If present but not specified, it is the empty string
         if (limit === undefined || limit === '') {
             limit = 20; // Default value for limit is 20
-        } else if (!/^\d+$/.test(limit)) { // Test if string is only digits
-            return reply.response({ code: 2, moments: [] }).code(400); // Code 2 means invalid input
-        }
-
-        // Parse limit to number to prep for db query
-        limit = parseInt(limit, 10);
+        } 
+        
+        const { where, values } = getMomentsBuilder(request.query);
 
         // Create db query
         const query = `
-        SELECT MOMENT.ID AS MOMENT_ID,
-        IMG_URL, DESCRIPTION, DATE_ADDED, USER.USERNAME,
-        USER.ID AS USER_ID FROM MOMENT
-        JOIN USER ON MOMENT.USER_ID = USER.ID ORDER BY DATE_ADDED DESC LIMIT ?
+        SELECT 
+            MOMENT.ID AS MOMENT_ID,
+            IMG_URL, 
+            DESCRIPTION, 
+            DATE_ADDED, 
+            USER.USERNAME,
+            USER.ID AS USER_ID 
+        FROM 
+            MOMENT
+        JOIN 
+            USER 
+        ON 
+            MOMENT.USER_ID = USER.ID 
+        WHERE 
+            ${where}
+        ORDER BY 
+            DATE_ADDED DESC 
+        LIMIT 20
         `;
-        return databaseUtil.sendQuery(query, [limit]).then((result) => {
+        return databaseUtil.sendQuery(query, values[0]).then((result) => {
             const moments = result.rows.map(moment => ({
                 moment_id: moment.MOMENT_ID,
                 user: {
