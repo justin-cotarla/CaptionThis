@@ -1,5 +1,5 @@
-import * as AuthUtil from '../../utility/AuthUtil';
-import loginRoute from './login';
+import * as AuthUtil from '../../../utility/AuthUtil';
+import postLogin from './postLogin';
 
 // A dummy request
 const request = {
@@ -45,7 +45,7 @@ describe('api/auth/login endpoint', () => {
 
         // The login route is exported from login.js in an array
         // .handler is the actual functon we are testing
-        return loginRoute[0].handler(request, reply)
+        return postLogin.handler(request, reply)
             .then(() => {
                 // [0][0] refers to first function argument of the first call
                 expect(reply.response.mock.calls[0][0].code).toBe(1);
@@ -57,7 +57,7 @@ describe('api/auth/login endpoint', () => {
             throw new Error('Wrong password');
         }));
 
-        return loginRoute[0].handler(request, reply)
+        return postLogin.handler(request, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0].code).toBe(4);
             });
@@ -65,27 +65,22 @@ describe('api/auth/login endpoint', () => {
 
     it('handles users that do not exist', () => {
         AuthUtil.authenticate = jest.fn(() => new Promise(() => {
-            throw new Error('User does not exists');
+            throw new Error('User does not exist');
         }));
 
-        return loginRoute[0].handler(request, reply)
+        return postLogin.handler(request, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0].code).toBe(3);
             });
     });
 
     it('handles requests with blank params', () => {
-        loginRoute[0].handler(emptyRequest, reply);
+        postLogin.handler(emptyRequest, reply);
         expect(reply.response.mock.calls[0][0].code).toBe(2);
     });
 
     it('handles requests with missing payloads', () => {
-        loginRoute[0].handler({}, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(2);
-    });
-
-    it('handles requests with missing payloads', () => {
-        loginRoute[0].handler({}, reply);
+        postLogin.handler({}, reply);
         expect(reply.response.mock.calls[0][0].code).toBe(2);
     });
 
@@ -94,7 +89,7 @@ describe('api/auth/login endpoint', () => {
             throw new Error('idk man');
         }));
 
-        return loginRoute[0].handler(request, reply)
+        return postLogin.handler(request, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0].code).toBe(5);
             });
