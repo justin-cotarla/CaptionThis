@@ -28,7 +28,13 @@ describe('/api/getMoments endpoint', () => {
     it('Successfully get a moment', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
             resolve({
-                rows: [{}],
+                rows: [{
+                    ID: 1,
+                    IMG_URL: 'test',
+                    DESCRIPTION: 'testDescription',
+                    DATA_ADDED: 0,
+                    USER_ID: 1,
+                }],
                 fields: {},
             });
         }));
@@ -52,7 +58,6 @@ describe('/api/getMoments endpoint', () => {
                 expect(reply.response.mock.calls[0][0].code).toBe(3);
             });
     });
-
     /*  it('empty request', () => {
         momentsRoute.handler(emptyRequest, reply);
         expect(reply.response.mock.calls[0][0].code).toBe(3);
