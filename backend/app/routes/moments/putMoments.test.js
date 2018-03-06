@@ -1,7 +1,7 @@
+import AWSMock from 'aws-sdk-mock';
 import AWS from 'aws-sdk';
 import databaseUtil from '../../utility/DatabaseUtil';
-import momentsRoute from './putMoments.js';
-
+import putMoments from './putMoments.js';
 
 const request = {
     auth: {
@@ -13,9 +13,9 @@ const request = {
         },
     },
     payload: {
-        description: '',
+        description: 'test',
         file: {
-            _data: 1,
+            _data: 'test',
             hapi: {
                 filename: 'test.jpg',
             },
@@ -23,30 +23,16 @@ const request = {
     },
 };
 
-/* const emptyRequest = {
-    auth: {
-        credentials: {
-            user: {
-                id: 1,
-                username: 'test',
-            },
-        },
-    },
-    payload: {
-        output: '',
-        parse: '',
-        allow: '',
-        maxBytes: 1,
-    },
-}; */
-
 const emptyAuthRequest = {
     auth: {},
     payload: {
-        output: '',
-        parse: '',
-        allow: '',
-        maxBytes: 1,
+        description: '',
+        file: {
+            _data: 'test',
+            hapi: {
+                filename: 'test.jpg',
+            },
+        },
     },
 };
 
@@ -56,39 +42,37 @@ const reply = {
     })),
 };
 
-const s3 = new AWS.S3({});
-
 beforeEach(() => {
     jest.clearAllMocks();
 });
 
+const s3 = new AWS.S3();
+
 describe('/api/moments endpoint', () => {
     it('successfully create a moment', () => {
-        s3.mock = jest.fn(() => new Promise((resolve) => {
+        s3.upload = jest.fn(() => new Promise((resolve) => {
             resolve({
                 data: {
-                    ETag: '1"',
                     Location: 'test.jpg',
-                    Key: '1',
-                    Bucket: 'TestBucket',
                 },
             });
         }));
+
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
             resolve({
-                rows: {},
+                rows: [{}],
                 fields: {},
             });
         }));
 
-        return momentsRoute.handler(request, reply)
+        return putMoments.handler(request, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0].code).toBe(3);
             });
     });
 
-    it('request with no authentication', () => {
-        momentsRoute.handler(emptyAuthRequest, reply);
+    it('Request with no authentication', () => {
+        putMoments.handler(emptyAuthRequest, reply);
         expect(reply.response.mock.calls[0][0].code).toBe(4);
     });
 
