@@ -10,9 +10,11 @@ const Moment = props => {
                     <div className="Moment-thumbnail" style={{backgroundImage: `url(${props.image})`}} onClick={props.onClick}></div>
                 </li>
                 <li className="Moment-preview-info">
-                    <Header textSize={4} text={ props.description } />
+                    <center>
+                      <Header textSize={4} text={ props.description } />
+                    </center>
                     <Header textSize={3} text={'Posted on ' + props.date } />
-                    <Header textSize={1} text={ 'Submitted by ' + props.user } />
+                    <Header textSize={2} text={ 'Submitted by ' + props.user } />
                 </li>
             </ul>
         </div>
