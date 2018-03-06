@@ -6,7 +6,7 @@ import RegistrationPage from './pages/RegistrationPage';
 import MomentCreationPage from './pages/MomentCreationPage';
 import MomentViewPage from './pages/MomentViewPage';
 import LoginPage from './pages/LoginPage';
-import UserContributionPage from './pages/UserContributionPage';
+import ProfilePage from './pages/ProfilePage';
 
 import './App.css';
 
@@ -20,7 +20,7 @@ class App extends Component {
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/submit" component={MomentCreationPage}/>
                 <Route path="/moment/:momentID" component={MomentViewPage}/>
-                <Route path="/user/:id" component={UserContributionPage}/>
+                <Route path="/user/:username" component={ProfilePage}/>
             </Switch>
         </BrowserRouter>
     );

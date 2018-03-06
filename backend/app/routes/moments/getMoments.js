@@ -31,7 +31,6 @@ const getMoments = {
     method: 'GET',
     path: '/api/moments',
     handler: (request, reply) => {
-
         const { where, values } = getMomentsBuilder(request.query);
 
         // Create db query
