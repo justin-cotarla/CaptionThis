@@ -148,7 +148,6 @@ databaseUtil.sendQuery = jest.fn(query => new Promise((resolve) => {
     }
 }));
 
-
 // Test the acceptance/rejection of a caption functionality
 describe('/api/captions/:id Endpoint (Accepting/Rejecting)', () => {
     it('Handles successful acceptance or rejection of a caption', () =>
