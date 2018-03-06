@@ -132,11 +132,20 @@ beforeEach(() => {
 });
 
 // Override the sendQuery
-databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
-    resolve({
-        rows: [{}],
-        fields: {},
-    });
+databaseUtil.sendQuery = jest.fn(query => new Promise((resolve) => {
+    switch (query) {
+    case 'SELECT SUM(VALUE) AS VOTECOUNT FROM CAPTION_VOTE WHERE CAPTION_ID=?':
+        resolve({
+            rows: [{ VOTECOUNT: 1 }],
+            fields: {},
+        });
+        break;
+    default:
+        resolve({
+            rows: [{}],
+            fields: {},
+        });
+    }
 }));
 
 
@@ -154,12 +163,12 @@ describe('/api/captions/:id Endpoint (Accepting/Rejecting)', () => {
             }));
 });
 
-// Test the caption voting captionality. Does not test for the vote count.
+// Test the caption voting functionality. Does not test for the vote count.
 describe('/api/captions/:id Endpoint (Voting)', () => {
     it('Handles successful acceptance or rejection of a caption', () =>
         postCaptions.handler(voteRequest, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(1);
+                expect(reply.response.mock.calls[0][0]).toEqual({ code: 1, votes: 1 });
             }));
     it('Handles request with invalid or missing vote value', () =>
         postCaptions.handler(emptyVoteRequest, reply)
