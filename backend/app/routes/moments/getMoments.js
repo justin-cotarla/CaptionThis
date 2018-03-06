@@ -10,11 +10,11 @@ const getMomentsBuilder = (params) => {
 
     if (!(userid === undefined || userid === '' || userid === 0 || !/^\d+$/.test(userid))) {
         conditions.push('MOMENT.USER_ID=?');
-        values.push(momentid);
+        values.push(userid);
     }
 
     if (limit === undefined || limit === '' || !/^\d+$/.test(limit)) {
-        limit = 15; // Default value for limit is 15
+        limit = 20; // Default value for limit is 20
     }
 
     // Parse limit to number
@@ -22,7 +22,7 @@ const getMomentsBuilder = (params) => {
     values.push(limit);
 
     return {
-        where: conditions ? conditions[0] : 'TRUE',
+        where: conditions.length ? conditions[0] : 'TRUE',
         values,
     };
 };
@@ -31,13 +31,7 @@ const getMoments = {
     method: 'GET',
     path: '/api/moments',
     handler: (request, reply) => {
-        // Get limit query param, Hapi parses params as strings
-        let { limit } = request.query;
-        // If param is absent, it is undefined. If present but not specified, it is the empty string
-        if (limit === undefined || limit === '') {
-            limit = 20; // Default value for limit is 20
-        } 
-        
+
         const { where, values } = getMomentsBuilder(request.query);
 
         // Create db query
@@ -59,9 +53,10 @@ const getMoments = {
             ${where}
         ORDER BY 
             DATE_ADDED DESC 
-        LIMIT 20
+        LIMIT ?
         `;
-        return databaseUtil.sendQuery(query, values[0]).then((result) => {
+
+        return databaseUtil.sendQuery(query, values).then((result) => {
             const moments = result.rows.map(moment => ({
                 moment_id: moment.MOMENT_ID,
                 user: {
