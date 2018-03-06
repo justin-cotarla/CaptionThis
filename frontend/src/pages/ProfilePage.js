@@ -150,7 +150,10 @@ class ProfilePage extends React.Component {
                     }
                     {
                         selectedView === views[1]
-                        && <MomentList Moments={moments}/>
+                        && ( 
+                            moments.length > 0 && <MomentList Moments={moments}/> 
+                            || <h1 className="header-section">There aren't any Moments to see here :(</h1> 
+                        )
                     }
                 </div>
                 <div className="profile-page-sidebar">
