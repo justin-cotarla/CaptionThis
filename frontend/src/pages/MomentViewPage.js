@@ -91,6 +91,8 @@ class MomentViewPage extends Component{
     render() {
         const token = this.state.token;
         const moment = this.state.moment;
+        const captions = this.state.captions;
+        const loading = this.state.loading;
         const error = this.state.error;
         
         if(error) {
@@ -100,20 +102,25 @@ class MomentViewPage extends Component{
                 </div>
             )
         }
-        
-        if(moment) {
+
+        if(loading) {
             return (
-                <div className="moment-view-container">
-                <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
-                <CaptionCreatorForm momentId={this.props.match.params.momentID} onCaptionSubmit={this.fetchCaptions} token={token}/>
-                <CaptionList captions={this.state.captions} token={token} onCaptionUpdate={this.onCaptionUpdate}/>
-                </div>
+                <Loading/>
             )
         }
-        else {
-            return <Loading />
-        }
         
+        return (
+            <div className="moment-view-container">
+            <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
+            <CaptionCreatorForm momentId={this.props.match.params.momentID} onCaptionSubmit={this.fetchCaptions} token={token}/>
+            <CaptionList captions={captions} isLinkedToMoment={false} token={token} onCaptionUpdate={this.onCaptionUpdate}>
+                {
+                    captions.length > 0 ? <Header textSize={3} text={`${captions.length} Caption${captions.length > 1 ? 's' : ''}`}/>
+                    : <Header textSize={3} text="Looks like there's nothing here (yet) :("/>
+                }
+            </CaptionList>
+            </div>
+        )
     } 
 }
 
