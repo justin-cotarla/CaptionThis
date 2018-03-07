@@ -7,6 +7,8 @@ import Header from '../components/Header';
 import PageHeader from '../components/PageHeader';
 import Loading from '../components/Loading';
 
+import '../styles/LandingPage.css';
+
 class LandingPage extends Component {
     constructor(props){
         super(props);
