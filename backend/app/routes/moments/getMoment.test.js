@@ -24,8 +24,8 @@ describe('/api/getMoments endpoint', () => {
                 rows: [{
                     ID: 1,
                     IMG_URL: 'test',
-                    DESCRIPTION: 'testDescription',
-                    DATA_ADDED: 0,
+                    DESCRIPTON: 'test',
+                    DATE_ADDED: 1,
                     USER_ID: 1,
                 }],
                 fields: {},
@@ -33,7 +33,16 @@ describe('/api/getMoments endpoint', () => {
         }));
         return getMoment.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(1);
+                expect(reply.response.mock.calls[0][0]).toEqual({
+                    code: 1,
+                    moment: {
+                        moment_id: 1,
+                        img_url: 'test',
+                        description: 'test',
+                        date_added: 1,
+                        user_id: 1,
+                    },
+                });
             });
     });
     it('Nothing is returned', () => {
