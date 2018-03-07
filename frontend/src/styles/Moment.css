@@ -1,20 +1,14 @@
-.Moment-preview-container:hover {
-    cursor: pointer;
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    position: relative;
-    z-index: 5;
-    height: 440px;
-    background-color: #FFFF;
-    transition: .3s ease-in-out;
-}
-
 @font-face {
     font-family: 'Gloria Hallelujah';
     @import url(https://fonts.googleapis.com/css?family=Gloria+Hallelujah);
 }
 
+/* By default, tilt all moments by -2 degrees */
 .Moment-preview-container {
+    -webkit-transform: rotate(-2deg);
+    -moz-transform: rotate(-2deg);
+    -webkit-transition: opacity .3s ease-out;
+    -moz-transition: opacity .3s ease-out;
     text-align: right;
     font-family: 'Gloria Hallelujah';
     font-size: 15px;
@@ -25,8 +19,7 @@
     padding: 16px;
     box-shadow: 5px 10px 20px black;
     align-content: center;
-    background-color: #FFFF;
-    background-image: url("../resources/polaroid_texture.png");
+    background-color: #FFFFFF;
 }
 
 .Moment-preview-layout {
@@ -48,4 +41,45 @@
     background-position: 50% 50%;
     background-repeat:   no-repeat;
     background-size:     cover;
+}
+
+/* Rotate all even images 2 degrees */
+.Moments-list li:nth-child(5n) .Moment-preview-container{
+  -webkit-transform: rotate(2deg);
+  -moz-transform: rotate(2deg);
+}
+/* offset every 3rd image's position */
+.Moments-list li:nth-child(5n+1) .Moment-preview-container{
+  -webkit-transform: none;
+  -moz-transform: none;
+  position: relative;
+  top: -5px;
+}
+/* Rotate every fifth image by 5 degrees and offset it */
+.Moments-list li:nth-child(5n+2) .Moment-preview-container{
+  -webkit-transform: rotate(5deg);
+  -moz-transform: rotate(5deg);
+  position: relative;
+  right: 5px;
+}
+/* Keep default rotate for every eighth, but offset it */
+.Moments-list li:nth-child(5n+3) .Moment-preview-container{
+  position: relative;
+  top: 8px;
+  right: 5px;
+}
+/* Keep default rotate for every eleventh, but offset it */
+.Moments-list li:nth-child(5n+4) .Moment-preview-container{
+  position: relative;
+  top: 3px;
+  left: -5px;
+}
+
+.Moments-list li .Moment-preview-container:hover {
+    cursor: pointer;
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    position: relative;
+    z-index: 5;
+    transition: .3s ease-in-out;
 }
