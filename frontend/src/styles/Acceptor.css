@@ -1,0 +1,17 @@
+#accept:hover {
+    cursor: pointer;
+}
+
+#reject:hover {
+    cursor: pointer;
+}
+
+.accept-reject {
+    display: flex;
+    flex-direction: row;
+}
+
+.accept-reject li {
+    font-size: 14px;
+    margin-right: 10px !important;
+}
