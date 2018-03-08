@@ -8,7 +8,7 @@ const AuthRoute = ({ component: Component, ...rest }) => {
         <Route {...rest} render={props => (
             <Component
                 {...props}
-                user={JSON.parse(AuthUtil.getUser())}
+                user={AuthUtil.getUser()}
                 token={AuthUtil.getToken()}
                 validateToken={AuthUtil.validateToken}
             />
