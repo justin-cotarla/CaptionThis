@@ -9,6 +9,7 @@ a {
 
 .scroll {
     cursor: pointer;
+    opacity: 0.6;
     background-color: transparent;
     width: 31px;
     height: 32px;

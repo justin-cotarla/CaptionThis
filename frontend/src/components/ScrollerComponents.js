@@ -56,7 +56,7 @@ class ScrollButton extends Component {
           return <ColoredContainer color={color}/>
         })
       }
-      <ScrollButton scrollStepInPx="50" delayInMs="16.66"/>
+      <ScrollButton scrollStepInPx="50" delayInMs="10"/>
       </div>
     }
   }

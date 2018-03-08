@@ -4,15 +4,15 @@
 .Moment-preview-container {
     -webkit-transform: rotate(-2deg);
     -moz-transform: rotate(-2deg);
-    -webkit-transition: opacity .3s ease-out;
-    -moz-transition: opacity .3s ease-out;
+    -webkit-transition:  .3s ease-out;
+    -moz-transition:  .3s ease-out;
     text-align: right;
     font-size: 15px;
     font-style: normal;
     font-variant: normal;
     font weight: 300;
-    margin: 20px;
-    padding: 16px;
+    margin: 24px;
+    padding: 15px;
     box-shadow: 5px 10px 20px black;
     align-content: center;
     background-color: #FFFFFF;
@@ -36,8 +36,8 @@
 .Moment-thumbnail {
     position: relative;
     float: left;
-    width:  400px;
-    height: 320px;
+    width:  380px;
+    height: 300px;
     background-position: 50% 50%;
     background-repeat:   no-repeat;
     background-size:     cover;
@@ -57,8 +57,8 @@
 }
 /* Rotate every fifth image by 5 degrees and offset it */
 .Moments-list li:nth-child(5n+2) .Moment-preview-container{
-  -webkit-transform: rotate(5deg);
-  -moz-transform: rotate(5deg);
+  -webkit-transform: rotate(4deg);
+  -moz-transform: rotate(4deg);
   position: relative;
   right: 5px;
 }
@@ -77,8 +77,11 @@
 
 .Moments-list li .Moment-preview-container:hover {
     cursor: pointer;
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.15);
+    -moz-transform: scale(1.15);
+    -webkit-transition: opacity .8s ease-out;
+    -moz-transition: opacity .8s ease-out;
+
     position: relative;
     z-index: 5;
     transition: .3s ease-in-out;
