@@ -45,11 +45,11 @@ class LandingPage extends Component {
             });
         });
     };
-    
+
     render() {
         const moments = this.state.moments;
         const error = this.state.error;
-        
+
         // Return an error message if moments could not be loaded
         if (error) {
             return <div className="landing-page-container">
@@ -61,10 +61,12 @@ class LandingPage extends Component {
                 <PageHeader user={this.state.user}/>
                 <div>
                     {moments ? (
-                        <MomentsList Moments={moments}/>
+                        <MomentsList
+                         Moments={moments} MomentList/>
                     ) : (
                         <Loading />
                     )}
+
                     <ScrollApp id="app"/>
                 </div>
             </div>
