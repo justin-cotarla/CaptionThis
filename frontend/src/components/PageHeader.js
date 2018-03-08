@@ -13,22 +13,7 @@ class PageHeader extends Component{
             error: null,
             redirect: null,
             allowBack: false,
-            user: null,
         };
-    };
-
-    componentDidMount(){
-        AuthUtil.authenticate()
-            .then((user) => {
-                this.setState({
-                    user,
-                });
-            })
-            .catch((err) => {
-                this.setState({
-                    user: null,
-                });
-            })
     };
 
     onLoginClick = () => {
@@ -63,7 +48,7 @@ class PageHeader extends Component{
             <div className="main-container">
                 {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
                 <div className="header">
-                {this.state.user && 
+                {this.props.user && 
                     <div
                         className="profile-button"
                         onClick={this.onProfileClick}>
@@ -73,7 +58,7 @@ class PageHeader extends Component{
                         />
                     </div>
                 }
-                {this.state.user === null && 
+                {this.props.user === null && 
                     <div
                         className="login-button"
                         onClick={this.onLoginClick}

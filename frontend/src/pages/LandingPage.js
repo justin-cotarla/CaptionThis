@@ -15,7 +15,19 @@ class LandingPage extends Component {
         this.state = {
             moments: null,
             error: null,
+            user: props.user,
+            token: props.token,
         };
+        props.validateToken()
+            .then(token => {
+                this.setState({ token });
+            })
+            .catch(err => {
+                this.setState({ 
+                    user: null,
+                    token: null,
+                });
+            });
     };
 
     componentDidMount(){
@@ -46,7 +58,7 @@ class LandingPage extends Component {
         }
         return (
             <div>
-                <PageHeader />
+                <PageHeader user={this.state.user}/>
                 <div>
                     {moments ? (
                         <MomentsList
