@@ -144,6 +144,8 @@ class ProfilePage extends React.Component {
                         && <CaptionList 
                                 captions={captions} 
                                 isLinkedToMoment={true} 
+                                momentCreatorId={null}
+                                user={this.props.user}
                                 token={token} 
                                 onCaptionUpdate={this.onCaptionUpdate}>
                             </CaptionList>

@@ -10,7 +10,7 @@ class Caption extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            ...props.caption, 
+            caption: props.caption, 
             token: props.token,
         }
     }
@@ -19,7 +19,7 @@ class Caption extends React.Component {
         const token = this.state.token;
         if (token) {    
             const action = event.target.id;
-            const previousVote = this.state.user_vote;
+            const previousVote = this.state.caption.user_vote;
 
             let newVote;
             switch (previousVote) {
@@ -37,12 +37,15 @@ class Caption extends React.Component {
 
             this.setState(prevState => {
                 return {
-                    total_votes: prevState.total_votes + (newVote - previousVote),
-                    user_vote: newVote,
+                    caption: {
+                        ...prevState.caption,
+                        total_votes: prevState.caption.total_votes + (newVote - previousVote),
+                        user_vote: newVote,
+                    }
                 }
             });
 
-            const captionid = this.state.caption_id;
+            const captionid = this.state.caption.caption_id;
             const data = { 
                 operation: 'vote', 
                 value: newVote,
@@ -64,7 +67,7 @@ class Caption extends React.Component {
     handleAccept = (event) => {
         const action = event.target.id;
         const token = this.state.token;
-        const previousAcceptState = this.state.selected;
+        const previousAcceptState = this.state.caption.selected;
 
         let newAcceptState;
         switch (previousAcceptState) {
@@ -80,11 +83,16 @@ class Caption extends React.Component {
             default: break;
         }
 
-        this.setState({
-            selected: newAcceptState,
+        this.setState(prevState => {
+            return {
+                caption: {
+                    ...prevState.caption,
+                    selected: newAcceptState,
+                }
+            }
         });
 
-        const captionid = this.state.caption_id;
+        const captionid = this.state.caption.caption_id;
         const data = { 
             operation: 'select', 
             value: newAcceptState, 
@@ -103,23 +111,24 @@ class Caption extends React.Component {
     }
 
     render(){
+        const { caption } = this.state;
         return (
             <div className="caption-container">
                 <ul>
                     <li>
                         <CaptionVotes 
-                            upvotes={this.state.total_votes}
+                            upvotes={caption.total_votes}
                             voteHandler={this.handleVote} 
-                            id={this.state.caption_id}/>
+                            id={caption.caption_id}/>
                     </li>
                     <li className="caption-content">
                         <Acceptor 
-                            isReadOnly={this.state.token} 
-                            captionId={this.state.caption_id} 
-                            status={this.state.selected} 
+                            canAccept={this.props.canAccept} 
+                            captionId={caption.caption_id} 
+                            status={caption.selected} 
                             acceptHandler={this.handleAccept} />
-                        <Header textSize={2} text={this.state.caption}/>  
-                        <Header text={`Posted by ${this.state.user.username} on ${this.state.date_added}`}/> 
+                        <Header textSize={2} text={caption.caption}/>  
+                        <Header text={`Posted by ${caption.user.username} on ${caption.date_added}`}/> 
                     </li>
                 </ul>
             </div>
