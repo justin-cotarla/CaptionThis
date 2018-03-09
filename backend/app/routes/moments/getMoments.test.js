@@ -12,15 +12,6 @@ const request = {
     },
 };
 
-const emptyLimit = {
-    params: {
-        momentid: 1,
-    },
-    query: {
-        limit: '',
-    },
-};
-
 const reply = {
     response: jest.fn().mockImplementation(() => ({
         code: () => {},
@@ -70,10 +61,6 @@ describe('/api/getMoments endpoint', () => {
     it('ID pushed into conditions', () => {
         getMoments.handler(request, reply);
         expect(request.params.userid).toBe(1);
-    });
-    it('Limit is empty string', () => {
-        getMoments.handler(emptyLimit, reply);
-        expect(emptyLimit.query.limit).toBe('');
     });
     it('Handle unknown error', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise(() => {
