@@ -8,10 +8,6 @@
     background: #272525;
   }
 
-  .main-container{
-      height: 250px;
-  }
-
   a {
     color: white;
   }
@@ -47,10 +43,12 @@
 
   div.logo {
     text-align: center;
+    margin-top: -30px;
   }
 
+
   div.logo img {
-    border: #1DE28F 2px solid;
-    border-radius: 10px;
+    text-align: center;
+    width: 420px;
     cursor: pointer;
   }

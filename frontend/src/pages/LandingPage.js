@@ -23,7 +23,7 @@ class LandingPage extends Component {
                 this.setState({ token });
             })
             .catch(err => {
-                this.setState({ 
+                this.setState({
                     user: null,
                     token: null,
                 });
