@@ -32,8 +32,13 @@ class RegistrationPage extends Component{
         });
     }
 
-    onSubmit = (event) => {
-        event.preventDefault();
+    onEnterPress = (event) => {
+        if(event.keyCode == 13 && event.shiftKey == false) {
+          this.onSubmit();
+        }
+    }
+
+    onSubmit = () => {
         axios({
             url: `http://${process.env.REACT_APP_IP}/api/auth/register`,
             method: 'post',
@@ -84,10 +89,16 @@ class RegistrationPage extends Component{
                             size="12"
                             value={this.state.passField}
                             onChange={this.onPassChange}
+                            onKeyDown={this.onEnterPress}
                         />
                         </p>
 
-                        <input type="submit" value="Sign Up" />
+                        <div
+                        className="registration2-button"
+                        onClick={this.onSubmit}
+                        >
+                        Sign Up
+                        </div>
                     </form>
                     <div
                         className="login2-button"
