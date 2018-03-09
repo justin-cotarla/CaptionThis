@@ -45,7 +45,7 @@ class ScrollButton extends Component {
       super();
       this.state = {
         colors: []
-        // colors: ["#044747", "#079191", "#38adad", "#90e3e3", "#d5f7f7"]
+        //colors: ["#FFFFF", "#124829", "#000000", "#800000", "#242424"]
       }
     }
 

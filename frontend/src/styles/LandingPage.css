@@ -5,7 +5,7 @@
 
 html, body{
   height: 100%;
-  background: #2A2A2A;
+  background: #303030;
   /* #272525 */
 }
 
@@ -43,6 +43,7 @@ div.logo {
 }
 
 div.logo img {
-  border: #1DE28F 2px solid;
-  border-radius: 10px;
+// border: #1DE28F 2px solid;
+// border-radius: 10px;
+  text-align: center;
 }
