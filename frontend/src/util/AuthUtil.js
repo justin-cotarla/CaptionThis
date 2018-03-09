@@ -37,7 +37,7 @@ const getUser = () => {
     const token =  cookies.get('token');
 
     return token
-        ? base64url.decode(cookies.get('token').split('.')[1])
+        ? JSON.parse(base64url.decode(cookies.get('token').split('.')[1]))
         : null;
 };
 

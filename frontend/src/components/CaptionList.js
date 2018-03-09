@@ -6,7 +6,7 @@ import '../styles/CaptionList.css';
 const ConditionalWrap = ({condition, wrap, children}) => condition ? wrap(children) : children;
 
 const CaptionList = (props) => {
-    const token = props.token;
+    const { user, momentCreatorId, token } = props;
     return (
         <div className="caption-list-container">
             { props.children }
@@ -18,7 +18,14 @@ const CaptionList = (props) => {
                                 condition={props.isLinkedToMoment}
                                 wrap={children => <Link className="linked-caption" to={`/moment/${caption.moment_id}`}>{children}</Link>}
                             >
-                                <Caption caption={caption} token={token} />
+                                <Caption 
+                                    caption={caption} 
+                                    canAccept={
+                                        (user) // The user is logged on
+                                        && (momentCreatorId === user.id) // The logged-on user created the moment
+                                        && (user.id !== caption.user.user_id) // The logged-on user did not create the caption
+                                    } 
+                                    token={token} />
                             </ConditionalWrap>
                         </li>
                     })                  

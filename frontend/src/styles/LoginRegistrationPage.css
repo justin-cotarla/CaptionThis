@@ -3,6 +3,19 @@ div.loginHeader {
   color: #1DE28F;
 }
 
+div.login1-button {
+  width: 45px;
+  float: none;
+  margin: 0 auto;
+  margin-top: 5px;
+  padding: 5px;
+  color: #1DE28F;
+  font-weight: bold;
+  cursor: pointer;
+  border: #1DE28F 2px solid;
+  border-radius: 10px;
+}
+
 div.login2-button {
     width: 175px;
     float: none;
@@ -21,6 +34,19 @@ div.login2-button {
     float: none;
     margin: 0 auto;
     margin-top: 20px;
+    padding: 5px;
+    color: #1DE28F;
+    font-weight: bold;
+    cursor: pointer;
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+  }
+
+  div.registration2-button {
+    width: 65px;
+    float: none;
+    margin: 0 auto;
+    margin-top: 5px;
     padding: 5px;
     color: #1DE28F;
     font-weight: bold;
