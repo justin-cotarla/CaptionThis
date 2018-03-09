@@ -34,7 +34,7 @@ class LoginPage extends Component{
     }
 
     onEnterPress = (event) => {
-        if(event.keyCode == 13 && event.shiftKey == false) {
+        if(event.keyCode === 13 && event.shiftKey === false) {
           this.onSubmit();
         }
     }

@@ -15,7 +15,19 @@ class LandingPage extends Component {
         this.state = {
             moments: null,
             error: null,
+            user: props.user,
+            token: props.token,
         };
+        props.validateToken()
+            .then(token => {
+                this.setState({ token });
+            })
+            .catch(err => {
+                this.setState({ 
+                    user: null,
+                    token: null,
+                });
+            });
     };
 
     componentDidMount(){
@@ -33,11 +45,11 @@ class LandingPage extends Component {
             });
         });
     };
-    
+
     render() {
         const moments = this.state.moments;
         const error = this.state.error;
-        
+
         // Return an error message if moments could not be loaded
         if (error) {
             return <div className="landing-page-container">
@@ -46,13 +58,15 @@ class LandingPage extends Component {
         }
         return (
             <div>
-                <PageHeader />
+                <PageHeader user={this.state.user}/>
                 <div>
                     {moments ? (
-                        <MomentsList Moments={moments}/>
+                        <MomentsList
+                         Moments={moments} MomentList/>
                     ) : (
                         <Loading />
                     )}
+
                     <ScrollApp id="app"/>
                 </div>
             </div>

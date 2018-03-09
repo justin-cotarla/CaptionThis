@@ -2,3 +2,4 @@ Infrastructure.pdf
 .DS_Store
 .env
 coverage/
+server/build/
