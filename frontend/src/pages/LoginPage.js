@@ -33,8 +33,13 @@ class LoginPage extends Component{
         });
     }
 
-    onSubmit = (event) => {
-        event.preventDefault();
+    onEnterPress = (event) => {
+        if(event.keyCode == 13 && event.shiftKey == false) {
+          this.onSubmit();
+        }
+    }
+
+    onSubmit = () => {
         axios({
             url: `http://${process.env.REACT_APP_IP}/api/auth/login`,
             method: 'post',
@@ -64,9 +69,7 @@ class LoginPage extends Component{
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <p><font size ="5" color="#1DE28F"> Login </font></p>
 
-                    <form
-                        onSubmit={this.onSubmit}
-                    >
+                    <form>
                         <p>
                         <input
                             type="text"
@@ -86,14 +89,17 @@ class LoginPage extends Component{
                             placeholder="Password"                       
                             value={this.state.passField}
                             onChange={this.onPassChange}
+                            onKeyDown={this.onEnterPress}
                         />
 
-                        <p><input
-                            type="submit"
-                            name="login"
-                            className="login2-button"
-                        /></p>
+                        <div
+                        className="login1-button"
+                        onClick={this.onSubmit}
+                        >
+                        Login
+                        </div>
                     </form>
+                    
                     <div
                         className="registration-button"
                         onClick={this.onRegisterClick}
