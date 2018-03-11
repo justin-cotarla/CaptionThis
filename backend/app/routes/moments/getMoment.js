@@ -12,7 +12,7 @@ const getMoment = {
         const query = 'SELECT * FROM MOMENT WHERE ID =?';
         return databaseUtil.sendQuery(query, [id]).then((result) => {
             if (!result.rows[0]) {
-                reply.response({ code: 3 }).code(404);
+                return reply.response({ code: 3 }).code(404);
             }
 
             const moment = {
