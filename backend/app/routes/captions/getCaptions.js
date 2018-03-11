@@ -58,7 +58,7 @@ const getCaptions = {
             SELECTED,
             COALESCE(SUM(TV.VALUE),0) AS TOTAL_VOTES,
             COALESCE(UV.VALUE, 0) AS USER_VOTE,
-            DATE_ADDED
+            CAPTION.DATE_ADDED
         FROM
             CAPTION
         JOIN

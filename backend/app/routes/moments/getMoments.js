@@ -39,7 +39,7 @@ const getMoments = {
             MOMENT.ID AS MOMENT_ID,
             IMG_URL, 
             DESCRIPTION, 
-            DATE_ADDED, 
+            MOMENT.DATE_ADDED, 
             USER.USERNAME,
             USER.ID AS USER_ID 
         FROM 
