@@ -29,10 +29,6 @@ class ProfilePage extends React.Component {
         let profileUser;
 
         this.fetchUser(username)
-        .catch(error => {
-            console.log(error)
-            throw new Error('nonexistent user');
-        })
         .then(response => {
             profileUser = response.data.user;
             return axios.all([
@@ -55,7 +51,7 @@ class ProfilePage extends React.Component {
 
             let message = '';
             if (error.message === 'nonexistent user') {
-                message = 'The user you are looking for doesnt\'t exist :(';
+                message = 'The user you are looking for doesn\'t exist :(';
             } else {
                 message = 'Oops... Something went wrong!';
             }
@@ -84,6 +80,10 @@ class ProfilePage extends React.Component {
         return axios({
             method: 'get',
             url: `http://${process.env.REACT_APP_IP}/api/users/${username}`,
+        })
+        .catch(error => {
+            console.log(error)
+            throw new Error('nonexistent user');
         });
     }
 
