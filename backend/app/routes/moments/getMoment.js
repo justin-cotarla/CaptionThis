@@ -9,7 +9,23 @@ const getMoment = {
         const id = parseInt(request.params.momentid, 10);
 
         // Create db query
-        const query = 'SELECT * FROM MOMENT WHERE ID =?';
+        const query = `
+        SELECT 
+            MOMENT.ID AS MOMENT_ID,
+            IMG_URL, 
+            DESCRIPTION, 
+            MOMENT.DATE_ADDED, 
+            USER.USERNAME,
+            USER.ID AS USER_ID 
+        FROM 
+            MOMENT
+        JOIN 
+            USER 
+        ON 
+            MOMENT.USER_ID = USER.ID 
+        WHERE 
+            MOMENT.ID=?
+        `;
         return databaseUtil.sendQuery(query, [id]).then((result) => {
             if (!result.rows[0]) {
                 return reply.response({ code: 3 }).code(404);
@@ -20,7 +36,10 @@ const getMoment = {
                 img_url: result.rows[0].IMG_URL,
                 description: result.rows[0].DESCRIPTON,
                 date_added: result.rows[0].DATE_ADDED,
-                user_id: result.rows[0].USER_ID,
+                user: {
+                    username: result.rows[0].USERNAME,
+                    user_id: result.rows[0].USER_ID,
+                },
             };
 
             // The response data includes a status code and the moment

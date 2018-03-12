@@ -106,7 +106,7 @@ class MomentViewPage extends Component{
         
         return (
             <div className="moment-view-container">
-            <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
+            <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } username={ moment.user.username}/>
             <CaptionCreatorForm momentId={this.props.match.params.momentID} onCaptionSubmit={this.fetchCaptions} token={token}/>
             <CaptionList 
                 captions={captions} 
