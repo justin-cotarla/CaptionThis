@@ -146,8 +146,7 @@ class ProfilePage extends React.Component {
         return (
             <div className="profile-page-container">
                 <div className="profile-page-content">
-                    <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>
-                  
+                    <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>      
                     <ul className='views'>
                         {views.map(view => {
                             return <li  key={view}
@@ -160,26 +159,29 @@ class ProfilePage extends React.Component {
                     </ul>
                     {
                         selectedView === views[0]
-                        && <CaptionList 
-                                captions={captions} 
-                                isLinkedToMoment={true} 
-                                momentCreatorId={null}
-                                user={this.props.user}
-                                token={token} 
-                                onCaptionUpdate={this.onCaptionUpdate}>
+                        && (
+                            ( captions.length === 0 
+                                && <h1 className="header-section">There aren't any captions to see here :(</h1> )
+                            || <CaptionList 
+                                    captions={captions} 
+                                    isLinkedToMoment={true} 
+                                    momentCreatorId={null}
+                                    user={this.props.user}
+                                    token={token} 
+                                    onCaptionUpdate={this.onCaptionUpdate}>
                             </CaptionList>
+                        )
                     }
                     {
                         selectedView === views[1]
                         && ( 
-                            ( moments.length > 0 && <MomentList Moments={moments}/> )
-                            || <h1 className="header-section">There aren't any Moments to see here :(</h1> 
+                            ( moments.length === 0 && <h1 className="header-section">There aren't any Moments to see here :(</h1> )
+                            || <MomentList Moments={moments}/>
                         )
                     }
                 </div>
                 <div className="profile-page-sidebar">
-                </div>
-                
+                </div>  
             </div>
         )
     }
