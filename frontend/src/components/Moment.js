@@ -14,7 +14,7 @@ const Moment = props => {
                 <li className="Moment-preview-info">
                     <Header textSize={4} text={ props.description } />
                     <Header textSize={3} text={'Posted on ' + props.date } />
-                    <Header textSize={2} text={ 'Submitted by ' + props.user } />
+                    <Header textSize={2} text={ 'Submitted by ' + props.username } />
                 </li>
             </ul>
         </div>
