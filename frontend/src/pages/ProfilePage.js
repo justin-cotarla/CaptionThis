@@ -163,7 +163,8 @@ class ProfilePage extends React.Component {
                             ( captions.length === 0 
                                 && <h1 className="header-section">There aren't any captions to see here :(</h1> )
                             || <CaptionList 
-                                    captions={captions} 
+                                    captions={captions}
+                                    showSubmittedBy={false} 
                                     isLinkedToMoment={true} 
                                     momentCreatorId={null}
                                     user={this.props.user}

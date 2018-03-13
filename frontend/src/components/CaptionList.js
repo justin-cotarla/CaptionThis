@@ -6,7 +6,7 @@ import '../styles/CaptionList.css';
 const ConditionalWrap = ({condition, wrap, children}) => condition ? wrap(children) : children;
 
 const CaptionList = (props) => {
-    const { user, momentCreatorId, token } = props;
+    const { user, momentCreatorId, showSubmittedBy, token } = props;
     return (
         <div className="caption-list-container">
             { props.children }
@@ -20,6 +20,7 @@ const CaptionList = (props) => {
                             >
                                 <Caption 
                                     caption={caption} 
+                                    showSubmittedBy={showSubmittedBy}
                                     canAccept={
                                         (user) // The user is logged on
                                         && (momentCreatorId === user.id) // The logged-on user created the moment

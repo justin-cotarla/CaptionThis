@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
 import CaptionVotes from './CaptionVotes';
@@ -128,7 +129,14 @@ class Caption extends React.Component {
                             status={caption.selected} 
                             acceptHandler={this.handleAccept} />
                         <Header textSize={2} text={caption.caption}/>  
-                        <Header text={`Posted by ${caption.user.username} on ${caption.date_added}`}/> 
+                        {   
+                            this.props.showSubmittedBy && <h1 style={{ fontSize: '12px' }}>
+                                Submitted by <Link className="linked-username" to={`/user/${caption.user.username}`}>{caption.user.username}</Link> on {caption.date_added}
+                            </h1> 
+                        }
+                        {
+                            !this.props.showSubmittedBy && <Header text={`Posted on ${caption.date_added}`}/> 
+                        }
                     </li>
                 </ul>
             </div>
