@@ -44,9 +44,6 @@ const getCaptions = {
             ? parseInt(request.auth.credentials.user.id, 10)
             : 'null';
 
-        // To check if the moment exists
-        const momentCheck = 'SELECT * FROM MOMENT WHERE ID=?';
-
         // The actual query
         const query = `
         SELECT
@@ -88,18 +85,9 @@ const getCaptions = {
         LIMIT ?
         `;
 
-        return databaseUtil.sendQuery(momentCheck, [values[0]])
+        const allQueryValues = [userId].concat(values);
+        return databaseUtil.sendQuery(query, allQueryValues)
             .then((result) => {
-                // For some reason, directly returning a reply here does not work
-                if (result.rows.length === 0) {
-                    throw new Error('Moment ID does not exist.');
-                }
-
-                const allQueryValues = [userId].concat(values);
-                return databaseUtil.sendQuery(query, allQueryValues);
-            })
-            .then((result) => {
-                console.log('now here here');
                 const captions = result.rows.map(caption => ({
                     moment_id: caption.MOMENT_ID,
                     user: {
@@ -125,9 +113,6 @@ const getCaptions = {
             })
             .catch((error) => {
                 console.log(error);
-                if (error.message === 'Moment ID does not exist.') {
-                    return reply.response({ code: 2 }).code(400);
-                }
                 return reply.response({ code: 3 }).code(500);
             });
     },
