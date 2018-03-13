@@ -62,7 +62,8 @@ class LandingPage extends Component {
                 <div>
                     {moments ? (
                         <MomentsList
-                         Moments={moments} MomentList/>
+                         Moments={moments} 
+                         showSubmittedBy={true} />
                     ) : (
                         <Loading />
                     )}
