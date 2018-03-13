@@ -27,6 +27,7 @@ describe('/api/getMoments endpoint', () => {
                     DESCRIPTON: 'test',
                     DATE_ADDED: 1,
                     USER_ID: 1,
+                    USERNAME: 'test',
                 }],
                 fields: {},
             });
@@ -40,7 +41,10 @@ describe('/api/getMoments endpoint', () => {
                         img_url: 'test',
                         description: 'test',
                         date_added: 1,
-                        user_id: 1,
+                        user: {
+                            username: 'test',
+                            user_id: 1,
+                        },
                     },
                 });
             });

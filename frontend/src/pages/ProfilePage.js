@@ -14,7 +14,7 @@ class ProfilePage extends React.Component {
         super(props);
         this.state = {
             token: null,
-            user: null,
+            profileUser: null,
             moments: [],
             captions: [],
             selectedView: 'captions',
@@ -26,29 +26,40 @@ class ProfilePage extends React.Component {
     componentDidMount(){
         const token = this.getToken();
         const { username } = this.props.match.params;
-        
-        const user = this.fetchUser(username);
-        
-        axios.all([
-            this.fetchUserCaptions(user.user_id, token), 
-            this.fetchUserMoments(user.user_id, token),
-        ])
+        let profileUser;
+
+        this.fetchUser(username)
+        .then(response => {
+            profileUser = response.data.user;
+            return axios.all([
+                this.fetchUserCaptions(profileUser.id, token), 
+                this.fetchUserMoments(profileUser.id, token),
+            ])
+        })   
         .then(axios.spread((userCaptions, userMoments) => {
             const { captions } = userCaptions.data;
             const { moments } = userMoments.data;      
             this.setState({
-                user,
+                profileUser,
                 captions,
                 moments,
-                loading: false
-            })
-        })) 
+                loading: false,
+            });
+        }))      
         .catch(error => {
             console.log(error);
+
+            let message = '';
+            if (error.message === 'nonexistent user') {
+                message = 'The user you are looking for doesn\'t exist :(';
+            } else {
+                message = 'Oops... Something went wrong!';
+            }
+            
             this.setState({
                 loading: false,
-                error: 'Oops... Something went wrong!',
-            })
+                error: message,
+            });
         });   
     }
 
@@ -66,11 +77,14 @@ class ProfilePage extends React.Component {
     }
 
     fetchUser = (username) => {
-        // Hardcoded user id until an endpoint to get user info from username is created
-        return {   
-            user_id: 2,
-            username,  
-        }
+        return axios({
+            method: 'get',
+            url: `http://${process.env.REACT_APP_IP}/api/users/${username}`,
+        })
+        .catch(error => {
+            console.log(error)
+            throw new Error('nonexistent user');
+        });
     }
 
     fetchUserCaptions = (id, token) => {
@@ -79,7 +93,7 @@ class ProfilePage extends React.Component {
         };
         return axios({
             method: 'get',
-            url: `http://${process.env.REACT_APP_IP}:/api/captions?user-id=${id}`,
+            url: `http://${process.env.REACT_APP_IP}/api/captions?user-id=${id}`,
             header: token ? headers : {}
         });
     }
@@ -90,7 +104,7 @@ class ProfilePage extends React.Component {
         };
         return axios({
             method: 'get',
-            url: `http://${process.env.REACT_APP_IP}:/api/moments?user-id=${id}`,
+            url: `http://${process.env.REACT_APP_IP}/api/moments?user-id=${id}`,
             header: token ? headers : {}
         });
     }
@@ -113,7 +127,8 @@ class ProfilePage extends React.Component {
     }
 
     render(){
-        const { token, user, moments, captions, selectedView, loading, error } = this.state;
+        const { user } = this.props;
+        const { token, profileUser, moments, captions, selectedView, loading, error } = this.state;
         const views = ['captions', 'moments'];
 
         if (loading) {
@@ -121,46 +136,53 @@ class ProfilePage extends React.Component {
         }
 
         if (error) {
-            return <h1 className="header-username">Oops... Something went wrong!</h1>
+            return (
+                <div className="profile-page-container">
+                    <h1 className="header-username">{error}</h1>
+                </div>
+            )
         }
 
         return (
             <div className="profile-page-container">
                 <div className="profile-page-content">
-                    <h1 className="header-username">{`${user.username}'s posts`}</h1>
-                  
+                    <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>      
                     <ul className='views'>
                         {views.map(view => {
                             return <li  key={view}
                                         className="header-section"
                                         style={view === selectedView ? {color: '#1DE28F'} : null}
                                         onClick={this.updateView.bind(null, view)}>
-                                        { token ? `My ${view}` : view.charAt(0).toUpperCase() + view.slice(1) }
+                                        { (token && user.id === profileUser.id ? 'My ' : '') + view.charAt(0).toUpperCase() + view.slice(1) }
                                 </li>
                         })}
                     </ul>
                     {
                         selectedView === views[0]
-                        && <CaptionList 
-                                captions={captions} 
-                                isLinkedToMoment={true} 
-                                momentCreatorId={null}
-                                user={this.props.user}
-                                token={token} 
-                                onCaptionUpdate={this.onCaptionUpdate}>
+                        && (
+                            ( captions.length === 0 
+                                && <h1 className="header-section">There aren't any captions to see here :(</h1> )
+                            || <CaptionList 
+                                    captions={captions}
+                                    showSubmittedBy={false} 
+                                    isLinkedToMoment={true} 
+                                    momentCreatorId={null}
+                                    user={this.props.user}
+                                    token={token} 
+                                    onCaptionUpdate={this.onCaptionUpdate}>
                             </CaptionList>
+                        )
                     }
                     {
                         selectedView === views[1]
                         && ( 
-                            ( moments.length > 0 && <MomentList Moments={moments}/> )
-                            || <h1 className="header-section">There aren't any Moments to see here :(</h1> 
+                            ( moments.length === 0 && <h1 className="header-section">There aren't any Moments to see here :(</h1> )
+                            || <MomentList Moments={moments}/>
                         )
                     }
                 </div>
                 <div className="profile-page-sidebar">
-                </div>
-                
+                </div>  
             </div>
         )
     }
