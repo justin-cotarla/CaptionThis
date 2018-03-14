@@ -14,6 +14,17 @@ class RegistrationPage extends Component{
         }
     }
 
+    componentDidMount(){
+        const cookies = new Cookies();
+        const token = cookies.get('token');
+
+        if(token) {
+            this.setState({
+                redirect: '/',
+            });
+        }
+    }
+    
     onUserChange = (event) => {
         this.setState({
             userField: event.target.value,
