@@ -35,12 +35,12 @@ describe('DatabaseUtil', () => {
 
     it('handles valid queries', () => {
         mysql.format = jest.fn();
-        databaseUtil.getConnection = jest.fn().mockResolvedValue({
+        databaseUtil.getConnection = jest.fn().mockImplementation(() => Promise.resolve({
             query: jest.fn((query, callback) => {
                 callback(undefined, 'some rows', 'some fields');
             }),
             release: jest.fn(),
-        });
+        }));
 
         return databaseUtil.sendQuery()
             .then((result) => {
@@ -53,12 +53,12 @@ describe('DatabaseUtil', () => {
 
     it('handles database errors', () => {
         mysql.format = jest.fn();
-        databaseUtil.getConnection = jest.fn().mockResolvedValue({
+        databaseUtil.getConnection = jest.fn().mockImplementation(() => Promise.resolve({
             query: jest.fn((query, callback) => {
                 callback(new Error('some error'));
             }),
             release: jest.fn(),
-        });
+        }));
 
         return databaseUtil.sendQuery()
             .catch((err) => {
