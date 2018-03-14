@@ -31,31 +31,17 @@ class DatabaseUtil {
         const query = mysql.format(queryString, values);
         return this.getConnection()
             .then(connection => new Promise((resolve, reject) => {
-                if (values !== undefined) {
-                    connection.query(query, (err, rows, fields) => {
-                        connection.release();
-                        if (err) {
-                            reject(err);
-                            return;
-                        }
-                        resolve({
-                            rows,
-                            fields,
-                        });
+                connection.query(query, (err, rows, fields) => {
+                    connection.release();
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve({
+                        rows,
+                        fields,
                     });
-                } else {
-                    connection.query(queryString, (err, rows, fields) => {
-                        connection.release();
-                        if (err) {
-                            reject(err);
-                            return;
-                        }
-                        resolve({
-                            rows,
-                            fields,
-                        });
-                    });
-                }
+                });
             }));
     }
 
