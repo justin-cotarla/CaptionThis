@@ -27,3 +27,13 @@
 .vote-ticker:hover{
     cursor: pointer;
 }
+
+.vote-up{
+    color: #1DE28F;
+    font-size: 12px;
+}
+
+.vote-down{
+    color: #f44b42;
+    font-size: 12px;
+}

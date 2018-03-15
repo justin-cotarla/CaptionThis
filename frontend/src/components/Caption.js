@@ -13,6 +13,7 @@ class Caption extends React.Component {
         this.state = {
             caption: props.caption, 
             token: props.token,
+            vote_value: 0,
         }
     }
 
@@ -34,6 +35,20 @@ class Caption extends React.Component {
                     newVote = (action === '+') ? 1 : 0;
                     break;
                 default: break;
+            }
+
+            switch (newVote) {
+                case 0:
+                    this.state.vote_value = 0;
+                    break;
+                case -1:
+                    this.state.vote_value = -1;
+                    break;
+                case 1:
+                    this.state.vote_value = 1;
+                    break;
+                default:
+                    break;
             }
 
             this.setState(prevState => {
@@ -120,7 +135,8 @@ class Caption extends React.Component {
                         <CaptionVotes 
                             upvotes={caption.total_votes}
                             voteHandler={this.handleVote} 
-                            id={caption.caption_id}/>
+                            id={caption.caption_id}
+                            vote_value={this.state.vote_value}/>
                     </li>
                     <li className="caption-content">
                         <Acceptor 
