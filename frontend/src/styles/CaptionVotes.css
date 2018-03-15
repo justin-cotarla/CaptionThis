@@ -24,7 +24,7 @@
     font-size: 12px;
 }
 
-.vote-ticker:hover{
+.vote-ticker:hover, .vote-up:hover, .vote-down:hover{
     cursor: pointer;
 }
 
