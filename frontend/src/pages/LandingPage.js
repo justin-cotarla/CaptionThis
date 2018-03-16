@@ -3,7 +3,6 @@ import axios from 'axios';
 import MomentsList from '../components/MomentsList';
 import ScrollApp from '../components/ScrollerComponents'
 
-import Header from '../components/Header';
 import PageHeader from '../components/PageHeader';
 import Loading from '../components/Loading';
 import ErrorGraphic from '../components/ErrorGraphic';
