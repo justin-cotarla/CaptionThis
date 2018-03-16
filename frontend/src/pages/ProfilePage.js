@@ -6,6 +6,7 @@ import Loading from '../components/Loading';
 
 import MomentList from '../components/MomentsList';
 import CaptionList from '../components/CaptionList';
+import NavBar from '../components/NavBar';
 import ErrorGraphic from '../components/ErrorGraphic';
 
 import '../styles/ProfilePage.css';
@@ -20,6 +21,7 @@ class ProfilePage extends React.Component {
             captions: [],
             selectedView: 'captions',
             loading: true,
+            user: props.user,
             error: null,
         }
     }
@@ -143,46 +145,49 @@ class ProfilePage extends React.Component {
         }
 
         return (
-            <div className="profile-page-container">
-                <div className="profile-page-content">
-                    <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>      
-                    <ul className='views'>
-                        {views.map(view => {
-                            return <li  key={view}
-                                        className="header-section"
-                                        style={view === selectedView ? {color: '#1DE28F'} : null}
-                                        onClick={this.updateView.bind(null, view)}>
-                                        { (token && user.id === profileUser.id ? 'My ' : '') + view.charAt(0).toUpperCase() + view.slice(1) }
-                                </li>
-                        })}
-                    </ul>
-                    {
-                        selectedView === views[0]
-                        && (
-                            ( captions.length === 0 
-                                && <h1 className="header-section">There aren't any captions to see here :(</h1> )
-                            || <CaptionList 
-                                    captions={captions}
-                                    showSubmittedBy={false} 
-                                    isLinkedToMoment={true} 
-                                    momentCreatorId={null}
-                                    user={this.props.user}
-                                    token={token} 
-                                    onCaptionUpdate={this.onCaptionUpdate}>
-                            </CaptionList>
-                        )
-                    }
-                    {
-                        selectedView === views[1]
-                        && ( 
-                            ( moments.length === 0 && <h1 className="header-section">There aren't any Moments to see here :(</h1> )
-                            || <MomentList Moments={moments}/>
-                        )
-                    }
+            <div style={{display: 'inline', minHeight: '100%'}}>
+                <NavBar user={this.state.user}/>
+                <div className="profile-page-container">
+                    <div className="profile-page-content">
+                        <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>      
+                        <ul className='views'>
+                            {views.map(view => {
+                                return <li  key={view}
+                                            className="header-section"
+                                            style={view === selectedView ? {color: '#1DE28F'} : null}
+                                            onClick={this.updateView.bind(null, view)}>
+                                            { (token && user.id === profileUser.id ? 'My ' : '') + view.charAt(0).toUpperCase() + view.slice(1) }
+                                    </li>
+                            })}
+                        </ul>
+                        {
+                            selectedView === views[0]
+                            && (
+                                ( captions.length === 0 
+                                    && <h1 className="header-section">There aren't any captions to see here :(</h1> )
+                                || <CaptionList 
+                                        captions={captions}
+                                        showSubmittedBy={false} 
+                                        isLinkedToMoment={true} 
+                                        momentCreatorId={null}
+                                        user={this.props.user}
+                                        token={token} 
+                                        onCaptionUpdate={this.onCaptionUpdate}>
+                                </CaptionList>
+                            )
+                        }
+                        {
+                            selectedView === views[1]
+                            && ( 
+                                ( moments.length === 0 && <h1 className="header-section">There aren't any Moments to see here :(</h1> )
+                                || <MomentList Moments={moments}/>
+                            )
+                        }
+                    </div>
+                    <div className="profile-page-sidebar">
+                    </div>
                 </div>
-                <div className="profile-page-sidebar">
-                </div>  
-            </div>
+            </div>  
         )
     }
 }
