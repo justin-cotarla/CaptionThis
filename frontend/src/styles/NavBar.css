@@ -8,11 +8,9 @@
     background: #272525;
   }
 
-  div.header {
-    padding: 15px;
+  div.navbar-container {
     display: block;
-    height: 20px;
-    margin-bottom: 15px;
+    padding: 1em;
   }
 
   div.login-button {

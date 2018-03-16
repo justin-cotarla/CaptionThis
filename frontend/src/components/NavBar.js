@@ -58,56 +58,54 @@ class NavBar extends Component{
 
     render() {
         return (
-            <div className="main-container">
-                {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
-                <div className="header">
-                {this.props.user &&
-                    <div
-                    className="logout-button"
-                    onClick={this.onLogoutClick}
-                    >
-                    Logout
-                    </div>
-                }
+                <div className="navbar-container">
+                    {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
+                    {this.props.user &&
+                        <div
+                        className="logout-button"
+                        onClick={this.onLogoutClick}
+                        >
+                        Logout
+                        </div>
+                    }
 
-                {this.props.user &&
-                    <div
-                        className="profile-button"
-                        onClick={this.onProfileClick}>
-                        <img
-                            alt="Profile"
-                            src={`http://${process.env.REACT_APP_IP}/res/personIcon.png`}
-                        />
-                    </div>
-                }
+                    {this.props.user &&
+                        <div
+                            className="profile-button"
+                            onClick={this.onProfileClick}>
+                            <img
+                                alt="Profile"
+                                src={`http://${process.env.REACT_APP_IP}/res/personIcon.png`}
+                            />
+                        </div>
+                    }
 
-                {this.props.user &&
-                    <div
-                    className="home-button"
-                    onClick={this.onHomeClick}
-                    >
-                    Home
-                    </div>
-                }
+                    {this.props.user &&
+                        <div
+                        className="home-button"
+                        onClick={this.onHomeClick}
+                        >
+                        Home
+                        </div>
+                    }
 
-                {this.props.user &&
-                    <div
-                    className="createMoment-button"
-                    onClick={this.onCreateMomentClick}
-                    >
-                    CREATE MOMENT
-                    </div>
-                }
+                    {this.props.user &&
+                        <div
+                        className="createMoment-button"
+                        onClick={this.onCreateMomentClick}
+                        >
+                        CREATE MOMENT
+                        </div>
+                    }
 
-                {this.props.user === null &&
-                    <div
-                        className="login-button"
-                        onClick={this.onLoginClick}
-                    >
-                    Login
-                    </div>
-                }
-                </div>
+                    {this.props.user === null &&
+                        <div
+                            className="login-button"
+                            onClick={this.onLoginClick}
+                        >
+                        Login
+                        </div>
+                    }
             </div>
         )
     }

@@ -144,9 +144,9 @@ class ProfilePage extends React.Component {
             )
         }
 
-        return (  
-            <div>
-            <NavBar user={this.state.user}/>
+        return (
+            <div style={{display: 'inline', minHeight: '100%'}}>
+                <NavBar user={this.state.user}/>
                 <div className="profile-page-container">
                     <div className="profile-page-content">
                         <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>      
@@ -187,7 +187,7 @@ class ProfilePage extends React.Component {
                     <div className="profile-page-sidebar">
                     </div>
                 </div>
-            </div>
+            </div>  
         )
     }
 }
