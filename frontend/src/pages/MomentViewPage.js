@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import Moment from '../components/Moment';
 import CaptionCreatorForm from '../components/CaptionCreatorForm';
 import CaptionList from '../components/CaptionList';
+import NavBar from '../components/NavBar';
 
 import Header from '../components/Header';
 import Loading from '../components/Loading';
@@ -18,6 +19,7 @@ class MomentViewPage extends Component{
             moment: null,
             captions: [],
             loading: true,
+            user: props.user,
             error: null,
         };
     };
@@ -104,30 +106,33 @@ class MomentViewPage extends Component{
         }
         
         return (
-            <div className="moment-view-container">
-            <Moment 
-                image={ moment.img_url } 
-                date={ formatDate(moment.date_added) } 
-                description={ moment.description } 
-                showSubmittedBy={ true } 
-                username={ moment.user.username }/>
-            <CaptionCreatorForm 
-                momentId={this.props.match.params.momentID} 
-                onCaptionSubmit={this.fetchCaptions} 
-                token={token}/>
-            <CaptionList 
-                captions={captions} 
-                showSubmittedBy={true}
-                isLinkedToMoment={false} 
-                momentCreatorId={moment.user_id}
-                user={this.props.user}
-                token={token} 
-                onCaptionUpdate={this.onCaptionUpdate}>
-                {
-                    captions.length > 0 ? <Header textSize={3} text={`${captions.length} Caption${captions.length > 1 ? 's' : ''}`}/>
-                    : <Header textSize={3} text="Looks like there's nothing here (yet) :("/>
-                }
-            </CaptionList>
+            <div>
+            <NavBar user={this.state.user}/>
+                <div className="moment-view-container">
+                <Moment 
+                    image={ moment.img_url } 
+                    date={ formatDate(moment.date_added) } 
+                    description={ moment.description } 
+                    showSubmittedBy={ true } 
+                    username={ moment.user.username }/>
+                <CaptionCreatorForm 
+                    momentId={this.props.match.params.momentID} 
+                    onCaptionSubmit={this.fetchCaptions} 
+                    token={token}/>
+                <CaptionList 
+                    captions={captions} 
+                    showSubmittedBy={true}
+                    isLinkedToMoment={false} 
+                    momentCreatorId={moment.user_id}
+                    user={this.props.user}
+                    token={token} 
+                    onCaptionUpdate={this.onCaptionUpdate}>
+                    {
+                        captions.length > 0 ? <Header textSize={3} text={`${captions.length} Caption${captions.length > 1 ? 's' : ''}`}/>
+                        : <Header textSize={3} text="Looks like there's nothing here (yet) :("/>
+                    }
+                </CaptionList>
+                </div>
             </div>
         )
     } 
