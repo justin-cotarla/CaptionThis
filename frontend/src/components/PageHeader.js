@@ -30,7 +30,7 @@ class PageHeader extends Component{
 
     onProfileClick = () => {
         this.setState({
-            redirect: '/user/' + this.state.user.username,
+            redirect: `/user/${this.state.user.username}`,
             allowBack: true,
         })
     }
