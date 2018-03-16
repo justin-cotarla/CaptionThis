@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import PageHeader from '../components/PageHeader';
 
 import '../styles/CreateMoment.css';
 import Header from '../components/Header';
 
 class MomentCreation extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             redirect: null,
+            user: props.user,
         }
     }
 
@@ -41,24 +43,27 @@ class MomentCreation extends Component {
     }
     render(){
         return(
-            <div className = "CreateMoment">
-                {this.state.redirect && <Redirect to={this.state.redirect} />}
-                <form onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
-                    <div className = "content-container">
-                        <Header textSize={2} text="Title" />
-                        <input name="title" type="text" className="title" required/>
-                    </div>
-                    <div className = "content-container">
-                        <input type="file" name="file" required></input>
-                    </div>
-                    <div className = "content-container">
-                        <Header textSize={2} text="Description" />
-                        <textarea name="description" rows="8" cols="90"></textarea>
-                    </div>
-                    <div className = "content-container">
-                        <input type="submit" className="button"></input>
-                    </div>
-                </form>
+            <div>
+                <PageHeader user={this.state.user}/>
+                <div className = "CreateMoment">
+                    {this.state.redirect && <Redirect to={this.state.redirect} />}
+                    <form onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
+                        <div className = "content-container">
+                            <Header textSize={2} text="Title" />
+                            <input name="title" type="text" className="title" required/>
+                        </div>
+                        <div className = "content-container">
+                            <input type="file" name="file" required></input>
+                        </div>
+                        <div className = "content-container">
+                            <Header textSize={2} text="Description" />
+                            <textarea name="description" rows="8" cols="90"></textarea>
+                        </div>
+                        <div className = "content-container">
+                            <input type="submit" className="button"></input>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }

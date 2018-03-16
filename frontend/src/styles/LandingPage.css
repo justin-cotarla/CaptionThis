@@ -43,7 +43,7 @@ div.logo {
 }
 
 div.logo img {
-// border: #1DE28F 2px solid;
-// border-radius: 10px;
   text-align: center;
+  width: 420px;
+  cursor: pointer;
 }

@@ -59,6 +59,16 @@ class LandingPage extends Component {
         return (
             <div>
                 <PageHeader user={this.state.user}/>
+                
+                <div className="logo">
+                    <img
+                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
+                        alt="Logo"
+                        width="340"
+                        onClick={this.onLogoClick}
+                    />
+                </div>
+
                 <div>
                     {moments ? (
                         <MomentsList
