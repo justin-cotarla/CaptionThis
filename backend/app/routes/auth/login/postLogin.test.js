@@ -1,4 +1,11 @@
 import * as AuthUtil from '../../../utility/AuthUtil';
+import {
+    GOOD,
+    INVALID_INPUT,
+    USER_DOES_NOT_EXIST,
+    WRONG_PASSWORD,
+    UNKNOWN_ERROR,
+} from '../../../utility/ResponseCodes';
 import postLogin from './postLogin';
 
 // A dummy request
@@ -48,7 +55,7 @@ describe('api/auth/login endpoint', () => {
         return postLogin.handler(request, reply)
             .then(() => {
                 // [0][0] refers to first function argument of the first call
-                expect(reply.response.mock.calls[0][0].code).toBe(1);
+                expect(reply.response.mock.calls[0][0].code).toBe(GOOD.code);
             });
     });
 
@@ -59,7 +66,7 @@ describe('api/auth/login endpoint', () => {
 
         return postLogin.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(4);
+                expect(reply.response.mock.calls[0][0].code).toBe(WRONG_PASSWORD.code);
             });
     });
 
@@ -70,18 +77,18 @@ describe('api/auth/login endpoint', () => {
 
         return postLogin.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(USER_DOES_NOT_EXIST.code);
             });
     });
 
     it('handles requests with blank params', () => {
         postLogin.handler(emptyRequest, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(2);
+        expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
     });
 
     it('handles requests with missing payloads', () => {
         postLogin.handler({}, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(2);
+        expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
     });
 
     it('handles unknown errors', () => {
@@ -91,7 +98,7 @@ describe('api/auth/login endpoint', () => {
 
         return postLogin.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(5);
+                expect(reply.response.mock.calls[0][0].code).toBe(UNKNOWN_ERROR.code);
             });
     });
 });
