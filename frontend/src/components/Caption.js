@@ -120,7 +120,8 @@ class Caption extends React.Component {
                         <CaptionVotes 
                             upvotes={caption.total_votes}
                             voteHandler={this.handleVote} 
-                            id={caption.caption_id}/>
+                            id={caption.caption_id}
+                            vote_value={this.state.caption.user_vote}/>
                     </li>
                     <li className="caption-content">
                         <Acceptor 
