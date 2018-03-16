@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import PageHeader from '../components/PageHeader';
 
 class RegistrationPage extends Component{
     constructor(props) {
@@ -72,7 +71,14 @@ class RegistrationPage extends Component{
     render() {
         return (
             <div>
-                <PageHeader />
+                <div className="logo">
+                    <img
+                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
+                        alt="Logo"
+                        width="340"
+                        onClick={this.onLogoClick}
+                    />
+                </div>
                 <div className="login-box-container">
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <p><font size ="5" color="#1DE28F"> Sign Up </font></p>

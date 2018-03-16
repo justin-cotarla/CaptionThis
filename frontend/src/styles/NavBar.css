@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body{
+    height: 100%;
+    background: #272525;
+  }
+
+  div.navbar-container {
+    display: block;
+    padding: 1em;
+  }
+
+  div.login-button {
+    float: right;
+    padding: 5px;
+    color: #1DE28F;
+    font-weight: bold;
+    cursor: pointer;
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+  }
+
+  div.logout-button {
+    float: right;
+    padding: 8px;
+    color: #1DE28F;
+    font-weight: bold;
+    cursor: pointer;
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+  }
+
+  div.createMoment-button {
+    display: inline-block;
+    margin-left: auto;
+    text-align: center;
+    padding: 8px;
+    color: #1DE28F;
+    font-weight: bold;
+    width: 150px;
+    cursor: pointer;
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+  }
+
+  div.profile-button {
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+    padding: 4px 8px;
+    color: #1DE28F;
+    cursor: pointer;
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+  }
+
+  div.profile-button img {
+    width: 20px;
+  }
+
+  div.home-button {
+    float: left;
+    padding: 8px;
+    color: #1DE28F;
+    margin-right: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+  }
