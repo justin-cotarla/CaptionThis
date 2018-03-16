@@ -39,7 +39,7 @@ const deleteCaptions = {
             })
             .then(() => reply.response({ code: 1 }).code(200))
             .catch((error) => {
-                if (error.message === 'Caption ID does not exist' || 'Invalid user') {
+                if (error.message === 'Caption ID does not exist' || error.message === 'Invalid user') {
                     return reply.response({ code: 2 }).code(400);
                 }
                 return reply.response({ code: 3 }).code(300);
