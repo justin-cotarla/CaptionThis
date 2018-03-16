@@ -3,9 +3,9 @@ import axios from 'axios';
 import MomentsList from '../components/MomentsList';
 import ScrollApp from '../components/ScrollerComponents'
 
-import Header from '../components/Header';
 import PageHeader from '../components/PageHeader';
 import Loading from '../components/Loading';
+import ErrorGraphic from '../components/ErrorGraphic';
 
 import '../styles/LandingPage.css';
 
@@ -52,9 +52,7 @@ class LandingPage extends Component {
 
         // Return an error message if moments could not be loaded
         if (error) {
-            return <div className="landing-page-container">
-            <Header textSize={4} text={error} />
-            </div>
+            return <ErrorGraphic error_message={error}/>
         }
         return (
             <div>
