@@ -82,3 +82,14 @@ div.login2-button {
   width: 185px;
   padding: 3px 10px;
 }
+
+div.logo img {
+  text-align: center;
+  width: 420px;
+  margin-bottom: 15px;
+}
+
+div.logo {
+  text-align: center;
+  margin-top: 0px;
+}
