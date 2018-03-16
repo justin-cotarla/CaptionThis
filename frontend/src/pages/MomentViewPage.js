@@ -9,6 +9,7 @@ import NavBar from '../components/NavBar';
 
 import Header from '../components/Header';
 import Loading from '../components/Loading';
+import ErrorGraphic from '../components/ErrorGraphic';
 
 class MomentViewPage extends Component{
     constructor(props){
@@ -94,9 +95,7 @@ class MomentViewPage extends Component{
         const { token, moment, captions, loading, error } = this.state;
         if(error) {
             return (
-                <div>
-                <Header textSize={4} text={error} />
-                </div>
+                <ErrorGraphic error_message={error}/>
             )
         }
 
