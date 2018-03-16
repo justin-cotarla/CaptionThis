@@ -4,7 +4,7 @@ import MomentsList from '../components/MomentsList';
 import ScrollApp from '../components/ScrollerComponents'
 
 import Header from '../components/Header';
-import PageHeader from '../components/PageHeader';
+import NavBar from '../components/NavBar';
 import Loading from '../components/Loading';
 
 import '../styles/LandingPage.css';
@@ -58,7 +58,7 @@ class LandingPage extends Component {
         }
         return (
             <div>
-                <PageHeader user={this.state.user}/>
+                <NavBar user={this.state.user}/>
                 
                 <div className="logo">
                     <img

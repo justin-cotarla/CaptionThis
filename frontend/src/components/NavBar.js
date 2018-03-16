@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 
-import '../styles/PageHeader.css';
+import '../styles/NavBar.css';
 import * as AuthUtil from '../util/AuthUtil';
 
 
-class PageHeader extends Component{
+class NavBar extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -113,4 +113,4 @@ class PageHeader extends Component{
     }
 }
 
-export default PageHeader;
+export default NavBar;

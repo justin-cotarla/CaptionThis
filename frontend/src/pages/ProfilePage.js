@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 
 import MomentList from '../components/MomentsList';
 import CaptionList from '../components/CaptionList';
-import PageHeader from '../components/PageHeader';
+import NavBar from '../components/NavBar';
 
 import '../styles/ProfilePage.css';
 
@@ -147,7 +147,7 @@ class ProfilePage extends React.Component {
 
         return (  
             <div>
-            <PageHeader user={this.state.user}/>
+            <NavBar user={this.state.user}/>
                 <div className="profile-page-container">
                     <div className="profile-page-content">
                         <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>      

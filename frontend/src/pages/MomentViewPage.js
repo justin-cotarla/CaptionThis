@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import Moment from '../components/Moment';
 import CaptionCreatorForm from '../components/CaptionCreatorForm';
 import CaptionList from '../components/CaptionList';
-import PageHeader from '../components/PageHeader';
+import NavBar from '../components/NavBar';
 
 import Header from '../components/Header';
 import Loading from '../components/Loading';
@@ -108,7 +108,7 @@ class MomentViewPage extends Component{
         
         return (
             <div>
-            <PageHeader user={this.state.user}/>
+            <NavBar user={this.state.user}/>
                 <div className="moment-view-container">
                 <Moment 
                     image={ moment.img_url } 

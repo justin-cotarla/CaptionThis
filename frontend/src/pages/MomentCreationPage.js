@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import PageHeader from '../components/PageHeader';
+import NavBar from '../components/NavBar';
 
 import '../styles/CreateMoment.css';
 import Header from '../components/Header';
@@ -44,7 +44,7 @@ class MomentCreation extends Component {
     render(){
         return(
             <div>
-                <PageHeader user={this.state.user}/>
+                <NavBar user={this.state.user}/>
                 <div className = "CreateMoment">
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <form onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
