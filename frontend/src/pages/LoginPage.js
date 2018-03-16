@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import PageHeader from '../components/PageHeader';
 import '../styles/LoginRegistrationPage.css';
 
 class LoginPage extends Component{
@@ -12,6 +11,17 @@ class LoginPage extends Component{
             userField: '',
             passField: '',
             redirect: null,
+        }
+    }
+
+    componentDidMount(){
+        const cookies = new Cookies();
+        const token = cookies.get('token');
+
+        if(token) {
+            this.setState({
+                redirect: '/',
+            });
         }
     }
 
@@ -64,7 +74,14 @@ class LoginPage extends Component{
     render() {
         return (
             <div>
-                <PageHeader />
+                <div className="logo">
+                    <img
+                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
+                        alt="Logo"
+                        width="340"
+                        onClick={this.onLogoClick}
+                    />
+                </div>
                 <div className="login-box-container">
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <p><font size ="5" color="#1DE28F"> Login </font></p>

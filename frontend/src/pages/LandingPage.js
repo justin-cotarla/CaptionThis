@@ -3,9 +3,9 @@ import axios from 'axios';
 import MomentsList from '../components/MomentsList';
 import ScrollApp from '../components/ScrollerComponents'
 
-import Header from '../components/Header';
-import PageHeader from '../components/PageHeader';
+import NavBar from '../components/NavBar';
 import Loading from '../components/Loading';
+import ErrorGraphic from '../components/ErrorGraphic';
 
 import '../styles/LandingPage.css';
 
@@ -52,13 +52,21 @@ class LandingPage extends Component {
 
         // Return an error message if moments could not be loaded
         if (error) {
-            return <div className="landing-page-container">
-            <Header textSize={4} text={error} />
-            </div>
+            return <ErrorGraphic error_message={error}/>
         }
         return (
             <div>
-                <PageHeader user={this.state.user}/>
+                <NavBar user={this.state.user}/>
+                
+                <div className="logo">
+                    <img
+                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
+                        alt="Logo"
+                        width="340"
+                        onClick={this.onLogoClick}
+                    />
+                </div>
+
                 <div>
                     {moments ? (
                         <MomentsList
