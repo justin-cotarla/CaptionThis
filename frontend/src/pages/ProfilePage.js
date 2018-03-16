@@ -6,6 +6,7 @@ import Loading from '../components/Loading';
 
 import MomentList from '../components/MomentsList';
 import CaptionList from '../components/CaptionList';
+import ErrorGraphic from '../components/ErrorGraphic';
 
 import '../styles/ProfilePage.css';
 
@@ -137,9 +138,7 @@ class ProfilePage extends React.Component {
 
         if (error) {
             return (
-                <div className="profile-page-container">
-                    <h1 className="header-username">{error}</h1>
-                </div>
+                <ErrorGraphic error_message={error}/>
             )
         }
 
