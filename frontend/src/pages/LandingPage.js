@@ -59,21 +59,26 @@ class LandingPage extends Component {
         return (
             <div>
                 <PageHeader user={this.state.user}/>
+                  <div class="Moment-button"><a href="submit"> CREATE A MOMENT </a>
                 <div>
                     {moments ? (
                         <MomentsList
-                         Moments={moments} 
+                         Moments={moments}
                          showSubmittedBy={true} />
                     ) : (
                         <Loading />
                     )}
+                    <div class="Moment-preview-container">
+                      <div class="Moment-overlay"></div>
 
-                    <ScrollApp id="app"/>
+                    </div>
+
+
+                    <ScrollApp id="app"/></div>
                 </div>
             </div>
         )
     }
 }
-
 
 export default LandingPage;

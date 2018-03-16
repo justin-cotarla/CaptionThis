@@ -20,7 +20,7 @@ class MomentViewPage extends Component{
             error: null,
         };
     };
-    
+
     componentDidMount(){
         const cookies = new Cookies();
         const token = cookies.get('token');
@@ -31,7 +31,7 @@ class MomentViewPage extends Component{
             });
         }
 
-        const momentID = this.props.match.params.momentID; 
+        const momentID = this.props.match.params.momentID;
         axios({
             method: 'get',
             url: `http://${process.env.REACT_APP_IP}/api/moments/${momentID}`
@@ -53,8 +53,8 @@ class MomentViewPage extends Component{
 
     fetchCaptions = (momentid) => {
         const token = this.state.token;
-        const headers = { 
-            'Authorization': `Bearer ${token}` 
+        const headers = {
+            'Authorization': `Bearer ${token}`
         };
         axios({
             method: 'get',
@@ -103,26 +103,26 @@ class MomentViewPage extends Component{
                 <Loading/>
             )
         }
-        
+
         return (
             <div className="moment-view-container">
-            <Moment 
-                image={ moment.img_url } 
-                date={ formatDate(moment.date_added) } 
-                description={ moment.description } 
-                showSubmittedBy={ true } 
+            <Moment
+                image={ moment.img_url }
+                date={ formatDate(moment.date_added) }
+                description={ moment.description }
+                showSubmittedBy={ true }
                 username={ moment.user.username }/>
-            <CaptionCreatorForm 
-                momentId={this.props.match.params.momentID} 
-                onCaptionSubmit={this.fetchCaptions} 
+            <CaptionCreatorForm
+                momentId={this.props.match.params.momentID}
+                onCaptionSubmit={this.fetchCaptions}
                 token={token}/>
-            <CaptionList 
-                captions={captions} 
+            <CaptionList
+                captions={captions}
                 showSubmittedBy={true}
-                isLinkedToMoment={false} 
+                isLinkedToMoment={false}
                 momentCreatorId={moment.user_id}
                 user={this.props.user}
-                token={token} 
+                token={token}
                 onCaptionUpdate={this.onCaptionUpdate}>
                 {
                     captions.length > 0 ? <Header textSize={3} text={`${captions.length} Caption${captions.length > 1 ? 's' : ''}`}/>
@@ -131,7 +131,7 @@ class MomentViewPage extends Component{
             </CaptionList>
             </div>
         )
-    } 
+    }
 }
 
 // Exact formatting of date will be handled later

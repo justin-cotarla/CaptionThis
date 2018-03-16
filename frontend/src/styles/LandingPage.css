@@ -5,8 +5,8 @@
 
 html, body{
   height: 100%;
-  background: #303030;
-  /* #272525 */
+  background: #202020;
+  /* #272525 #303030;*/
 }
 
 div.header {
