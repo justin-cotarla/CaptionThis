@@ -5,11 +5,8 @@
 
 html, body{
   height: 100%;
-  background: #303030;
-}
-
-a {
-  color: white;
+  background: #202020;
+  /* #272525 #303030;*/
 }
 
 div.header {
@@ -24,8 +21,10 @@ div.login-button {
   color: #1DE28F;
   font-weight: bold;
   cursor: pointer;
+  /*
   border: #1DE28F 2px solid;
   border-radius: 10px;
+  */
 }
 
 div.profile-button {
@@ -33,12 +32,10 @@ div.profile-button {
   padding: 4px 8px;
   color: #1DE28F;
   cursor: pointer;
-  border: #1DE28F 2px solid;
-  border-radius: 10px;
 }
 
 div.profile-button img {
-  width: 20px;
+  width: 22px;
 }
 
 div.logo {
@@ -46,6 +43,6 @@ div.logo {
 }
 
 div.logo img {
-  border: #1DE28F 2px solid;
-  border-radius: 10px;
+  text-align: center;
+  width: 420px;
 }

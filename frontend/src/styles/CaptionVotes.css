@@ -1,0 +1,39 @@
+.caption-votes-container {
+    width: 50px;
+}
+
+.caption-votes-container li {
+    font-weight: 600;
+    margin: 3px 0;
+}
+
+.caption-votes-container > ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    list-style-type: none;
+    text-align: center;
+    padding: 0;
+}
+
+.vote-count {
+    font-size: 16px;
+}
+
+.vote-ticker {
+    font-size: 12px;
+}
+
+.vote-ticker:hover, .vote-up:hover, .vote-down:hover{
+    cursor: pointer;
+}
+
+.vote-up{
+    color: #1DE28F;
+    font-size: 12px;
+}
+
+.vote-down{
+    color: #f44b42;
+    font-size: 12px;
+}

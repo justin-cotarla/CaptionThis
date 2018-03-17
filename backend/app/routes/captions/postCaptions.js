@@ -7,7 +7,6 @@ const updateVote = (request, reply, captionId) => {
 
     // Check if the vote is valid
     if (vote === undefined || vote === '' || !/^-*[01]$/.test(vote)) {
-        console.log('Invalid vote.');
         return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
     }
 
@@ -36,7 +35,6 @@ const selectCaption = (request, reply, captionId) => {
 
     // Check if the selection is valid
     if (selection === undefined || selection === '' || !/^-*[01]$/.test(selection)) {
-        console.log('Invalid selection.');
         return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
     }
 
@@ -64,20 +62,19 @@ const postCaptions = {
 
         // Check if the caption id is valid
         if (captionId === undefined || captionId === '' || !/^\d+$/.test(captionId)) {
-            console.log('Invalid caption ID');
             return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
         }
 
         // Parse the caption id to an integer
         captionId = parseInt(captionId, 10);
 
-        const checkCaption = 'SELECT * FROM CAPTION WHERE ID=?';
+        const checkCaption = 'SELECT * FROM CAPTION WHERE ID=? AND DELETED=0';
         return databaseUtil.sendQuery(checkCaption, [captionId])
             .then((result) => {
-                // If the caption id is not in the db, throw error
                 if (result.rows[0] === undefined) {
-                    throw new Error('Caption ID does not exist.');
+                    return reply.response({ code: 2 }).code(400);
                 }
+
                 switch (operation) {
                 case 'vote': {
                     return updateVote(request, reply, captionId);
@@ -86,17 +83,11 @@ const postCaptions = {
                     return selectCaption(request, reply, captionId);
                 }
                 default: {
-                    console.log('Invalid operation');
                     return reply.response({ code: 2 }).code(400);
                 }
                 }
-            }).catch((error) => {
-                console.log(error);
-                if (error.message === 'Caption ID does not exist.') {
-                    return reply.response({ code: 2 }).code(400);
-                }
-                return reply.response({ code: 3 }).code(300);
-            });
+            })
+            .catch(() => reply.response({ code: 3 }).code(300));
     },
 };
 

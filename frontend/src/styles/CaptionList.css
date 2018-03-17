@@ -1,8 +1,8 @@
 .caption-list-container {
-    margin: 20px;
+    margin: 1em 20px;
 }
 
 .caption-list-container > ul {
-    background-color: rgba(196, 196, 196, 0.282);
-    padding: 1em;
+    margin: 0.5em 0;
+    padding: 0;
 }

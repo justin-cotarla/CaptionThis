@@ -5,9 +5,11 @@ import Cookies from 'universal-cookie';
 import Moment from '../components/Moment';
 import CaptionCreatorForm from '../components/CaptionCreatorForm';
 import CaptionList from '../components/CaptionList';
+import NavBar from '../components/NavBar';
 
 import Header from '../components/Header';
 import Loading from '../components/Loading';
+import ErrorGraphic from '../components/ErrorGraphic';
 
 class MomentViewPage extends Component{
     constructor(props){
@@ -17,10 +19,11 @@ class MomentViewPage extends Component{
             moment: null,
             captions: [],
             loading: true,
+            user: props.user,
             error: null,
         };
     };
-    
+
     componentDidMount(){
         const cookies = new Cookies();
         const token = cookies.get('token');
@@ -31,7 +34,7 @@ class MomentViewPage extends Component{
             });
         }
 
-        const momentID = this.props.match.params.momentID; 
+        const momentID = this.props.match.params.momentID;
         axios({
             method: 'get',
             url: `http://${process.env.REACT_APP_IP}/api/moments/${momentID}`
@@ -53,8 +56,8 @@ class MomentViewPage extends Component{
 
     fetchCaptions = (momentid) => {
         const token = this.state.token;
-        const headers = { 
-            'Authorization': `Bearer ${token}` 
+        const headers = {
+            'Authorization': `Bearer ${token}`
         };
         axios({
             method: 'get',
@@ -89,32 +92,54 @@ class MomentViewPage extends Component{
     }
 
     render() {
-        const token = this.state.token;
-        const moment = this.state.moment;
-        const error = this.state.error;
-        
+        const { token, moment, captions, loading, error } = this.state;
         if(error) {
             return (
                 <div>
-                <Header textSize={4} text={error} />
+                    <NavBar user={this.state.user}/>
+                    <ErrorGraphic message={error}/>
                 </div>
+                
             )
         }
-        
-        if(moment) {
+
+        if(loading) {
             return (
-                <div className="moment-view-container">
-                <Moment image={ moment.img_url } date={ formatDate(moment.date_added) } description={ moment.description } user={ moment.user_id }/>
-                <CaptionCreatorForm momentId={this.props.match.params.momentID} onCaptionSubmit={this.fetchCaptions} token={token}/>
-                <CaptionList captions={this.state.captions} token={token} onCaptionUpdate={this.onCaptionUpdate}/>
-                </div>
+                <Loading/>
             )
         }
-        else {
-            return <Loading />
-        }
-        
-    } 
+
+        return (
+            <div>
+            <NavBar user={this.state.user}/>
+            <div className="moment-view-container">
+                <Moment
+                    image={ moment.img_url }
+                    date={ formatDate(moment.date_added) }
+                    description={ moment.description }
+                    showSubmittedBy={ true }
+                    username={ moment.user.username }/>
+                <CaptionCreatorForm
+                    momentId={this.props.match.params.momentID}
+                    onCaptionSubmit={this.fetchCaptions}
+                    token={token}/>
+                <CaptionList
+                    captions={captions}
+                    showSubmittedBy={true}
+                    isLinkedToMoment={false}
+                    momentCreatorId={moment.user_id}
+                    user={this.props.user}
+                    token={token}
+                    onCaptionUpdate={this.onCaptionUpdate}>
+                    {
+                        captions.length > 0 ? <Header textSize={3} text={`${captions.length} Caption${captions.length > 1 ? 's' : ''}`}/>
+                        : <Header textSize={3} text="Looks like there's nothing here (yet) :("/>
+                    }
+                </CaptionList>
+            </div>
+            </div>
+        )
+    }
 }
 
 // Exact formatting of date will be handled later
