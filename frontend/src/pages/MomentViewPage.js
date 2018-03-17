@@ -95,7 +95,11 @@ class MomentViewPage extends Component{
         const { token, moment, captions, loading, error } = this.state;
         if(error) {
             return (
-                <ErrorGraphic error_message={error}/>
+                <div>
+                    <NavBar user={this.state.user}/>
+                    <ErrorGraphic message={error}/>
+                </div>
+                
             )
         }
 
