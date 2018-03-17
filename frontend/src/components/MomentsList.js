@@ -29,12 +29,12 @@ class MomentsList extends Component {
                     this.props.Moments && this.props.Moments.map(moment => {
                         return (
                             <li key={moment.moment_id}>
-                                <Moment 
-                                    onClick={() => this.viewMoment(moment)} 
+                                <Moment className="Moment-component"
+                                    onClick={() => this.viewMoment(moment)}
                                     showSubmittedBy={this.props.showSubmittedBy}
-                                    image={ moment.img } 
-                                    date={ formatDate(moment.date_added) } 
-                                    description={ moment.description } 
+                                    image={ moment.img }
+                                    date={ formatDate(moment.date_added) }
+                                    description={ moment.description }
                                     username={ moment.user.username }/>
                             </li>
                         )
