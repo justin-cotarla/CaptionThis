@@ -24,15 +24,7 @@ const request = {
 
 const emptyAuthRequest = {
     auth: {},
-    payload: {
-        description: '',
-        file: {
-            _data: 'test',
-            hapi: {
-                filename: 'test.jpg',
-            },
-        },
-    },
+    payload: {},
 };
 
 const reply = {
@@ -45,17 +37,15 @@ beforeEach(() => {
     jest.clearAllMocks();
 });
 
-const s3 = new AWS.S3();
-
 describe('/api/moments endpoint', () => {
     it('successfully create a moment', () => {
-        s3.upload = jest.fn(() => new Promise((resolve) => {
-            resolve({
-                data: {
+        AWS.S3 = () => ({
+            upload: () => ({
+                promise: jest.fn(() => Promise.resolve({
                     Location: 'test.jpg',
-                },
-            });
-        }));
+                })),
+            }),
+        });
 
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
             resolve({
@@ -66,7 +56,7 @@ describe('/api/moments endpoint', () => {
 
         return putMoments.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(1);
             });
     });
 
@@ -75,8 +65,16 @@ describe('/api/moments endpoint', () => {
         expect(reply.response.mock.calls[0][0].code).toBe(4);
     });
 
-/*    it('request with no payload', () => {
-        momentsRoute.handler(emptyRequest, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(3);
-    }); */
+    it('Handle unknown error', () => {
+        AWS.S3 = () => ({
+            upload: () => ({
+                promise: jest.fn(() => Promise.reject(new Error())),
+            }),
+        });
+
+        return putMoments.handler(request, reply)
+            .then(() => {
+                expect(reply.response.mock.calls[0][0].code).toBe(3);
+            });
+    });
 });
