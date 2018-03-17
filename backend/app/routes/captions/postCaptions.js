@@ -1,4 +1,12 @@
 import databaseUtil from '../../utility/DatabaseUtil';
+import {
+    GOOD,
+    UNAUTHORIZED,
+    INVALID_INPUT,
+    INVALID_OPERATION,
+    CAPTION_DOES_NOT_EXIST,
+    UNKNOWN_ERROR,
+} from '../../../utility/ResponseCodes';
 
 const updateVote = (request, reply, captionId) => {
     // Get the user id and vote
@@ -7,7 +15,9 @@ const updateVote = (request, reply, captionId) => {
 
     // Check if the vote is valid
     if (vote === undefined || vote === '' || !/^-*[01]$/.test(vote)) {
-        return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
+        return reply
+            .response({ code: INVALID_INPUT.code })
+            .code(INVALID_INPUT.http);
     }
 
     // Parse the user id and vote to an integer
@@ -23,9 +33,9 @@ const updateVote = (request, reply, captionId) => {
         .then((result) => {
             const voteCount = result.rows[0].VOTECOUNT;
             return reply.response({
-                code: 1,
+                code: GOOD.code,
                 votes: voteCount,
-            }).code(200);
+            }).code(GOOD.http);
         });
 };
 
@@ -35,7 +45,9 @@ const selectCaption = (request, reply, captionId) => {
 
     // Check if the selection is valid
     if (selection === undefined || selection === '' || !/^-*[01]$/.test(selection)) {
-        return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
+        return reply
+            .response({ code: INVALID_INPUT.code })
+            .code(INVALID_INPUT.http);
     }
 
     // Parse the selection to an integer
@@ -43,7 +55,9 @@ const selectCaption = (request, reply, captionId) => {
 
     const query = 'UPDATE CAPTION SET SELECTED=? WHERE ID=?';
     return databaseUtil.sendQuery(query, [selection, captionId])
-        .then(() => reply.response({ code: 1 }).code(200));
+        .then(() => reply
+            .response({ code: GOOD.code })
+            .code(GOOD.http));
 };
 
 
@@ -53,7 +67,9 @@ const postCaptions = {
     handler: (request, reply) => {
         // Check if authorized
         if (!request.auth.credentials) {
-            return reply.response({ code: 4 }).code(401);
+            return reply
+                .response({ code: UNAUTHORIZED.code })
+                .code(UNAUTHORIZED.http);
         }
 
         // Get the caption id and operation
@@ -62,7 +78,9 @@ const postCaptions = {
 
         // Check if the caption id is valid
         if (captionId === undefined || captionId === '' || !/^\d+$/.test(captionId)) {
-            return reply.response({ code: 2 }).code(400); // Code 2 means invalid input
+            return reply
+                .response({ code: INVALID_INPUT.code })
+                .code(INVALID_INPUT.http);
         }
 
         // Parse the caption id to an integer
@@ -72,7 +90,9 @@ const postCaptions = {
         return databaseUtil.sendQuery(checkCaption, [captionId])
             .then((result) => {
                 if (result.rows[0] === undefined) {
-                    return reply.response({ code: 2 }).code(400);
+                    return reply
+                        .response({ code: CAPTION_DOES_NOT_EXIST.code })
+                        .code(CAPTION_DOES_NOT_EXIST.http);
                 }
 
                 switch (operation) {
@@ -83,11 +103,15 @@ const postCaptions = {
                     return selectCaption(request, reply, captionId);
                 }
                 default: {
-                    return reply.response({ code: 2 }).code(400);
+                    return reply
+                        .response({ code: INVALID_OPERATION.code })
+                        .code(INVALID_OPERATION.http);
                 }
                 }
             })
-            .catch(() => reply.response({ code: 3 }).code(300));
+            .catch(() => reply
+                .response({ code: UNKNOWN_ERROR.code })
+                .code(UNKNOWN_ERROR.http));
     },
 };
 
