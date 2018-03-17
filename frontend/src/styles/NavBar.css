@@ -36,10 +36,11 @@ div.login-button img {
 
 
 div.login-button:hover{
-  opacity: 1;
+    opacity: 1;
 }
 
-  div.logout-button {
+div.logout-button {
+    opacity: 0.8;
     width:100;
     height:30;
     float: right;
