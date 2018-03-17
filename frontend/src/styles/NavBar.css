@@ -1,75 +1,96 @@
-* {
-    margin: 0;
-    padding: 0;
-  }
-
-  html, body{
-    height: 100%;
-    background: #272525;
-  }
-
-  div.header {
-    padding: 15px;
+  @import url('https://fonts.googleapis.com/css?family=Teko');
+  div.navbar-container {
     display: block;
-    height: 20px;
-    margin-bottom: 15px;
+    height: 42px;
+    padding: 1em;
   }
 
   div.login-button {
+    opacity: 0.8;
+    position: relative;
+    width: 100px;
+    text-align:right;
     float: right;
-    padding: 5px;
-    color: #1DE28F;
-    font-weight: bold;
+    padding: 0px;
+    border: #202020 1px solid;
+    border-radius: 2px;
     cursor: pointer;
-    border: #1DE28F 2px solid;
-    border-radius: 10px;
+
   }
 
-  div.logout-button {
+div.login-button img {
+    opacity: 0.8;
+    width: 100px;
+    bottom: 0;
+    display: inline-block;
+  }
+
+
+div.login-button:hover{
+    opacity: 1;
+}
+
+div.logout-button {
+    opacity: 0.8;
+    width:100;
+    height:30;
     float: right;
-    padding: 8px;
-    color: #1DE28F;
-    font-weight: bold;
+    padding: 4px;
     cursor: pointer;
-    border: #1DE28F 2px solid;
-    border-radius: 10px;
+    border: #202020 1px solid;
+    border-radius: 2px;
+  }
+  div.logout-button img {
+      opacity: 0.8;
+      position: right;
+      opacity: 0.8;
+      height: 30px;
+      width: 100px;
+      bottom: 0;
+      display: inline-block;
+    }
+  div.logout-button:hover{
+    opacity: 1;
   }
 
   div.createMoment-button {
     display: inline-block;
     margin-left: auto;
     text-align: center;
-    padding: 8px;
+    padding-top: -1px;
+    padding-left: 1px;
     color: #1DE28F;
-    font-weight: bold;
-    width: 150px;
+    font-family: 'Teko';
+    width: 170px;
     cursor: pointer;
-    border: #1DE28F 2px solid;
-    border-radius: 10px;
+    font-size: 34px;
   }
 
   div.profile-button {
+    width:100;
+    height:100;
     display: inline-block;
     float: right;
-    margin-right: 10px;
-    padding: 4px 8px;
-    color: #1DE28F;
+    padding: 3px 3px;
     cursor: pointer;
-    border: #1DE28F 2px solid;
-    border-radius: 10px;
   }
 
   div.profile-button img {
-    width: 20px;
+    width: 22px;
+    padding-top: 2px;
   }
 
   div.home-button {
     float: left;
-    padding: 8px;
-    color: #1DE28F;
     margin-right: 10px;
     font-weight: bold;
     cursor: pointer;
-    border: #1DE28F 2px solid;
-    border-radius: 10px;
+  }
+
+  div.home-button img{
+    float: left;
+    height: 40px;
+    padding-top: 0px;
+    font-weight: bold;
+    cursor: pointer;
   }

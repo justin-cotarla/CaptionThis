@@ -1,6 +1,12 @@
 
 import * as AuthUtil from '../../../utility/AuthUtil';
 import postTokens from './postTokens';
+import {
+    INVALID_INPUT,
+    GOOD,
+    INVALID_TOKEN,
+    UNKNOWN_ERROR,
+} from '../../../utility/ResponseCodes';
 
 // A dummy request
 const request = {
@@ -42,23 +48,23 @@ describe('api/auth/tokens endpoint', () => {
             });
         }));
 
-      // The login route is exported from login.js in an array
-      // .handler is the actual functon we are testing
-      return postTokens.handler(request, reply)
-          .then(() => {
-              // [0][0] refers to first function argument of the first call
-              expect(reply.response.mock.calls[0][0].code).toBe(1);
-          });
-  });
+        // The login route is exported from login.js in an array
+        // .handler is the actual functon we are testing
+        return postTokens.handler(request, reply)
+            .then(() => {
+                // [0][0] refers to first function argument of the first call
+                expect(reply.response.mock.calls[0][0].code).toBe(GOOD.code);
+            });
+    });
 
     it('handles requests with missing payloads', () => {
-      postTokens.handler({},reply);
-      expect(reply.response.mock.calls[0][0].code).toBe(2);
+        postTokens.handler({},reply);
+        expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
     });
 
     it('handles token requests with missing params', () => {
-      postTokens.handler(emptyRequest,reply);
-      expect(reply.response.mock.calls[0][0].code).toBe(2);
+        postTokens.handler(emptyRequest,reply);
+        expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
     });
 
     it('handles invalid tokens', () => {
@@ -68,7 +74,7 @@ describe('api/auth/tokens endpoint', () => {
 
         return postTokens.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(INVALID_TOKEN.code);
             });
     });
 
@@ -79,7 +85,7 @@ describe('api/auth/tokens endpoint', () => {
 
         return postTokens.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(99);
+                expect(reply.response.mock.calls[0][0].code).toBe(UNKNOWN_ERROR.code);
             });
     });
 });

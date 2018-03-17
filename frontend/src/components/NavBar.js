@@ -58,56 +58,62 @@ class NavBar extends Component{
 
     render() {
         return (
-            <div className="main-container">
-                {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
-                <div className="header">
-                {this.props.user &&
-                    <div
-                    className="logout-button"
-                    onClick={this.onLogoutClick}
-                    >
-                    Logout
-                    </div>
-                }
+                <div className="navbar-container">
+                    {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
+                    {this.props.user &&
+                        <div
+                              className="logout-button"
+                              onClick={this.onLogoutClick}>
+                              <img
+                                  alt="Logout"
+                                  src={`http://${process.env.REACT_APP_IP}/res/logout.png`}
+                              />
+                        </div>
+                    }
 
-                {this.props.user &&
-                    <div
-                        className="profile-button"
-                        onClick={this.onProfileClick}>
+                    {this.props.user &&
+                        <div
+                            className="profile-button"
+                            onClick={this.onProfileClick}>
+                            <img
+                                alt="Profile"
+                                src={`http://${process.env.REACT_APP_IP}/res/personIcon.png`}
+                            />
+                        </div>
+                    }
+
+                    {this.props.user &&
+                        <div
+                        className="home-button"
+                        onClick={this.onHomeClick}>
                         <img
-                            alt="Profile"
-                            src={`http://${process.env.REACT_APP_IP}/res/personIcon.png`}
+                            alt="Home"
+                            src={`http://${process.env.REACT_APP_IP}/res/homeicon.png`}
                         />
-                    </div>
-                }
+                        </div>
+                    }
 
-                {this.props.user &&
-                    <div
-                    className="home-button"
-                    onClick={this.onHomeClick}
-                    >
-                    Home
-                    </div>
-                }
+                    {this.props.user &&
+                        <div
+                        className="createMoment-button"
+                        onClick={this.onCreateMomentClick}
+                        >
+                        CREATE MOMENT
+                        </div>
+                    }
 
-                {this.props.user &&
-                    <div
-                    className="createMoment-button"
-                    onClick={this.onCreateMomentClick}
-                    >
-                    CREATE MOMENT
-                    </div>
-                }
+                    {this.props.user === null &&
+                        <div
+                            className="login-button"
+                            onClick={this.onLoginClick}>
+                            <img
+                                alt="Login"
+                                src={`http://${process.env.REACT_APP_IP}/res/login.png`}
+                            />
 
-                {this.props.user === null &&
-                    <div
-                        className="login-button"
-                        onClick={this.onLoginClick}
-                    >
-                    Login
-                    </div>
-                }
-                </div>
+                        </div>
+                    }
+
             </div>
         )
     }

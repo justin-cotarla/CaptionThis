@@ -68,7 +68,7 @@ const postCaptions = {
         // Parse the caption id to an integer
         captionId = parseInt(captionId, 10);
 
-        const checkCaption = 'SELECT * FROM CAPTION WHERE ID=?';
+        const checkCaption = 'SELECT * FROM CAPTION WHERE ID=? AND DELETED=0';
         return databaseUtil.sendQuery(checkCaption, [captionId])
             .then((result) => {
                 if (result.rows[0] === undefined) {

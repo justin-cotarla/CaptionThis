@@ -3,8 +3,7 @@
 /* By default, tilt all moments by -2 degrees */
 .Moment-preview-container {
     display: inline-block;
-    padding-left: 0;
-    margin: 24px;
+    margin: 34px;
     padding: 15px;
     text-align: right;
     font-size: 15px;
@@ -13,7 +12,6 @@
     font-weight: 300;
     box-shadow: 5px 10px 20px black;
     align-content: center;
-    background-color: #FFFFFF;
     transform: rotate(-2deg);
     -webkit-transform: rotate(-2deg);
     -moz-transform: rotate(-2deg);
@@ -29,13 +27,16 @@
 
 .Moment-preview-info {
     margin-top: auto;
+
 }
 
 .Moment-thumbnail {
     position: relative;
-    float: left;
-    width:  380px;
-    margin-bottom: 8px;
+    width:  400px;
+    height: 320px; //added this to fix the height
+    margin-bottom: 7px;
+    margin-right:2.5px;
+    margin-left: 2.5px;
 }
 
 /* Rotate all even images 2 degrees */
@@ -74,13 +75,13 @@
 }
 
 .Moments-list li .Moment-preview-container:hover {
+
     cursor: pointer;
     transform: scale(1.15);
     -webkit-transform: scale(1.15);
     -moz-transform: scale(1.15);
-    -webkit-transition: opacity .8s ease-out;
-    -moz-transition: opacity .8s ease-out;
-
+    -webkit-transition: color .8s ease-in;
+    -moz-transition: color .8s ease-in;
     position: relative;
     z-index: 5;
     transition: .3s ease-in-out;
