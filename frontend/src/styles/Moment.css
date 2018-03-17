@@ -20,31 +20,6 @@
     -moz-transition:  .3s ease-out;
 }
 
-.Moment-caption-button a{
-
-  position: absolute;
-  width: 150px;
-  left: 0;
-  top: 120px;
-  font-weight: 10;
-  font-size: 14px;
-  border: solid 1.4px white;
-  text-align: center;
-  color: white;
-  transition: top .5s ease-in;
-  z-index: 1;
-}
-
-.Moment-overlay {
-  top: 0;
-  left: 0;
-  width: 400px;
-  height: 320px;
-  position: relative;
-  background: rgba(255,255,255,0);
-  transition: background 0.5s ease;
-}
-
 .Moment-preview-container h1 {
   clear: both;
   font-family: 'Gloria Hallelujah', cursive;
@@ -99,28 +74,15 @@
   left: -5px;
 }
 
-.Moments-list li .Moment-preview-container:hover .Moment-overlay {
+.Moments-list li .Moment-preview-container:hover {
 
     cursor: pointer;
-    color: rgba(255,255,255,0.7);
-/* background: rgba(255,255,255,0.7); */
     transform: scale(1.15);
     -webkit-transform: scale(1.15);
     -moz-transform: scale(1.15);
-/*  image: url('white.png') no-repeat;  */
     -webkit-transition: color .8s ease-in;
     -moz-transition: color .8s ease-in;
     position: relative;
     z-index: 5;
     transition: .3s ease-in-out;
-}
-
-.Moment-preview-container:hover {
-  cursor: pointer;
-  display: block;
-  transform: scale(1.15);
-  -webkit-transform: scale(1.15);
-  -moz-transform: scale(1.15);
-  -webkit-transition: color .8s ease-in;
-  -moz-transition: color .8s ease-in;
 }

@@ -62,10 +62,12 @@ class NavBar extends Component{
                     {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
                     {this.props.user &&
                         <div
-                        className="logout-button"
-                        onClick={this.onLogoutClick}
-                        >
-                        Logout
+                              className="logout-button"
+                              onClick={this.onLogoutClick}>
+                              <img
+                                  alt="Logout"
+                                  src={`http://${process.env.REACT_APP_IP}/res/logout.png`}
+                              />
                         </div>
                     }
 
@@ -83,9 +85,11 @@ class NavBar extends Component{
                     {this.props.user &&
                         <div
                         className="home-button"
-                        onClick={this.onHomeClick}
-                        >
-                        Home
+                        onClick={this.onHomeClick}>
+                        <img
+                            alt="Home"
+                            src={`http://${process.env.REACT_APP_IP}/res/homeButton.png`}
+                        />
                         </div>
                     }
 
@@ -101,11 +105,15 @@ class NavBar extends Component{
                     {this.props.user === null &&
                         <div
                             className="login-button"
-                            onClick={this.onLoginClick}
-                        >
-                        Login
+                            onClick={this.onLoginClick}>
+                            <img
+                                alt="Login"
+                                src={`http://${process.env.REACT_APP_IP}/res/login.png`}
+                            />
+
                         </div>
                     }
+
             </div>
         )
     }

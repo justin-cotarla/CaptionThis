@@ -75,12 +75,7 @@ class LandingPage extends Component {
                     ) : (
                         <Loading />
                     )}
-                    <div class="Moment-preview-container">
-                      <div class="Moment-overlay"></div>
-
-                    </div>
-
-
+                  
                     <ScrollApp id="app"/></div>
               </div>
         )
