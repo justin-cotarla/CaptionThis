@@ -88,7 +88,7 @@ class NavBar extends Component{
                         onClick={this.onHomeClick}>
                         <img
                             alt="Home"
-                            src={`http://${process.env.REACT_APP_IP}/res/homeButton.png`}
+                            src={`http://${process.env.REACT_APP_IP}/res/homeicon.png`}
                         />
                         </div>
                     }

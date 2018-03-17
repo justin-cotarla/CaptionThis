@@ -90,7 +90,16 @@ div.login-button:hover{
 
   div.home-button {
     float: left;
-    padding: 4px;
+    padding: px;
+    margin-right: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  div.home-button img{
+    float: left;
+    height: 40px;
+    padding-top: 0px;
     margin-right: 10px;
     font-weight: bold;
     cursor: pointer;
