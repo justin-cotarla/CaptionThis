@@ -57,7 +57,7 @@ class LandingPage extends Component {
         return (
             <div>
                 <NavBar user={this.state.user}/>
-                
+
                 <div className="logo">
                     <img
                         src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
@@ -70,18 +70,16 @@ class LandingPage extends Component {
                 <div>
                     {moments ? (
                         <MomentsList
-                         Moments={moments} 
+                         Moments={moments}
                          showSubmittedBy={true} />
                     ) : (
                         <Loading />
                     )}
-
-                    <ScrollApp id="app"/>
-                </div>
-            </div>
+                  
+                    <ScrollApp id="app"/></div>
+              </div>
         )
     }
 }
-
 
 export default LandingPage;
