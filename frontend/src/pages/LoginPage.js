@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import PageHeader from '../components/PageHeader';
 import '../styles/LoginRegistrationPage.css';
+
+import LoadingDots from '../components/LoadingDots'
 
 class LoginPage extends Component{
     constructor(props) {
@@ -12,6 +13,18 @@ class LoginPage extends Component{
             userField: '',
             passField: '',
             redirect: null,
+            loggingin: false,
+        }
+    }
+
+    componentDidMount(){
+        const cookies = new Cookies();
+        const token = cookies.get('token');
+
+        if(token) {
+            this.setState({
+                redirect: '/',
+            });
         }
     }
 
@@ -33,8 +46,17 @@ class LoginPage extends Component{
         });
     }
 
-    onSubmit = (event) => {
-        event.preventDefault();
+    onEnterPress = (event) => {
+        if(event.keyCode === 13 && event.shiftKey === false) {
+          this.onSubmit();
+        }
+    }
+
+    onSubmit = () => {
+        this.setState({
+            loggingin: true,
+        });
+
         axios({
             url: `http://${process.env.REACT_APP_IP}/api/auth/login`,
             method: 'post',
@@ -59,14 +81,19 @@ class LoginPage extends Component{
     render() {
         return (
             <div>
-                <PageHeader />
+                <div className="logo">
+                    <img
+                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
+                        alt="Logo"
+                        width="340"
+                        onClick={this.onLogoClick}
+                    />
+                </div>
                 <div className="login-box-container">
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <p><font size ="5" color="#1DE28F"> Login </font></p>
 
-                    <form
-                        onSubmit={this.onSubmit}
-                    >
+                    <form>
                         <p>
                         <input
                             type="text"
@@ -86,14 +113,17 @@ class LoginPage extends Component{
                             placeholder="Password"                       
                             value={this.state.passField}
                             onChange={this.onPassChange}
+                            onKeyDown={this.onEnterPress}
                         />
 
-                        <p><input
-                            type="submit"
-                            name="login"
-                            className="login2-button"
-                        /></p>
+                        <div
+                        className="login1-button"
+                        onClick={this.onSubmit}
+                        >
+                        Login
+                        </div>
                     </form>
+                    
                     <div
                         className="registration-button"
                         onClick={this.onRegisterClick}
@@ -101,6 +131,13 @@ class LoginPage extends Component{
                         Sign up for CaptionThis
                         </div>
                     </div>
+
+                    {this.state.loggingin &&
+                        <div className="login-loader-holder">
+                            <LoadingDots className="login-loader"/>
+                        </div>
+                    }
+
             </div>
         );
     }

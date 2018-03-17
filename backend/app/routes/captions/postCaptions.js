@@ -68,13 +68,13 @@ const postCaptions = {
         // Parse the caption id to an integer
         captionId = parseInt(captionId, 10);
 
-        const checkCaption = 'SELECT * FROM CAPTION WHERE ID=?';
+        const checkCaption = 'SELECT * FROM CAPTION WHERE ID=? AND DELETED=0';
         return databaseUtil.sendQuery(checkCaption, [captionId])
             .then((result) => {
-                // If the caption id is not in the db, throw error
                 if (result.rows[0] === undefined) {
-                    throw new Error('Caption ID does not exist.');
+                    return reply.response({ code: 2 }).code(400);
                 }
+
                 switch (operation) {
                 case 'vote': {
                     return updateVote(request, reply, captionId);
@@ -86,12 +86,8 @@ const postCaptions = {
                     return reply.response({ code: 2 }).code(400);
                 }
                 }
-            }).catch((error) => {
-                if (error.message === 'Caption ID does not exist.') {
-                    return reply.response({ code: 2 }).code(400);
-                }
-                return reply.response({ code: 3 }).code(300);
-            });
+            })
+            .catch(() => reply.response({ code: 3 }).code(300));
     },
 };
 

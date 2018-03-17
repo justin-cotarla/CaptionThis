@@ -3,6 +3,17 @@ div.loginHeader {
   color: #1DE28F;
 }
 
+div.login1-button {
+  width: 45px;
+  float: none;
+  margin: 0 auto;
+  margin-top: 5px;
+  padding: 5px;
+  color: #1DE28F;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 div.login2-button {
     width: 175px;
     float: none;
@@ -12,8 +23,6 @@ div.login2-button {
     color: #1DE28F;
     font-weight: bold;
     cursor: pointer;
-    border: #1DE28F 2px solid;
-    border-radius: 10px;
   }
 
   div.registration-button {
@@ -25,8 +34,17 @@ div.login2-button {
     color: #1DE28F;
     font-weight: bold;
     cursor: pointer;
-    border: #1DE28F 2px solid;
-    border-radius: 10px;
+  }
+
+  div.registration2-button {
+    width: 65px;
+    float: none;
+    margin: 0 auto;
+    margin-top: 5px;
+    padding: 5px;
+    color: #1DE28F;
+    font-weight: bold;
+    cursor: pointer;
   }
 
   .login-box-container {
@@ -39,8 +57,6 @@ div.login2-button {
     display: block;
     padding: 10px;
     align-content: center;
-    border: #1DE28F 2px solid;
-    border-radius: 10px;
 }
 
 .text-line {
@@ -55,4 +71,27 @@ div.login2-button {
   border-bottom: #1DE28F 2px solid;
   width: 185px;
   padding: 3px 10px;
+}
+
+div.logo img {
+  text-align: center;
+  width: 420px;
+  margin-bottom: 15px;
+}
+
+div.logo {
+  text-align: center;
+  margin-top: 0px;
+}
+
+.login-loader-holder {
+  text-align: center;
+  width: 80px;
+  float: none;
+  margin: 0 auto;
+  height: 50px;
+}
+
+.login-loader {
+  margin:auto;
 }

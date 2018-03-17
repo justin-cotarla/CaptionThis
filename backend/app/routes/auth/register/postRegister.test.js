@@ -1,5 +1,11 @@
 import * as AuthUtil from '../../../utility/AuthUtil';
 import postRegister from './postRegister';
+import {
+    GOOD,
+    INVALID_INPUT,
+    UNKNOWN_ERROR,
+    USER_EXISTS,
+} from '../../../utility/ResponseCodes';
 
 // A dummy request
 const request = {
@@ -44,7 +50,7 @@ describe('api/auth/register endpoint', () => {
         return postRegister.handler(request, reply)
             .then(() => {
                 // [0][0] refers to first function argument of the first call
-                expect(reply.response.mock.calls[0][0].code).toBe(1);
+                expect(reply.response.mock.calls[0][0].code).toBe(GOOD.code);
             });
     });
 
@@ -54,18 +60,18 @@ describe('api/auth/register endpoint', () => {
         }));
         return postRegister.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(USER_EXISTS.code);
             });
     });
 
     it('handles requests with blank params', () => {
         postRegister.handler(emptyRequest, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(2);
+        expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
     });
 
     it('handles requests with missing payloads', () => {
         postRegister.handler({}, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(2);
+        expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
     });
 
     it('handles unknown errors', () => {
@@ -74,7 +80,7 @@ describe('api/auth/register endpoint', () => {
         }));
         return postRegister.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(4);
+                expect(reply.response.mock.calls[0][0].code).toBe(UNKNOWN_ERROR.code);
             });
     });
 });

@@ -9,9 +9,9 @@ const Acceptor = (props) => {
 
     return (
         <ul className="accept-reject">
-            { props.isReadOnly && <li id="accept" value={props.caption_id} onClick={props.acceptHandler}>Accept</li> }
-            { props.isReadOnly && <li>|</li> }
-            { props.isReadOnly && <li id="reject" value={props.caption_id} onClick={props.acceptHandler}>Reject</li> }        
+            { props.canAccept && <li id="accept" value={props.caption_id} onClick={props.acceptHandler}>Accept</li> }
+            { props.canAccept && <li>|</li> }
+            { props.canAccept && <li id="reject" value={props.caption_id} onClick={props.acceptHandler}>Reject</li> }        
             <li>{acceptStatus}</li>
         </ul>
     )

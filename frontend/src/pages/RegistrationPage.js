@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import PageHeader from '../components/PageHeader';
 
 class RegistrationPage extends Component{
     constructor(props) {
@@ -14,6 +13,17 @@ class RegistrationPage extends Component{
         }
     }
 
+    componentDidMount(){
+        const cookies = new Cookies();
+        const token = cookies.get('token');
+
+        if(token) {
+            this.setState({
+                redirect: '/',
+            });
+        }
+    }
+    
     onUserChange = (event) => {
         this.setState({
             userField: event.target.value,
@@ -32,8 +42,13 @@ class RegistrationPage extends Component{
         });
     }
 
-    onSubmit = (event) => {
-        event.preventDefault();
+    onEnterPress = (event) => {
+        if(event.keyCode === 13 && event.shiftKey === false) {
+          this.onSubmit();
+        }
+    }
+
+    onSubmit = () => {
         axios({
             url: `http://${process.env.REACT_APP_IP}/api/auth/register`,
             method: 'post',
@@ -56,7 +71,14 @@ class RegistrationPage extends Component{
     render() {
         return (
             <div>
-                <PageHeader />
+                <div className="logo">
+                    <img
+                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
+                        alt="Logo"
+                        width="340"
+                        onClick={this.onLogoClick}
+                    />
+                </div>
                 <div className="login-box-container">
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <p><font size ="5" color="#1DE28F"> Sign Up </font></p>
@@ -84,10 +106,16 @@ class RegistrationPage extends Component{
                             size="12"
                             value={this.state.passField}
                             onChange={this.onPassChange}
+                            onKeyDown={this.onEnterPress}
                         />
                         </p>
 
-                        <input type="submit" value="Sign Up" />
+                        <div
+                        className="registration2-button"
+                        onClick={this.onSubmit}
+                        >
+                        Sign Up
+                        </div>
                     </form>
                     <div
                         className="login2-button"
