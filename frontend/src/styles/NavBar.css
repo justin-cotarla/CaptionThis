@@ -1,15 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-  }
-
-  html, body{
-    height: 100%;
-    background: #272525;
-  }
-
   div.navbar-container {
     display: block;
+    height: 42px;
     padding: 1em;
   }
 
