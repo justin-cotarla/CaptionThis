@@ -6,7 +6,7 @@ import {
     INVALID_OPERATION,
     CAPTION_DOES_NOT_EXIST,
     UNKNOWN_ERROR,
-} from '../../../utility/ResponseCodes';
+} from '../../utility/ResponseCodes';
 
 const updateVote = (request, reply, captionId) => {
     // Get the user id and vote

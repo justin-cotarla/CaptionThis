@@ -5,7 +5,7 @@ import {
     INVALID_INPUT,
     CAPTION_DOES_NOT_EXIST,
     UNKNOWN_ERROR,
-} from '../../../utility/ResponseCodes';
+} from '../../utility/ResponseCodes';
 
 const deleteCaptions = {
     method: 'DELETE',

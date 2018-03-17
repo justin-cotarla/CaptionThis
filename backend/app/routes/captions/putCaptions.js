@@ -4,7 +4,7 @@ import {
     UNAUTHORIZED,
     INVALID_INPUT,
     UNKNOWN_ERROR,
-} from '../../../utility/ResponseCodes';
+} from '../../utility/ResponseCodes';
 
 const putCaptions = {
     method: 'PUT',

@@ -2,7 +2,7 @@ import databaseUtil from '../../utility/DatabaseUtil';
 import {
     GOOD,
     UNKNOWN_ERROR,
-} from '../../../utility/ResponseCodes';
+} from '../../utility/ResponseCodes';
 
 // Function to build the where clause for the getCaptions endpoint, and all values for the query
 const getCaptionsBuilder = (params) => {
