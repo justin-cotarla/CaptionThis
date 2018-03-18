@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import NavBar from '../components/NavBar';
+
 import '../styles/CreateMoment.css';
 
 
 class MomentCreation extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             redirect: null,
             user: props.user,
+            description: '',
+            filename: '',
         }
     }
 
@@ -37,50 +39,81 @@ class MomentCreation extends Component {
             body: data,
             // Hardcoded to user 'test'
             headers: {'Authorization': `Bearer ${this.state.token}`}
+        }).then(() => {
+            this.setState({ redirect: '/' });
+        })
+        .catch(error => {
+            console.log(error);
         });
-        this.setState({redirect: '/'});
     }
 
     handleChange = (event) => {
-        console.log(event.target.files[0].name);
-        const filename = event.target.files[0].name;
-        document.getElementById('filename').innerHTML = filename;
+        const image = event.target.files[0];
+        if (image) {
+            console.log(image.name);
+            const filename = event.target.files[0].name;
+            this.setState({ filename });
+            this.refs.fileInput.blur();
+        }
+    }
+
+    onDescriptionChange = (event) => {
+        const description = event.target.value;
+        this.setState({ description });
+    }
+
+    onClear = () => {
+        this.refs.fileInput.value = null;
+        this.setState({
+            description: '', 
+            filename: ''
+        }); 
     }
 
     render(){
         return(
             <div>
                 <NavBar user={this.state.user}/>
-                <div className = "createMoment-header">
-
                 <img
+                    className="upload-moment-banner"
                     alt="UploadMoment"
                     src={`http://${process.env.REACT_APP_IP}/res/uploadyourmoment.png`}
                 />
-                </div>
                 <div className = "CreateMoment">
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
-                    <form onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
-                        <div className = "content-container">
-                            <input type="file" name="file" id="file" className="inputfile" onChange={this.handleChange} required/>
-                            <label for="file">Choose Moment
-                                <img
-                                    alt="inputFile"
-                                    src={`http://${process.env.REACT_APP_IP}/res/uploadicon.png`}
-                                />
-                            </label>
-                            <div id="filename"></div>
-                            <label className = "createMoment-description">
-                              Description
-                            </label>
-                            <div className="Wrapper">
-                                <div className="Input">
-                                    <textarea type="text" id="input" name="description" className="Input-text" row="4" cols="50" placeholder="Add a Description to your Moment"/>
-                                    <label for="input" className="Input-label">This will help users come up with your ideal caption!</label>
-                                </div>
-                            </div>
-                        </div>
-                            <input type="submit" className="button"></input>
+                    <form className="moment-create-form" onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
+                        <label className = "moment-create-label">Upload</label>
+                        <input 
+                            type="file" 
+                            name="file" 
+                            ref="fileInput" 
+                            id="file" 
+                            className="inputfile" 
+                            onChange={this.handleChange} 
+                            accept="image/*" required/>
+                        <label 
+                            htmlFor="file"
+                            className="upload-button">
+                            Choose Moment
+                            <img alt="inputFile" src={`http://${process.env.REACT_APP_IP}/res/uploadicon.png`}/>
+                        </label>
+                        <div id="filename">{this.state.filename}</div>
+                        <label className = "moment-create-label">Description</label>
+                        <textarea 
+                            value={this.state.description} 
+                            onChange={this.onDescriptionChange} 
+                            type="text" 
+                            id="input" 
+                            name="description" 
+                            className="desc-textarea" 
+                            placeholder="Provide context to help others come up with the ideal caption!"/>
+                        <input type="submit" className="moment-create-button"></input>
+                        <input 
+                            type="reset" 
+                            className="moment-create-button" 
+                            value="Clear" 
+                            style={{marginLeft: '10px'}}
+                            onClick={this.onClear}></input>
                     </form>
                 </div>
             </div>
