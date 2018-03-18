@@ -84,7 +84,7 @@ const getMoments = {
                 img: moment.IMG_URL,
                 description: moment.DESCRIPTION,
                 date_added: moment.DATE_ADDED,
-                top_caption: moment.TOP_CAPTION ? moment.TOP_CAPTION : 'Click here to submit your caption',
+                top_caption: moment.TOP_CAPTION ? moment.TOP_CAPTION : 'Click to submit a caption',
             }));
 
             // The response data includes a status code and the array of moments
