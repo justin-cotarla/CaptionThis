@@ -1,5 +1,11 @@
 import databaseUtil from '../../utility/DatabaseUtil';
 import putCaptions from './putCaptions.js';
+import {
+    GOOD,
+    UNAUTHORIZED,
+    INVALID_INPUT,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 const request = {
     auth: {
@@ -59,16 +65,16 @@ describe('/api/captions Endpoint', () => {
         }));
         return putCaptions.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(1);
+                expect(reply.response.mock.calls[0][0].code).toBe(GOOD.code);
             });
     });
     it('Handles unable to create caption due to empty content', () => {
         putCaptions.handler(emptyCaptionRequest, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(2);
+        expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
     });
     it('Handles request with blank authentication', () => {
         putCaptions.handler(emptyAuthRequest, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(4);
+        expect(reply.response.mock.calls[0][0].code).toBe(UNAUTHORIZED.code);
     });
     it('Handles unknown error', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise(() => {
@@ -76,7 +82,7 @@ describe('/api/captions Endpoint', () => {
         }));
         return putCaptions.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(UNKNOWN_ERROR.code);
             });
     });
 });

@@ -1,5 +1,10 @@
 import databaseUtil from '../../utility/DatabaseUtil';
 import getUser from './getUser.js';
+import {
+    GOOD,
+    USER_DOES_NOT_EXIST,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 const request = {
     params: {
@@ -32,7 +37,7 @@ describe('/api/getUser endpoint', () => {
         return getUser.handler(request, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0]).toEqual({
-                    code: 1,
+                    code: GOOD.code,
                     user: {
                         id: 1,
                         username: 'test',
@@ -50,7 +55,7 @@ describe('/api/getUser endpoint', () => {
         }));
         return getUser.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(USER_DOES_NOT_EXIST.code);
             });
     });
     it('Handle unknown error', () => {
@@ -59,7 +64,7 @@ describe('/api/getUser endpoint', () => {
         }));
         return getUser.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(UNKNOWN_ERROR.code);
             });
     });
 });
