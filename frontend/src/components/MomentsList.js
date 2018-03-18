@@ -34,7 +34,7 @@ class MomentsList extends Component {
                                     showSubmittedBy={this.props.showSubmittedBy}
                                     image={ moment.img }
                                     date={ formatDate(moment.date_added) }
-                                    description={ moment.description }
+                                    description={ '"' + moment.top_caption + '"'}
                                     username={ moment.user.username }/>
                             </li>
                         )
