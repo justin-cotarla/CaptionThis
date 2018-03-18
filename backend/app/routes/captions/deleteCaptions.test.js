@@ -1,5 +1,13 @@
 import databaseUtil from '../../utility/DatabaseUtil';
 import deleteCaptions from './deleteCaptions.js';
+import {
+    GOOD,
+    UNAUTHORIZED,
+    INVALID_INPUT,
+    INVALID_USER_OPERATION,
+    CAPTION_DOES_NOT_EXIST,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 const request = {
     auth: {
@@ -56,7 +64,7 @@ describe('/api/captions/:id Endpoint (Deleting)', () => {
         }));
         return deleteCaptions.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(1);
+                expect(reply.response.mock.calls[0][0].code).toBe(GOOD.code);
             });
     });
     it('Handles non-existent caption ID in the database', () => {
@@ -68,7 +76,7 @@ describe('/api/captions/:id Endpoint (Deleting)', () => {
         }));
         return deleteCaptions.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(CAPTION_DOES_NOT_EXIST.code);
             });
     });
     it('Handles invalid user trying to delete caption', () => {
@@ -82,16 +90,16 @@ describe('/api/captions/:id Endpoint (Deleting)', () => {
         }));
         return deleteCaptions.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(INVALID_USER_OPERATION.code);
             });
     });
     it('Handles request with blank authentication', () => {
         deleteCaptions.handler(emptyAuthRequest, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(4);
+        expect(reply.response.mock.calls[0][0].code).toBe(UNAUTHORIZED.code);
     });
-    it('Handles request with blank authentication', () => {
+    it('Handles request with invalid caption ID', () => {
         deleteCaptions.handler(blankCaptionIdRequest, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(2);
+        expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
     });
     it('Handles an unknown error', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise(() => {
@@ -99,7 +107,7 @@ describe('/api/captions/:id Endpoint (Deleting)', () => {
         }));
         return deleteCaptions.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(UNKNOWN_ERROR.code);
             });
     });
 });

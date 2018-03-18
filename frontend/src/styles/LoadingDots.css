@@ -1,0 +1,48 @@
+.dot-holder {
+    float:left;
+    margin-left: 10px;
+}
+  
+.first-dot-holder {
+    float:left;
+}
+  
+.dot {
+    background-color: #1DE28F;
+    width:20px;
+    height:20px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+  
+@keyframes blink {
+    0% {
+        opacity: .2;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .2;
+    }
+}
+  
+.dot {
+      animation-name: blink;
+      animation-duration: 1.4s;
+      animation-iteration-count: infinite;
+      animation-fill-mode: both;
+}
+  
+#two {
+    animation-delay: .2s;
+}
+  
+#three{
+    animation-delay: .4s;
+}
+  
+.loader-holder {
+    list-style-type: none;
+}
