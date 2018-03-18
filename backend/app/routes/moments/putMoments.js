@@ -1,3 +1,4 @@
+
 import AWS from 'aws-sdk';
 
 import databaseUtil from '../../utility/DatabaseUtil';
@@ -45,21 +46,15 @@ const putMoments = {
             ACL: 'public-read',
         };
 
-        return s3.upload(params).promise().then((data) => {
-            console.log('Successfully uploaded image to S3.');
-            imageURL = data.Location; // Get image URL after uploading
-            // Create db query
-            const query = 'INSERT INTO MOMENT (IMG_URL, DESCRIPTION, USER_ID) VALUES (?, ?, ?)';
-            return databaseUtil.sendQuery(query, [imageURL, momentDesc, userId])
-                .then(() => reply.response({ code: 1 }).code(200))
-                .catch((error) => {
-                    console.log(error);
-                    return reply.response({ code: 3 }).code(500);
-                });
-        }).catch((error) => {
-            console.log('Error uploading image. ', error);
-            return reply.response({ code: 3 }).code(500);
-        });
+        return s3.upload(params).promise()
+            .then((data) => {
+                imageURL = data.Location; // Get image URL after uploading
+                // Create db query
+                const query = 'INSERT INTO MOMENT (IMG_URL, DESCRIPTION, USER_ID) VALUES (?, ?, ?)';
+                return databaseUtil.sendQuery(query, [imageURL, momentDesc, userId]);
+            })
+            .then(() => reply.response({ code: 1 }).code(200))
+            .catch(() => reply.response({ code: 3 }).code(500));
     },
 };
 
