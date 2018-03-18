@@ -1,5 +1,13 @@
 import databaseUtil from '../../utility/DatabaseUtil';
 import postCaptions from './postCaptions.js';
+import {
+    GOOD,
+    UNAUTHORIZED,
+    INVALID_INPUT,
+    INVALID_OPERATION,
+    CAPTION_DOES_NOT_EXIST,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 // Requests for accepting/rejecting captions
 const selectionRequest = {
@@ -153,12 +161,12 @@ describe('/api/captions/:id Endpoint (Accepting/Rejecting)', () => {
     it('Handles successful acceptance or rejection of a caption', () =>
         postCaptions.handler(selectionRequest, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(1);
+                expect(reply.response.mock.calls[0][0].code).toBe(GOOD.code);
             }));
     it('Handles request with invalid or missing selection value', () =>
         postCaptions.handler(emptySelectionRequest, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
             }));
 });
 
@@ -167,12 +175,12 @@ describe('/api/captions/:id Endpoint (Voting)', () => {
     it('Handles successful acceptance or rejection of a caption', () =>
         postCaptions.handler(voteRequest, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0]).toEqual({ code: 1, votes: 1 });
+                expect(reply.response.mock.calls[0][0]).toEqual({ code: GOOD.code, votes: 1 });
             }));
     it('Handles request with invalid or missing vote value', () =>
         postCaptions.handler(emptyVoteRequest, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
             }));
 });
 
@@ -181,15 +189,15 @@ describe('/api/captions/:id Endpoint (Common)', () => {
     it('Handles request with invalid or missing operation value', () =>
         postCaptions.handler(emptyOperationRequest, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(INVALID_OPERATION.code);
             }));
     it('Handles request with blank authentication', () => {
         postCaptions.handler(emptyAuthRequest, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(4);
+        expect(reply.response.mock.calls[0][0].code).toBe(UNAUTHORIZED.code);
     });
     it('Handles request that is missing the caption ID', () => {
         postCaptions.handler(emptyIdRequest, reply);
-        expect(reply.response.mock.calls[0][0].code).toBe(2);
+        expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
     });
     it('Handles non-existent caption ID in the database', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
@@ -200,7 +208,7 @@ describe('/api/captions/:id Endpoint (Common)', () => {
         }));
         return postCaptions.handler(selectionRequest, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(2);
+                expect(reply.response.mock.calls[0][0].code).toBe(CAPTION_DOES_NOT_EXIST.code);
             });
     });
     it('Handles an unknown error', () => {
@@ -209,7 +217,7 @@ describe('/api/captions/:id Endpoint (Common)', () => {
         }));
         return postCaptions.handler(selectionRequest, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(UNKNOWN_ERROR.code);
             });
     });
 });

@@ -1,4 +1,8 @@
 import databaseUtil from '../../utility/DatabaseUtil';
+import {
+    GOOD,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 // Function to build the where clause for the getCaptions endpoint, and all values for the query
 const getCaptionsBuilder = (params) => {
@@ -104,16 +108,20 @@ const getCaptions = {
 
                 // The response data includes a status code and the array of moments
                 const data = {
-                    code: 1,
+                    code: GOOD.code,
                     captions,
                 };
 
                 // The request was successful
-                return reply.response(data).code(200);
+                return reply
+                    .response(data)
+                    .code(GOOD.http);
             })
             .catch((error) => {
                 console.log(error);
-                return reply.response({ code: 3 }).code(500);
+                return reply
+                    .response({ code: UNKNOWN_ERROR.code })
+                    .code(UNKNOWN_ERROR.http);
             });
     },
 };
