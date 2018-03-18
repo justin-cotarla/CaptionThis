@@ -22,10 +22,11 @@ div.createMoment-header img{
   width: 420px;
 }
 
-div.createMoment-description {
+.createMoment-description {
   display: block;
   position: center;
   text-align: center;
+  margin-top: 30px;
   font-family: 'Teko';
   color: #1DE28F;
   font-size: 48px;
@@ -35,7 +36,6 @@ div.createMoment-description {
     position: center;
     margin-top: 30px;
     margin-bottom: 20px;
-
 }
 .label {
     margin-right: 40px;
@@ -43,9 +43,7 @@ div.createMoment-description {
 
 .textarea {
     padding-left: 10px;
-
 }
-
 .button {
     cursor: pointer;
     background-color: rgb(255, 255, 255);
@@ -53,20 +51,13 @@ div.createMoment-description {
     font-family: 'Teko';
     width: 90px;
     border-radius: 2px;
+
 }
 .button:hover{
-    border-width: 2px;
-    border-color: #1DE28F;
+  background-color: #1DE28F;
+  box-shadow: 3.2px 12.8px 25.6px #000000;
+  border-color: #1DE28F;
 }
-/*
-.upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-}
-*/
 .inputfile {
   cursor: pointer;
 	width: 0.1px;
@@ -74,7 +65,7 @@ div.createMoment-description {
 	overflow: hidden;
 	position: absolute;
 	z-index: -1;
-  background-color: white;
+  background-color: #FFFFFF;
   font-weight: 200;
   font-size: 40px;
   border-radius: 3px;
@@ -89,7 +80,6 @@ div.createMoment-description {
   top: 9.5px;
   padding-left: 3px;
 }
-
 .inputfile + label {
     position: center;
     cursor: pointer;
@@ -112,20 +102,17 @@ div.createMoment-description {
 	outline: 1px dotted #FFFFFF;
 	outline: -webkit-focus-ring-color auto 5px;
 }
-
 .inputfile:focus + label,
 .inputfile + label:hover {
-  border-width: 2px;
-  border-color: #1DE28F;
+  background-color: #1DE28F;
+  box-shadow: 3.2px 12.8px 25.6px #000000;
 }
-
 #filename {
   font-family: 'Teko';
   color: #FFFFFF;
   font-size: 25px;
   font-weight: 200;
 }
-
 :root {
   /* generic */
   --transitionTF: cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -137,34 +124,27 @@ div.createMoment-description {
   );
   --inputTransitionTF: var(--transitionTF);
 }
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
-html {
-  font-size: 9px;
-}
-
 .Wrapper {
   display: inline-block;
   position: center;
   padding-top: 28px;
   flex: 0 0 20%;
-  width: 600px;
-  height: 150px;
+  width: 620px;
+  height: 180px;
 }
 textarea{
    resize: none;
-   height: 100px;
+   height: 150px;
 }
 .Input {
   text-align: center;
   position: relative;
 }
-
 .Input-text {
   text-indent: .5px;
   display: block;
@@ -180,13 +160,10 @@ textarea{
   border-radius: 6.5px;
   transition: box-shadow 0.3s;
 }
-
 .Input-text:focus {
-
   outline: none;
-  box-shadow: 3.2px 12.8px 25.6px #000000;
+  box-shadow: 3.5px 12.8px 25.8px #000000;
 }
-
 .Input-label {
   display: block;
   position: absolute;
@@ -196,24 +173,19 @@ textarea{
   font-family: "Teko";
   font-size: 28px;
   font-weight: 300;
-  line-height: 1.8;
+  line-height: 1.2;
   opacity: 0;
   transform:
     translate3d(0, 50%, 0)
     scale(1);
   transform-origin: 0 0;
-
 }
-
 .Input-text:placeholder-shown + .Input-label {
-
   visibility: hidden;
   z-index: -1;
 }
-
 .Input-text:not(:placeholder-shown) + .Input-label,
 .Input-text:focus:not(:placeholder-shown) + .Input-label {
-
   visibility: visible;
   z-index: 1;
   opacity: 1;
