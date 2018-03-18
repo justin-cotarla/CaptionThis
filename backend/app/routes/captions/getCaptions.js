@@ -7,16 +7,23 @@ import {
 // Function to build the where clause for the getCaptions endpoint, and all values for the query
 const getCaptionsBuilder = (params) => {
     const conditions = [];
+    let order = 'SELECTED DESC, DATE_ADDED DESC';
     const values = [];
 
     // To get captions by moment id, user-id, with a limit
     const momentid = params['moment-id'];
     const captionsByUser = params['user-id'];
+    const usedOrder = params['order'];
+
     let { limit } = params;
 
     if (!(momentid === undefined || momentid === '' || momentid === 0 || !/^\d+$/.test(momentid))) {
         conditions.push('MOMENT_ID=?');
         values.push(momentid);
+    }
+
+    if (usedOrder == 'total-votes') {
+        order = 'TOTAL_VOTES DESC';
     }
 
     if (!(captionsByUser === undefined || captionsByUser === '' || captionsByUser === 0 || !/^\d+$/.test(captionsByUser))) {
@@ -34,6 +41,7 @@ const getCaptionsBuilder = (params) => {
 
     return {
         where: conditions.length ? conditions.join(' AND ') : 'TRUE',
+        order_values: order,
         values,
     };
 };
@@ -42,7 +50,7 @@ const getCaptions = {
     method: 'GET',
     path: '/api/captions',
     handler: (request, reply) => {
-        const { where, values } = getCaptionsBuilder(request.query);
+        const { where, order_values, values } = getCaptionsBuilder(request.query);
 
         const userId = (request.auth.credentials)
             ? parseInt(request.auth.credentials.user.id, 10)
@@ -85,7 +93,7 @@ const getCaptions = {
             DATE_ADDED,
             USERNAME
         ORDER BY
-            SELECTED DESC, DATE_ADDED DESC
+            ${order_values}
         LIMIT ?
         `;
 
