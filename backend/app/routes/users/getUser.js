@@ -1,4 +1,9 @@
 import databaseUtil from '../../utility/DatabaseUtil';
+import {
+    GOOD,
+    USER_DOES_NOT_EXIST,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 const getUser = {
     method: 'GET',
@@ -17,7 +22,9 @@ const getUser = {
 
         return databaseUtil.sendQuery(query, [request.params.username]).then((result) => {
             if (!result.rows[0]) {
-                return reply.response({ code: 2 }).code(404);
+                return reply
+                    .response({ code: USER_DOES_NOT_EXIST.code })
+                    .code(USER_DOES_NOT_EXIST.http);
             }
 
             const user = {
@@ -26,8 +33,12 @@ const getUser = {
                 dateAdded: result.rows[0].DATE_ADDED,
             };
 
-            return reply.response({ user, code: 1 }).code(200);
-        }).catch(() => reply.response({ code: 3 }).code(500));
+            return reply
+                .response({ user, code: GOOD.code })
+                .code(GOOD.http);
+        }).catch(() => reply
+            .response({ code: UNKNOWN_ERROR.code })
+            .code(UNKNOWN_ERROR.http));
     },
 };
 
