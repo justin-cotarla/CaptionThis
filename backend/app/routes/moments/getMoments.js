@@ -33,6 +33,24 @@ const getMoments = {
     handler: (request, reply) => {
         const { where, values } = getMomentsBuilder(request.query);
 
+        //Caption Query
+        const subQuery = `  
+        SELECT
+            CONTENT
+        FROM
+            CAPTION
+        LEFT JOIN
+            CAPTION_VOTE TV
+        ON
+            TV.CAPTION_ID = CAPTION.ID
+        WHERE
+            MOMENT_ID=MOMENT.ID
+        GROUP BY
+            CONTENT
+        ORDER BY
+        	COALESCE(SUM(TV.VALUE),0) DESC
+        LIMIT 1`
+
         // Create db query
         const query = `
         SELECT 
@@ -41,7 +59,8 @@ const getMoments = {
             DESCRIPTION, 
             MOMENT.DATE_ADDED, 
             USER.USERNAME,
-            USER.ID AS USER_ID 
+            USER.ID AS USER_ID, 
+            (${subQuery}) AS TOP_CAPTION
         FROM 
             MOMENT
         JOIN 
@@ -54,7 +73,7 @@ const getMoments = {
             DATE_ADDED DESC 
         LIMIT ?
         `;
-
+        
         return databaseUtil.sendQuery(query, values).then((result) => {
             const moments = result.rows.map(moment => ({
                 moment_id: moment.MOMENT_ID,
@@ -65,6 +84,7 @@ const getMoments = {
                 img: moment.IMG_URL,
                 description: moment.DESCRIPTION,
                 date_added: moment.DATE_ADDED,
+                top_caption: moment.TOP_CAPTION ? moment.TOP_CAPTION : 'Click here to submit your caption',
             }));
 
             // The response data includes a status code and the array of moments
