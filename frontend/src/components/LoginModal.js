@@ -4,6 +4,8 @@ import Modal from 'react-responsive-modal';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
+import LoadingDots from './LoadingDots';
+
 import '../styles/LoginModal.css';
 
 class LoginModal extends React.Component {
@@ -227,15 +229,15 @@ class LoginModal extends React.Component {
                     <button className="modal-login-btn" disabled={!formValid}>
                         { showRegisterForm ? 'Create My Account!' : 'Log In' }
                     </button>
-                    {
-                        isWorking && <span>working...</span>
-                    }
                     <span className="modal-to-login">
                         { showRegisterForm ? 'Already have an account? ' : 'Don\'t have an account? '}
                     </span>
                     <Link to="#" className="modal-to-login" onClick={this.showRegisterForm}>
                         { showRegisterForm ? 'Log in!' : 'Sign up!' }
                     </Link>
+                    {
+                        isWorking && <div className="login-working"><LoadingDots/></div>
+                    }
                 </form>
             </Modal>
         )
