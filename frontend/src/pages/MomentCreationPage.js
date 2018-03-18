@@ -6,6 +6,8 @@ import NavBar from '../components/NavBar';
 import '../styles/CreateMoment.css';
 import Header from '../components/Header';
 
+
+
 class MomentCreation extends Component {
     constructor(props) {
         super(props);
@@ -15,6 +17,7 @@ class MomentCreation extends Component {
             user: props.user,
         }
     }
+
 
     componentDidMount() {
         const cookies = new Cookies();
@@ -41,26 +44,56 @@ class MomentCreation extends Component {
         });
         this.setState({redirect: '/'});
     }
+
+    handleChange = (event) => {
+        console.log(event.target.files[0].name);
+        const filename = event.target.files[0].name;
+        document.getElementById('filename').innerHTML = filename;
+    }
+
     render(){
         return(
             <div>
                 <NavBar user={this.state.user}/>
+                <div className = "createMoment-header">
+                <img
+                    alt="UploadMoment"
+                    src={`http://${process.env.REACT_APP_IP}/res/uploadMoment.png`}
+                />
+                </div>
+
                 <div className = "CreateMoment">
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <form onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
+
                         <div className = "content-container">
-                            <Header textSize={2} text="Title" />
-                            <input name="title" type="text" className="title" required/>
+
+                        <input type="file" name="file" id="file" className="inputfile" onChange={this.handleChange} required/>
+                            <label for="file">Choose Moment
+                                <img
+                                    alt="inputFile"
+                                    src={`http://${process.env.REACT_APP_IP}/res/inputfile.png`}
+                                />
+                            </label>
+                            <div id="filename"></div>
                         </div>
                         <div className = "content-container">
-                            <input type="file" name="file" required></input>
+                            <div className = "createMoment-description">
+                              Description
+                            </div>
+                            <div className="Wrapper">
+
+                                <div className="Input">
+                                    <textarea type="text" id="input" name="description" className="Input-text" row="4" cols="50" placeholder="Add a Description to your Moment"/>
+                                    <label for="input" className="Input-label">This will help users come up with your ideal caption!</label>
+                                </div>
+                            </div>
+
                         </div>
                         <div className = "content-container">
-                            <Header textSize={2} text="Description" />
-                            <textarea name="description" rows="8" cols="90"></textarea>
-                        </div>
-                        <div className = "content-container">
-                            <input type="submit" className="button"></input>
+                            <input type="submit" className="button">
+                            </input>
+
                         </div>
                     </form>
                 </div>
