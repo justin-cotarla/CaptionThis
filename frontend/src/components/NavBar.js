@@ -4,6 +4,8 @@ import { Redirect } from 'react-router';
 import '../styles/NavBar.css';
 import * as AuthUtil from '../util/AuthUtil';
 
+import LoadingDots from '../components/LoadingDots';
+
 
 class NavBar extends Component{
     constructor(props){
@@ -14,6 +16,7 @@ class NavBar extends Component{
             redirect: null,
             allowBack: false,
             user: this.props.user,
+            logingout: false,
         };
     };
 
@@ -25,6 +28,9 @@ class NavBar extends Component{
     }
 
     onLogoutClick = () => {
+        this.setState({
+            logingout: true,
+        })
         AuthUtil.logout();
     }
 
@@ -111,6 +117,12 @@ class NavBar extends Component{
                                 src={`http://${process.env.REACT_APP_IP}/res/login.png`}
                             />
 
+                        </div>
+                    }
+
+                    {this.state.logingout &&
+                        <div className="logout-loader-holder">
+                            <LoadingDots />
                         </div>
                     }
 

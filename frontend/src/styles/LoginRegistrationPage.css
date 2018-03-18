@@ -83,3 +83,15 @@ div.logo {
   text-align: center;
   margin-top: 0px;
 }
+
+.login-loader-holder {
+  text-align: center;
+  width: 80px;
+  float: none;
+  margin: 0 auto;
+  height: 50px;
+}
+
+.login-loader {
+  margin:auto;
+}

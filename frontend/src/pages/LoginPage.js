@@ -4,6 +4,8 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import '../styles/LoginRegistrationPage.css';
 
+import LoadingDots from '../components/LoadingDots'
+
 class LoginPage extends Component{
     constructor(props) {
         super(props);
@@ -11,6 +13,7 @@ class LoginPage extends Component{
             userField: '',
             passField: '',
             redirect: null,
+            loggingin: false,
         }
     }
 
@@ -50,6 +53,10 @@ class LoginPage extends Component{
     }
 
     onSubmit = () => {
+        this.setState({
+            loggingin: true,
+        });
+
         axios({
             url: `http://${process.env.REACT_APP_IP}/api/auth/login`,
             method: 'post',
@@ -124,6 +131,13 @@ class LoginPage extends Component{
                         Sign up for CaptionThis
                         </div>
                     </div>
+
+                    {this.state.loggingin &&
+                        <div className="login-loader-holder">
+                            <LoadingDots className="login-loader"/>
+                        </div>
+                    }
+
             </div>
         );
     }

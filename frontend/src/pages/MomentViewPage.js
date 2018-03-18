@@ -127,7 +127,7 @@ class MomentViewPage extends Component{
                     captions={captions}
                     showSubmittedBy={true}
                     isLinkedToMoment={false}
-                    momentCreatorId={moment.user_id}
+                    momentCreatorId={moment.user.user_id}
                     user={this.props.user}
                     token={token}
                     onCaptionUpdate={this.onCaptionUpdate}>
