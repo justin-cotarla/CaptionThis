@@ -4,6 +4,7 @@ import {
     GOOD,
     UNAUTHORIZED,
     INVALID_INPUT,
+    INVALID_USER_OPERATION,
     CAPTION_DOES_NOT_EXIST,
     UNKNOWN_ERROR,
 } from '../../utility/ResponseCodes';
@@ -89,7 +90,7 @@ describe('/api/captions/:id Endpoint (Deleting)', () => {
         }));
         return deleteCaptions.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(CAPTION_DOES_NOT_EXIST.code);
+                expect(reply.response.mock.calls[0][0].code).toBe(INVALID_USER_OPERATION.code);
             });
     });
     it('Handles request with blank authentication', () => {

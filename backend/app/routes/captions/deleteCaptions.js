@@ -3,6 +3,7 @@ import {
     GOOD,
     UNAUTHORIZED,
     INVALID_INPUT,
+    INVALID_USER_OPERATION,
     CAPTION_DOES_NOT_EXIST,
     UNKNOWN_ERROR,
 } from '../../utility/ResponseCodes';
@@ -53,10 +54,14 @@ const deleteCaptions = {
                 .response({ code: GOOD.code })
                 .code(GOOD.http))
             .catch((error) => {
-                if (error.message === 'Caption ID does not exist' || error.message === 'Invalid user') {
+                if (error.message === 'Caption ID does not exist') {
                     return reply
                         .response({ code: CAPTION_DOES_NOT_EXIST.code })
                         .code(CAPTION_DOES_NOT_EXIST.http);
+                } else if (error.message === 'Invalid user') {
+                    return reply
+                        .response({ code: INVALID_USER_OPERATION.code })
+                        .code(INVALID_USER_OPERATION.http);
                 }
                 return reply
                     .response({ code: UNKNOWN_ERROR.code })
