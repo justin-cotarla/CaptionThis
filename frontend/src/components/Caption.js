@@ -6,7 +6,7 @@ import CaptionVotes from './CaptionVotes';
 import Acceptor from './Acceptor';
 
 import '../styles/Caption.css';
-import LoginModal from './LoginModal';
+import AuthModal from './AuthModal';
 
 class Caption extends React.Component {
     constructor(props){
@@ -14,7 +14,7 @@ class Caption extends React.Component {
         this.state = {
             caption: props.caption, 
             token: props.token,
-            showLoginModal: false,
+            showAuthModal: false,
         }
     }
 
@@ -65,7 +65,7 @@ class Caption extends React.Component {
             })
             .catch(error => console.log(error));
         } else {
-            this.setState({ showLoginModal: true });
+            this.setState({ showAuthModal: true });
         }
     }
 
@@ -116,12 +116,12 @@ class Caption extends React.Component {
     }
 
     render(){
-        const { caption, showLoginModal } = this.state;
+        const { caption, showAuthModal } = this.state;
         return (
             <div className="caption-container">
-                <LoginModal
-                    open={showLoginModal}
-                    onClose={() => this.setState({ showLoginModal: false })}/>
+                <AuthModal
+                    open={showAuthModal}
+                    onClose={() => this.setState({ showAuthModal: false })}/>
                 <ul>
                     <li>
                         <CaptionVotes 

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import LoginModal from './LoginModal';
+import AuthModal from './AuthModal';
 
 import '../styles/CaptionCreatorForm.css';
 
@@ -10,7 +10,7 @@ class CaptionCreatorForm extends React.Component {
         super(props);
         this.state = {
             caption: '',
-            showLoginModal: false,
+            showAuthModal: false,
         }
     }
 
@@ -48,19 +48,19 @@ class CaptionCreatorForm extends React.Component {
             });
             this.setState({ caption: '' });
         } else {
-            this.setState({ showLoginModal: true });
+            this.setState({ showAuthModal: true });
         }      
     }
 
     render(){
         const token = this.props.token;
-        const { caption, showLoginModal } = this.state;
+        const { caption, showAuthModal } = this.state;
         return (
             <div>
-                <LoginModal
-                        open={showLoginModal}
+                <AuthModal
+                        open={showAuthModal}
                         onClose={(context) => {
-                            this.setState({ showLoginModal: false });
+                            this.setState({ showAuthModal: false });
                         }}/>
                 <form className="caption-creator-form" onSubmit={this.onSubmit}>
                     <input 

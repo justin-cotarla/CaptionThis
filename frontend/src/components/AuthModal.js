@@ -6,9 +6,9 @@ import axios from 'axios';
 
 import LoadingDots from './LoadingDots';
 
-import '../styles/LoginModal.css';
+import '../styles/AuthModal.css';
 
-class LoginModal extends React.Component {
+class AuthModal extends React.Component {
     constructor(props){
         super(props);
         this.state = this.initializeForm();
@@ -27,7 +27,7 @@ class LoginModal extends React.Component {
             verifyError: '',
         },
         showRegisterForm: false,
-        isWorking: false,
+        isAuthenticating: false,
         redirect: null,
     });
 
@@ -94,7 +94,7 @@ class LoginModal extends React.Component {
         event.preventDefault();
         const { showRegisterForm } = this.state;
         const { username, password } = this.state.fields;
-        this.setState({ isWorking: true });
+        this.setState({ isAuthenticating: true });
         if (showRegisterForm) {
             axios({
                 url: `http://${process.env.REACT_APP_IP}/api/auth/register`,
@@ -137,7 +137,7 @@ class LoginModal extends React.Component {
                 errors.loginError = 'Incorrect username or password!';
                 this.setState({
                     errors,
-                    isWorking: false,
+                    isAuthenticating: false,
                 });
             });
         }
@@ -159,7 +159,7 @@ class LoginModal extends React.Component {
     }
 
     render(){
-        const { showRegisterForm, isWorking, redirect } = this.state; 
+        const { showRegisterForm, isAuthenticating, redirect } = this.state; 
         const { username, password, verify } = this.state.fields;
         const { loginError, userError, passError, verifyError } = this.state.errors;
         
@@ -167,12 +167,10 @@ class LoginModal extends React.Component {
             borderBottom: '2px solid #ff0000',
         };
 
-        let formValid;
-        if (showRegisterForm) {
-            formValid = username.length > 0 && password.length > 0 && verify.length > 0 && userError.concat(passError, verifyError).length === 0;
-        } else {
-            formValid = username.length > 0 && password.length > 0 && userError.concat(passError).length === 0;
-        }
+        const formValid = username.length > 0
+            && password.length > 0
+            && userError.concat(passError).length === 0
+            && (showRegisterForm ? verify.length > 0 : true);
 
         return (
             <Modal 
@@ -186,7 +184,7 @@ class LoginModal extends React.Component {
                     redirect && <Redirect to={redirect}/>
                 }
                 <h1 className="modal-header">{ showRegisterForm ? 'Sign up for CaptionThis' : 'Log in to your account' }</h1>
-                <form className="modal-login-form" onSubmit={this.onSubmit}>
+                <form className="modal-auth-form" onSubmit={this.onSubmit}>
                     <label className="modal-input-label">Username</label>
                     <input 
                         className="modal-input-field" 
@@ -226,7 +224,7 @@ class LoginModal extends React.Component {
                     { 
                         showRegisterForm && verifyError && <h1 className="modal-verify-error">{verifyError}</h1> 
                     } 
-                    <button className="modal-login-btn" disabled={!formValid}>
+                    <button className="modal-login-btn" disabled={!formValid || isAuthenticating}>
                         { showRegisterForm ? 'Create My Account!' : 'Log In' }
                     </button>
                     <span className="modal-to-login">
@@ -236,7 +234,7 @@ class LoginModal extends React.Component {
                         { showRegisterForm ? 'Log in!' : 'Sign up!' }
                     </Link>
                     {
-                        isWorking && <div className="login-working"><LoadingDots/></div>
+                        isAuthenticating && <div className="login-working"><LoadingDots/></div>
                     }
                 </form>
             </Modal>
@@ -244,4 +242,4 @@ class LoginModal extends React.Component {
     }
 };
 
-export default LoginModal;
+export default AuthModal;
