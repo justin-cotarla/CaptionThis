@@ -88,7 +88,6 @@ class NavBar extends Component{
                         </div>
                     }
 
-                    {this.props.user &&
                         <div
                         className="home-button"
                         onClick={this.onHomeClick}>
@@ -97,7 +96,6 @@ class NavBar extends Component{
                             src={`http://${process.env.REACT_APP_IP}/res/homeicon.png`}
                         />
                         </div>
-                    }
 
                     {this.props.user &&
                         <div

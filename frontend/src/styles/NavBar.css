@@ -9,8 +9,12 @@
 
   div.navbar-container {
     display: block;
+    position: sticky;
+    top: 0;
+    background: #202020;
     height: 42px;
     padding: 1em;
+    z-index: 999;
   }
 
   div.login-button {
