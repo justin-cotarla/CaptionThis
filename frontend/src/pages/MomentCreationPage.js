@@ -84,7 +84,7 @@ class MomentCreation extends Component {
                 <div className = "CreateMoment">
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <form className="moment-create-form" onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
-                        <label className = "moment-create-label">Moment</label>
+                        <label className = "moment-create-label">Upload</label>
                         <input 
                             type="file" 
                             name="file" 
@@ -96,7 +96,7 @@ class MomentCreation extends Component {
                         <label 
                             htmlFor="file"
                             className="upload-button">
-                            Choose Image
+                            Select Image
                             <img alt="inputFile" src={`http://${process.env.REACT_APP_IP}/res/uploadicon.png`}/>
                         </label>
                         <div id="filename">{this.state.filename}</div>
