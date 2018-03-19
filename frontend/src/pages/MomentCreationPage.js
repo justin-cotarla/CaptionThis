@@ -109,13 +109,14 @@ class MomentCreation extends Component {
                             name="description" 
                             className="desc-textarea" 
                             placeholder="Provide context to help others come up with the ideal caption!"/>
-                        <input type="submit" className="moment-create-button"></input>
+                        <input type="submit" className="moment-create-button" disabled={this.state.isUploading}></input>
                         <input 
                             type="reset" 
                             className="moment-create-button" 
                             value="Clear" 
                             style={{marginLeft: '10px'}}
-                            onClick={this.onClear}></input>
+                            onClick={this.onClear}
+                            disabled={this.state.isUploading}/>
                         { this.state.isUploading && <LoadingDots/> }
                     </form>
                 </div>
