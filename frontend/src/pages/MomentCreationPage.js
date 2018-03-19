@@ -53,8 +53,8 @@ class MomentCreation extends Component {
         const image = event.target.files[0];
         if (image) {
             let filename = event.target.files[0].name;
-            if (filename.length > 8) {
-                filename = filename.slice(0, 9).concat('...');
+            if (filename.length > 10) {
+                filename = filename.slice(0, 11).concat('...');
             }
 
             this.setState({ filename });
