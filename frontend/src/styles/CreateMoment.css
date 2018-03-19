@@ -26,6 +26,8 @@
   font-family: 'Teko';
   color: #1DE28F;
   font-size: 48px;
+  position: relative;
+  right: 2px;
 }
 
 .moment-create-form {
@@ -114,4 +116,10 @@
 .desc-textarea:focus {
   outline: none;
   box-shadow: 0px 7px 0px #000000;
+}
+
+.moment-desc-hint {
+  font-family: Teko;
+  font-size: 18px;
+  color: white;
 }

@@ -100,15 +100,17 @@ class MomentCreation extends Component {
                             <img alt="inputFile" src={`http://${process.env.REACT_APP_IP}/res/uploadicon.png`}/>
                         </label>
                         <div id="filename">{this.state.filename}</div>
-                        <label className = "moment-create-label">Description</label>
+                        <label className = "moment-create-label" style={{top: '15px'}}>Description</label>
+                        <h1 className = "moment-desc-hint">
+                            Provide context to help others come up with the ideal caption!
+                        </h1>
                         <textarea 
                             value={this.state.description} 
                             onChange={this.onDescriptionChange} 
                             type="text" 
                             id="input" 
                             name="description" 
-                            className="desc-textarea" 
-                            placeholder="Provide context to help others come up with the ideal caption!"/>
+                            className="desc-textarea"/>
                         <input type="submit" className="moment-create-button" disabled={this.state.isUploading}></input>
                         <input 
                             type="reset" 
