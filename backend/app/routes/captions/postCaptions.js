@@ -4,6 +4,7 @@ import {
     UNAUTHORIZED,
     INVALID_INPUT,
     INVALID_OPERATION,
+    INVALID_USER_OPERATION,
     CAPTION_DOES_NOT_EXIST,
     UNKNOWN_ERROR,
 } from '../../utility/ResponseCodes';
@@ -60,6 +61,23 @@ const selectCaption = (request, reply, captionId) => {
             .code(GOOD.http));
 };
 
+const editCaption = (request, reply, captionId) => {
+    // Get the edited caption
+    const { value: editedCaption } = request.payload;
+
+    // Check if it is valid
+    if (!editedCaption) {
+        return reply
+            .response({ code: INVALID_INPUT.code })
+            .code(INVALID_INPUT.http);
+    }
+
+    const query = 'UPDATE CAPTION SET CONTENT=? WHERE ID=?';
+    return databaseUtil.sendQuery(query, [editedCaption, captionId])
+        .then(() => reply
+            .response({ code: GOOD.code })
+            .code(GOOD.http));
+};
 
 const postCaptions = {
     method: 'POST',
@@ -101,6 +119,15 @@ const postCaptions = {
                 }
                 case 'select': {
                     return selectCaption(request, reply, captionId);
+                }
+                case 'edit': {
+                    // A user should only be able to edit their own caption
+                    if (result.rows[0].USER_ID !== request.auth.credentials.user.id) {
+                        return reply
+                            .response({ code: INVALID_USER_OPERATION.code })
+                            .code(INVALID_USER_OPERATION.http);
+                    }
+                    return editCaption(request, reply, captionId);
                 }
                 default: {
                     return reply
