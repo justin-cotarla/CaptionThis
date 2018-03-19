@@ -5,6 +5,7 @@ import {
     UNAUTHORIZED,
     INVALID_INPUT,
     INVALID_OPERATION,
+    INVALID_USER_OPERATION,
     CAPTION_DOES_NOT_EXIST,
     UNKNOWN_ERROR,
 } from '../../utility/ResponseCodes';
@@ -83,7 +84,62 @@ const emptyVoteRequest = {
     },
 };
 
-// Common requests for both accepting/rejecting and voting on captions
+// Requests for editing captions
+const editRequest = {
+    auth: {
+        credentials: {
+            user: {
+                id: 1,
+                username: 'test',
+            },
+        },
+    },
+    params: {
+        id: 1,
+    },
+    payload: {
+        operation: 'edit',
+        value: 'test edit',
+    },
+};
+
+const emptyEditRequest = {
+    auth: {
+        credentials: {
+            user: {
+                id: 1,
+                username: 'test',
+            },
+        },
+    },
+    params: {
+        id: 1,
+    },
+    payload: {
+        operation: 'edit',
+        value: undefined,
+    },
+};
+
+const wrongUserRequest = {
+    auth: {
+        credentials: {
+            user: {
+                id: 2,
+                username: 'test',
+            },
+        },
+    },
+    params: {
+        id: 1,
+    },
+    payload: {
+        operation: 'edit',
+        value: 'test edit',
+    },
+};
+
+// Common requests for accepting/rejecting, voting on, and editing captions
 const emptyAuthRequest = {
     auth: {},
     params: {
@@ -170,7 +226,7 @@ describe('/api/captions/:id Endpoint (Accepting/Rejecting)', () => {
             }));
 });
 
-// Test the caption voting functionality. Does not test for the vote count.
+// Test the caption voting functionality
 describe('/api/captions/:id Endpoint (Voting)', () => {
     it('Handles successful acceptance or rejection of a caption', () =>
         postCaptions.handler(voteRequest, reply)
@@ -181,6 +237,34 @@ describe('/api/captions/:id Endpoint (Voting)', () => {
         postCaptions.handler(emptyVoteRequest, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
+            }));
+});
+
+// Test the caption editing functionality
+describe('/api/captions/:id Endpoint (Editing)', () => {
+    it('Handles successful editing of a caption', () => {
+        databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
+            resolve({
+                rows: [{
+                    USER_ID: 1,
+                }],
+                fields: {},
+            });
+        }));
+        return postCaptions.handler(editRequest, reply)
+            .then(() => {
+                expect(reply.response.mock.calls[0][0].code).toBe(GOOD.code);
+            });
+    });
+    it('Handles request with invalid or missing edited caption', () =>
+        postCaptions.handler(emptyEditRequest, reply)
+            .then(() => {
+                expect(reply.response.mock.calls[0][0].code).toBe(INVALID_INPUT.code);
+            }));
+    it('Handles request where a wrong user attempts to edit caption', () =>
+        postCaptions.handler(wrongUserRequest, reply)
+            .then(() => {
+                expect(reply.response.mock.calls[0][0].code).toBe(INVALID_USER_OPERATION.code);
             }));
 });
 
