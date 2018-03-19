@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import NavBar from '../components/NavBar';
-
+import LoadingDots from '../components/LoadingDots';
 import '../styles/CreateMoment.css';
 
 
@@ -14,6 +14,7 @@ class MomentCreation extends Component {
             user: props.user,
             description: '',
             filename: '',
+            isUploading: false,
         }
     }
 
@@ -34,6 +35,7 @@ class MomentCreation extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.target);
+        this.setState({ isUploading: true });
         fetch(`http://${process.env.REACT_APP_IP}/api/moments`, {
             method: 'PUT',
             body: data,
@@ -114,6 +116,7 @@ class MomentCreation extends Component {
                             value="Clear" 
                             style={{marginLeft: '10px'}}
                             onClick={this.onClear}></input>
+                        { this.state.isUploading && <LoadingDots/> }
                     </form>
                 </div>
             </div>
