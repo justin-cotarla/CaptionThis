@@ -1,4 +1,12 @@
   @import url('https://fonts.googleapis.com/css?family=Teko');
+
+  .logout-loader-holder > div {
+    bottom: 15px;
+    position: relative;
+    text-align: right;
+    margin-right: 2em;
+  }
+
   div.navbar-container {
     display: block;
     position: sticky;

@@ -140,7 +140,12 @@ class ProfilePage extends React.Component {
 
         if (error) {
             return (
-                <ErrorGraphic error_message={error}/>
+                <div>
+                    <NavBar user={this.state.user}/>
+                    <div className="profile-page-container">
+                        <ErrorGraphic message={error}/>
+                    </div>
+                </div>
             )
         }
 
