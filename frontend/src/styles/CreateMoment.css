@@ -45,8 +45,11 @@
     font-size: 26px;
     font-family: 'Teko';
     width: 120px;
+    height: 45px;
+    border: none;
     border-radius: 2px;
-    margin: 20px 0 ;
+    margin: 20px 0;
+    padding: 2px 0;
 }
 
 .moment-create-button:hover{
@@ -77,7 +80,7 @@
     font-weight: 200;
     text-align:center;
     background-color: #FFFFFF;
-    border-radius: 3px;
+    border-radius: 2px;
     border-width: thin;
     border-color: #202020;
 }
@@ -85,15 +88,6 @@
 .upload-button:hover {
   background-color: #1DE28F;
   box-shadow: 0px 5px 0 #000000;
-}
-
-#filename {
-  font-family: 'Teko';
-  color: #FFFFFF;
-  font-size: 25px;
-  font-weight: 200;
-  text-align: left;
-  margin-top: 10px;
 }
 
 .desc-textarea {
