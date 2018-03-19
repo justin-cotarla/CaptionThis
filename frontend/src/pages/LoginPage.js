@@ -3,7 +3,6 @@ import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import '../styles/LoginRegistrationPage.css';
-
 import LoadingDots from '../components/LoadingDots'
 
 class LoginPage extends Component{
@@ -80,67 +79,72 @@ class LoginPage extends Component{
 
     render() {
         return (
-            <div>
-                <div className="logo">
-                    <img
-                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
-                        alt="Logo"
-                        width="340"
-                        onClick={this.onLogoClick}
-                    />
-                </div>
-                <div className="login-box-container">
-                    {this.state.redirect && <Redirect to={this.state.redirect} />}
-                    <p><font size ="5" color="#1DE28F"> Login </font></p>
-
-                    <form>
-                        <p>
+          <div>
+            <div className="logo">
+              <img
+                  src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
+                  alt="Logo"
+                  onClick={this.onLogoClick}
+              />
+          </div>
+          <body className="align">
+            <div className="grid">
+                <form>
+                    <div className="form__field">
+                        {this.state.redirect && <Redirect to={this.state.redirect} />}
+                        <label for="login__username">
+                            <img
+                                src={`http://${process.env.REACT_APP_IP}/res/username.png`}
+                                alt="username"
+                                onClick={this.onLogoClick}/>
+                        </label>
                         <input
-                            type="text"
-                            className="text-line"
+                            id="login__username"
+                            type="username"
                             name="username"
-                            size="12"
+                            className="form__input"
                             placeholder="Username"
                             value={this.state.userField}
                             onChange={this.onUserChange}
-                        /></p>
-                    
+                            required/>
+                    </div>
+                    <div className="form__field">
+                        <label for="loginpassword">
+                            <img
+                                src={`http://${process.env.REACT_APP_IP}/res/password.png`}
+                                alt="password"
+                                onClick={this.onLogoClick}/>
+                        </label>
                         <input
+                            id="loginpassword"
                             type="password"
-                            className="text-line"
                             name="password"
-                            size="12"
-                            placeholder="Password"                       
+                            className="form__input"
+                            placeholder="Password"
                             value={this.state.passField}
                             onChange={this.onPassChange}
                             onKeyDown={this.onEnterPress}
-                        />
-
-                        <div
-                        className="login1-button"
+                            required/>
+                    </div>
+                    <div
+                        className="login2-button"
                         onClick={this.onSubmit}
                         >
                         Login
-                        </div>
-                    </form>
-                    
-                    <div
-                        className="registration-button"
-                        onClick={this.onRegisterClick}
-                        >
-                        Sign up for CaptionThis
-                        </div>
-                    </div>
-
-                    {this.state.loggingin &&
-                        <div className="login-loader-holder">
-                            <LoadingDots className="login-loader"/>
-                        </div>
-                    }
-
+                   </div>
+                </form>
+                <div className="registration-button" onClick={this.onRegisterClick}>
+                    <p class="text--center"> Not a member ? <a>Sign up now </a></p>
+                </div>
+                {this.state.loggingin &&
+                <div className="login-loader-holder">
+                  <LoadingDots className="login-loader"/>
+                </div>
+                }
             </div>
+        </body>
+        </div>
         );
     }
 }
-
 export default LoginPage;

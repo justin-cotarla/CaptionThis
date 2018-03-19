@@ -1,89 +1,113 @@
-div.loginHeader {
-  font-size: 40px;
-  color: #1DE28F;
-}
+@import url('https://fonts.googleapis.com/css?family=Teko');
 
+:root {
+  --BackgroundColor: #202020;
+  --themeColor: #1DE28F;
+  --bodyColor: var(--baseColor);
+  --FontFamily: 'Teko';
+  --FontSize: 14px;
+  --FontWeight: 300;
+  --LineHeight: 1.5;
+}
+body {
+  background-color: var(--BackgroundColor);
+  color: var(--bodyColor);
+  font-family: var(--FontFamily);
+  font-size: var(--FontSize);
+  font-weight: var(--FontWeight);
+  height: 100%;
+  line-height: var(--LineHeight);
+  margin: 0;
+  min-height: 60px;
+}
+form{
+  padding-top: 60px;
+}
 div.login1-button {
+  text-align: center;
+  opacity: 0.7;
+  cursor: pointer;
+  font-family: var(--FontFamily);
   width: 45px;
+  font-size: 34px;
+  letter-spacing: 2px;
   float: none;
   margin: 0 auto;
-  margin-top: 5px;
+  margin-top: 10px;
   padding: 5px;
-  color: #1DE28F;
+  padding-top: 20px;
+  color:var(--themeColor);
   font-weight: bold;
-  cursor: pointer;
 }
-
-div.login2-button {
+div.login1-button:hover {
+  opacity: 1;
+}
+div.signup-button {
+   opacity: 0.8;
+   text-align: center;
     width: 175px;
+    font-family: var(--FontFamily);
+    font-size: 34px;
+    letter-spacing: 2px;
     float: none;
     margin: 0 auto;
     margin-top: 20px;
     padding: 5px;
-    color: #1DE28F;
+    color:#FFFFFF;
     font-weight: bold;
     cursor: pointer;
   }
-
+  div.signup-button:hover {
+      opacity: 1;
+  }
+  div.login2-button {
+     opacity: 0.8;
+     text-align: center;
+      width: 175px;
+      font-family: var(--FontFamily);
+      font-size: 32px;
+      letter-spacing: 2px;
+      float: none;
+      margin: 0 auto;
+      margin-top: 0px;
+      padding: 5px;
+      color: var(--themeColor);
+      font-weight: bold;
+      cursor: pointer;
+    }
+  div.login2-button:hover {
+      opacity: 1;
+    }
   div.registration-button {
     width: 200px;
     float: none;
     margin: 0 auto;
     margin-top: 20px;
     padding: 5px;
-    color: #1DE28F;
+    color:var(--themeColor);
     font-weight: bold;
     cursor: pointer;
   }
-
   div.registration2-button {
     width: 65px;
     float: none;
     margin: 0 auto;
     margin-top: 5px;
     padding: 5px;
-    color: #1DE28F;
+    color: var(--themeColor);
     font-weight: bold;
     cursor: pointer;
   }
-
-  .login-box-container {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    width: 50%;
-    margin-left: auto;
-    display: block;
-    padding: 10px;
-    align-content: center;
-}
-
-.text-line {
-  background-color: transparent;
-  text-align: center;
-  color: #eeeeee;
-  outline: none;
-  outline-style: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: #1DE28F 2px solid;
-  width: 185px;
-  padding: 3px 10px;
-}
-
 div.logo img {
   text-align: center;
   width: 420px;
-  margin-bottom: 15px;
+  padding-top: 40px;
+  margin-bottom: 0px;
 }
-
 div.logo {
   text-align: center;
   margin-top: 0px;
 }
-
 .login-loader-holder {
   text-align: center;
   width: 80px;
@@ -91,7 +115,132 @@ div.logo {
   margin: 0 auto;
   height: 50px;
 }
-
 .login-loader {
   margin:auto;
+}
+.align {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--gridMaxWidth);
+  width: var(--gridWidth);
+}
+input:before{
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all .8s ease-in-out 0s;
+  transition: all .8s ease-in-out 0s;
+  transition: box-shadow 0.3s ease-in-out;
+}
+input:focus ,
+input[type="username"]:hover,
+input[type="password"]:hover,
+input[type="password1"]:hover,
+input[type="password2"]:hover  {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  border-bottom: 1px solid #FFFFFF;
+  box-shadow: 0px 1.8px 0px #000000;
+}
+input {
+  background-color:var(--BackgroundColor);
+  border: 0;
+  color: #FFFFFF;
+  font: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  transition: background-color 0.3s;
+}
+input[type='submit'] {
+  cursor: pointer;
+}
+.form {
+  margin: calc(var(--formFieldMargin) * -1);
+}
+.form input[type='password'],
+.form input[type='password1'],
+.form input[type='password2'],
+.form input[type='username'],
+.form input[type='submit'] {
+  width: 100%;
+}
+.form__field {
+  display: flex;
+  height:38px;
+  margin: 8px;
+  width: 30px;
+}
+.form__input {
+  letter-spacing: 1px;
+  flex: 1;
+  font-size: 30px;
+  font-family: var(--FontFamily);
+  border-bottom: 1px solid #AAAAAA;
+}
+:root {
+  --loginBorderRad: 4px;
+  --SubmitColor: #EEEEEE;
+}
+
+.login label,
+.login input[type='username'],
+.login input[type='password'],
+.login input[type='password1'],
+.login input[type='password2'],
+.login input[type='submit'] {
+  border-radius: var(--loginBorderRad);
+  padding: 26px;
+}
+.login label {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.login input[type='password'],
+.login input[type='password1'],
+.login input[type='password2'],
+.login input[type='username'] {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+a {
+  position: relative;
+  color: #FFFFFF;
+}
+a:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  border-bottom: 2px solid #FFFFFF;
+  transition: 0.4s;
+}
+a:hover:after {
+  width: 100%;
+}
+.text--center {
+  font-family: var(--FontFamily);
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 200;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-top:1px;
+  margin-left:  40px;
+  margin-right: 26px;
+}
+.text--center a{
+  text-align: center;
 }
