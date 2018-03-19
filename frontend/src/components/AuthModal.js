@@ -224,13 +224,13 @@ class AuthModal extends React.Component {
                     { 
                         showRegisterForm && verifyError && <h1 className="modal-verify-error">{verifyError}</h1> 
                     } 
-                    <button className="modal-login-btn" disabled={!formValid || isAuthenticating}>
+                    <button className="modal-auth-btn" disabled={!formValid || isAuthenticating}>
                         { showRegisterForm ? 'Create My Account!' : 'Log In' }
                     </button>
-                    <span className="modal-to-login">
+                    <span className="modal-select-form">
                         { showRegisterForm ? 'Already have an account? ' : 'Don\'t have an account? '}
                     </span>
-                    <Link to="#" className="modal-to-login" onClick={this.showRegisterForm}>
+                    <Link to="#" className="modal-select-form" onClick={this.showRegisterForm}>
                         { showRegisterForm ? 'Log in!' : 'Sign up!' }
                     </Link>
                     {

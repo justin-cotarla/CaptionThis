@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
-.modal-input-label, .modal-header, .modal-to-login, .modal-verify-error, .modal-login-btn {
+.modal-input-label, .modal-header, .modal-select-form, .modal-verify-error, .modal-auth-btn {
     font-family: 'Teko';
 }
 
@@ -68,15 +68,15 @@
     border-bottom: #1DE28F 2px solid;
 }
 
-.modal-to-login {
+.modal-select-form {
     font-size: 20px;
 }
 
-a.modal-to-login {
+a.modal-select-form {
     color: #1DE28F;
 }
 
-.modal-login-btn {
+.modal-auth-btn {
     width: 100%;
     padding: 10px;
     margin-bottom: .5em;
@@ -87,7 +87,7 @@ a.modal-to-login {
     box-shadow: 0 2px 0 black;
 }
 
-.modal-login-btn:active {
+.modal-auth-btn:active {
     border: 1px solid #1DE28F;
 }
 
