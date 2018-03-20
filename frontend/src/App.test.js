@@ -2,7 +2,7 @@ import Nightmare from 'nightmare';
 
 describe('Acceptance Tests', () => {
     it('Passes AT1', () => {
-        const nightmare = Nightmare({ show: false });
+        const nightmare = Nightmare({ show: true });
 
         return nightmare
             .cookies.clearAll()
@@ -13,7 +13,7 @@ describe('Acceptance Tests', () => {
             .type('input[name="username"]', 'test')
             .type('input[name="password"]', 'test')
             .click('div.login1-button')
-            .wait(200)
+            .wait(500)
             .cookies.get('token')
             .end()  
             .then(token => {       

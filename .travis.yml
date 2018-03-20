@@ -1,14 +1,5 @@
 language: node_js
 
-addons:
-  apt:
-    packages:
-      - xvfb
-
-install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-
 cache:
   directories:
     - "frontend/node_modules"
@@ -18,10 +9,6 @@ node_js:
   - "node"
 
 script:
-  - cd frontend
-  - npm install
-  - npm run build
-  - npm test
-  - cd ../backend
+  - cd backend
   - npm install
   - npm test
