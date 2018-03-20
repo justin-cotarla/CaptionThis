@@ -93,7 +93,7 @@ class RegistrationPage extends Component{
                                 id="register_username"
                                 type="username"
                                 name="username"
-                                className="form_input"
+                                className="user-form-field"
                                 placeholder="Username"
                                 value={this.state.userField}
                                 onChange={this.onUserChange}
@@ -109,7 +109,7 @@ class RegistrationPage extends Component{
                         <input
                             id="password1"
                             type="password"
-                            className="form_input"
+                            className="user-form-field"
                             name="password1"
                             placeholder="Password"
                             onChange={this.onPassChange}
@@ -126,7 +126,7 @@ class RegistrationPage extends Component{
                            <input
                               id="password2"
                               type="password"
-                              className="form_input"
+                              className="user-form-field"
                               name="password2"
                               placeholder="Confirm Password"
                               value={this.state.passField2}

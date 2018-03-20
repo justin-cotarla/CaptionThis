@@ -23,25 +23,7 @@
 .grid-components form{
   padding-top: 60px;
 }
-div.login1-button {
-  text-align: center;
-  opacity: 0.7;
-  cursor: pointer;
-  font-family: var(--FontFamily);
-  width: 45px;
-  font-size: 34px;
-  letter-spacing: 2px;
-  float: none;
-  margin: 0 auto;
-  margin-top: 10px;
-  padding: 5px;
-  padding-top: 20px;
-  color:var(--themeColor);
-  font-weight: bold;
-}
-div.login1-button:hover {
-  opacity: 1;
-}
+
 div.signup-button {
    opacity: 0.8;
    text-align: center;
@@ -149,7 +131,7 @@ div.logo {
   border-bottom: 1px solid #FFFFFF;
   box-shadow: 0px 1.8px 0px #000000;
 }
-input {
+.user-form-field input {
   background-color:var(--BackgroundColor);
   border: 0;
   color: #FFFFFF;
@@ -159,7 +141,7 @@ input {
   padding: 0;
   transition: background-color 0.3s;
 }
-input[type='submit'] {
+.user-form-field input[type='submit'] {
   cursor: pointer;
 }
 .form {
@@ -178,7 +160,8 @@ input[type='submit'] {
   margin: 8px;
   width: 30px;
 }
-.form_input {
+.user-form-field input {
+  width: 210px;
   letter-spacing: 1px;
   flex: 1;
   font-size: 30px;

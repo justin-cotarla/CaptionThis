@@ -79,52 +79,52 @@ class LoginPage extends Component{
 
     render() {
         return (
-          <div>
+          <div className="defined-style-components">
             <div className="logo">
               <img
                   src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
                   alt="Logo"
-                  onClick={this.onLogoClick}
+
               />
           </div>
-          <body className="align">
+          <body className="align-user-field">
             <div className="grid">
                 <form>
-                    <div className="form__field">
+                    <div className="user-form-field">
                         {this.state.redirect && <Redirect to={this.state.redirect} />}
-                        <label for="login__username">
+                        <label for="login_username">
                             <img
                                 src={`http://${process.env.REACT_APP_IP}/res/username.png`}
                                 alt="username"
-                                onClick={this.onLogoClick}/>
+                            />
                         </label>
                         <input
-                            id="login__username"
+                            id="login_username"
                             type="username"
                             name="username"
-                            className="form__input"
+                            className="user-form-field"
                             placeholder="Username"
                             value={this.state.userField}
                             onChange={this.onUserChange}
-                            required/>
+                            />
                     </div>
-                    <div className="form__field">
+                    <div className="user-form-field">
                         <label for="loginpassword">
                             <img
                                 src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                 alt="password"
-                                onClick={this.onLogoClick}/>
+                            />
                         </label>
                         <input
                             id="loginpassword"
                             type="password"
                             name="password"
-                            className="form__input"
+                            className="user-form-field"
                             placeholder="Password"
                             value={this.state.passField}
                             onChange={this.onPassChange}
                             onKeyDown={this.onEnterPress}
-                            required/>
+                            />
                     </div>
                     <div
                         className="login2-button"
