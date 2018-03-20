@@ -24,7 +24,7 @@ describe('/api/getMoments endpoint', () => {
                 rows: [{
                     ID: 1,
                     IMG_URL: 'test',
-                    DESCRIPTON: 'test',
+                    DESCRIPTION: 'test',
                     DATE_ADDED: 1,
                     USER_ID: 1,
                     USERNAME: 'test',
