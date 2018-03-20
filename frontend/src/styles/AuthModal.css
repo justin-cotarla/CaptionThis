@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css?family=Teko');
+
+.modal-input-label, .modal-header, .modal-select-form, .modal-verify-error, .modal-auth-btn {
+    font-family: 'Teko';
+}
+
+.modal-container {
+    width: 500px;
+    padding: 1.2rem 2rem !important;
+    border-radius: 3px;
+    background-image: url("http://localhost/res/polaroid_texture.png") !important;
+    transform: rotate(0.1deg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.modal-overlay {
+    background: rgba(0, 0, 0, .5) !important;
+}
+
+.modal-auth-form {
+    margin: 0 auto 1em;
+    width: 80%;
+}
+
+.modal-header { 
+    font-size: 48px;
+}
+
+.modal-info {
+    font-size: 24px;
+}
+
+.modal-verify-error {
+    height: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ff0000;
+}
+
+.modal-input-label {
+    display: block;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    font-size: 26px;
+}
+
+.modal-input-field {
+    display: block;
+    width: 100%;
+    height: 25px;
+    box-sizing: border-box;
+    border: solid 1px #cccc;
+    border-radius: 3px;
+    margin: 5px 0;
+    margin-top: 0;
+    padding-left: 0.2em;
+    font-size: 20px;
+    font-family: Teko;
+    font-weight: 100;
+    background-color: transparent;
+    text-align: left;
+    outline: none;
+    outline-style: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: #1DE28F 2px solid;
+}
+
+.modal-select-form {
+    font-size: 20px;
+}
+
+a.modal-select-form {
+    color: #1DE28F;
+}
+
+.modal-auth-btn {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: .5em;
+    margin-top: 1em;
+    border-radius: 3px;
+    font-size: 20px;
+    border: none;
+    box-shadow: 0 2px 0 black;
+}
+
+.modal-auth-btn:active {
+    border: 1px solid #1DE28F;
+}
+
+::-webkit-input-placeholder {
+     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+}
+
+.login-working {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    margin: 0 1.2em .5em 0;
+}

@@ -34,7 +34,7 @@ const getMoment = {
             const moment = {
                 moment_id: result.rows[0].ID,
                 img_url: result.rows[0].IMG_URL,
-                description: result.rows[0].DESCRIPTON,
+                description: result.rows[0].DESCRIPTION,
                 date_added: result.rows[0].DATE_ADDED,
                 user: {
                     username: result.rows[0].USERNAME,

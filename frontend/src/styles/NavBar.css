@@ -1,8 +1,20 @@
   @import url('https://fonts.googleapis.com/css?family=Teko');
+
+  .logout-loader-holder > div {
+    bottom: 15px;
+    position: relative;
+    text-align: right;
+    margin-right: 2em;
+  }
+
   div.navbar-container {
     display: block;
+    position: sticky;
+    top: 0;
+    background: #202020;
     height: 42px;
     padding: 1em;
+    z-index: 999;
   }
 
   div.login-button {

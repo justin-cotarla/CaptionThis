@@ -16,7 +16,7 @@ class NavBar extends Component{
             redirect: null,
             allowBack: false,
             user: this.props.user,
-            logingout: false,
+            loggingOut: false,
         };
     };
 
@@ -29,7 +29,7 @@ class NavBar extends Component{
 
     onLogoutClick = () => {
         this.setState({
-            logingout: true,
+            loggingOut: true,
         })
         AuthUtil.logout();
     }
@@ -88,7 +88,6 @@ class NavBar extends Component{
                         </div>
                     }
 
-                    {this.props.user &&
                         <div
                         className="home-button"
                         onClick={this.onHomeClick}>
@@ -97,7 +96,6 @@ class NavBar extends Component{
                             src={`http://${process.env.REACT_APP_IP}/res/homeicon.png`}
                         />
                         </div>
-                    }
 
                     {this.props.user &&
                         <div
@@ -120,7 +118,7 @@ class NavBar extends Component{
                         </div>
                     }
 
-                    {this.state.logingout &&
+                    {this.state.loggingOut &&
                         <div className="logout-loader-holder">
                             <LoadingDots />
                         </div>
