@@ -21,7 +21,9 @@ const putMoments = {
     handler: (request, reply) => {
         // If not authorized
         if (!request.auth.credentials) {
-            return reply.response({ code: UNAUTHORIZED.code }).code(UNAUTHORIZED.http);
+            return reply
+                .response({ code: UNAUTHORIZED.code })
+                .code(UNAUTHORIZED.http);
         }
         // Get the form data from request
         // const momentTitle = request.payload.title;
@@ -65,8 +67,12 @@ const putMoments = {
                 const query = 'INSERT INTO MOMENT (IMG_URL, DESCRIPTION, USER_ID) VALUES (?, ?, ?)';
                 return databaseUtil.sendQuery(query, [imageURL, momentDesc, userId]);
             })
-            .then(() => reply.response({ code: GOOD.code }).code(GOOD.http))
-            .catch(() => reply.response({ code: UNKNOWN_ERROR.code }).code(UNKNOWN_ERROR.http));
+            .then(() => reply
+                .response({ code: GOOD.code })
+                .code(GOOD.http))
+            .catch(() => reply
+                .response({ code: UNKNOWN_ERROR.code })
+                .code(UNKNOWN_ERROR.http));
     },
 };
 
