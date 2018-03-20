@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
-:root {
+.defined-style-components {
   --BackgroundColor: #202020;
   --themeColor: #1DE28F;
   --bodyColor: var(--baseColor);
@@ -9,7 +9,7 @@
   --FontWeight: 300;
   --LineHeight: 1.5;
 }
-body {
+.align-user-field {
   background-color: var(--BackgroundColor);
   color: var(--bodyColor);
   font-family: var(--FontFamily);
@@ -20,7 +20,7 @@ body {
   margin: 0;
   min-height: 60px;
 }
-form{
+.grid-components form{
   padding-top: 60px;
 }
 div.login1-button {
@@ -45,40 +45,39 @@ div.login1-button:hover {
 div.signup-button {
    opacity: 0.8;
    text-align: center;
+   width: 175px;
+   font-family: var(--FontFamily);
+   font-size: 34px;
+   letter-spacing: 2px;
+   float: none;
+   margin: 0 auto;
+   margin-top: 20px;
+   padding: 5px;
+   color:#FFFFFF;
+   font-weight: bold;
+   cursor: pointer;
+  }
+  div.signup-button:hover {
+    opacity: 1;
+  }
+  div.login2-button {
+    opacity: 0.8;
+    text-align: center;
     width: 175px;
     font-family: var(--FontFamily);
-    font-size: 34px;
+    font-size: 32px;
     letter-spacing: 2px;
     float: none;
     margin: 0 auto;
-    margin-top: 20px;
     padding: 5px;
-    color:#FFFFFF;
+    color: var(--themeColor);
     font-weight: bold;
     cursor: pointer;
-  }
-  div.signup-button:hover {
-      opacity: 1;
-  }
-  div.login2-button {
-     opacity: 0.8;
-     text-align: center;
-      width: 175px;
-      font-family: var(--FontFamily);
-      font-size: 32px;
-      letter-spacing: 2px;
-      float: none;
-      margin: 0 auto;
-      margin-top: 0px;
-      padding: 5px;
-      color: var(--themeColor);
-      font-weight: bold;
-      cursor: pointer;
     }
-  div.login2-button:hover {
+div.login2-button:hover {
       opacity: 1;
-    }
-  div.registration-button {
+}
+div.registration-button {
     width: 200px;
     float: none;
     margin: 0 auto;
@@ -87,8 +86,11 @@ div.signup-button {
     color:var(--themeColor);
     font-weight: bold;
     cursor: pointer;
-  }
-  div.registration2-button {
+}
+div.registration-button:hover {
+    opacity: 1;
+}
+div.registration2-button {
     width: 65px;
     float: none;
     margin: 0 auto;
@@ -102,7 +104,7 @@ div.logo img {
   text-align: center;
   width: 420px;
   padding-top: 40px;
-  margin-bottom: 0px;
+  padding-bottom: 50px;
 }
 div.logo {
   text-align: center;
@@ -118,7 +120,7 @@ div.logo {
 .login-loader {
   margin:auto;
 }
-.align {
+.align-user-field {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -128,7 +130,7 @@ div.logo {
   max-width: var(--gridMaxWidth);
   width: var(--gridWidth);
 }
-input:before{
+.user-form-field input:before{
   visibility: hidden;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
@@ -136,11 +138,11 @@ input:before{
   transition: all .8s ease-in-out 0s;
   transition: box-shadow 0.3s ease-in-out;
 }
-input:focus ,
-input[type="username"]:hover,
-input[type="password"]:hover,
-input[type="password1"]:hover,
-input[type="password2"]:hover  {
+.user-form-field input:focus ,
+.user-form-field input[type="username"]:hover,
+.user-form-field input[type="password"]:hover,
+.user-form-field input[type="password1"]:hover,
+.user-form-field input[type="password2"]:hover  {
   visibility: visible;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
@@ -170,24 +172,19 @@ input[type='submit'] {
 .form input[type='submit'] {
   width: 100%;
 }
-.form__field {
+.user-form-field {
   display: flex;
   height:38px;
   margin: 8px;
   width: 30px;
 }
-.form__input {
+.form_input {
   letter-spacing: 1px;
   flex: 1;
   font-size: 30px;
   font-family: var(--FontFamily);
   border-bottom: 1px solid #AAAAAA;
 }
-:root {
-  --loginBorderRad: 4px;
-  --SubmitColor: #EEEEEE;
-}
-
 .login label,
 .login input[type='username'],
 .login input[type='password'],
@@ -210,15 +207,29 @@ input[type='submit'] {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
-a:hover, a:visited, a:link, a:active
-{
+.signup-button a:hover,
+.signup-button a:visited,
+.signup-button a:link,
+.signup-button a:active{
     text-decoration: none;
 }
-a {
+.registration-button a:hover,
+.registration-button a:visited,
+.registration-button a:link,
+.registration-button a:active{
+    text-decoration: none;
+}
+.registration-button a {
+  text-align: center;
   position: relative;
   color: #FFFFFF;
 }
-a:after {
+.signup-button a {
+  text-align: center;
+  position: relative;
+  color: #FFFFFF;
+}
+.registration-button a:after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -227,7 +238,19 @@ a:after {
   border-bottom: 2px solid #FFFFFF;
   transition: 0.4s;
 }
-a:hover:after {
+.signup-button a:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  border-bottom: 2px solid #FFFFFF;
+  transition: 0.4s;
+}
+.registration-button a:hover:after {
+  width: 100%;
+}
+.signup-button a:hover:after {
   width: 100%;
 }
 .text--center {
@@ -240,7 +263,4 @@ a:hover:after {
   margin-top:1px;
   margin-left:  40px;
   margin-right: 26px;
-}
-.text--center a{
-  text-align: center;
 }

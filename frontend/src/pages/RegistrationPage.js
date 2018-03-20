@@ -70,74 +70,69 @@ class RegistrationPage extends Component{
     }
     render() {
         return (
-            <div>
+            <div className="defined-style-components">
                 <div className="logo">
                     <img
                         src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
                         alt="Logo"
-                        onClick={this.onLogoClick}
                     />
                 </div>
-                <body className="align">
+                <body className="align-user-field">
                   <div className="grid">
                     <form>
-                        <div className="form__field">
+                        <div className="user-form-field">
                             {this.state.redirect && <Redirect to={this.state.redirect} />}
                             <form onSubmit={this.onSubmit}/>
                             <label>
                                 <img
                                     src={`http://${process.env.REACT_APP_IP}/res/username.png`}
                                     alt="username"
-                                    onClick={this.onLogoClick}
                                 />
                             </label>
                             <input
-                                id="register__username"
+                                id="register_username"
                                 type="username"
                                 name="username"
-                                className="form__input"
+                                className="form_input"
                                 placeholder="Username"
                                 value={this.state.userField}
                                 onChange={this.onUserChange}
-                                required>
-                          </input>
+                            />
                       </div>
-                      <div className="form__field">
+                      <div className="user-form-field">
                           <label for="registerpassword1">
                               <img
                                   src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                   alt="password"
-                                  onClick={this.onLogoClick}
                               />
                              </label>
                         <input
                             id="password1"
                             type="password"
-                            className="form__input"
+                            className="form_input"
                             name="password1"
                             placeholder="Password"
-                            value={this.state.passField1}
                             onChange={this.onPassChange}
                             onKeyDown={this.onEnterPress}
-                            required/>
+                            />
                         </div>
-                        <div className="form__field">
+                        <div className="user-form-field">
                             <label for="registerpassword2">
                                 <img
                                     src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                     alt="password"
-                                    onClick={this.onLogoClick}/>
+                                />
                            </label>
                            <input
                               id="password2"
                               type="password"
-                              className="form__input"
+                              className="form_input"
                               name="password2"
                               placeholder="Confirm Password"
                               value={this.state.passField2}
                               onChange={this.onPassChange}
                               onKeyDown={this.onEnterPress}
-                              required/>
+                              />
                         </div>
                         <div
                             className="signup-button"
