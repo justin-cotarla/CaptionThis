@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import scrollToComponent from 'react-scroll-to-component';
+
 import Header from './Header';
 import CaptionVotes from './CaptionVotes';
 import Acceptor from './Acceptor';
@@ -13,9 +15,44 @@ class Caption extends React.Component {
         super(props);
         this.state = {
             caption: props.caption, 
+            isHighlighted: false,
             token: props.token,
             showAuthModal: false,
         }
+    }
+    
+    componentDidMount = () => this.scrollToCaption();
+
+    componentDidUpdate = () => {
+        const captionId = this.state.caption.caption_id;
+        const captionRef = this.refs[captionId];
+        this.highlightCaption(captionRef);
+    }
+
+    onBlur = (event) => {
+        const { scrollTo } = this.props;
+        const captionId = this.state.caption.caption_id;
+        if ((scrollTo === captionId) && scrollTo) {
+            this.setState({ isHighlighted: false });
+        }
+    }
+
+    scrollToCaption = () => {
+        const { scrollTo } = this.props;
+        const captionId = this.state.caption.caption_id;
+        if ((scrollTo === captionId) && scrollTo) {
+            const captionRef = this.refs[captionId];
+            scrollToComponent(captionRef, {
+                offset: -100,
+                align: 'top',
+                duration: 1000
+            });
+            this.setState({ isHighlighted: true });
+        }
+    }
+
+    highlightCaption = (caption) => {
+        caption.focus(); 
     }
 
     handleVote = (event) => {
@@ -116,9 +153,14 @@ class Caption extends React.Component {
     }
 
     render(){
-        const { caption, showAuthModal } = this.state;
+        const { caption, isHighlighted, showAuthModal } = this.state;
+
         return (
-            <div className="caption-container">
+            <div 
+                className="caption-container" 
+                ref={caption.caption_id}
+                onBlur={this.onBlur}
+                tabIndex={isHighlighted? "0" : null}>
                 <AuthModal
                     open={showAuthModal}
                     onClose={() => this.setState({ showAuthModal: false })}/>
