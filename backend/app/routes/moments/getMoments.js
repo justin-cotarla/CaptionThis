@@ -4,13 +4,13 @@ import {
     UNKNOWN_ERROR,
 } from '../../utility/ResponseCodes';
 
-const getMomentsBuilder = (params) => {
+const queryBuilder = (params) => {
     const conditions = [];
     const values = [];
 
     // To get captions by moment id, user-id, with a limit
     const userid = params['user-id'];
-    let { limit } = params;
+    let { limit, filter, order } = params;
 
     if (!(userid === undefined || userid === '' || userid === 0 || !/^\d+$/.test(userid))) {
         conditions.push('MOMENT.USER_ID=?');
@@ -25,9 +25,22 @@ const getMomentsBuilder = (params) => {
     limit = parseInt(limit, 10);
     values.push(limit);
 
+    switch (filter) {
+    case 'popularity':
+        filter = 'CAPTION_COUNT';
+        break;
+    default:
+        filter = 'DATE_ADDED';
+    }
+
+    order = (order === 'asc')
+        ? 'ASC'
+        : 'DESC';
+
     return {
         where: conditions.length ? conditions[0] : 'TRUE',
         values,
+        order: `${filter} ${order}`,
     };
 };
 
@@ -35,7 +48,7 @@ const getMoments = {
     method: 'GET',
     path: '/api/moments',
     handler: (request, reply) => {
-        const { where, values } = getMomentsBuilder(request.query);
+        const { where, values, order } = queryBuilder(request.query);
 
         // Caption Query
         const subQuery = `
@@ -52,7 +65,7 @@ const getMoments = {
         GROUP BY
             CONTENT
         ORDER BY
-        	COALESCE(SUM(TV.VALUE),0) DESC
+            COALESCE(SUM(TV.VALUE),0) DESC
         LIMIT 1
         `;
 
@@ -65,6 +78,7 @@ const getMoments = {
             MOMENT.DATE_ADDED,
             USER.USERNAME,
             USER.ID AS USER_ID,
+            COUNT(C_CAPTION.ID) AS CAPTION_COUNT,
             (${subQuery}) AS TOP_CAPTION
         FROM
             MOMENT
@@ -72,10 +86,16 @@ const getMoments = {
             USER
         ON
             MOMENT.USER_ID = USER.ID
+        LEFT JOIN
+            CAPTION AS C_CAPTION
+        ON
+            C_CAPTION.MOMENT_ID = MOMENT.ID
         WHERE
             ${where}
+        GROUP BY
+            MOMENT.ID
         ORDER BY
-            DATE_ADDED DESC
+            ${order}
         LIMIT ?
         `;
 
@@ -105,7 +125,7 @@ const getMoments = {
         })
             .catch(() => reply
                 .response({ code: UNKNOWN_ERROR.code })
-                .code(UNKNOWN_ERROR.http)); // Code 3 means unknown error
+                .code(UNKNOWN_ERROR.http));
     },
 };
 
