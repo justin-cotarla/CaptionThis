@@ -33,7 +33,7 @@ const getMoments = {
     handler: (request, reply) => {
         const { where, values } = getMomentsBuilder(request.query);
 
-        //Caption Query
+        // Caption Query
         const subQuery = `  
         SELECT
             CONTENT
@@ -49,7 +49,8 @@ const getMoments = {
             CONTENT
         ORDER BY
         	COALESCE(SUM(TV.VALUE),0) DESC
-        LIMIT 1`
+        LIMIT 1
+        `;
 
         // Create db query
         const query = `
@@ -73,7 +74,7 @@ const getMoments = {
             DATE_ADDED DESC 
         LIMIT ?
         `;
-        
+
         return databaseUtil.sendQuery(query, values).then((result) => {
             const moments = result.rows.map(moment => ({
                 moment_id: moment.MOMENT_ID,

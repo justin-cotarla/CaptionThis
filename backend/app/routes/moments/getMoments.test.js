@@ -36,6 +36,8 @@ describe('/api/getMoments endpoint', () => {
                     IMG_URL: 'test',
                     DESCRIPTION: 'test',
                     DATE_ADDED: 1,
+                    TOP_CAPTION: 'test',
+
                 }],
                 fields: {},
             });
@@ -53,6 +55,7 @@ describe('/api/getMoments endpoint', () => {
                         img: 'test',
                         description: 'test',
                         date_added: 1,
+                        top_caption: 'test',
                     }],
                 });
             });
@@ -84,6 +87,7 @@ describe('/api/getMoments endpoint', () => {
                         img: 'test',
                         description: 'test',
                         date_added: 1,
+                        top_caption: 'Click to submit a caption',
                     }],
                 });
             });
