@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "base64url": "^2.0.0",
+    "classnames": "^2.2.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-responsive-modal": "^2.0.1",

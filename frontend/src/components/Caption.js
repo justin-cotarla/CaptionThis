@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import scrollToComponent from 'react-scroll-to-component';
+import classnames from 'classnames';
 
 import Header from './Header';
 import CaptionVotes from './CaptionVotes';
@@ -15,44 +16,27 @@ class Caption extends React.Component {
         super(props);
         this.state = {
             caption: props.caption, 
-            isHighlighted: false,
+            isHighlighted: props.scrollTo === props.caption.caption_id,
             token: props.token,
             showAuthModal: false,
         }
     }
     
-    componentDidMount = () => this.scrollToCaption();
-
-    componentDidUpdate = () => {
-        const captionId = this.state.caption.caption_id;
-        const captionRef = this.refs[captionId];
-        this.highlightCaption(captionRef);
-    }
-
-    onBlur = (event) => {
-        const { scrollTo } = this.props;
-        const captionId = this.state.caption.caption_id;
-        if ((scrollTo === captionId) && scrollTo) {
-            this.setState({ isHighlighted: false });
-        }
-    }
+    componentDidMount = () => {
+        this.scrollToCaption()
+    };
 
     scrollToCaption = () => {
-        const { scrollTo } = this.props;
+        const { isHighlighted } = this.state;
         const captionId = this.state.caption.caption_id;
-        if ((scrollTo === captionId) && scrollTo) {
+        if (isHighlighted) {
             const captionRef = this.refs[captionId];
             scrollToComponent(captionRef, {
                 offset: -100,
                 align: 'top',
                 duration: 1000
             });
-            this.setState({ isHighlighted: true });
         }
-    }
-
-    highlightCaption = (caption) => {
-        caption.focus(); 
     }
 
     handleVote = (event) => {
@@ -157,10 +141,8 @@ class Caption extends React.Component {
         const acceptorClasses = ["caption-container-rejected", "caption-container", "caption-container-accepted"];
         return (
             <div 
-                className={acceptorClasses[caption.selected + 1]}
-                ref={caption.caption_id}
-                onBlur={this.onBlur}
-                tabIndex={isHighlighted? "0" : null}>
+                className={classnames(acceptorClasses[caption.selected + 1], isHighlighted ? 'caption-highlighted' : '')}
+                ref={caption.caption_id}>
                 <AuthModal
                     open={showAuthModal}
                     onClose={() => this.setState({ showAuthModal: false })}/>

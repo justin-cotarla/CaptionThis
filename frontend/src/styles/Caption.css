@@ -8,14 +8,13 @@
     background-color: rgba(196, 196, 196, 0.282);
 }
 
-.caption-container:focus, 
-.caption-container-accepted:focus, 
-.caption-container-rejected:focus {
+.caption-highlighted {
     outline: none;
     animation: 
         pulse-boxshadow 1.5s 3, 
         pulse-background 1.5s 3,
         pulse-scale 1.5s 3 ease-in-out;
+    animation-delay: 1000ms;
 }
 
 @keyframes pulse-scale {
