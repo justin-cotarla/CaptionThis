@@ -1,4 +1,8 @@
 import databaseUtil from '../../utility/DatabaseUtil';
+import {
+    GOOD,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 const getMomentsBuilder = (params) => {
     const conditions = [];
@@ -34,7 +38,7 @@ const getMoments = {
         const { where, values } = getMomentsBuilder(request.query);
 
         // Caption Query
-        const subQuery = `  
+        const subQuery = `
         SELECT
             CONTENT
         FROM
@@ -54,24 +58,24 @@ const getMoments = {
 
         // Create db query
         const query = `
-        SELECT 
+        SELECT
             MOMENT.ID AS MOMENT_ID,
-            IMG_URL, 
-            DESCRIPTION, 
-            MOMENT.DATE_ADDED, 
+            IMG_URL,
+            DESCRIPTION,
+            MOMENT.DATE_ADDED,
             USER.USERNAME,
-            USER.ID AS USER_ID, 
+            USER.ID AS USER_ID,
             (${subQuery}) AS TOP_CAPTION
-        FROM 
+        FROM
             MOMENT
-        JOIN 
-            USER 
-        ON 
-            MOMENT.USER_ID = USER.ID 
-        WHERE 
+        JOIN
+            USER
+        ON
+            MOMENT.USER_ID = USER.ID
+        WHERE
             ${where}
-        ORDER BY 
-            DATE_ADDED DESC 
+        ORDER BY
+            DATE_ADDED DESC
         LIMIT ?
         `;
 
@@ -90,14 +94,14 @@ const getMoments = {
 
             // The response data includes a status code and the array of moments
             const data = {
-                code: 1,
+                code: GOOD.code,
                 moments,
             };
 
             // The request was successful
-            return reply.response(data).code(200);
+            return reply.response(data).code(GOOD.http);
         })
-            .catch(() => reply.response({ code: 3 }).code(500)); // Code 3 means unknown error
+            .catch(() => reply.response({ code: UNKNOWN_ERROR.code }).code(UNKNOWN_ERROR.http)); // Code 3 means unknown error
     },
 };
 
