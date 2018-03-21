@@ -99,9 +99,13 @@ const getMoments = {
             };
 
             // The request was successful
-            return reply.response(data).code(GOOD.http);
+            return reply
+                .response(data)
+                .code(GOOD.http);
         })
-            .catch(() => reply.response({ code: UNKNOWN_ERROR.code }).code(UNKNOWN_ERROR.http)); // Code 3 means unknown error
+            .catch(() => reply
+                .response({ code: UNKNOWN_ERROR.code })
+                .code(UNKNOWN_ERROR.http)); // Code 3 means unknown error
     },
 };
 
