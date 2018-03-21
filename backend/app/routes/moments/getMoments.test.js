@@ -1,5 +1,9 @@
 import databaseUtil from '../../utility/DatabaseUtil';
 import getMoments from './getMoments.js';
+import {
+    GOOD,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 const request = {
     query: {
@@ -45,7 +49,7 @@ describe('/api/getMoments endpoint', () => {
         return getMoments.handler(request, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0]).toEqual({
-                    code: 1,
+                    code: GOOD.code,
                     moments: [{
                         moment_id: 1,
                         user: {
@@ -77,7 +81,7 @@ describe('/api/getMoments endpoint', () => {
         return getMoments.handler(limitTestRequest, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0]).toEqual({
-                    code: 1,
+                    code: GOOD.code,
                     moments: [{
                         moment_id: 1,
                         user: {
@@ -98,7 +102,7 @@ describe('/api/getMoments endpoint', () => {
         }));
         return getMoments.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(UNKNOWN_ERROR.code);
             });
     });
 });
