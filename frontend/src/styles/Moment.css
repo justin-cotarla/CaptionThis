@@ -8,6 +8,7 @@
     text-align: right;
     font-size: 15px;
     font-style: normal;
+    width: 405px;
     font-variant: normal;
     font-weight: 300;
     box-shadow: 5px 10px 20px black;
@@ -18,6 +19,7 @@
     transition: .3s ease-out;
     -webkit-transition:  .3s ease-out;
     -moz-transition:  .3s ease-out;
+    max-width: 405px;
 }
 
 .Moment-preview-container h1 {
@@ -33,10 +35,11 @@
 .Moment-thumbnail {
     position: relative;
     width:  400px;
-    height: 320px; //added this to fix the height
+    height: 320px;
     margin-bottom: 7px;
     margin-right:2.5px;
     margin-left: 2.5px;
+    object-fit: cover;
 }
 
 /* Rotate all even images 2 degrees */
@@ -85,4 +88,13 @@
     position: relative;
     z-index: 5;
     transition: .3s ease-in-out;
+}
+
+.top-caption {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  clear: both;
+  font-size: 24px;
+  font-family: 'Gloria Hallelujah', cursive;
 }

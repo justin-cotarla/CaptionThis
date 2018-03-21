@@ -1,7 +1,11 @@
-
 import AWS from 'aws-sdk';
-
 import databaseUtil from '../../utility/DatabaseUtil';
+import {
+    GOOD,
+    UNAUTHORIZED,
+    INVALID_INPUT,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 const putMoments = {
     method: 'PUT',
@@ -17,7 +21,9 @@ const putMoments = {
     handler: (request, reply) => {
         // If not authorized
         if (!request.auth.credentials) {
-            return reply.response({ code: 4 }).code(401);
+            return reply
+                .response({ code: UNAUTHORIZED.code })
+                .code(UNAUTHORIZED.http);
         }
         // Get the form data from request
         // const momentTitle = request.payload.title;
@@ -29,6 +35,14 @@ const putMoments = {
 
         // Get the uploaded file from request
         const imageFile = request.payload.file;
+
+        // Check if the file is valid
+        if (imageFile === undefined) {
+            return reply
+                .response({ code: INVALID_INPUT.code })
+                .code(INVALID_INPUT.http);
+        }
+
         const imageName = imageFile.hapi.filename;
 
         // Define S3 bucket
@@ -53,8 +67,12 @@ const putMoments = {
                 const query = 'INSERT INTO MOMENT (IMG_URL, DESCRIPTION, USER_ID) VALUES (?, ?, ?)';
                 return databaseUtil.sendQuery(query, [imageURL, momentDesc, userId]);
             })
-            .then(() => reply.response({ code: 1 }).code(200))
-            .catch(() => reply.response({ code: 3 }).code(500));
+            .then(() => reply
+                .response({ code: GOOD.code })
+                .code(GOOD.http))
+            .catch(() => reply
+                .response({ code: UNKNOWN_ERROR.code })
+                .code(UNKNOWN_ERROR.http));
     },
 };
 
