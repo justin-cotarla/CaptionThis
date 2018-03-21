@@ -7,16 +7,16 @@ import {
 
 const request = {
     query: {
-        limit: 1,
         'user-id': 1,
     },
 };
 
-const limitTestRequest = {
-    query: [{
-        'user-id': 1,
-        limit: 20,
-    }],
+const queryBuildRequest = {
+    query: {
+        limit: 1,
+        order: 'asc',
+        filter: 'popularity',
+    },
 };
 
 const reply = {
@@ -64,7 +64,7 @@ describe('/api/getMoments endpoint', () => {
                 });
             });
     });
-    it('Test getMomentsBuilder', () => {
+    it('Test queryBuilder', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
             resolve({
                 rows: [{
@@ -78,7 +78,7 @@ describe('/api/getMoments endpoint', () => {
                 fields: {},
             });
         }));
-        return getMoments.handler(limitTestRequest, reply)
+        return getMoments.handler(queryBuildRequest, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0]).toEqual({
                     code: GOOD.code,
