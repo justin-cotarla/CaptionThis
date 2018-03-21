@@ -125,12 +125,9 @@ const getCaptions = {
                     .response(data)
                     .code(GOOD.http);
             })
-            .catch((error) => {
-                console.log(error);
-                return reply
-                    .response({ code: UNKNOWN_ERROR.code })
-                    .code(UNKNOWN_ERROR.http);
-            });
+            .catch(() => reply
+                .response({ code: UNKNOWN_ERROR.code })
+                .code(UNKNOWN_ERROR.http));
     },
 };
 
