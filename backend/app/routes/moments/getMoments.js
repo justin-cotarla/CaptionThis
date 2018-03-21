@@ -1,12 +1,16 @@
 import databaseUtil from '../../utility/DatabaseUtil';
+import {
+    GOOD,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
-const getMomentsBuilder = (params) => {
+const queryBuilder = (params) => {
     const conditions = [];
     const values = [];
 
     // To get captions by moment id, user-id, with a limit
     const userid = params['user-id'];
-    let { limit } = params;
+    let { limit, filter, order } = params;
 
     if (!(userid === undefined || userid === '' || userid === 0 || !/^\d+$/.test(userid))) {
         conditions.push('MOMENT.USER_ID=?');
@@ -21,9 +25,22 @@ const getMomentsBuilder = (params) => {
     limit = parseInt(limit, 10);
     values.push(limit);
 
+    switch (filter) {
+    case 'popularity':
+        filter = 'CAPTION_COUNT';
+        break;
+    default:
+        filter = 'DATE_ADDED';
+    }
+
+    order = (order === 'asc')
+        ? 'ASC'
+        : 'DESC';
+
     return {
         where: conditions.length ? conditions[0] : 'TRUE',
         values,
+        order: `${filter} ${order}`,
     };
 };
 
@@ -31,10 +48,10 @@ const getMoments = {
     method: 'GET',
     path: '/api/moments',
     handler: (request, reply) => {
-        const { where, values } = getMomentsBuilder(request.query);
+        const { where, values, order } = queryBuilder(request.query);
 
-        //Caption Query
-        const subQuery = `  
+        // Caption Query
+        const subQuery = `
         SELECT
             CONTENT
         FROM
@@ -48,32 +65,40 @@ const getMoments = {
         GROUP BY
             CONTENT
         ORDER BY
-        	COALESCE(SUM(TV.VALUE),0) DESC
-        LIMIT 1`
+            COALESCE(SUM(TV.VALUE),0) DESC
+        LIMIT 1
+        `;
 
         // Create db query
         const query = `
-        SELECT 
+        SELECT
             MOMENT.ID AS MOMENT_ID,
-            IMG_URL, 
-            DESCRIPTION, 
-            MOMENT.DATE_ADDED, 
+            IMG_URL,
+            DESCRIPTION,
+            MOMENT.DATE_ADDED,
             USER.USERNAME,
-            USER.ID AS USER_ID, 
+            USER.ID AS USER_ID,
+            COUNT(C_CAPTION.ID) AS CAPTION_COUNT,
             (${subQuery}) AS TOP_CAPTION
-        FROM 
+        FROM
             MOMENT
-        JOIN 
-            USER 
-        ON 
-            MOMENT.USER_ID = USER.ID 
-        WHERE 
+        JOIN
+            USER
+        ON
+            MOMENT.USER_ID = USER.ID
+        LEFT JOIN
+            CAPTION AS C_CAPTION
+        ON
+            C_CAPTION.MOMENT_ID = MOMENT.ID
+        WHERE
             ${where}
-        ORDER BY 
-            DATE_ADDED DESC 
+        GROUP BY
+            MOMENT.ID
+        ORDER BY
+            ${order}
         LIMIT ?
         `;
-        
+
         return databaseUtil.sendQuery(query, values).then((result) => {
             const moments = result.rows.map(moment => ({
                 moment_id: moment.MOMENT_ID,
@@ -84,21 +109,23 @@ const getMoments = {
                 img: moment.IMG_URL,
                 description: moment.DESCRIPTION,
                 date_added: moment.DATE_ADDED,
-                top_caption: moment.TOP_CAPTION ? moment.TOP_CAPTION : 'Click to submit a caption',
+                top_caption: moment.TOP_CAPTION ? moment.TOP_CAPTION : null,
             }));
 
             // The response data includes a status code and the array of moments
             const data = {
-                code: 1,
+                code: GOOD.code,
                 moments,
             };
 
             // The request was successful
-            return reply.response(data).code(200);
-        }).catch((error) => {
-            console.log(error);
-            return reply.response({ code: 3 }).code(500); // Code 3 means unknown error
-        });
+            return reply
+                .response(data)
+                .code(GOOD.http);
+        })
+            .catch(() => reply
+                .response({ code: UNKNOWN_ERROR.code })
+                .code(UNKNOWN_ERROR.http));
     },
 };
 

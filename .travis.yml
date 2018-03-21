@@ -9,10 +9,6 @@ node_js:
   - "node"
 
 script:
-  - cd frontend
-  - npm install
-  - npm run build
-  - npm test
-  - cd ../backend
+  - cd backend
   - npm install
   - npm test
