@@ -117,8 +117,9 @@ class Caption extends React.Component {
 
     render(){
         const { caption, showAuthModal } = this.state;
+        const acceptorClasses = ["caption-container-rejected", "caption-container", "caption-container-accepted"];
         return (
-            <div className="caption-container">
+            <div className={acceptorClasses[caption.selected + 1]}>
                 <AuthModal
                     open={showAuthModal}
                     onClose={() => this.setState({ showAuthModal: false })}/>
