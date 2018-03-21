@@ -1,13 +1,16 @@
-.caption-container {
+.caption-container, 
+.caption-container-accepted,
+.caption-container-rejected {
     width: 100%;
     display: inline-block;
     margin: 3px 0;
     padding: 0.5em 0;
-    border: solid 1px rgba(65, 65, 65, 0.8);
     background-color: rgba(196, 196, 196, 0.282);
 }
 
-.caption-container:focus {
+.caption-container:focus, 
+.caption-container-accepted:focus, 
+.caption-container-rejected:focus {
     outline: none;
     animation: 
         pulse-boxshadow 1.5s 3, 
@@ -69,18 +72,34 @@
     }
 }
 
+.caption-container {
+    border: solid 1px rgba(65, 65, 65, 0.8);
+}
+
+.caption-container-accepted {
+    border: solid 1px #1DE28F;
+}
+
+.caption-container-rejected {
+    border: solid 1px #f44b42;
+}
+
 .caption-content {
     margin: auto 0;
 }
 
-.caption-container > ul {
+.caption-container > ul,
+.caption-container-accepted > ul,
+.caption-container-rejected > ul {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     list-style-type: none;
 }
 
-.caption-container li > * {
+.caption-container li > *,
+.caption-container-accepted li > *, 
+.caption-container-rejected li > * {
     padding: 1px 0;
 }
 

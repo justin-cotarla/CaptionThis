@@ -154,10 +154,10 @@ class Caption extends React.Component {
 
     render(){
         const { caption, isHighlighted, showAuthModal } = this.state;
-
+        const acceptorClasses = ["caption-container-rejected", "caption-container", "caption-container-accepted"];
         return (
             <div 
-                className="caption-container" 
+                className={acceptorClasses[caption.selected + 1]}
                 ref={caption.caption_id}
                 onBlur={this.onBlur}
                 tabIndex={isHighlighted? "0" : null}>
