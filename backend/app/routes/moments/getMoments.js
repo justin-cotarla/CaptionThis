@@ -75,10 +75,8 @@ const getMoments = {
 
             // The request was successful
             return reply.response(data).code(200);
-        }).catch((error) => {
-            console.log(error);
-            return reply.response({ code: 3 }).code(500); // Code 3 means unknown error
-        });
+        })
+            .catch(() => reply.response({ code: 3 }).code(500)); // Code 3 means unknown error
     },
 };
 
