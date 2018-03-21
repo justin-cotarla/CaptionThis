@@ -22,7 +22,7 @@ class MomentsList extends Component {
         if (this.state.redirect) {
             return <Redirect push to={"/moment/" + this.state.currMoment.moment_id} />;
         }
-
+        
         return (
             <ul className="Moments-list">
                 {
@@ -36,7 +36,7 @@ class MomentsList extends Component {
                                     date={ formatDate(moment.date_added) }
                                     description= {
                                         moment.top_caption 
-                                            ? `"${moment.top_caption}"`
+                                            ? `"${(moment.top_caption.length > 30) ? moment.top_caption.slice(0, 30).concat('...') : moment.top_caption}"`
                                             : 'Submit a caption'
                                         }
                                     username={ moment.user.username }/>
