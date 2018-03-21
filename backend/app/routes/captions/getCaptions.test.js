@@ -55,7 +55,22 @@ describe('/api/captions GET Endpoint', () => {
         }));
         return getCaptions.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(GOOD.code);
+                expect(reply.response.mock.calls[0][0]).toEqual({
+                    code: GOOD.code,
+                    captions: [{
+                        moment_id: 1,
+                        user: {
+                            user_id: 1,
+                            username: 'TEST',
+                        },
+                        caption_id: 1,
+                        caption: 'TEST',
+                        selected: 0,
+                        total_votes: 1,
+                        user_vote: 1,
+                        date_added: '2018-02-15 20:07:04',
+                    }],
+                });
             });
     });
     it('Handles request missing authentication and query', () => {
