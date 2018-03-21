@@ -31,7 +31,7 @@ class LandingPage extends Component {
     };
 
     componentDidMount(){
-        axios.get(`http://${process.env.REACT_APP_IP}/api/moments`)
+        axios.get(`http://${process.env.REACT_APP_IP}/api/moments?limit=30`)
         .then(response => {
             let moments = response.data.moments;
             this.setState({
