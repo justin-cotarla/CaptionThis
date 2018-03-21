@@ -23,10 +23,6 @@ class Caption extends React.Component {
     }
     
     componentDidMount = () => {
-        this.scrollToCaption()
-    };
-
-    scrollToCaption = () => {
         const { isHighlighted } = this.state;
         const captionId = this.state.caption.caption_id;
         if (isHighlighted) {
@@ -37,7 +33,7 @@ class Caption extends React.Component {
                 duration: 1000
             });
         }
-    }
+    };
 
     handleVote = (event) => {
         const token = this.state.token;
