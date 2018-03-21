@@ -18,6 +18,7 @@
     transition: .3s ease-out;
     -webkit-transition:  .3s ease-out;
     -moz-transition:  .3s ease-out;
+    max-width: 405px;
 }
 
 .Moment-preview-container h1 {
@@ -86,4 +87,13 @@
     position: relative;
     z-index: 5;
     transition: .3s ease-in-out;
+}
+
+.top-caption {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  clear: both;
+  font-size: 24px;
+  font-family: 'Gloria Hallelujah', cursive;
 }

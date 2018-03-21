@@ -9,7 +9,7 @@ const Moment = props => {
           className="Moment-preview-container"
           style={{backgroundImage: `url(http://${process.env.REACT_APP_IP}/res/polaroid_texture.png)`}}>
             <img className="Moment-thumbnail" src={props.image} alt="moment" onClick={props.onClick}/>
-            <Header textSize={4} text={ props.description } />
+            <h1 className="top-caption">{ props.description }</h1>
             <Header textSize={3} text={'Posted on ' + props.date } />
             {
                 props.showSubmittedBy && <h1 className="header-medium-2" style={{ marginTop: '8px'}}>
