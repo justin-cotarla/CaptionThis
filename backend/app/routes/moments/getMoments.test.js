@@ -91,7 +91,7 @@ describe('/api/getMoments endpoint', () => {
                         img: 'test',
                         description: 'test',
                         date_added: 1,
-                        top_caption: 'Click to submit a caption',
+                        top_caption: null,
                     }],
                 });
             });
