@@ -33,7 +33,7 @@ const getMoments = {
     handler: (request, reply) => {
         const { where, values } = getMomentsBuilder(request.query);
 
-        //Caption Query
+        // Caption Query
         const subQuery = `  
         SELECT
             CONTENT
@@ -49,7 +49,8 @@ const getMoments = {
             CONTENT
         ORDER BY
         	COALESCE(SUM(TV.VALUE),0) DESC
-        LIMIT 1`
+        LIMIT 1
+        `;
 
         // Create db query
         const query = `
@@ -73,7 +74,7 @@ const getMoments = {
             DATE_ADDED DESC 
         LIMIT ?
         `;
-        
+
         return databaseUtil.sendQuery(query, values).then((result) => {
             const moments = result.rows.map(moment => ({
                 moment_id: moment.MOMENT_ID,
@@ -95,10 +96,8 @@ const getMoments = {
 
             // The request was successful
             return reply.response(data).code(200);
-        }).catch((error) => {
-            console.log(error);
-            return reply.response({ code: 3 }).code(500); // Code 3 means unknown error
-        });
+        })
+            .catch(() => reply.response({ code: 3 }).code(500)); // Code 3 means unknown error
     },
 };
 
