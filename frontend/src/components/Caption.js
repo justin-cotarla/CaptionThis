@@ -15,13 +15,13 @@ class Caption extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            caption: props.caption, 
+            caption: props.caption,
             isHighlighted: props.scrollTo === props.caption.caption_id,
             token: props.token,
             showAuthModal: false,
         }
     }
-    
+
     componentDidMount = () => {
         const { isHighlighted } = this.state;
         const captionId = this.state.caption.caption_id;
@@ -37,14 +37,14 @@ class Caption extends React.Component {
 
     handleVote = (event) => {
         const token = this.state.token;
-        if (token) {    
+        if (token) {
             const action = event.target.id;
             const previousVote = this.state.caption.user_vote;
 
             let newVote;
             switch (previousVote) {
                 case 0:
-                    newVote = (action === '+') ? 1 : -1; 
+                    newVote = (action === '+') ? 1 : -1;
                     break;
                 case 1:
                     newVote = (action === '+') ? 0 : -1;
@@ -66,12 +66,12 @@ class Caption extends React.Component {
             });
 
             const captionid = this.state.caption.caption_id;
-            const data = { 
-                operation: 'vote', 
+            const data = {
+                operation: 'vote',
                 value: newVote,
             };
-            const headers = { 
-                'Authorization': `Bearer ${token}` 
+            const headers = {
+                'Authorization': `Bearer ${token}`
             };
 
             axios({
@@ -115,12 +115,12 @@ class Caption extends React.Component {
         });
 
         const captionid = this.state.caption.caption_id;
-        const data = { 
-            operation: 'select', 
-            value: newAcceptState, 
+        const data = {
+            operation: 'select',
+            value: newAcceptState,
         };
-        const headers = { 
-            'Authorization': `Bearer ${token}` 
+        const headers = {
+            'Authorization': `Bearer ${token}`
         };
 
         axios({
@@ -129,14 +129,14 @@ class Caption extends React.Component {
             data: data,
             headers: token ? headers : {}
         })
-        .catch(error => console.log(error)); 
+        .catch(error => console.log(error));
     }
 
     render(){
         const { caption, isHighlighted, showAuthModal } = this.state;
         const acceptorClasses = ["caption-container-rejected", "caption-container", "caption-container-accepted"];
         return (
-            <div 
+            <div
                 className={classnames(acceptorClasses[caption.selected + 1], isHighlighted ? 'caption-highlighted' : '')}
                 ref={caption.caption_id}>
                 <AuthModal
@@ -144,26 +144,26 @@ class Caption extends React.Component {
                     onClose={() => this.setState({ showAuthModal: false })}/>
                 <ul>
                     <li>
-                        <CaptionVotes 
+                        <CaptionVotes
                             upvotes={caption.total_votes}
-                            voteHandler={this.handleVote} 
+                            voteHandler={this.handleVote}
                             id={caption.caption_id}
                             vote_value={this.state.caption.user_vote}/>
                     </li>
                     <li className="caption-content">
-                        <Acceptor 
-                            canAccept={this.props.canAccept} 
-                            captionId={caption.caption_id} 
-                            status={caption.selected} 
+                        <Acceptor
+                            canAccept={this.props.canAccept}
+                            captionId={caption.caption_id}
+                            status={caption.selected}
                             acceptHandler={this.handleAccept} />
-                        <Header textSize={2} text={caption.caption}/>  
-                        {   
-                            this.props.showSubmittedBy && <h1 style={{ fontSize: '12px' }}>
+                        <Header textSize={2} text={caption.caption}/>
+                        {
+                            this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>
                                 Submitted by <Link className="linked-username" to={`/user/${caption.user.username}`}>{caption.user.username}</Link> on {caption.date_added}
-                            </h1> 
+                            </h1>
                         }
                         {
-                            !this.props.showSubmittedBy && <Header text={`Posted on ${caption.date_added}`}/> 
+                            !this.props.showSubmittedBy && <Header text={`Posted on ${caption.date_added}`}/>
                         }
                     </li>
                 </ul>

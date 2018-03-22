@@ -3,8 +3,10 @@
 }
 
 .caption-votes-container li {
-    font-weight: 600;
-    margin: 3px 0;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 1px 0;
+    height: 25px;
 }
 
 .caption-votes-container > ul {

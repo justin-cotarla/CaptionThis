@@ -1,90 +1,27 @@
-.caption-container, 
+@import url('https://fonts.googleapis.com/css?family=Teko');
+
+.caption-container,
 .caption-container-accepted,
-.caption-container-rejected {
-    width: 100%;
+.caption-container-rejected {    width: 100%;
     display: inline-block;
     margin: 3px 0;
     padding: 0.5em 0;
     background-color: rgba(196, 196, 196, 0.282);
 }
 
-.caption-highlighted {
-    outline: none;
-    animation: 
-        pulse-boxshadow 1.5s 3, 
-        pulse-background 1.5s 3,
-        pulse-scale 1.5s 3 ease-in-out;
-    animation-delay: 1000ms;
-}
-
-@keyframes pulse-scale {
-    0% {
-        transform: translateY(0);
-    }
-    30% {
-        transform: translateY(-1.5px);
-    }
-    90% {
-        transform: translateY(0.5px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse-background {
-    0% {
-        background-color: rgba(196, 196, 196, 0.282);
-    }
-    35% {
-        background-color: rgba(196, 196, 196, 0.320);
-    }
-    100% {
-        background-color: rgba(196, 196, 196, 0.282);
-    }
-}
-
-@-webkit-keyframes pulse-boxshadow {
-    0% {
-      -webkit-box-shadow: 0 0 0 0 rgba(29, 226, 143, 0.5);
-    }
-    70% {
-        -webkit-box-shadow: 0 0 0 10px rgba(23, 167, 107, 0);
-    }
-    100% {
-        -webkit-box-shadow: 0 0 0 0 rgba(29, 225, 143, 0);
-    }
-}
-
-@keyframes pulse-boxshadow {
-    0% {
-      -moz-box-shadow: 0 0 0 0 rgba(29, 226, 143, 0.5);
-      box-shadow: 0 0 0 0 rgba(29, 226, 143, 0.5);
-    }  
-    70% {
-        -moz-box-shadow: 0 0 0 10px rgba(23, 167, 107, 0);
-        box-shadow: 0 0 0 10px rgba(23, 167, 107, 0);
-    }
-    100% {
-        -moz-box-shadow: 0 0 0 0 rgba(29, 225, 143, 0);
-        box-shadow: 0 0 0 0 rgb(29, 225, 143, 0);
-    }
-}
-
-.caption-container {
-    border: solid 1px rgba(65, 65, 65, 0.8);
-}
-
-.caption-container-accepted {
-    border: solid 1px #1DE28F;
-}
-
-.caption-container-rejected {
-    border: solid 1px #f44b42;
+.caption-container .caption-content h1 a{
+  font-family: 'Teko';
+  font-size: 20px;
 }
 
 .caption-content {
     margin: auto 0;
+}
+
+.caption-container h1 {
+  font-family: 'Teko';
+  font-size: 18px;;
+
 }
 
 .caption-container > ul,
@@ -94,10 +31,16 @@
     flex-direction: row;
     justify-content: flex-start;
     list-style-type: none;
+    font-family: 'Teko';
+    font-size: 20px;
+}
+
+.caption-content h1 {
+  font-size: 20px;
 }
 
 .caption-container li > *,
-.caption-container-accepted li > *, 
+.caption-container-accepted li > *,
 .caption-container-rejected li > * {
     padding: 1px 0;
 }
