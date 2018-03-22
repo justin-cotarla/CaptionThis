@@ -5,22 +5,6 @@ import {
     UNKNOWN_ERROR,
 } from '../../utility/ResponseCodes';
 
-const request = {
-    auth: {
-        credentials: {
-            user: {
-                id: 1,
-            },
-        },
-    },
-    query: {
-        'moment-id': 1,
-        'user-id': 1,
-        order: 'total-votes',
-        limit: 1,
-    },
-};
-
 const emptyRequest = {
     auth: {},
     query: {},
@@ -38,6 +22,20 @@ beforeEach(() => {
 
 describe('/api/captions GET Endpoint', () => {
     it('Handles successful retrieval of captions', () => {
+        const request = {
+            auth: {
+                credentials: {
+                    user: {
+                        id: 1,
+                    },
+                },
+            },
+            query: {
+                'moment-id': 1,
+                'user-id': 1,
+                limit: 1,
+            },
+        };
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
             resolve({
                 rows: [{
@@ -73,6 +71,63 @@ describe('/api/captions GET Endpoint', () => {
                 });
             });
     });
+
+    it('Handles votes filter', () => {
+        const request = {
+            auth: {
+                credentials: {
+                    user: {
+                        id: 1,
+                    },
+                },
+            },
+            query: {
+                filter: 'votes',
+                order: 'asc',
+                limit: 1,
+            },
+        };
+        databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
+            resolve({
+                rows: [],
+            });
+        }));
+        return getCaptions.handler(request, reply)
+            .then(() => {
+                expect(reply.response.mock.calls[0][0]).toEqual({
+                    code: GOOD.code,
+                    captions: [],
+                });
+            });
+    });
+
+    it('Handles acceptance filter', () => {
+        const request = {
+            auth: {
+                credentials: {
+                    user: {
+                        id: 1,
+                    },
+                },
+            },
+            query: {
+                filter: 'acceptance',
+            },
+        };
+        databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
+            resolve({
+                rows: [],
+            });
+        }));
+        return getCaptions.handler(request, reply)
+            .then(() => {
+                expect(reply.response.mock.calls[0][0]).toEqual({
+                    code: GOOD.code,
+                    captions: [],
+                });
+            });
+    });
+
     it('Handles request missing authentication and query', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise(() => {
             throw new Error();
