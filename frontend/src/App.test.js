@@ -47,8 +47,6 @@ describe('Acceptance Tests', () => {
             .type('input[name="password"]', 'test')
             .click('div.login2-button')
             .wait(1000)
-            .cookies.get('token')
-            .wait(1000)
             .click('div.Moment-preview-container')
             .wait(500)
             .exists('.Moment-preview-container')
