@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import scrollToComponent from 'react-scroll-to-component';
+import classnames from 'classnames';
+
 import Header from './Header';
 import CaptionVotes from './CaptionVotes';
 import Acceptor from './Acceptor';
@@ -13,10 +16,24 @@ class Caption extends React.Component {
         super(props);
         this.state = {
             caption: props.caption, 
+            isHighlighted: props.scrollTo === props.caption.caption_id,
             token: props.token,
             showAuthModal: false,
         }
     }
+    
+    componentDidMount = () => {
+        const { isHighlighted } = this.state;
+        const captionId = this.state.caption.caption_id;
+        if (isHighlighted) {
+            const captionRef = this.refs[captionId];
+            scrollToComponent(captionRef, {
+                offset: -100,
+                align: 'top',
+                duration: 1000
+            });
+        }
+    };
 
     handleVote = (event) => {
         const token = this.state.token;
@@ -116,10 +133,12 @@ class Caption extends React.Component {
     }
 
     render(){
-        const { caption, showAuthModal } = this.state;
+        const { caption, isHighlighted, showAuthModal } = this.state;
         const acceptorClasses = ["caption-container-rejected", "caption-container", "caption-container-accepted"];
         return (
-            <div className={acceptorClasses[caption.selected + 1]}>
+            <div 
+                className={classnames(acceptorClasses[caption.selected + 1], isHighlighted ? 'caption-highlighted' : '')}
+                ref={caption.caption_id}>
                 <AuthModal
                     open={showAuthModal}
                     onClose={() => this.setState({ showAuthModal: false })}/>
