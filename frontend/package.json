@@ -5,11 +5,13 @@
   "dependencies": {
     "axios": "^0.17.1",
     "base64url": "^2.0.0",
+    "classnames": "^2.2.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-responsive-modal": "^2.0.1",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
+    "react-scroll-to-component": "^1.0.2",
     "universal-cookie": "^2.1.2"
   },
   "scripts": {
