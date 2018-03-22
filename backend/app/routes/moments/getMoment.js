@@ -39,7 +39,7 @@ const getMoment = {
             }
 
             const moment = {
-                moment_id: result.rows[0].ID,
+                moment_id: result.rows[0].MOMENT_ID,
                 img_url: result.rows[0].IMG_URL,
                 description: result.rows[0].DESCRIPTION,
                 date_added: result.rows[0].DATE_ADDED,
