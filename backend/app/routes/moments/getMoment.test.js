@@ -27,7 +27,7 @@ describe('/api/getMoments endpoint', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
             resolve({
                 rows: [{
-                    ID: 1,
+                    MOMENT_ID: 1,
                     IMG_URL: 'test',
                     DESCRIPTION: 'test',
                     DATE_ADDED: 1,

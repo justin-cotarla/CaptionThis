@@ -21,7 +21,9 @@ describe('Acceptance Tests', () => {
             .then(token => {
                 expect(token).toBeTruthy();
             })
-    }, 10000);
+    }, 50000);
+
+
 
     it('Passes AT3', () => {
         return Nightmare({ show: true })
@@ -32,7 +34,28 @@ describe('Acceptance Tests', () => {
             .then(element => {
                 expect(element).toBeTruthy();
             })
-    }, 30000);
+    }, 50000);
+
+    it('Passes AT7', () => {
+        return Nightmare({ show: true })
+            .cookies.clearAll()
+            .goto(`http://${process.env.REACT_APP_IP}/`)
+            .wait('div.logo')
+            .click('div.login-button')
+            .wait('div.user-form-field')
+            .type('input[name="username"]', 'test')
+            .type('input[name="password"]', 'test')
+            .click('div.login2-button')
+            .wait(1000)
+            .click('div.Moment-preview-container')
+            .wait(500)
+            .exists('.Moment-preview-container')
+            .end()
+            .then(element => {
+                expect(element).toBeTruthy();
+            })
+    }, 50000);
+
 
     it('Passes AT8', () => {
         return Nightmare({ show: true })

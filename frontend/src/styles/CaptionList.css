@@ -1,8 +1,16 @@
 .caption-list-container {
     margin: 1em 20px;
+    position: relative;
 }
 
 .caption-list-container > ul {
     margin: 0.5em 0;
     padding: 0;
+}
+
+.fetching-captions-filtered {
+    display: inline-block;
+    position: absolute;
+    top: 2.5px;
+    left: 424px;
 }
