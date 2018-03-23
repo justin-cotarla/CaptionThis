@@ -54,6 +54,15 @@ class MomentViewPage extends Component{
         });
     }
 
+    onCaptionSubmit = (momentId) => {
+        const CaptionList = this.CaptionList;
+        fetchCaptionsByMomentId(momentId, this.state.token)
+        .then(reponse => {
+            const { captions } = reponse.data;
+            CaptionList.setState({ captions });
+        })
+    }
+
     render() {
         const { token, moment, loading, error } = this.state;
         const locationState = this.props.location.state;
@@ -89,9 +98,10 @@ class MomentViewPage extends Component{
                         username={ moment.user.username }/>
                     <CaptionCreatorForm
                         momentId={this.props.match.params.momentID}
-                        onCaptionSubmit={this.fetchCaptions}
+                        onCaptionSubmit={(momentId) => this.onCaptionSubmit(momentId)}
                         token={token}/>
                     <CaptionList
+                        ref={(CaptionList) => this.CaptionList = CaptionList}
                         fetchCaptions={() => fetchCaptionsByMomentId(moment.moment_id, token)}
                         getFilteredCaptions={filter => getFilteredCaptionsByMoment(moment.moment_id, filter, token)}
                         showSubmittedBy={true}
