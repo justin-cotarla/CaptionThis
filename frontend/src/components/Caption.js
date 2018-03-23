@@ -35,6 +35,12 @@ class Caption extends React.Component {
         }
     };
 
+    componentWillReceiveProps(nextProps){
+        if(this.state.scrollTo !== nextProps.scrollTo){
+            this.setState({ isHighlighted: false })
+        }
+    }
+
     handleVote = (event) => {
         const token = this.state.token;
         if (token) {    

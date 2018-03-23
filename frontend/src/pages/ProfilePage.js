@@ -1,13 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import Cookies from 'universal-cookie';
-
 import Loading from '../components/Loading';
-
 import MomentList from '../components/MomentsList';
 import CaptionList from '../components/CaptionList';
 import NavBar from '../components/NavBar';
 import ErrorGraphic from '../components/ErrorGraphic';
+
+import { getToken, fetchUser, fetchUserCaptions, fetchUserMoments, getFilteredCaptionsUser } from '../util/apiUtil';
 
 import '../styles/ProfilePage.css';
 
@@ -18,7 +17,6 @@ class ProfilePage extends React.Component {
             token: null,
             profileUser: null,
             moments: [],
-            captions: [],
             selectedView: 'captions',
             loading: true,
             user: props.user,
@@ -27,24 +25,25 @@ class ProfilePage extends React.Component {
     }
 
     componentDidMount(){
-        const token = this.getToken();
+        const token = getToken();
+        if (token) {
+            this.setState({ token });
+        }
+
         const { username } = this.props.match.params;
         let profileUser;
 
-        this.fetchUser(username)
+        fetchUser(username)
         .then(response => {
             profileUser = response.data.user;
             return axios.all([
-                this.fetchUserCaptions(profileUser.id, token), 
-                this.fetchUserMoments(profileUser.id, token),
+                fetchUserMoments(profileUser.id, token),
             ])
         })   
-        .then(axios.spread((userCaptions, userMoments) => {
-            const { captions } = userCaptions.data;
+        .then(axios.spread((userMoments) => {
             const { moments } = userMoments.data;      
             this.setState({
                 profileUser,
-                captions,
                 moments,
                 loading: false,
             });
@@ -66,63 +65,6 @@ class ProfilePage extends React.Component {
         });   
     }
 
-    getToken = () => {
-        const cookies = new Cookies();
-        const token = cookies.get('token');
-
-        if (token) {
-            this.setState({
-                token: cookies.get('token'),
-            });
-        }
-
-        return token;
-    }
-
-    fetchUser = (username) => {
-        return axios({
-            method: 'get',
-            url: `http://${process.env.REACT_APP_IP}/api/users/${username}`,
-        })
-        .catch(error => {
-            console.log(error)
-            throw new Error('nonexistent user');
-        });
-    }
-
-    fetchUserCaptions = (id, token) => {
-        const headers = { 
-            'Authorization': `Bearer ${token}` 
-        };
-        return axios({
-            method: 'get',
-            url: `http://${process.env.REACT_APP_IP}/api/captions?user-id=${id}`,
-            header: token ? headers : {}
-        });
-    }
-
-    fetchUserMoments = (id, token) => {
-        const headers = { 
-            'Authorization': `Bearer ${token}` 
-        };
-        return axios({
-            method: 'get',
-            url: `http://${process.env.REACT_APP_IP}/api/moments?user-id=${id}`,
-            header: token ? headers : {}
-        });
-    }
-
-    onCaptionUpdate = (newcaption) => {
-        this.setState({
-            captions: this.state.captions.map(caption => {
-                if(newcaption.caption_id === caption.caption_id){
-                    return newcaption;
-                }
-                return caption;
-            }),
-        })
-    }
-
     updateView = (selectedView) => {
         this.setState({
             selectedView,
@@ -131,7 +73,7 @@ class ProfilePage extends React.Component {
 
     render(){
         const { user } = this.props;
-        const { token, profileUser, moments, captions, selectedView, loading, error } = this.state;
+        const { token, profileUser, moments, selectedView, loading, error } = this.state;
         const views = ['captions', 'moments'];
 
         if (loading) {
@@ -168,16 +110,15 @@ class ProfilePage extends React.Component {
                         {
                             selectedView === views[0]
                             && (
-                                ( captions.length === 0 
-                                    && <h1 className="header-section">There aren't any captions to see here :(</h1> )
-                                || <CaptionList 
-                                        captions={captions}
+                                <CaptionList 
+                                        fetchCaptions={() => fetchUserCaptions(profileUser.id, token)}
+                                        getFilteredCaptions={filter => getFilteredCaptionsUser(profileUser.id, filter, token)}
                                         showSubmittedBy={false} 
+                                        showCount={false}
                                         isLinkedToMoment={true} 
                                         momentCreatorId={null}
                                         user={this.props.user}
-                                        token={token} 
-                                        onCaptionUpdate={this.onCaptionUpdate}>
+                                        token={token}>
                                 </CaptionList>
                             )
                         }

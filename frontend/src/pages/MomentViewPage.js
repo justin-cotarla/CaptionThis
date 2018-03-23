@@ -7,9 +7,10 @@ import CaptionCreatorForm from '../components/CaptionCreatorForm';
 import CaptionList from '../components/CaptionList';
 import NavBar from '../components/NavBar';
 
-import Header from '../components/Header';
 import Loading from '../components/Loading';
 import ErrorGraphic from '../components/ErrorGraphic';
+
+import { fetchCaptionsByMomentId, getFilteredCaptionsByMoment } from '../util/apiUtil';
 
 class MomentViewPage extends Component{
     constructor(props){
@@ -91,14 +92,16 @@ class MomentViewPage extends Component{
                         onCaptionSubmit={this.fetchCaptions}
                         token={token}/>
                     <CaptionList
+                        fetchCaptions={() => fetchCaptionsByMomentId(moment.moment_id, token)}
+                        getFilteredCaptions={filter => getFilteredCaptionsByMoment(moment.moment_id, filter, token)}
                         showSubmittedBy={true}
+                        showCount={true}
                         isLinkedToMoment={false}
-                        momentId={this.props.match.params.momentID}
+                        scrollTo={scrollTo}
+                        momentId={moment.moment_id}
                         momentCreatorId={moment.user.user_id}
                         user={this.props.user}
-                        token={token}
-                        onCaptionUpdate={this.onCaptionUpdate}
-                        onFilterChange={this.getFilteredCaptions}>
+                        token={token}>
                     </CaptionList>
                 </div>
             </div>

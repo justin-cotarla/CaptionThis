@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import CaptionFilter from '../components/CaptionFilter';
 import Caption from './Caption';
-import LoadingDots from './LoadingDots';
+import Header from './Header';
 import ErrorGraphic from './ErrorGraphic';
+
 import '../styles/CaptionList.css';
 
 const ConditionalWrap = ({condition, wrap, children}) => condition ? wrap(children) : children;
@@ -15,13 +15,14 @@ class CaptionList extends React.Component {
         this.state = {
             captions: [],
             selectedFilter: 'Recent',
+            scrolled: false,
             loading: true,
             error: '',
         }
     }
 
     componentDidMount() {
-        this.fetchCaptions(this.props.momentId)
+        this.props.fetchCaptions()
         .then(response => {
             const { captions } = response.data;
             this.setState({ 
@@ -38,24 +39,14 @@ class CaptionList extends React.Component {
         });
     }
 
-    fetchCaptions = (momentid) => {
-        const token = this.props.token;
-        const headers = {
-            'Authorization': `Bearer ${token}`
-        };
-        return axios({
-            method: 'get',
-            url: `http://${process.env.REACT_APP_IP}/api/captions?moment-id=${momentid}`,
-            headers: token ? headers : {}
-        })
-    }
-
     onFilterChange = (selectedFilter) => {
         const currentFilter = this.state.selectedFilter;
         if (selectedFilter !== currentFilter) {
-            this.setState({ loading: true });
-            setTimeout(10000)
-            this.getFilteredCaptions(selectedFilter)
+            this.setState({ 
+                scrolled: true, 
+                loading: true, 
+            });
+            this.props.getFilteredCaptions(selectedFilter)
             .then(response => {
                 const { captions } = response.data;
                 this.setState({ 
@@ -67,46 +58,9 @@ class CaptionList extends React.Component {
         }
     }
 
-    getFilteredCaptions = (filter) => {
-        const { token } = this.props;
-        const headers = {
-            'Authorization': `Bearer ${token}`
-        };
-        
-        const { momentId } = this.props;
-        let filterQuery = `?moment-id=${momentId}`;
-        switch (filter) {
-            case 'Oldest':
-                filterQuery = filterQuery.concat('&order=asc');
-                break;
-            case 'Top':
-                filterQuery = filterQuery.concat('&filter=votes');
-                break;
-            case 'Worst':
-                filterQuery = filterQuery.concat('&filter=votes&order=asc');
-                break;
-            case 'Accepted': 
-                filterQuery = filterQuery.concat('&filter=acceptance');
-                break;
-            case 'Rejected':
-                filterQuery = filterQuery.concat('&filter=acceptance&order=asc');
-                break;
-            default: break;
-        }
-
-        return axios({
-            method: 'get',
-            url: `http://${process.env.REACT_APP_IP}/api/captions${filterQuery}`,
-            headers: token ? headers : {}
-        })
-    }
-
     render () {
-        const { captions, selectedFilter, loading, error } = this.state;
-        const { user, momentCreatorId, showSubmittedBy, isLinkedToMoment, scrollTo, token } = this.props;
-        const loadingListStyle = {
-            opacity: '0',
-        }
+        const { captions, selectedFilter, scrolled, loading, error } = this.state;
+        const { user, momentCreatorId, showSubmittedBy, showCount, isLinkedToMoment, scrollTo, token } = this.props;
 
         if (error) {
             return <div className="caption-list-container">
@@ -116,15 +70,14 @@ class CaptionList extends React.Component {
 
         return ( 
             <div className="caption-list-container">
-                { this.props.children }
-                <CaptionFilter selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
-                { loading && (
-                        <div className="fetching-captions-filtered">
-                            <LoadingDots/>
-                        </div> 
+                {
+                    showCount && (
+                        captions.length > 0 ? <Header textSize={4} text={`${captions.length} Caption${captions.length > 1 ? 's' : ''}`}/>
+                                            : <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
                     )
                 }
-                <ul style={ loading ? loadingListStyle : {opacity: 1, transition: 'opacity 300ms ease-in-out'}}>
+                <CaptionFilter selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
+                <ul>
                     { 
                         captions.map(caption => {
                             return <li key={caption.caption_id} style={isLinkedToMoment ? {cursor: 'pointer'} : {}}>
@@ -133,7 +86,7 @@ class CaptionList extends React.Component {
                                     wrap={children => <Link className="linked-caption" to={{pathname: `/moment/${caption.moment_id}`, state: { scrollTo: caption.caption_id}}}>{children}</Link>}
                                 >
                                     <Caption 
-                                        scrollTo={scrollTo}
+                                        scrollTo={scrolled === false ? scrollTo : -1}
                                         caption={caption} 
                                         showSubmittedBy={showSubmittedBy}
                                         canAccept={
