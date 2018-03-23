@@ -79,6 +79,9 @@
 .caption-container-rejected {
     border: solid 1px #f44b42;
 }
+.caption-container{
+    border: solid 1px rgba(65, 65, 65, 0.8);
+}
 .caption-content {
     margin: auto 0;
 }
