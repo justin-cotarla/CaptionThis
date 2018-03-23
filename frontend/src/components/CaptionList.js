@@ -71,10 +71,7 @@ class CaptionList extends React.Component {
         return ( 
             <div className="caption-list-container">
                 {
-                    showCount && (
-                        captions.length > 0 ? <Header textSize={4} text={`${captions.length} Caption${captions.length > 1 ? 's' : ''}`}/>
-                                            : <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
-                    )
+                    (showCount && captions.length === 0) && <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
                 }
                 <CaptionFilter selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
                 <ul>

@@ -56,11 +56,7 @@ class MomentViewPage extends Component{
 
     onCaptionSubmit = (momentId) => {
         const CaptionList = this.CaptionList;
-        fetchCaptionsByMomentId(momentId, this.state.token)
-        .then(reponse => {
-            const { captions } = reponse.data;
-            CaptionList.setState({ captions });
-        })
+        CaptionList.forceUpdate();
     }
 
     render() {
