@@ -156,7 +156,7 @@ class Caption extends React.Component {
                             captionId={caption.caption_id}
                             status={caption.selected}
                             acceptHandler={this.handleAccept} />
-                        <Header textSize={2} text={caption.caption}/>
+                        <Header textSize={4} text={caption.caption}/>
                         {
                             this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>
                                 Submitted by <Link className="linked-username" to={`/user/${caption.user.username}`}>{caption.user.username}</Link> on {caption.date_added}

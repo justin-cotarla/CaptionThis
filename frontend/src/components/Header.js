@@ -6,7 +6,7 @@ class Header extends Component{
         let headerStyle = { fontSize: '10px', };
         switch (size) {
             case 2:
-                headerStyle.fontSize = '24px';
+                headerStyle.fontSize = '16px';
                 break;
             case 3:
                 headerStyle.fontSize = '20px';
