@@ -44,7 +44,7 @@ const deleteMoment = {
                     throw new Error('Moment ID does not exist');
                 }
                 // If user tries to delete another user's moment
-                if (result.rows[0].USER_ID !== userId) {
+                if (result.rows[0].USER_ID !== userId) { 
                     throw new Error('Invalid user');
                 }
                 const deleteQuery = 'UPDATE MOMENT SET DELETED=1 WHERE MOMENT.ID=?';
