@@ -41,11 +41,11 @@ const deleteMoment = {
             .then((result) => {
                 // If the caption id is not in the db or it is already marked as deleted
                 if (result.rows[0] === undefined) {
-                    throw new Error(MOMENT_DOES_NOT_EXIST);
+                    throw MOMENT_DOES_NOT_EXIST;
                 }
                 // If user tries to delete another user's moment
                 if (result.rows[0].USER_ID !== userId) { 
-                    throw new Error(INVALID_USER_OPERATION);
+                    throw INVALID_USER_OPERATION;
                 }
                 const deleteQuery = 'UPDATE MOMENT SET DELETED=1 WHERE MOMENT.ID=?';
                 return databaseUtil.sendQuery(deleteQuery, [momentId]);
@@ -55,7 +55,7 @@ const deleteMoment = {
                 .code(GOOD.http))
             .catch((error) => {
 
-                return (error.message.code) ? reply.response({ code: error.message.code }).code(error.message.http)
+                return (error.code) ? reply.response({ code: error.code }).code(error.http)
                     : reply.response({ code: UNKNOWN_ERROR.code }).code(UNKNOWN_ERROR.http);
             });
     },
