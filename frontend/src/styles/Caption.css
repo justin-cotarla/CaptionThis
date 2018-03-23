@@ -7,7 +7,7 @@
     display: inline-block;
     margin: 3px 0;
     padding: 0.5em 0;
-    background-color: rgba(196, 196, 196, 0.282);
+    background-color: rgba(196, 196, 196, 0.3);
 }
 
 .caption-highlighted {
@@ -72,11 +72,6 @@
         box-shadow: 0 0 0 0 rgb(29, 225, 143, 0);
     }
 }
-
-.caption-container {
-    border: solid 1px rgba(65, 65, 65, 0.8);
-}
-
 .caption-container-accepted {
     border: solid 1px #1DE28F;
 }
@@ -84,20 +79,14 @@
 .caption-container-rejected {
     border: solid 1px #f44b42;
 }
-
-.caption-container .caption-content h1 a{
-  font-family: 'Teko';
-  font-size: 20px;
-}
-
 .caption-content {
     margin: auto 0;
 }
-
-.caption-container h1 {
+.caption-container h1,
+.caption-container-accepted h1,
+.caption-container-rejected h1 {
   font-family: 'Teko';
-  font-size: 18px;;
-
+  font-size: 18px;
 }
 
 .caption-container > ul,

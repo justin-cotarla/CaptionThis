@@ -6,7 +6,8 @@ import Moment from '../components/Moment';
 import CaptionCreatorForm from '../components/CaptionCreatorForm';
 import CaptionList from '../components/CaptionList';
 import NavBar from '../components/NavBar';
-
+import '../styles/MomentView.css';
+import '../styles/CaptionVotes.css';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import ErrorGraphic from '../components/ErrorGraphic';
@@ -98,13 +99,13 @@ class MomentViewPage extends Component{
         if (locationState) {
             scrollTo = locationState.scrollTo;
         }
-        
+
         if(error) {
             return (
                 <div>
                     <NavBar user={this.state.user}/>
                     <ErrorGraphic message={error}/>
-                </div>         
+                </div>
             )
         }
 

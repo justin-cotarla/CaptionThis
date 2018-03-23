@@ -9,26 +9,9 @@
 
 .caption-creator-input {
     width: 85%;
-    font-size: 20px;
+    font-size: 25px;
     border-radius: 3px;
-    margin-right: 0.8em;
-    padding: 0.8em;
+    margin-right: 0.6em;
+    padding: 0.6em;
     font-family: 'Teko';
-}
-.caption-creator-input::placeholder{
-  font-family: 'Teko';
-  font-size: 23px;
-  letter-spacing: 0.8px;
-}
-.caption-creator-submit {
-   cursor: pointer;
-    width: 15%;
-    font-size: 28px;
-    border-radius: 3px;
-    border: none;
-    font-family: 'Teko';
-}
-.caption-creator-submit:active{
-    box-shadow: 1px 1.8px 1px #000000;
-    color:#1DE28F;
 }
