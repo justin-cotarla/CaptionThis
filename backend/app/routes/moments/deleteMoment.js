@@ -4,7 +4,7 @@ import {
     UNAUTHORIZED,
     INVALID_INPUT,
     INVALID_USER_OPERATION,
-    CAPTION_DOES_NOT_EXIST,
+    MOMENT_DOES_NOT_EXIST,
     UNKNOWN_ERROR,
 } from '../../utility/ResponseCodes';
 
@@ -36,7 +36,7 @@ const deleteMoment = {
         momentId = parseInt(momentId, 10);
 
         // First check if the moment exists in the db
-        const checkMoment = 'SELECT * FROM MOMENTS WHERE MOMENT_ID=? AND DELETED=0';
+        const checkMoment = 'SELECT * FROM MOMENT WHERE MOMENT.ID=? AND DELETED=0';
         return databaseUtil.sendQuery(checkMoment, [momentId])
             .then((result) => {
                 // If the caption id is not in the db or it is already marked as deleted
@@ -47,7 +47,7 @@ const deleteMoment = {
                 if (result.rows[0].USER_ID !== userId) {
                     throw new Error('Invalid user');
                 }
-                const deleteQuery = 'UPDATE MOMENT SET DELETED=1 WHERE MOMENT_ID=?';
+                const deleteQuery = 'UPDATE MOMENT SET DELETED=1 WHERE MOMENT.ID=?';
                 return databaseUtil.sendQuery(deleteQuery, [momentId]);
             })
             .then(() => reply
@@ -56,8 +56,8 @@ const deleteMoment = {
             .catch((error) => {
                 if (error.message === 'Moment ID does not exist') {
                     return reply
-                        .response({ code: CAPTION_DOES_NOT_EXIST.code })
-                        .code(CAPTION_DOES_NOT_EXIST.http);
+                        .response({ code: MOMENT_DOES_NOT_EXIST.code })
+                        .code(MOMENT_DOES_NOT_EXIST.http);
                 } else if (error.message === 'Invalid user') {
                     return reply
                         .response({ code: INVALID_USER_OPERATION.code })
