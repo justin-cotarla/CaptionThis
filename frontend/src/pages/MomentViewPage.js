@@ -101,8 +101,7 @@ class MomentViewPage extends Component{
                         momentId={moment.moment_id}
                         momentCreatorId={moment.user.user_id}
                         user={this.props.user}
-                        token={token}>
-                    </CaptionList>
+                        token={token}/>
                 </div>
             </div>
         )

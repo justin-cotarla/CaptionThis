@@ -59,7 +59,7 @@ class CaptionList extends React.Component {
     }
 
     render () {
-        const { captions, selectedFilter, scrolled, loading, error } = this.state;
+        const { captions, selectedFilter, scrolled, error } = this.state;
         const { user, momentCreatorId, showSubmittedBy, showCount, isLinkedToMoment, scrollTo, token } = this.props;
 
         if (error) {
