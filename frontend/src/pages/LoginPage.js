@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import '../styles/LoginRegistrationPage.css';
 import LoadingDots from '../components/LoadingDots'
+import NavBar from '../components/NavBar';
 
 class LoginPage extends Component{
     constructor(props) {
@@ -13,7 +14,19 @@ class LoginPage extends Component{
             passField: '',
             redirect: null,
             loggingin: false,
+            errors: {
+                loginError: '',
+                userError: '',
+                passError: '',
+            },
         }
+    }
+
+    onHomeClick = () => {
+        this.setState({
+            redirect: '/',
+            allowBack: true,
+        })
     }
 
     componentDidMount(){
@@ -74,65 +87,83 @@ class LoginPage extends Component{
             } else {
                 console.log(data);
             }
+        })
+        .catch(error => {
+            const { errors } = this.state;
+            errors.loginError = 'Incorrect username or password!';
+            this.setState({
+                errors,
+                loggingin: false,
+            });
         });
     }
 
     render() {
+        const errorIndicator = {
+            borderBottom: '2px solid #ff0000',
+        };
+        const { loginError, userError, passError} = this.state.errors;
+
         return (
-          <div className="defined-style-components">
+          <div>
+          <NavBar user={this.state.user}/>                    
             <div className="logo">
               <img
                   src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
                   alt="Logo"
+
               />
             </div>
-            <div className="align-user-field">
-                <form>
-                    <div className="user-form-field">
-                        {this.state.redirect && <Redirect to={this.state.redirect} />}
-                        <label for="login_username">
-                            <img
-                                src={`http://${process.env.REACT_APP_IP}/res/username.png`}
-                                alt="username"
-                            />
-                        </label>
-                        <input
-                            id="login_username"
-                            type="username"
-                            name="username"
-                            className="user-form-field"
-                            placeholder="Username"
-                            value={this.state.userField}
-                            onChange={this.onUserChange}
+            <div className="login-container">
+            <logReg-form>
+                    {this.state.redirect && <Redirect to={this.state.redirect} />}
+                    <label className="input-label">
+                        <img
+                            src={`http://${process.env.REACT_APP_IP}/res/username.png`}
                         />
-                    </div>
-                    <div className="user-form-field">
-                        <label for="loginpassword">
+                        Username
+                    </label>
+                    <input
+                        id="login_username"
+                        type="username"
+                        name="username"
+                        className="input-field"
+                        value={this.state.userField}
+                        onChange={this.onUserChange}
+                        style={ (userError || loginError) ? errorIndicator : {} }/>    
+                        {
+                            <h1 className="login-verify-error">{userError}</h1>
+                        }
+                    
+                        <label className="input-label">
                             <img
                                 src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                 alt="password"
                             />
+                            Password
                         </label>
                         <input
                             id="loginpassword"
                             type="password"
                             name="password"
-                            className="user-form-field"
-                            placeholder="Password"
+                            className="input-field"
                             value={this.state.passField}
                             onChange={this.onPassChange}
                             onKeyDown={this.onEnterPress}
-                        />
-                    </div>
-                </form>
-                <div
-                    className="login2-button"
-                    onClick={this.onSubmit}
-                    >
-                    Login
-                </div>
-                <div className="registration-button" onClick={this.onRegisterClick}>
-                    <p class="text--center"> Not a member ? <a>Sign up now </a></p>
+                            style={ (passError || loginError) ? errorIndicator : {} }/>
+                            {
+                                <h1 className="login-verify-error">{passError || loginError}</h1>
+                            }
+                    <div
+                        className="loginSignUp-button"
+                        onClick={this.onSubmit}
+                        >
+                        Login
+                   </div>
+                </logReg-form>
+                <div 
+                    onClick={this.onRegisterClick}>
+                    <p class="signUpNow-button"> Not a member ? <a>Sign up now </a></p>
                 </div>
                 {this.state.loggingin &&
                 <div className="login-loader-holder">
@@ -140,7 +171,7 @@ class LoginPage extends Component{
                 </div>
                 }
             </div>
-          </div>
+            </div>
         );
     }
 }

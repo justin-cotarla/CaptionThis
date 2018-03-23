@@ -29,7 +29,7 @@ div.signup-button {
    letter-spacing: 2px;
    float: none;
    margin: 0 auto;
-   margin-top: 20px;
+   margin-top: 40px;
    padding: 5px;
    color:#FFFFFF;
    font-weight: bold;
@@ -41,7 +41,7 @@ div.signup-button {
   div.login2-button {
     opacity: 0.8;
     text-align: center;
-    width: 175px;
+    width: 300px;
     font-family: var(--FontFamily);
     font-size: 32px;
     letter-spacing: 2px;
@@ -56,7 +56,9 @@ div.signup-button {
 div.login2-button:hover {
       opacity: 1;
 }
+
 div.registration-button {
+    opacity: 0.8;
     width: 200px;
     float: none;
     margin: 0 auto;
@@ -104,8 +106,7 @@ div.logo {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: -30px;
   max-width: var(--gridMaxWidth);
   width: var(--gridWidth);
 }
@@ -215,9 +216,19 @@ div.logo {
   color: #FFFFFF;
 }
 .signup-button a {
-  text-align: center;
-  position: relative;
-  color: #FFFFFF;
+  opacity: 0.8;
+    text-align: center;
+    width: 175px;
+    font-family: var(--FontFamily);
+    font-size: 32px;
+    letter-spacing: 2px;
+    float: none;
+    margin: 0 auto;
+    margin-top: 25px;
+    padding: 5px;
+    color: var(--themeColor);
+    font-weight: bold;
+    cursor: pointer;
 }
 .registration-button a:after {
   content: '';
@@ -240,9 +251,26 @@ div.logo {
 .registration-button a:hover:after {
   width: 100%;
 }
-.signup-button a:hover:after {
+
+.login-redirect-button b{
+  text-align: center;
+  position: relative;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+.login-redirect-button b:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  border-bottom: 2px solid #FFFFFF;
+  transition: 0.4s;
+}
+.login-redirect-button b:hover:after {
   width: 100%;
 }
+
 .text--center {
   font-family: var(--FontFamily);
   font-size: 22px;

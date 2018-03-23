@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import LoadingDots from '../components/LoadingDots'
+import NavBar from '../components/NavBar';
 
 class RegistrationPage extends Component{
     constructor(props) {
@@ -71,6 +72,7 @@ class RegistrationPage extends Component{
     render() {
         return (
             <div className="defined-style-components">
+            <NavBar user={this.state.user}/>  
                 <div className="logo">
                     <img
                         src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
