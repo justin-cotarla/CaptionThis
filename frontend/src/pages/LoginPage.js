@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import '../styles/LoginRegistrationPage.css';
 import LoadingDots from '../components/LoadingDots'
+import NavBar from '../components/NavBar';
 
 class LoginPage extends Component{
     constructor(props) {
@@ -13,7 +14,19 @@ class LoginPage extends Component{
             passField: '',
             redirect: null,
             loggingin: false,
+            errors: {
+                loginError: '',
+                userError: '',
+                passError: '',
+            },
         }
+    }
+
+    onHomeClick = () => {
+        this.setState({
+            redirect: '/',
+            allowBack: true,
+        })
     }
 
     componentDidMount(){
@@ -74,12 +87,26 @@ class LoginPage extends Component{
             } else {
                 console.log(data);
             }
+        })
+        .catch(error => {
+            const { errors } = this.state;
+            errors.loginError = 'Incorrect username or password!';
+            this.setState({
+                errors,
+                loggingin: false,
+            });
         });
     }
 
     render() {
+        const errorIndicator = {
+            borderBottom: '2px solid #ff0000',
+        };
+        const { loginError, userError, passError, verifyError } = this.state.errors;
+
         return (
           <div className="defined-style-components">
+          <NavBar user={this.state.user}/>                    
             <div className="logo">
               <img
                   src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
@@ -106,8 +133,11 @@ class LoginPage extends Component{
                             placeholder="Username"
                             value={this.state.userField}
                             onChange={this.onUserChange}
-                            />
-                    </div>
+                            style={ (userError || loginError) ? errorIndicator : {} }/>
+                        </div>
+                        {
+                            <h1 className="modal-verify-error">{userError}</h1>
+                        }
                     <div className="user-form-field">
                         <label for="loginpassword">
                             <img
@@ -124,8 +154,11 @@ class LoginPage extends Component{
                             value={this.state.passField}
                             onChange={this.onPassChange}
                             onKeyDown={this.onEnterPress}
-                            />
-                    </div>
+                            style={ (passError || loginError) ? errorIndicator : {} }/>
+                        </div>
+                        {
+                            <h1 className="modal-verify-error">{passError || loginError}</h1>
+                        }
                     <div
                         className="login2-button"
                         onClick={this.onSubmit}
@@ -133,7 +166,9 @@ class LoginPage extends Component{
                         Login
                    </div>
                 </form>
-                <div className="registration-button" onClick={this.onRegisterClick}>
+                <div 
+                    className="registration-button" 
+                    onClick={this.onRegisterClick}>
                     <p class="text--center"> Not a member ? <a>Sign up now </a></p>
                 </div>
                 {this.state.loggingin &&

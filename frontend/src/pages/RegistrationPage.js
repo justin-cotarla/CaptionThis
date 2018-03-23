@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import LoadingDots from '../components/LoadingDots'
+import NavBar from '../components/NavBar';
 
 class RegistrationPage extends Component{
     constructor(props) {
@@ -71,6 +72,7 @@ class RegistrationPage extends Component{
     render() {
         return (
             <div className="defined-style-components">
+            <NavBar user={this.state.user}/>  
                 <div className="logo">
                     <img
                         src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
@@ -140,11 +142,15 @@ class RegistrationPage extends Component{
                             <a>Sign Up</a>
                       </div>
                     </form>
-                    <div
-                        className="login2-button"
-                        onClick={this.onLoginClick}
-                        >
-                        Login
+                    <div 
+                        className="login2-button" 
+                        onClick={this.onLoginClick}>
+                        <p class="text--center"> Already have an account ? </p>
+                    </div>
+                    <div 
+                        className="login-redirect-button b" 
+                        onClick={this.onLoginClick}>
+                        <p class="text--center"> <b>Login</b> </p>
                     </div>
                     {this.state.loggingin &&
                     <div className="login-loader-holder">
