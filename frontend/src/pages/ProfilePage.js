@@ -6,7 +6,7 @@ import CaptionList from '../components/CaptionList';
 import NavBar from '../components/NavBar';
 import ErrorGraphic from '../components/ErrorGraphic';
 
-import { getToken, fetchUser, fetchUserCaptions, fetchUserMoments, getFilteredCaptionsUser } from '../util/apiUtil';
+import { fetchUser, fetchUserCaptions, fetchUserMoments, getFilteredCaptionsUser } from '../util/apiUtil';
 
 import '../styles/ProfilePage.css';
 
@@ -14,7 +14,7 @@ class ProfilePage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            token: null,
+            token: props.token,
             profileUser: null,
             moments: [],
             selectedView: 'captions',
@@ -25,11 +25,7 @@ class ProfilePage extends React.Component {
     }
 
     componentDidMount(){
-        const token = getToken();
-        if (token) {
-            this.setState({ token });
-        }
-
+        const { token } = this.state;
         const { username } = this.props.match.params;
         let profileUser;
 

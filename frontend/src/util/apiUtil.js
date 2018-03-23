@@ -1,11 +1,4 @@
-import Cookies from 'universal-cookie';
 import axios from 'axios';
-
-export const getToken = () => {
-    const cookies = new Cookies();
-    const token = cookies.get('token');
-    return token;
-}
 
 export const fetchCaptionsByMomentId = (momentid, token) => {
     const headers = {
