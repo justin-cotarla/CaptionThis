@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import scrollToComponent from 'react-scroll-to-component';
 import classnames from 'classnames';
 
 import Header from './Header';
@@ -19,25 +18,6 @@ class Caption extends React.Component {
             isHighlighted: props.scrollTo === props.caption.caption_id,
             token: props.token,
             showAuthModal: false,
-        }
-    }
-    
-    componentDidMount = () => {
-        const { isHighlighted } = this.state;
-        const captionId = this.state.caption.caption_id;
-        if (isHighlighted) {
-            const captionRef = this.refs[captionId];
-            scrollToComponent(captionRef, {
-                offset: -100,
-                align: 'top',
-                duration: 1000
-            });
-        }
-    };
-
-    componentWillReceiveProps(nextProps){
-        if(this.state.scrollTo !== nextProps.scrollTo){
-            this.setState({ isHighlighted: false })
         }
     }
 

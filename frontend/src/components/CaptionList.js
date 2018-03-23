@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import scrollToComponent from 'react-scroll-to-component';
 import CaptionFilter from '../components/CaptionFilter';
 import Caption from './Caption';
 import Header from './Header';
@@ -39,11 +40,30 @@ class CaptionList extends React.Component {
         });
     }
 
+    componentDidUpdate = () => {
+        const { captions, scrolled } = this.state;
+        if (captions.length && !scrolled) {
+            this.scrollToCaption();
+        }
+    }
+
+    scrollToCaption = () => {
+        const { scrollTo } = this.props;
+        const captionRef = this.refs[scrollTo];
+        scrollToComponent(captionRef, {
+            offset: -100,
+            align: 'top',
+            duration: 1000
+        });
+        if (this.state.scrolled === false) {
+            this.setState({ scrolled: true });
+        }
+    }
+
     onFilterChange = (selectedFilter) => {
         const currentFilter = this.state.selectedFilter;
         if (selectedFilter !== currentFilter) {
             this.setState({ 
-                scrolled: true, 
                 loading: true, 
             });
             this.props.getFilteredCaptions(selectedFilter)
@@ -83,8 +103,9 @@ class CaptionList extends React.Component {
                                     wrap={children => <Link className="linked-caption" to={{pathname: `/moment/${caption.moment_id}`, state: { scrollTo: caption.caption_id}}}>{children}</Link>}
                                 >
                                     <Caption 
-                                        scrollTo={scrolled === false ? scrollTo : -1}
+                                        ref={caption.caption_id}
                                         caption={caption} 
+                                        scrollTo={scrolled === false ? scrollTo : -1}
                                         showSubmittedBy={showSubmittedBy}
                                         canAccept={
                                             (user) // The user is logged on
