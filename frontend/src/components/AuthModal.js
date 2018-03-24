@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 
 import LoadingDots from './LoadingDots';
+import { GOOD, USER_EXISTS, UNKNOWN_ERROR } from '../util/ResponseCodes';
 
 import '../styles/AuthModal.css';
 
@@ -105,7 +106,7 @@ class AuthModal extends React.Component {
                 },
             })
             .then(({ data }) => {
-                if (data.code === 1) {
+                if (data.code === GOOD.code) {
                     const cookies = new Cookies();
                     cookies.set('token', data.token);
                     this.setState({ redirect: '/' });
@@ -114,13 +115,13 @@ class AuthModal extends React.Component {
                 }
             })
             .catch(error => {
-                const { status } = error.response;
+                const { code } = error.response.data;
                 const { fields, errors } = this.state;
                 fields.password = '';
                 fields.verify = '';
-                if (status === 409) {
+                if (code === USER_EXISTS.code) {
                     errors.userError = 'That username is already taken! Pick another one.';
-                } else if (status === 500) {
+                } else if (code === UNKNOWN_ERROR.code) {
                     errors.loginError = 'There was an error while creating your account. Please try again.'
                 }
                 this.setState({
