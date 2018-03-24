@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import scrollToComponent from 'react-scroll-to-component';
 import classnames from 'classnames';
 
 import Header from './Header';
@@ -22,35 +21,23 @@ class Caption extends React.Component {
         }
     }
 
-    componentDidMount = () => {
-        const { isHighlighted } = this.state;
-        const captionId = this.state.caption.caption_id;
-        if (isHighlighted) {
-            const captionRef = this.refs[captionId];
-            scrollToComponent(captionRef, {
-                offset: -100,
-                align: 'top',
-                duration: 1000
-            });
-        }
-    };
-
     handleVote = (event) => {
         const token = this.state.token;
-        if (token) {
-            const action = event.target.id;
+        if (token) {    
+            const action = event.target.className;
+            const UPVOTE = 'vote-ticker-plus';
             const previousVote = this.state.caption.user_vote;
 
             let newVote;
             switch (previousVote) {
                 case 0:
-                    newVote = (action === '+') ? 1 : -1;
+                    newVote = (action === UPVOTE) ? 1 : -1; 
                     break;
                 case 1:
-                    newVote = (action === '+') ? 0 : -1;
+                    newVote = (action === UPVOTE) ? 0 : -1;
                     break;
                 case -1:
-                    newVote = (action === '+') ? 1 : 0;
+                    newVote = (action === UPVOTE) ? 1 : 0;
                     break;
                 default: break;
             }

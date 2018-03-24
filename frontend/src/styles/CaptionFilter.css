@@ -1,0 +1,13 @@
+.caption-filter {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    height: 30px;
+}
+
+.caption-filter li {
+    font-size: 18px;
+    margin-right: 1em;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
