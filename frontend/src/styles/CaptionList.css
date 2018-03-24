@@ -1,5 +1,6 @@
 .caption-list-container {
     margin: 1em 20px;
+    position: relative;
 }
 
 .caption-list-container > ul {
