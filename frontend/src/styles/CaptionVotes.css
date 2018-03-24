@@ -20,20 +20,10 @@
     font-size: 16px;
 }
 
-.vote-ticker {
+.vote-ticker-plus, .vote-ticker-minus {
     font-size: 12px;
 }
 
-.vote-ticker:hover, .vote-up:hover, .vote-down:hover{
+.vote-ticker-plus:hover, .vote-ticker-minus:hover {
     cursor: pointer;
-}
-
-.vote-up{
-    color: #1DE28F;
-    font-size: 12px;
-}
-
-.vote-down{
-    color: #f44b42;
-    font-size: 12px;
 }
