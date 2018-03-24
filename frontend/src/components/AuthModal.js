@@ -112,6 +112,22 @@ class AuthModal extends React.Component {
                 } else {
                     console.log(data);
                 }
+            })
+            .catch(error => {
+                const { status } = error.response;
+                const { fields, errors } = this.state;
+                fields.password = '';
+                fields.verify = '';
+                if (status === 409) {
+                    errors.userError = 'That username is already taken! Pick another one.';
+                } else if (status === 500) {
+                    errors.loginError = 'There was an error while creating your account. Please try again.'
+                }
+                this.setState({
+                    fields,
+                    errors,
+                    isAuthenticating: false,
+                });
             });
         } else if (!showRegisterForm) {
             axios({
@@ -133,9 +149,11 @@ class AuthModal extends React.Component {
                 }
             })
             .catch(error => {
-                const { errors } = this.state;
+                const { fields, errors } = this.state;
+                fields.password = '';
                 errors.loginError = 'Incorrect username or password!';
                 this.setState({
+                    fields,
                     errors,
                     isAuthenticating: false,
                 });
