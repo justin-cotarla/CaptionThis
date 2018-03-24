@@ -38,19 +38,20 @@ class Caption extends React.Component {
     handleVote = (event) => {
         const token = this.state.token;
         if (token) {    
-            const action = event.target.id;
+            const action = event.target.className;
+            const UPVOTE = 'vote-ticker-plus';
             const previousVote = this.state.caption.user_vote;
 
             let newVote;
             switch (previousVote) {
                 case 0:
-                    newVote = (action === '+') ? 1 : -1; 
+                    newVote = (action === UPVOTE) ? 1 : -1; 
                     break;
                 case 1:
-                    newVote = (action === '+') ? 0 : -1;
+                    newVote = (action === UPVOTE) ? 0 : -1;
                     break;
                 case -1:
-                    newVote = (action === '+') ? 1 : 0;
+                    newVote = (action === UPVOTE) ? 1 : 0;
                     break;
                 default: break;
             }
