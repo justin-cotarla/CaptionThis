@@ -7,21 +7,7 @@ export const captionRequestTypes = {
 }
 export const captionFilters = ['Recent', 'Oldest', 'Top', 'Worst', 'Accepted', 'Rejected'];
 export const fetchCaptions = ({ token, type, filter, momentId, userId }) => {
-    let baseQuery = '';
-    switch (type) {
-        case captionRequestTypes.BY_MOMENT:
-            baseQuery = `?moment-id=${momentId}`;
-            break;
-        case captionRequestTypes.BY_USER:
-            baseQuery = `?user-id=${userId}`;
-            break;
-        case captionRequestTypes.BY_MOMENT_AND_USER:
-            baseQuery = `?moment-id=${momentId}&user-id=${userId}`;
-            break;
-        default:
-            break;
-    }
-
+    const baseQuery = getRequestTypeQuery(type, momentId, userId);
     const filterQuery = getFilterQuery(filter);
     return axios({
         method: 'get',
@@ -50,6 +36,20 @@ export const fetchUserMoments = (id, token) => {
         url: `http://${process.env.REACT_APP_IP}/api/moments?user-id=${id}`,
         header: token ? headers : {}
     });
+}
+
+const getRequestTypeQuery = (type, momentId, userId) => {
+    const { BY_MOMENT, BY_USER, BY_MOMENT_AND_USER } = captionRequestTypes;
+    switch (type) {
+        case BY_MOMENT:
+            return `?moment-id=${momentId}`;
+        case BY_USER:
+            return `?user-id=${userId}`;
+        case BY_MOMENT_AND_USER:
+            return `?moment-id=${momentId}&user-id=${userId}`;
+        default:
+            return;
+    }
 }
 
 const getFilterQuery = filter => {
