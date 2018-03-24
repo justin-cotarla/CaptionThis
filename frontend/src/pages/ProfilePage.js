@@ -6,7 +6,7 @@ import CaptionList from '../components/CaptionList';
 import NavBar from '../components/NavBar';
 import ErrorGraphic from '../components/ErrorGraphic';
 
-import { fetchUser, fetchUserCaptions, fetchUserMoments, getFilteredCaptionsUser } from '../util/apiUtil';
+import { fetchUser, fetchCaptions, fetchUserMoments, captionRequestTypes } from '../util/apiUtil';
 
 import '../styles/ProfilePage.css';
 
@@ -107,8 +107,12 @@ class ProfilePage extends React.Component {
                             selectedView === views[0]
                             && (
                                 <CaptionList 
-                                        fetchCaptions={() => fetchUserCaptions(profileUser.id, token)}
-                                        getFilteredCaptions={filter => getFilteredCaptionsUser(profileUser.id, filter, token)}
+                                        fetchCaptions={(filter) => fetchCaptions({ 
+                                            token, 
+                                            type: captionRequestTypes.BY_USER, 
+                                            filter, 
+                                            userId: profileUser.id 
+                                        })}
                                         showSubmittedBy={false} 
                                         showCount={false}
                                         isLinkedToMoment={true} 

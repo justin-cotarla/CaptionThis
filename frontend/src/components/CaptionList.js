@@ -23,7 +23,7 @@ class CaptionList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchCaptions()
+        this.props.fetchCaptions(this.state.selectedFilter)
         .then(response => {
             const { captions } = response.data;
             this.setState({ 
@@ -32,7 +32,6 @@ class CaptionList extends React.Component {
             })
         })
         .catch(error => {
-            console.log(error);
             this.setState({
                 error: 'Failed to load captions :( Please try again!',
                 loading: false,
@@ -66,7 +65,7 @@ class CaptionList extends React.Component {
             this.setState({ 
                 loading: true, 
             });
-            this.props.getFilteredCaptions(selectedFilter)
+            this.props.fetchCaptions(selectedFilter)
             .then(response => {
                 const { captions } = response.data;
                 this.setState({ 

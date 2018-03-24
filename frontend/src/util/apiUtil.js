@@ -1,14 +1,33 @@
 import axios from 'axios';
 
-export const fetchCaptionsByMomentId = (momentid, token) => {
-    const headers = {
-        'Authorization': `Bearer ${token}`
-    };
+export const captionRequestTypes = {
+    BY_MOMENT: 'BY_MOMENT',
+    BY_USER: 'BY_USER',
+    BY_MOMENT_AND_USER: 'BY_MOMENT_AND_USER',
+}
+export const captionFilters = ['Recent', 'Oldest', 'Top', 'Worst', 'Accepted', 'Rejected'];
+export const fetchCaptions = ({ token, type, filter, momentId, userId }) => {
+    let baseQuery = '';
+    switch (type) {
+        case captionRequestTypes.BY_MOMENT:
+            baseQuery = `?moment-id=${momentId}`;
+            break;
+        case captionRequestTypes.BY_USER:
+            baseQuery = `?user-id=${userId}`;
+            break;
+        case captionRequestTypes.BY_MOMENT_AND_USER:
+            baseQuery = `?moment-id=${momentId}&user-id=${userId}`;
+            break;
+        default:
+            break;
+    }
+
+    const filterQuery = getFilterQuery(filter);
     return axios({
         method: 'get',
-        url: `http://${process.env.REACT_APP_IP}/api/captions?moment-id=${momentid}`,
-        headers: token ? headers : {}
-    })
+        url: `http://${process.env.REACT_APP_IP}/api/captions${baseQuery}${filterQuery}`,
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+    });
 }
 
 export const fetchUser = (username) => {
@@ -19,17 +38,6 @@ export const fetchUser = (username) => {
     .catch(error => {
         console.log(error)
         throw new Error('nonexistent user');
-    });
-}
-
-export const fetchUserCaptions = (id, token) => {
-    const headers = { 
-        'Authorization': `Bearer ${token}` 
-    };
-    return axios({
-        method: 'get',
-        url: `http://${process.env.REACT_APP_IP}/api/captions?user-id=${id}`,
-        header: token ? headers : {}
     });
 }
 
@@ -44,41 +52,22 @@ export const fetchUserMoments = (id, token) => {
     });
 }
 
-export const getFilteredCaptionsUser = (userId, filter, token) => {
-    const baseQuery = `?user-id=${userId}`;
-    return getFilteredCaptions(baseQuery, filter, token);
-}
-
-export const getFilteredCaptionsByMoment = (momentId, filter, token) => {
-    const baseQuery = `?moment-id=${momentId}`;
-    return getFilteredCaptions(baseQuery, filter, token);
-}
-
-const getFilteredCaptions = (baseQuery, filter, token) => {
-    const filterQuery = getFilterQuery(filter);
-    const headers = {
-        'Authorization': `Bearer ${token}`
-    };
-    return axios({
-        method: 'get',
-        url: `http://${process.env.REACT_APP_IP}/api/captions${baseQuery}${filterQuery}`,
-        headers: token ? headers : {}
-    })
-}
-
 const getFilterQuery = filter => {
+    const [ Recent, Oldest, Top, Worst, Accepted, Rejected ] = captionFilters;
     switch (filter) {
-        case 'Oldest':
+        case Recent:
+            return '';
+        case Oldest:
             return '&order=asc';
-        case 'Top':
+        case Top:
             return '&filter=votes';
-        case 'Worst':
+        case Worst:
             return '&filter=votes&order=asc';
-        case 'Accepted': 
+        case Accepted: 
             return '&filter=acceptance';
-        case 'Rejected':
+        case Rejected:
             return '&filter=acceptance&order=asc';
         default: 
-            return '';
+            return;
     }
 }

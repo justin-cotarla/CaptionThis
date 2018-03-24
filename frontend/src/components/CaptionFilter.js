@@ -1,8 +1,8 @@
 import React from 'react';
+import { captionFilters } from '../util/apiUtil';
 import '../styles/CaptionFilter.css';
 
 const CaptionFilter = props => {
-    const filters = ['Recent', 'Oldest', 'Top', 'Worst', 'Accepted', 'Rejected'];
     const selectedFilterStyle = {
         color: '#1DE28F',
         borderBottom: '1px solid #1DE28F',
@@ -13,7 +13,7 @@ const CaptionFilter = props => {
     return (
         <ul className="caption-filter">
             {
-                filters.map(filter => {
+                captionFilters.map(filter => {
                     return <li  key={filter} 
                                 style={filter === props.selectedFilter ? selectedFilterStyle : null}
                                 onClick={() => props.onFilterChange(filter)}>
