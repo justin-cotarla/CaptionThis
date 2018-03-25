@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Teko');
+
+
 .caption-list-container {
     margin: 1em 20px;
     position: relative;
@@ -6,4 +9,12 @@
 .caption-list-container > ul {
     margin: 0.5em 0;
     padding: 0;
+}
+
+.caption-list-container h1{
+  font-family: 'Teko';
+  color: #FFFFFF;
+  font-size: 34px;
+  letter-spacing: 1px;
+  font-weight: 200;
 }

@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Teko');
+
+.accept-reject h1{
+    font-family: 'Teko';
+    font-size: 20px;
+}
+.caption-creator-input::placeholder{
+  font-family: 'Teko';
+  font-size: 23px;
+  letter-spacing: 0.8px;
+}
+.caption-creator-submit {
+   cursor: pointer;
+    width: 15%;
+    font-size: 28px;
+    border-radius: 3px;
+    border: none;
+    font-family: 'Teko';
+}
+.caption-creator-submit:active{
+    box-shadow: 1px 1.8px 1px #000000;
+    color:#1DE28F;
+}
+.caption-container .caption-content h1 a{
+  font-family: 'Teko';
+  font-size: 18px;
+}
+.caption-container h1, .caption-container-accepted h1,.caption-container-rejected h1 {
+  font-family: 'Teko';
+  font-size: 18px;
+}
+.caption-container , .caption-container-accepted , .caption-container-rejected {
+    padding-bottom: 0px;
+    margin-bottom:8px;
+    background-color: rgba(196, 196, 196, 0.31);
+}
+
+.caption-list-container h1{
+  font-family: 'Teko';
+  color: #FFFFFF;
+  font-size: 34px;
+  letter-spacing: 1px;
+  font-weight: 200;
+}

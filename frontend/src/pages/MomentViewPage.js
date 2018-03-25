@@ -66,13 +66,13 @@ class MomentViewPage extends Component{
         if (locationState) {
             scrollTo = locationState.scrollTo;
         }
-        
+
         if(error) {
             return (
                 <div>
                     <NavBar user={this.state.user}/>
                     <ErrorGraphic message={error}/>
-                </div>         
+                </div>
             )
         }
 
