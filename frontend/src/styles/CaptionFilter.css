@@ -6,8 +6,9 @@
 }
 
 .caption-filter li {
-    font-size: 18px;
-    margin-right: 1em;
+    font-size: 24px;
+    margin-right: .6em;
     cursor: pointer;
     border: 1px solid transparent;
+    font-family: 'Teko';
 }

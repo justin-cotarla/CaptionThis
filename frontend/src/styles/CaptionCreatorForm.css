@@ -1,6 +1,6 @@
   @import url('https://fonts.googleapis.com/css?family=Teko');
 
-.caption-creator-form {
+/* .caption-creator-form {
     display: flex;
     flex-direction: row;
     margin: 20px;
@@ -14,4 +14,46 @@
     margin-right: 0.6em;
     padding: 0.6em;
     font-family: 'Teko';
+} */
+
+.caption-creator-form {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+    font-family: 'Teko';
+}
+
+.caption-creator-input {
+    display: flex;
+    flex-grow: 3;
+    font-size: 23px;
+    border-radius: 3px;
+    margin-right: 1em;
+    padding: 0.5em;
+    font-family: 'Teko';
+    outline-color: #1DE28F;
+}
+
+.caption-creator-input:focus {
+    box-shadow: 1px 5px 1px #000000;
+}
+
+.caption-creator-input::placeholder {
+    font-family: 'Teko';
+    font-size: 23px;
+    letter-spacing: 0.8px;
+}
+
+.caption-creator-submit {
+    display: flex;
+    font-size: 22px;
+    border-radius: 3px;
+    border: none;
+    font-family: 'Teko';
+    padding: 0 1em;
+}
+
+.caption-creator-submit:active{
+    box-shadow: 1px 1.8px 1px #000000;
+    color:#1DE28F;
 }
