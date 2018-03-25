@@ -1,8 +1,8 @@
 import React from 'react';
-import { captionFilters } from '../util/apiUtil';
-import '../styles/CaptionFilter.css';
 
-const CaptionFilter = props => {
+import '../styles/ListFilter.css';
+
+const ListFilter = props => {
     const selectedFilterStyle = {
         color: '#1DE28F',
         borderBottom: '1px solid #1DE28F',
@@ -11,9 +11,9 @@ const CaptionFilter = props => {
         cursor: 'default',
     }
     return (
-        <ul className="caption-filter">
+        <ul className="list-filter">
             {
-                captionFilters.map(filter => {
+                props.filters.map(filter => {
                     return <li  key={filter} 
                                 style={filter === props.selectedFilter ? selectedFilterStyle : null}
                                 onClick={() => props.onFilterChange(filter)}>
@@ -25,4 +25,4 @@ const CaptionFilter = props => {
     )
 }
 
-export default CaptionFilter;
+export default ListFilter;

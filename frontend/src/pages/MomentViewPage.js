@@ -10,7 +10,7 @@ import NavBar from '../components/NavBar';
 import Loading from '../components/Loading';
 import ErrorGraphic from '../components/ErrorGraphic';
 
-import { fetchCaptions, captionRequestTypes } from '../util/apiUtil';
+import { fetchCaptions, RequestTypes } from '../util/apiUtil';
 
 class MomentViewPage extends Component{
     constructor(props){
@@ -100,7 +100,7 @@ class MomentViewPage extends Component{
                         ref={(CaptionList) => this.CaptionList = CaptionList}
                         fetchCaptions={(filter) => fetchCaptions({ 
                             token, 
-                            type: captionRequestTypes.BY_MOMENT, 
+                            type: RequestTypes.BY_MOMENT, 
                             filter, 
                             momentId: moment.moment_id }
                         )}
