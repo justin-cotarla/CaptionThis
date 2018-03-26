@@ -22,7 +22,7 @@ class CaptionList extends React.Component {
         }
     }
 
-    componentWillUpdate = () => {
+    componentDidUpdate = () => {
         this.props.fetchCaptions(this.state.selectedFilter)
         .then(response => {
             const { captions } = response.data;
