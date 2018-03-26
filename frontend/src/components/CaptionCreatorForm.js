@@ -42,7 +42,7 @@ class CaptionCreatorForm extends React.Component {
                 data: data,
                 headers: token ? headers : {}
             })
-            .then(() => this.props.onCaptionSubmit(momentId))
+            .then(() => this.props.onCaptionSubmit())
             .catch(error => {
                 console.log(error);
             });

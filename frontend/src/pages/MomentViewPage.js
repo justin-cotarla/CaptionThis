@@ -56,7 +56,7 @@ class MomentViewPage extends Component{
 
     onCaptionSubmit = (momentId) => {
         const CaptionList = this.CaptionList;
-        CaptionList.forceUpdate();
+        CaptionList.fetchCaptions();
     }
 
     render() {
@@ -94,7 +94,7 @@ class MomentViewPage extends Component{
                         username={ moment.user.username }/>
                     <CaptionCreatorForm
                         momentId={this.props.match.params.momentID}
-                        onCaptionSubmit={(momentId) => this.onCaptionSubmit(momentId)}
+                        onCaptionSubmit={() => this.onCaptionSubmit()}
                         token={token}/>
                     <CaptionList
                         ref={(CaptionList) => this.CaptionList = CaptionList}

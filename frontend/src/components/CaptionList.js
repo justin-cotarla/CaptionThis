@@ -25,6 +25,17 @@ class CaptionList extends React.Component {
     }
 
     componentDidMount() {
+        this.fetchCaptions();
+    }
+
+    componentDidUpdate = () => {
+        const { captions, scrolled } = this.state;
+        if (captions.length && !scrolled) {
+            this.scrollToCaption();
+        }
+    }
+
+    fetchCaptions = () => {
         this.props.fetchCaptions(this.state.selectedFilter)
         .then(response => {
             const { captions } = response.data;
@@ -41,13 +52,6 @@ class CaptionList extends React.Component {
         });
     }
 
-    componentDidUpdate = () => {
-        const { captions, scrolled } = this.state;
-        if (captions.length && !scrolled) {
-            this.scrollToCaption();
-        }
-    }
-
     scrollToCaption = () => {
         const { scrollTo } = this.props;
         const captionRef = this.refs[scrollTo];
@@ -57,7 +61,7 @@ class CaptionList extends React.Component {
             duration: 1000
         });
         if (this.state.scrolled === false) {
-            this.setState({ scrolled: true });
+            setTimeout(() => this.setState({ scrolled: true }), 5000);
         }
     }
 

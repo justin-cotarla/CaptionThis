@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from './Header';
+import { timeAgo } from '../util/dateUtil';
 import '../styles/Moment.css';
 
 const Moment = props => {
@@ -10,7 +10,7 @@ const Moment = props => {
           style={{backgroundImage: `url(http://${process.env.REACT_APP_IP}/res/polaroid_texture.png)`}}>
             <img className="Moment-thumbnail" src={props.image} alt="moment" onClick={props.onClick}/>
             <h1 className="top-caption">{ props.description }</h1>
-            <Header textSize={3} text={'Posted on ' + props.date } />
+            <h1 style={{fontSize: '20px'}}>Posted {timeAgo(props.date)}</h1>
             {
                 props.showSubmittedBy && <h1 className="header-medium-2" style={{ marginTop: '8px'}}>
                     Submitted by <Link className="linked-username" to={`/user/${props.username}`}>{props.username}</Link>
