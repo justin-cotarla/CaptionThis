@@ -9,6 +9,7 @@ import Acceptor from './Acceptor';
 
 import '../styles/Caption.css';
 import AuthModal from './AuthModal';
+import { timeAgo } from '../util/dateUtil';
 
 class Caption extends React.Component {
     constructor(props){
@@ -18,6 +19,12 @@ class Caption extends React.Component {
             isHighlighted: props.scrollTo === props.caption.caption_id,
             token: props.token,
             showAuthModal: false,
+        }
+    }
+
+    componentWillReceiveProps = (nextProps) =>{
+        if (nextProps.scrollTo !== this.props.caption.caption) {
+            this.setState({ isHighlighted: false });
         }
     }
 
@@ -146,7 +153,7 @@ class Caption extends React.Component {
                         <Header textSize={4} text={caption.caption}/>
                         {
                             this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>
-                                Submitted by <Link className="linked-username" to={`/user/${caption.user.username}`}>{caption.user.username}</Link> on {caption.date_added}
+                                Submitted {timeAgo(caption.date_added)} by <Link className="linked-username" to={`/user/${caption.user.username}`}>{caption.user.username}</Link>
                             </h1>
                         }
                         {

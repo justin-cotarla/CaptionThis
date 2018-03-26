@@ -22,38 +22,8 @@ class CaptionList extends React.Component {
         }
     }
 
-    componentDidUpdate = () => {
-        this.props.fetchCaptions(this.state.selectedFilter)
-        .then(response => {
-            const { captions } = response.data;
-            this.setState({ 
-                captions,
-                loading: false,
-            })
-        })
-        .catch(error => {
-            this.setState({
-                error: 'Failed to load captions :( Please try again!',
-                loading: false,
-            });
-        });
-    }
-
     componentDidMount() {
-        this.props.fetchCaptions(this.state.selectedFilter)
-        .then(response => {
-            const { captions } = response.data;
-            this.setState({ 
-                captions,
-                loading: false,
-            })
-        })
-        .catch(error => {
-            this.setState({
-                error: 'Failed to load captions :( Please try again!',
-                loading: false,
-            });
-        });
+        this.fetchCaptions();
     }
 
     componentDidUpdate = () => {
@@ -61,6 +31,23 @@ class CaptionList extends React.Component {
         if (captions.length && !scrolled) {
             this.scrollToCaption();
         }
+    }
+
+    fetchCaptions = () => {
+        this.props.fetchCaptions(this.state.selectedFilter)
+        .then(response => {
+            const { captions } = response.data;
+            this.setState({ 
+                captions,
+                loading: false,
+            })
+        })
+        .catch(error => {
+            this.setState({
+                error: 'Failed to load captions :( Please try again!',
+                loading: false,
+            });
+        });
     }
 
     scrollToCaption = () => {
@@ -72,7 +59,7 @@ class CaptionList extends React.Component {
             duration: 1000
         });
         if (this.state.scrolled === false) {
-            this.setState({ scrolled: true });
+            setTimeout(() => this.setState({ scrolled: true }), 5000);
         }
     }
 
