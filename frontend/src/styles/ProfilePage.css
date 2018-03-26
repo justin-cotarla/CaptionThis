@@ -16,10 +16,6 @@
     width: 1000px;
 }
 
-.profile-page-container li {
-    color: black;
-}
-
 .profile-page-content {
     flex-grow: 3;
     padding: 0 1em;
