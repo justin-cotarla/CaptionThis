@@ -35,15 +35,15 @@ class ProfilePage extends React.Component {
             return axios.all([
                 fetchUserMoments(profileUser.id, token),
             ])
-        })   
+        })
         .then(axios.spread((userMoments) => {
-            const { moments } = userMoments.data;      
+            const { moments } = userMoments.data;
             this.setState({
                 profileUser,
                 moments,
                 loading: false,
             });
-        }))      
+        }))
         .catch(error => {
             console.log(error);
 
@@ -53,12 +53,12 @@ class ProfilePage extends React.Component {
             } else {
                 message = 'Oops... Something went wrong!';
             }
-            
+
             this.setState({
                 loading: false,
                 error: message,
             });
-        });   
+        });
     }
 
     updateView = (selectedView) => {
@@ -92,7 +92,7 @@ class ProfilePage extends React.Component {
                 <NavBar user={this.state.user}/>
                 <div className="profile-page-container">
                     <div className="profile-page-content">
-                        <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>      
+                        <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>
                         <ul className='views'>
                             {views.map(view => {
                                 return <li  key={view}
@@ -106,16 +106,16 @@ class ProfilePage extends React.Component {
                         {
                             selectedView === views[0]
                             && (
-                                <CaptionList 
-                                        fetchCaptions={(filter) => fetchCaptions({ 
-                                            token, 
-                                            type: captionRequestTypes.BY_USER, 
-                                            filter, 
-                                            userId: profileUser.id 
+                                <CaptionList
+                                        fetchCaptions={(filter) => fetchCaptions({
+                                            token,
+                                            type: captionRequestTypes.BY_USER,
+                                            filter,
+                                            userId: profileUser.id
                                         })}
-                                        showSubmittedBy={false} 
+                                        showSubmittedBy={false}
                                         showCount={false}
-                                        isLinkedToMoment={true} 
+                                        isLinkedToMoment={true}
                                         momentCreatorId={null}
                                         user={this.props.user}
                                         token={token}>
@@ -124,7 +124,7 @@ class ProfilePage extends React.Component {
                         }
                         {
                             selectedView === views[1]
-                            && ( 
+                            && (
                                 ( moments.length === 0 && <h1 className="header-section">There aren't any Moments to see here :(</h1> )
                                 || <MomentList Moments={moments}/>
                             )
@@ -133,7 +133,7 @@ class ProfilePage extends React.Component {
                     <div className="profile-page-sidebar">
                     </div>
                 </div>
-            </div>  
+            </div>
         )
     }
 }

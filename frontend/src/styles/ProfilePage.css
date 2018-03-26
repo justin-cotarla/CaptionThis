@@ -1,10 +1,19 @@
+  @import url('https://fonts.googleapis.com/css?family=Teko');
+
 .profile-page-container {
     min-height: 100%;
     display: flex;
     flex-direction: row;
     padding: 1em 2em;
     text-align: left;
-    background: white;
+    background: #202020;
+}
+.caption-container , .caption-container-accepted , .caption-container-rejected {
+    padding-bottom: 0px;
+    margin-bottom:8px;
+    background-color: rgba(196, 196, 196, 0.31);
+    border-radius: 2px;
+    width: 1000px;
 }
 
 .profile-page-container li {
@@ -14,7 +23,7 @@
 .profile-page-content {
     flex-grow: 3;
     padding: 0 1em;
-
+    font-family: 'Teko';
     -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
     -moz-animation: fadein 1s; /* Firefox < 16 */
     -ms-animation: fadein 1s; /* Internet Explorer */
@@ -48,14 +57,19 @@
 
 .header-username {
     font-size: 45px;
-    font-weight: 100;
-    margin: 0;
+    font-weight: 200;
+    margin: 2;
+    margin-left: 20px;
+    font-family: 'Teko';
+    color: #FFFFFF;
 }
 
 .header-section {
-    font-size: 35px; 
-    font-weight: 100; 
+    font-family: 'Teko';
+    font-size: 35px;
+    font-weight: 100;
     margin: 5px 10px 5px 20px;
+    color: #FFFFFF;
 }
 
 .header-section:hover{
