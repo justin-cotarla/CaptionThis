@@ -14,7 +14,7 @@ class MomentList extends Component {
         super(props);
         this.state = {
             moments: [],
-            selectedFilter: 'Recent',
+            selectedFilter: '',
             switchPages: false,
             currMoment: null,
             loading: true,
@@ -23,20 +23,7 @@ class MomentList extends Component {
     };
 
     componentDidMount() { 
-        this.props.fetchMoments(this.state.selectedFilter)
-        .then(response => {
-            const { moments } = response.data;
-            this.setState({
-                moments,
-                loading: false,
-            })
-        })
-        .catch(error => {
-            this.setState({
-                error: 'Failed to load moments :( Please try again!',
-                loading: false,
-            });
-        });
+        this.onFilterChange(momentFilters[0]);
     }
 
     onFilterChange = (selectedFilter) => {
@@ -48,8 +35,15 @@ class MomentList extends Component {
                 this.setState({ 
                     moments, 
                     selectedFilter,
+                    loading: false,
                 });
             })
+            .catch(error => {
+                this.setState({
+                    error: 'Failed to load moments :( Please try again!',
+                    loading: false,
+                });
+            });
         }
     }
 
