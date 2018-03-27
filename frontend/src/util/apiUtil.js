@@ -5,27 +5,41 @@ export const RequestTypes = {
     BY_USER: 'BY_USER',
     BY_MOMENT_AND_USER: 'BY_MOMENT_AND_USER',
 }
-export const momentFilters = ['Recent', 'Oldest', 'Popular'];
-export const captionFilters = ['Recent', 'Oldest', 'Top', 'Worst', 'Accepted', 'Rejected'];
+
+export const momentFilters = [
+    'Recent', 
+    'Oldest', 
+    'Popular'
+];
+
+export const captionFilters = [
+    'Recent', 
+    'Oldest', 
+    'Top', 
+    'Worst', 
+    'Accepted', 
+    'Rejected'
+];
+
 export const fetchMoments = ({ token, type, filter, userId, limit }) => {
     const baseParams = getRequestTypeQuery(type, null, userId);
-    const filterParams = getMomentsFilterQuery(filter, baseParams);
+    const filterParams = getMomentsFilterQuery(filter);
     return axios({
         method: 'get',
         url: `http://${process.env.REACT_APP_IP}/api/moments`,
         headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-        params: { ...filterParams, limit },
-    })
+        params: { ...baseParams, ...filterParams, limit },
+    });
 }
 
 export const fetchCaptions = ({ token, type, filter, momentId, userId, limit }) => {
     const baseParams = getRequestTypeQuery(type, momentId, userId);
-    const filterParams = getCaptionFilterQuery(filter, baseParams);
+    const filterParams = getCaptionFilterQuery(filter);
     return axios({
         method: 'get',
         url: `http://${process.env.REACT_APP_IP}/api/captions`,
         headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-        params: { ...filterParams, limit }
+        params: {  ...baseParams, ...filterParams, limit }
     });
 }
 
@@ -48,45 +62,42 @@ const getRequestTypeQuery = (type, momentId, userId) => {
         case BY_USER:
             return { 'user-id': userId };
         case BY_MOMENT_AND_USER:
-            return { 
-                'moment-id': momentId, 
-                'user-id': userId 
-            };
+            return { 'moment-id': momentId, 'user-id': userId };
         default:
             return {};
     }
 }
 
-const getMomentsFilterQuery = (filter, params) => {
+const getMomentsFilterQuery = filter => {
     const [ Recent, Oldest, Popular ] = momentFilters;
     switch (filter) {
         case Recent:
-            return { ...params };
+            return {};
         case Oldest:
-            return { ...params, order: 'asc' };
+            return { order: 'asc' };
         case Popular:
-            return { ...params, filter: 'popularity' };
+            return { filter: 'popularity' };
         default:
-            return { ...params };
+            return {};
     }
 }
 
-const getCaptionFilterQuery = (filter, params) => {
+const getCaptionFilterQuery = filter => {
     const [ Recent, Oldest, Top, Worst, Accepted, Rejected ] = captionFilters;
     switch (filter) {
         case Recent:
-            return { ...params };
+            return {};
         case Oldest:
-            return { ...params, order: 'asc' };
+            return { order: 'asc' };
         case Top:
-            return { ...params, filter: 'votes' };
+            return { filter: 'votes' };
         case Worst:
-            return { ...params, filter: 'votes', order: 'asc' };
+            return { filter: 'votes', order: 'asc' };
         case Accepted: 
-            return { ...params, filter: 'acceptance' };
+            return { filter: 'acceptance' };
         case Rejected:
-            return { ...params, filter: 'acceptance', order: 'asc' };
+            return { filter: 'acceptance', order: 'asc' };
         default: 
-            return { ...params };
+            return {};
     }
 }
