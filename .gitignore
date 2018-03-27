@@ -3,3 +3,4 @@ Infrastructure.pdf
 .env
 coverage/
 server/build/
+caption-this-keypair.pem
