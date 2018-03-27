@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import ListFilter from './ListFilter';
 import Moment from './Moment';
 import Header from './Header';
@@ -16,7 +16,6 @@ class MomentList extends Component {
             moments: [],
             selectedFilter: '',
             switchPages: false,
-            currMoment: null,
             loading: true,
             error: '',
         };
@@ -47,19 +46,9 @@ class MomentList extends Component {
         }
     }
 
-    viewMoment(moment) {
-        this.setState({ 
-            currMoment: moment,
-            redirect: true,
-        });
-    }
-
     render() {
         const { selectedFilter, moments, loading, error } = this.state;
         const { showCount } = this.props;
-        if (this.state.redirect) {
-            return <Redirect push to={"/moment/" + this.state.currMoment.moment_id} />;
-        }
 
         if (error) {
             return <div className="moment-list-container">
@@ -86,7 +75,6 @@ class MomentList extends Component {
                             return (
                                 <li key={moment.moment_id}>
                                     <Moment className="Moment-component"
-                                        onClick={() => this.viewMoment(moment)}
                                         showSubmittedBy={this.props.showSubmittedBy}
                                         image={ moment.img }
                                         date={ formatDate(moment.date_added) }
@@ -95,7 +83,8 @@ class MomentList extends Component {
                                                 ? `"${(moment.top_caption.length > 30) ? moment.top_caption.slice(0, 30).concat('...') : moment.top_caption}"`
                                                 : 'Submit a caption'
                                             }
-                                        username={ moment.user.username }/>
+                                        username={ moment.user.username }
+                                        momentId={moment.moment_id}/>
                                 </li>
                             )
                         })

@@ -5,12 +5,11 @@ import ListFilter from '../components/ListFilter';
 import Caption from './Caption';
 import Header from './Header';
 import ErrorGraphic from './ErrorGraphic';
+import ConditionalWrap from './ConditionalWrap';
 
 import { captionFilters } from '../util/apiUtil';
 
 import '../styles/CaptionList.css';
-
-const ConditionalWrap = ({condition, wrap, children}) => condition ? wrap(children) : children;
 
 class CaptionList extends React.Component {
     constructor(props){
