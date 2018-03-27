@@ -9,8 +9,6 @@ const getMoment = {
     method: 'GET',
     path: '/api/moments/{momentid}',
     handler: (request, reply) => {
-        // Get limit query param, Hapi parses params as strings
-
         const id = parseInt(request.params.momentid, 10);
 
         // Create db query

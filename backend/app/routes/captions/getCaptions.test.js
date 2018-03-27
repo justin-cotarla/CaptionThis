@@ -33,7 +33,8 @@ describe('/api/captions GET Endpoint', () => {
             query: {
                 'moment-id': 1,
                 'user-id': 1,
-                limit: 1,
+                start: 1,
+                range: 3,
             },
         };
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
@@ -84,7 +85,6 @@ describe('/api/captions GET Endpoint', () => {
             query: {
                 filter: 'votes',
                 order: 'asc',
-                limit: 1,
             },
         };
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {

@@ -123,7 +123,7 @@ class ProfilePage extends React.Component {
                                         type: RequestTypes.BY_USER, 
                                         filter,
                                         userId: profileUser.id, 
-                                        limit: 30, 
+                                        range: 30, 
                                     })}/>
                             )
                         }
