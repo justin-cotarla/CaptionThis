@@ -3,13 +3,11 @@ import moment from 'moment';
 import TimeAgo from 'react-timeago';
 
 const formatter = (value, unit, suffix) => {
-    switch (value) {
-        case 0:
-            return 'just now';
-        case 1:
-            return `a ${unit} ${suffix}`;
-        default: 
-            break;
+    if (unit === 'second') {
+        return 'just now';
+    }
+    if (value === 1) {
+        return `a ${unit} ${suffix}`;
     }
     if (value !== 1) {
         unit += 's';
