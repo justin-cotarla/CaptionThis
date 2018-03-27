@@ -13,7 +13,8 @@ const request = {
 
 const queryBuildRequest = {
     query: {
-        limit: 1,
+        start: 1,
+        range: 1,
         order: 'asc',
         filter: 'popularity',
     },

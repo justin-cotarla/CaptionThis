@@ -8,22 +8,32 @@ const queryBuilder = (params) => {
     const conditions = [];
     const values = [];
 
-    // To get captions by moment id, user-id, with a limit
     const userid = params['user-id'];
-    let { limit, filter, order } = params;
+    let {
+        filter,
+        order,
+        range,
+        start,
+    } = params;
 
     if (!(userid === undefined || userid === '' || userid === 0 || !/^\d+$/.test(userid))) {
         conditions.push('MOMENT.USER_ID=?');
         values.push(userid);
     }
 
-    if (limit === undefined || limit === '' || !/^\d+$/.test(limit)) {
-        limit = 20; // Default value for limit is 20
+    if (start === undefined || start === '' || !/^\d+$/.test(start)) {
+        start = 0; // Default value for start is 0
     }
 
-    // Parse limit to number
-    limit = parseInt(limit, 10);
-    values.push(limit);
+    if (range === undefined || range === '' || !/^\d+$/.test(range)) {
+        range = 20; // Default value for range is 20
+    }
+
+    start = parseInt(start, 10);
+    values.push(start);
+
+    range = parseInt(range, 10);
+    values.push(range);
 
     switch (filter) {
     case 'popularity':
@@ -96,7 +106,7 @@ const getMoments = {
             MOMENT.ID
         ORDER BY
             ${order}
-        LIMIT ?
+        LIMIT ?, ?
         `;
 
         return databaseUtil.sendQuery(query, values).then((result) => {

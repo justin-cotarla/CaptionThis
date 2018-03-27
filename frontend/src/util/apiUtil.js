@@ -21,25 +21,25 @@ export const captionFilters = [
     'Rejected'
 ];
 
-export const fetchMoments = ({ token, type, filter, userId, limit }) => {
+export const fetchMoments = ({ token, type, filter, userId, start, range }) => {
     const baseParams = getRequestTypeQuery(type, null, userId);
     const filterParams = getMomentsFilterQuery(filter);
     return axios({
         method: 'get',
         url: `http://${process.env.REACT_APP_IP}/api/moments`,
         headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-        params: { ...baseParams, ...filterParams, limit },
+        params: { ...baseParams, ...filterParams, start, range },
     });
 }
 
-export const fetchCaptions = ({ token, type, filter, momentId, userId, limit }) => {
+export const fetchCaptions = ({ token, type, filter, momentId, userId, start, range }) => {
     const baseParams = getRequestTypeQuery(type, momentId, userId);
     const filterParams = getCaptionFilterQuery(filter);
     return axios({
         method: 'get',
         url: `http://${process.env.REACT_APP_IP}/api/captions`,
         headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-        params: {  ...baseParams, ...filterParams, limit }
+        params: {  ...baseParams, ...filterParams, start, range }
     });
 }
 
