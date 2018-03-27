@@ -157,7 +157,7 @@ class Caption extends React.Component {
                             </h1>
                         }
                         {
-                            !this.props.showSubmittedBy && <Header text={`Posted on ${caption.date_added}`}/>
+                            !this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>Posted {timeAgo(caption.date_added)}</h1>
                         }
                     </li>
                 </ul>
