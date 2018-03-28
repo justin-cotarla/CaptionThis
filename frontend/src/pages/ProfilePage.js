@@ -43,12 +43,12 @@ class ProfilePage extends React.Component {
             } else {
                 message = 'Oops... Something went wrong!';
             }
-            
+
             this.setState({
                 loading: false,
                 error: message,
             });
-        });   
+        });
     }
 
     updateView = (selectedView) => {
@@ -82,7 +82,7 @@ class ProfilePage extends React.Component {
                 <NavBar user={this.state.user}/>
                 <div className="profile-page-container">
                     <div className="profile-page-content">
-                        <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>      
+                        <h1 className="header-username">{`${profileUser.username}'s posts`}</h1>
                         <ul className='views'>
                             {views.map(view => {
                                 return <li  key={view}
@@ -131,7 +131,7 @@ class ProfilePage extends React.Component {
                     <div className="profile-page-sidebar">
                     </div>
                 </div>
-            </div>  
+            </div>
         )
     }
 }
