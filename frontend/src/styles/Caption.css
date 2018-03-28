@@ -6,8 +6,10 @@
     width: 100%;
     display: inline-block;
     margin: 3px 0;
+    margin-bottom: 0.5em;
     padding: 0.5em 0;
     background-color: #C4C4C448;
+    border-radius: 2px;
 }
 
 .caption-highlighted {

@@ -8,13 +8,6 @@
     text-align: left;
     background: #202020;
 }
-.caption-container , .caption-container-accepted , .caption-container-rejected {
-    padding-bottom: 0px;
-    margin-bottom:8px;
-    background-color: #C4C4C448;
-    border-radius: 2px;
-    width: 1000px;
-}
 
 .profile-page-content {
     flex-grow: 3;
@@ -28,7 +21,7 @@
 }
 
 .profile-page-sidebar {
-    flex-grow: 1px;
+    flex-grow: 1;
     margin: 0 1em;
 }
 
@@ -52,9 +45,10 @@
 }
 
 .header-username {
-    font-size: 45px;
+    font-size: 54px;
     font-weight: 200px;
     margin: 2px;
+    margin-bottom: 0;
     margin-left: 20px;
     font-family: 'Teko';
     color: #FFFFFF;
@@ -62,9 +56,10 @@
 
 .header-section {
     font-family: 'Teko';
-    font-size: 35px;
+    font-size: 42px;
     font-weight: 100px;
-    margin: 5px 10px 5px 20px;
+    letter-spacing: 0.5px;
+    margin: 0px 10px 0px 20px;
     color: #FFFFFF;
 }
 
