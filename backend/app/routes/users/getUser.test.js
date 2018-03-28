@@ -30,6 +30,11 @@ describe('/api/getUser endpoint', () => {
                     ID: 1,
                     USERNAME: 'test',
                     DATE_ADDED: '2011-11-11T11:11:11.000Z',
+                    MOMENT_COUNT: 12,
+                    CAPTION_COUNT: 22,
+                    ACCEPT_COUNT: 3,
+                    REJECT_COUNT: 5,
+                    TOTAL_VOTE: 13,
                 }],
                 fields: {},
             });
@@ -42,6 +47,11 @@ describe('/api/getUser endpoint', () => {
                         id: 1,
                         username: 'test',
                         dateAdded: '2011-11-11T11:11:11.000Z',
+                        momentCount: 12,
+                        captionCount: 22,
+                        acceptCount: 3,
+                        rejectCount: 5,
+                        totalVote: 13,
                     },
                 });
             });

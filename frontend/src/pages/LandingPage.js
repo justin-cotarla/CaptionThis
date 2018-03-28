@@ -44,7 +44,7 @@ class LandingPage extends Component {
                     fetchMoments={(filter) => fetchMoments({ 
                         token, 
                         filter, 
-                        limit: 30, 
+                        range: 30, 
                     })}/>          
                 <ScrollApp id="app"/>
             </div>
