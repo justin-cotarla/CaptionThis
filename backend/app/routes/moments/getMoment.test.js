@@ -48,7 +48,7 @@ describe('/api/getMoments endpoint', () => {
                         date_added: 1,
                         user: {
                             username: 'test',
-                            user_id: 1,
+                            id: 1,
                         },
                     },
                 });

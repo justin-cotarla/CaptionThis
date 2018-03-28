@@ -44,7 +44,7 @@ const deleteMoment = {
                     throw MOMENT_DOES_NOT_EXIST;
                 }
                 // If user tries to delete another user's moment
-                if (result.rows[0].USER_ID !== userId) { 
+                if (result.rows[0].USER_ID !== userId) {
                     throw INVALID_USER_OPERATION;
                 }
                 const deleteQuery = 'UPDATE MOMENT SET DELETED=1 WHERE MOMENT.ID=?';
@@ -53,11 +53,8 @@ const deleteMoment = {
             .then(() => reply
                 .response({ code: GOOD.code })
                 .code(GOOD.http))
-            .catch((error) => {
-
-                return (error.code) ? reply.response({ code: error.code }).code(error.http)
-                    : reply.response({ code: UNKNOWN_ERROR.code }).code(UNKNOWN_ERROR.http);
-            });
+            .catch(error => ((error.code) ? reply.response({ code: error.code }).code(error.http)
+                : reply.response({ code: UNKNOWN_ERROR.code }).code(UNKNOWN_ERROR.http)));
     },
 };
 

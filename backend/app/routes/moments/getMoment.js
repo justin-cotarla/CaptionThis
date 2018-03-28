@@ -18,8 +18,8 @@ const getMoment = {
             IMG_URL,
             DESCRIPTION,
             MOMENT.DATE_ADDED,
-            USER.USERNAME,
-            USER.ID AS USER_ID
+            IF(USER.DELETED=0, USERNAME, null) AS USERNAME,
+            IF(USER.DELETED=0, USER.ID, null) AS USER_ID
         FROM
             MOMENT
         JOIN
@@ -27,7 +27,8 @@ const getMoment = {
         ON
             MOMENT.USER_ID = USER.ID
         WHERE
-            MOMENT.ID=?
+            MOMENT.ID=? AND
+            MOMENT.DELETED=0
         `;
         return databaseUtil.sendQuery(query, [id]).then((result) => {
             if (!result.rows[0]) {
@@ -43,7 +44,7 @@ const getMoment = {
                 date_added: result.rows[0].DATE_ADDED,
                 user: {
                     username: result.rows[0].USERNAME,
-                    user_id: result.rows[0].USER_ID,
+                    id: result.rows[0].USER_ID,
                 },
             };
 

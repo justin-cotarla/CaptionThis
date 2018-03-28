@@ -11,9 +11,9 @@ const getUser = {
     handler: (request, reply) => {
         const query = `
             SELECT
-                T.ID,
+                USER.ID,
                 USERNAME,
-                T.DATE_ADDED,
+                USER.DATE_ADDED,
                 COUNT(DISTINCT MOMENT.ID) AS MOMENT_COUNT,
                 COUNT(DISTINCT CAPTION.ID) AS CAPTION_COUNT,
                 COUNT(DISTINCT CAPTION.ID, case SELECTED when 1 then 1 else null end) AS ACCEPT_COUNT,
@@ -22,28 +22,52 @@ const getUser = {
             FROM
                 (SELECT 
                     USER.ID,
+                    USER.DELETED,
                     USERNAME,
                     USER.DATE_ADDED,
                     SUM(CAPTION_VOTE.VALUE) AS TOTAL_VOTE
                 FROM
                     USER
-                JOIN
+                LEFT JOIN
+                    CAPTION
+                ON
+                    USER.ID = CAPTION.USER_ID
+                LEFT JOIN
                     CAPTION_VOTE
                 ON
-                    USER.ID = CAPTION_VOTE.USER_ID
-                GROUP BY USER.ID, USERNAME, USER.DATE_ADDED) AS T
-            JOIN
-                MOMENT
+                    CAPTION.ID = CAPTION_VOTE.CAPTION_ID
+                WHERE CAPTION.DELETED=0
+                GROUP BY USER.ID, USERNAME, USER.DATE_ADDED, USER.DELETED) AS USER
+            LEFT JOIN
+                (SELECT
+                    MOMENT.USER_ID,
+                    ID
+                FROM
+                    MOMENT
+                WHERE
+                    MOMENT.DELETED = 0) AS MOMENT
             ON
-                T.ID = MOMENT.USER_ID
-            JOIN
-                CAPTION
+                USER.ID = MOMENT.USER_ID
+            LEFT JOIN
+                (SELECT
+                    CAPTION.USER_ID,
+                    CAPTION.ID,
+                    SELECTED
+                FROM
+                    CAPTION
+                JOIN
+                    MOMENT
+                ON
+                    CAPTION.MOMENT_ID = MOMENT.ID
+                WHERE
+                    CAPTION.DELETED = 0 AND
+                    MOMENT.DELETED = 0) AS CAPTION
             ON
-                T.ID = CAPTION.USER_ID
+                USER.ID = CAPTION.USER_ID
             WHERE
-                MOMENT.DELETED = 0 AND
-                CAPTION.DELETED = 0 AND
-                USERNAME = ?;
+                USERNAME = 'justin' AND
+                USER.DELETED=0
+            GROUP BY ID, USERNAME, DATE_ADDED, TOTAL_VOTE;        
         `;
 
         return databaseUtil.sendQuery(query, [request.params.username]).then((result) => {
