@@ -9,6 +9,7 @@ const Moment = props => {
         <div
           className="Moment-preview-container"
           style={{backgroundImage: `url(http://${process.env.REACT_APP_IP}/res/polaroid_texture.png)`}}>
+          { (props.currentUser.username == props.username) && <h1 className="delete-button" onClick={props.onClick}>X</h1> }
             <ConditionalWrap
                 condition={props.momentId}
                 wrap={children =>  <Link to={`/moment/${props.momentId}`}>{children}</Link>}

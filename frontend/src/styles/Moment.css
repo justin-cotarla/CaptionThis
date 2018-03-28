@@ -97,3 +97,10 @@
   font-size: 24px;
   font-family: 'Gloria Hallelujah', cursive;
 }
+
+.delete-button {
+  position: absolute;
+  top: -10px;
+  right: 3px;
+  font-size: 22px;
+}

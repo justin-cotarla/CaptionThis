@@ -118,6 +118,7 @@ class ProfilePage extends React.Component {
                                 <MomentList 
                                     showCount={false}
                                     showSubmittedBy={true}
+                                    user={this.props.user}
                                     fetchMoments={(filter) => fetchMoments({ 
                                         token,
                                         type: RequestTypes.BY_USER, 

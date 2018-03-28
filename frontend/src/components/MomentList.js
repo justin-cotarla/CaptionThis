@@ -83,7 +83,8 @@ class MomentList extends Component {
                                                 : 'Submit a caption'
                                             }
                                         username={ moment.user.username }
-                                        momentId={moment.moment_id}/>
+                                        momentId={ moment.moment_id }
+                                        currentUser={ this.props.user }/>
                                 </li>
                             )
                         })

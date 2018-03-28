@@ -41,6 +41,7 @@ class LandingPage extends Component {
                         onClick={this.onLogoClick} />
                 <MomentList 
                     showSubmittedBy={true}
+                    user={this.state.user}
                     fetchMoments={(filter) => fetchMoments({ 
                         token, 
                         filter, 
