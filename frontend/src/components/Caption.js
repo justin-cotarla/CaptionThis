@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import Header from './Header';
 import CaptionVotes from './CaptionVotes';
 import Acceptor from './Acceptor';
-
+import ConditionalWrap from './ConditionalWrap';
 import '../styles/Caption.css';
 import AuthModal from './AuthModal';
 import { timeAgo } from '../util/dateUtil';
@@ -153,7 +153,12 @@ class Caption extends React.Component {
                         <Header textSize={4} text={caption.caption}/>
                         {
                             this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>
-                                Submitted {timeAgo(caption.date_added)} by <Link className="linked-username" to={`/user/${caption.user.username}`}>{caption.user.username}</Link>
+                                Submitted {timeAgo(caption.date_added)} by <ConditionalWrap
+                                    condition={caption.user.id !== null}
+                                    wrap={children => <Link className="linked-username" to={`/user/${caption.user.username}`}>{children}</Link>}
+                                >
+                                    {(caption.user.id === null) ? '[deleted]' : caption.user.username}
+                                </ConditionalWrap>
                             </h1>
                         }
                         {

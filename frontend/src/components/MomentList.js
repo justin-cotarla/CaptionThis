@@ -71,19 +71,26 @@ class MomentList extends Component {
                 <ul className="Moments-list">
                     {
                         moments.map(moment => {
+                            const {
+                                moment_id,
+                                img,
+                                date_added,
+                                top_caption,
+                                user,
+                            } = moment;
                             return (
-                                <li key={moment.moment_id}>
+                                <li key={moment_id}>
                                     <Moment className="Moment-component"
                                         showSubmittedBy={this.props.showSubmittedBy}
-                                        image={ moment.img }
-                                        date={ formatDate(moment.date_added) }
+                                        image={ img }
+                                        date={ formatDate(date_added) }
                                         description= {
-                                            moment.top_caption 
-                                                ? `"${(moment.top_caption.length > 30) ? moment.top_caption.slice(0, 30).concat('...') : moment.top_caption}"`
+                                            top_caption 
+                                                ? `"${(top_caption.length > 30) ? top_caption.slice(0, 30).concat('...') : top_caption}"`
                                                 : 'Submit a caption'
                                             }
-                                        username={ moment.user.username }
-                                        momentId={moment.moment_id}/>
+                                        user={ {...user} }
+                                        momentId={moment_id}/>
                                 </li>
                             )
                         })
