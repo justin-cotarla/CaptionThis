@@ -112,6 +112,7 @@ class CaptionList extends React.Component {
                                             && (momentCreatorId === user.id) // The logged-on user created the moment
                                             && (user.id !== caption.user.user_id) // The logged-on user did not create the caption
                                         } 
+                                        canEdit={user && (user.id === caption.user.user_id)}
                                         token={token} />
                                 </ConditionalWrap>
                             </li>
