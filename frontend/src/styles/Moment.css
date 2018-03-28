@@ -78,8 +78,7 @@
 }
 
 .Moments-list li .Moment-preview-container:hover {
-
-    cursor: pointer;
+    cursor: default;
     transform: scale(1.15);
     -webkit-transform: scale(1.15);
     -moz-transform: scale(1.15);

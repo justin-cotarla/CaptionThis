@@ -9,11 +9,15 @@ const getCaptionsBuilder = (params) => {
     const conditions = [];
     const values = [];
 
-    // To get captions by moment id, user-id, with a limit
     const momentid = params['moment-id'];
     const captionsByUser = params['user-id'];
 
-    let { limit, filter, order } = params;
+    let {
+        start,
+        range,
+        filter,
+        order,
+    } = params;
 
     if (!(momentid === undefined || momentid === '' || momentid === 0 || !/^\d+$/.test(momentid))) {
         conditions.push('MOMENT_ID=?');
@@ -40,13 +44,19 @@ const getCaptionsBuilder = (params) => {
         values.push(captionsByUser);
     }
 
-    if (limit === undefined || limit === '' || !/^\d+$/.test(limit)) {
-        limit = 20; // Default value for limit is 20
+    if (start === undefined || start === '' || !/^\d+$/.test(start)) {
+        start = 0; // Default value for start is 0
     }
 
-    // Parse limit to number
-    limit = parseInt(limit, 10);
-    values.push(limit);
+    if (range === undefined || range === '' || !/^\d+$/.test(range)) {
+        range = 20; // Default value for range is 20
+    }
+
+    start = parseInt(start, 10);
+    values.push(start);
+
+    range = parseInt(range, 10);
+    values.push(range);
 
     return {
         where: conditions.length ? conditions.join(' AND ') : 'TRUE',
@@ -103,7 +113,7 @@ const getCaptions = {
             USERNAME
         ORDER BY
             ${order}
-        LIMIT ?
+        LIMIT ?, ?
         `;
 
         const allQueryValues = [userId].concat(values);

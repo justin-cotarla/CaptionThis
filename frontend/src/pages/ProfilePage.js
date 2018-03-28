@@ -1,12 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 import Loading from '../components/Loading';
-import MomentList from '../components/MomentsList';
+import MomentList from '../components/MomentList';
 import CaptionList from '../components/CaptionList';
 import NavBar from '../components/NavBar';
 import ErrorGraphic from '../components/ErrorGraphic';
 
-import { fetchUser, fetchCaptions, fetchUserMoments, captionRequestTypes } from '../util/apiUtil';
+import { fetchUser, fetchCaptions, fetchMoments, RequestTypes } from '../util/apiUtil';
 
 import '../styles/ProfilePage.css';
 
@@ -16,7 +15,6 @@ class ProfilePage extends React.Component {
         this.state = {
             token: props.token,
             profileUser: null,
-            moments: [],
             selectedView: 'captions',
             loading: true,
             user: props.user,
@@ -25,25 +23,17 @@ class ProfilePage extends React.Component {
     }
 
     componentDidMount(){
-        const { token } = this.state;
         const { username } = this.props.match.params;
         let profileUser;
 
         fetchUser(username)
         .then(response => {
             profileUser = response.data.user;
-            return axios.all([
-                fetchUserMoments(profileUser.id, token),
-            ])
-        })
-        .then(axios.spread((userMoments) => {
-            const { moments } = userMoments.data;
             this.setState({
                 profileUser,
-                moments,
                 loading: false,
             });
-        }))
+        })   
         .catch(error => {
             console.log(error);
 
@@ -69,7 +59,7 @@ class ProfilePage extends React.Component {
 
     render(){
         const { user } = this.props;
-        const { token, profileUser, moments, selectedView, loading, error } = this.state;
+        const { token, profileUser, selectedView, loading, error } = this.state;
         const views = ['captions', 'moments'];
 
         if (loading) {
@@ -106,27 +96,35 @@ class ProfilePage extends React.Component {
                         {
                             selectedView === views[0]
                             && (
-                                <CaptionList
-                                        fetchCaptions={(filter) => fetchCaptions({
-                                            token,
-                                            type: captionRequestTypes.BY_USER,
-                                            filter,
-                                            userId: profileUser.id
-                                        })}
-                                        showSubmittedBy={false}
-                                        showCount={false}
-                                        isLinkedToMoment={true}
-                                        momentCreatorId={null}
-                                        user={this.props.user}
-                                        token={token}>
+                                <CaptionList 
+                                    fetchCaptions={(filter) => fetchCaptions({ 
+                                        token, 
+                                        type: RequestTypes.BY_USER, 
+                                        filter, 
+                                        userId: profileUser.id 
+                                    })}
+                                    showSubmittedBy={false} 
+                                    showCount={false}
+                                    isLinkedToMoment={true} 
+                                    momentCreatorId={null}
+                                    user={this.props.user}
+                                    token={token}>
                                 </CaptionList>
                             )
                         }
                         {
                             selectedView === views[1]
                             && (
-                                ( moments.length === 0 && <h1 className="header-section">There aren't any Moments to see here :(</h1> )
-                                || <MomentList Moments={moments}/>
+                                <MomentList 
+                                    showCount={false}
+                                    showSubmittedBy={true}
+                                    fetchMoments={(filter) => fetchMoments({ 
+                                        token,
+                                        type: RequestTypes.BY_USER, 
+                                        filter,
+                                        userId: profileUser.id, 
+                                        range: 30, 
+                                    })}/>
                             )
                         }
                     </div>

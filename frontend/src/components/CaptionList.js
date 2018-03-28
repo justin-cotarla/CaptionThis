@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import scrollToComponent from 'react-scroll-to-component';
-import CaptionFilter from '../components/CaptionFilter';
+import ListFilter from '../components/ListFilter';
 import Caption from './Caption';
 import Header from './Header';
 import ErrorGraphic from './ErrorGraphic';
+import ConditionalWrap from './ConditionalWrap';
+
+import { captionFilters } from '../util/apiUtil';
 
 import '../styles/CaptionList.css';
-
-const ConditionalWrap = ({condition, wrap, children}) => condition ? wrap(children) : children;
 
 class CaptionList extends React.Component {
     constructor(props){
@@ -37,7 +38,7 @@ class CaptionList extends React.Component {
         this.props.fetchCaptions(this.state.selectedFilter)
         .then(response => {
             const { captions } = response.data;
-            this.setState({ 
+            this.setState({
                 captions,
                 loading: false,
             })
@@ -66,16 +67,12 @@ class CaptionList extends React.Component {
     onFilterChange = (selectedFilter) => {
         const currentFilter = this.state.selectedFilter;
         if (selectedFilter !== currentFilter) {
-            this.setState({ 
-                loading: true, 
-            });
             this.props.fetchCaptions(selectedFilter)
             .then(response => {
                 const { captions } = response.data;
                 this.setState({ 
                     captions, 
                     selectedFilter,
-                    loading: false,
                 });
             })
         }
@@ -93,10 +90,10 @@ class CaptionList extends React.Component {
 
         return ( 
             <div className="caption-list-container">
+                <ListFilter filters={captionFilters} selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
                 {
                     (showCount && captions.length === 0) && <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
                 }
-                <CaptionFilter selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
                 <ul>
                     { 
                         captions.map(caption => {

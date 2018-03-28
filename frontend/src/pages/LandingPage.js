@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import MomentsList from '../components/MomentsList';
+import MomentList from '../components/MomentList';
 import ScrollApp from '../components/ScrollerComponents'
-
 import NavBar from '../components/NavBar';
-import Loading from '../components/Loading';
-import ErrorGraphic from '../components/ErrorGraphic';
+
+import { fetchMoments } from '../util/apiUtil';
 
 import '../styles/LandingPage.css';
 
@@ -30,54 +28,26 @@ class LandingPage extends Component {
             });
     };
 
-    componentDidMount(){
-        axios.get(`http://${process.env.REACT_APP_IP}/api/moments?limit=30`)
-        .then(response => {
-            let moments = response.data.moments;
-            this.setState({
-                moments,
-            });
-        })
-        .catch(error => {
-            console.log(error);
-            this.setState({
-                error: 'Oops! Something went wrong...'
-            });
-        });
-    };
-
     render() {
-        const moments = this.state.moments;
-        const error = this.state.error;
-
-        // Return an error message if moments could not be loaded
-        if (error) {
-            return <ErrorGraphic error_message={error}/>
-        }
+        const { token } = this.state;
         return (
-            <div>
+            <div className="landing-page-container">
                 <NavBar user={this.state.user}/>
-
-                <div className="logo">
                     <img
+                        className="logo"
                         src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
                         alt="Logo"
                         width="340"
-                        onClick={this.onLogoClick}
-                    />
-                </div>
-
-                <div>
-                    {moments ? (
-                        <MomentsList
-                         Moments={moments}
-                         showSubmittedBy={true} />
-                    ) : (
-                        <Loading />
-                    )}
-                  
-                    <ScrollApp id="app"/></div>
-              </div>
+                        onClick={this.onLogoClick} />
+                <MomentList 
+                    showSubmittedBy={true}
+                    fetchMoments={(filter) => fetchMoments({ 
+                        token, 
+                        filter, 
+                        range: 30, 
+                    })}/>          
+                <ScrollApp id="app"/>
+            </div>
         )
     }
 }

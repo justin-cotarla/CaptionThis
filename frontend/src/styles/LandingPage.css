@@ -1,48 +1,40 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-html, body{
-  height: 100%;
-  background: #202020;
-  /* #272525 #303030;*/
+.landing-page-container .list-filter {
+    margin-left: 1em;
+    margin-bottom: 2em;
 }
 
 div.header {
-  padding: 15px;
-  display: block;
-  height: 20px;
+    padding: 15px;
+    display: block;
+    height: 20px;
 }
 
 div.login-button {
-  float: right;
-  padding: 5px;
-  color: #1DE28F;
-  font-weight: bold;
-  cursor: pointer;
-  /*
-  border: #1DE28F 2px solid;
-  border-radius: 10px;
-  */
+    float: right;
+    padding: 5px;
+    color: #1DE28F;
+    font-weight: bold;
+    cursor: pointer;
+    /*
+    border: #1DE28F 2px solid;
+    border-radius: 10px;
+    */
 }
 
 div.profile-button {
-  display: inline-block;
-  padding: 4px 8px;
-  color: #1DE28F;
-  cursor: pointer;
+    display: inline-block;
+    padding: 4px 8px;
+    color: #1DE28F;
+    cursor: pointer;
 }
 
 div.profile-button img {
-  width: 22px;
+    width: 22px;
 }
 
-div.logo {
-  text-align: center;
-}
-
-div.logo img {
-  text-align: center;
-  width: 420px;
+.logo {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 420px;
 }
