@@ -5,6 +5,7 @@
 .caption-container-rejected {
     width: 100%;
     display: inline-block;
+    position: relative;
     margin: 3px 0;
     padding: 0.5em 0;
     background-color: rgba(196, 196, 196, 0.3);

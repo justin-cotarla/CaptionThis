@@ -106,6 +106,7 @@ class ProfilePage extends React.Component {
                                     showSubmittedBy={false} 
                                     showCount={false}
                                     isLinkedToMoment={true} 
+                                    isInteractive={false}
                                     momentCreatorId={null}
                                     user={this.props.user}
                                     token={token}>

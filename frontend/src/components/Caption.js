@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import classnames from 'classnames';
 
-import Header from './Header';
 import LoadingDots from './LoadingDots';
 import CaptionVotes from './CaptionVotes';
 import Acceptor from './Acceptor';
@@ -21,7 +20,7 @@ class Caption extends React.Component {
         this.state = {
             caption: props.caption,
             isHighlighted: props.scrollTo === props.caption.caption_id,
-            isEditable: false,
+            editing: false,
             token: props.token,
             showAuthModal: false,
         }
@@ -133,14 +132,14 @@ class Caption extends React.Component {
 
     onEditClick = event => {
         event.preventDefault();
-        this.setState({ isEditable: true });
+        this.setState({ editing: true });
     }
 
     onSave = (editedCaption) => {
         this.setState(prevState => {
             return {
                 ...prevState,
-                isEditable: false,
+                editing: false,
                 caption: {
                     ...prevState.caption,
                     caption: editedCaption,
@@ -150,7 +149,8 @@ class Caption extends React.Component {
     }
 
     render(){
-        const { caption, isHighlighted, isEditable, token, showAuthModal } = this.state;
+        const { caption, isHighlighted, editing, token, showAuthModal } = this.state;
+        const { canEdit } = this.props;
         const acceptorClasses = ["caption-container-rejected", "caption-container", "caption-container-accepted"];
         return (
             <div
@@ -160,7 +160,7 @@ class Caption extends React.Component {
                     open={showAuthModal}
                     onClose={() => this.setState({ showAuthModal: false })}/>
                 <ul>
-                    <li>
+                    <li style={{height: '85px', margin: 'auto 0'}}>
                         <CaptionVotes
                             upvotes={caption.total_votes}
                             voteHandler={this.handleVote}
@@ -174,22 +174,22 @@ class Caption extends React.Component {
                             status={caption.selected}
                             acceptHandler={this.handleAccept} />
                         { 
-                            this.props.canEdit && !isEditable
-                            && <Link 
+                            canEdit && !editing
+                            && <span 
                                 className="edit-caption"
-                                to="#"
                                 onClick={this.onEditClick}>
                                     edit
-                                </Link>
+                                </span>
                         }
                         {
-                            isEditable ? 
+                            editing ? 
                                 <CaptionEditor 
+                                    key={caption.caption_id}
                                     token={token} 
                                     captionId={caption.caption_id}
                                     caption={caption.caption} 
                                     onSave={this.onSave}
-                                    onCancel={() => this.setState({ isEditable: false })}/> : <Header textSize={4} text={caption.caption}/>
+                                    onCancel={() => this.setState({ editing: false })}/> : <h1 style={{display: 'inline', fontSize: '24px'}}>{caption.caption}</h1>
                         }
                         {
                             this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>
@@ -216,6 +216,11 @@ class CaptionEditor extends React.Component {
             isEditing: false,
             error: '',
         }
+    }
+
+    componentDidMount(){
+        const { Textarea } = this;
+        Textarea.focus();
     }
 
     onEdit = event => {
@@ -248,8 +253,9 @@ class CaptionEditor extends React.Component {
     render() {
         const { token, currentCaption, editedCaption, isEditing, error } = this.state;
         return (
-                <div>
+                <div className="caption-editor-container">
                     <textarea
+                        ref={(textarea) => this.Textarea = textarea}
                         className="caption-editor-input" 
                         type="text"
                         value={editedCaption}

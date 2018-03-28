@@ -80,7 +80,7 @@ class CaptionList extends React.Component {
 
     render () {
         const { captions, selectedFilter, scrolled, error } = this.state;
-        const { user, momentCreatorId, showSubmittedBy, showCount, isLinkedToMoment, scrollTo, token } = this.props;
+        const { user, momentCreatorId, showSubmittedBy, showCount, isLinkedToMoment, scrollTo, isInteractive, token } = this.props;
 
         if (error) {
             return <div className="caption-list-container">
@@ -112,7 +112,7 @@ class CaptionList extends React.Component {
                                             && (momentCreatorId === user.id) // The logged-on user created the moment
                                             && (user.id !== caption.user.user_id) // The logged-on user did not create the caption
                                         } 
-                                        canEdit={user && (user.id === caption.user.user_id)}
+                                        canEdit={user && isInteractive && (user.id === caption.user.user_id)}
                                         token={token} />
                                 </ConditionalWrap>
                             </li>

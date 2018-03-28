@@ -1,19 +1,25 @@
 .edit-caption {
     display: inline-block;
+    position: absolute;
+    right: 0;
+    bottom: 5px;
     padding: 0 !important;
-    font-size: 14px;
+    margin: 0 0.8em;
+    font-size: 18px;
+    letter-spacing: .5px;
     color: white;
     cursor: 'pointer';
 }
 
 .edit-caption:hover {
     color: #1DE28F;
+    cursor: pointer;
 }
 
 .caption-editor-input {
     display: block;
     box-sizing: border-box;
-    width: 330px;
+    width: 375px;
     border-radius: 3px;
     outline-color: #1DE28F;
     padding: 0.5em;
@@ -29,7 +35,7 @@
 
 .caption-editor-btn {
     display: inline;
-    padding: 0.5em 1.2em;
+    padding: 0.1em 1.2em;
     margin: 0.5em 0;
     border-radius: 3px;
     border: none;
