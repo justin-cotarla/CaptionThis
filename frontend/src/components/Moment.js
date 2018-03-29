@@ -19,7 +19,12 @@ const Moment = props => {
                 <h1 style={{fontSize: '20px'}}>Posted {timeAgo(props.date)}</h1>
                 {
                     props.showSubmittedBy && <h1 className="header-medium-2" style={{ marginTop: '8px'}}>
-                        Submitted by <Link className="linked-username" to={`/user/${props.username}`}>{props.username}</Link>
+                        Submitted by <ConditionalWrap
+                                    condition={props.user.id !== null}
+                                    wrap={children => <Link className="linked-username" to={`/user/${props.user.username}`}>{children}</Link>}
+                                >
+                            {(props.user.id === null) ? '[deleted]' : props.user.username}
+                        </ConditionalWrap>
                     </h1>
                 }
         </div>

@@ -91,7 +91,7 @@ class MomentViewPage extends Component{
                         date={ formatDate(moment.date_added) }
                         description={ moment.description }
                         showSubmittedBy={ true }
-                        username={ moment.user.username }/>
+                        user={ {...moment.user} }/>
                     <CaptionCreatorForm
                         momentId={this.props.match.params.momentID}
                         onCaptionSubmit={() => this.onCaptionSubmit()}
@@ -110,7 +110,7 @@ class MomentViewPage extends Component{
                         isLinkedToMoment={false}
                         scrollTo={scrollTo}
                         momentId={moment.moment_id}
-                        momentCreatorId={moment.user.user_id}
+                        momentCreatorId={moment.user.id}
                         user={this.props.user}
                         token={token}/>
                 </div>

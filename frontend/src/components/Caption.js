@@ -9,6 +9,7 @@ import Acceptor from './Acceptor';
 import AuthModal from './AuthModal';
 
 import '../styles/CaptionEditor.css';
+import ConditionalWrap from './ConditionalWrap';
 import '../styles/Caption.css';
 
 import { timeAgo } from '../util/DateUtil';
@@ -188,8 +189,13 @@ class Caption extends React.Component {
                                     onCancel={() => this.setState({ editing: false })}/> : <h1 style={{fontSize: '24px'}}>{caption.caption}</h1>
                         }
                         {
-                            this.props.showSubmittedBy && <h1 className="caption-submitted-by">
-                                Submitted {timeAgo(caption.date_added)} by <Link className="linked-username" to={`/user/${caption.user.username}`}>{caption.user.username}</Link>
+                            this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>
+                                Submitted {timeAgo(caption.date_added)} by <ConditionalWrap
+                                    condition={caption.user.id !== null}
+                                    wrap={children => <Link className="linked-username" to={`/user/${caption.user.username}`}>{children}</Link>}
+                                >
+                                    {(caption.user.id === null) ? '[deleted]' : caption.user.username}
+                                </ConditionalWrap>
                             </h1>
                         }
                         {

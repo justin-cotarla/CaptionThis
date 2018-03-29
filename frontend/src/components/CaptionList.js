@@ -114,7 +114,7 @@ class CaptionList extends React.Component {
                                         canAccept={
                                             (user) // The user is logged on
                                             && (momentCreatorId === user.id) // The logged-on user created the moment
-                                            && (user.id !== caption.user.user_id) // The logged-on user did not create the caption
+                                            && (user.id !== caption.user.id) // The logged-on user did not create the caption
                                         } 
                                         canEdit={user && isInteractive && (user.id === caption.user.user_id)}
                                         token={token} />

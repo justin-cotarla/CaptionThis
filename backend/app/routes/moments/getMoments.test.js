@@ -54,7 +54,7 @@ describe('/api/getMoments endpoint', () => {
                     moments: [{
                         moment_id: 1,
                         user: {
-                            user_id: 1,
+                            id: 1,
                             username: 'test',
                         },
                         img: 'test',
@@ -86,7 +86,7 @@ describe('/api/getMoments endpoint', () => {
                     moments: [{
                         moment_id: 1,
                         user: {
-                            user_id: 1,
+                            id: 1,
                             username: 'test',
                         },
                         img: 'test',
