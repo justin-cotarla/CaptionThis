@@ -18,26 +18,25 @@ const getUser = {
                 COUNT(DISTINCT CAPTION.ID) AS CAPTION_COUNT,
                 COUNT(DISTINCT CAPTION.ID, case SELECTED when 1 then 1 else null end) AS ACCEPT_COUNT,
                 COUNT(DISTINCT CAPTION.ID, case SELECTED when -1 then 1 else null end) AS REJECT_COUNT,
-                TOTAL_VOTE
+                COALESCE(CAPTION_VOTE.TOTAL_VOTE, 0) AS TOTAL_VOTE
             FROM
-                (SELECT 
-                    USER.ID,
-                    USER.DELETED,
-                    USERNAME,
-                    USER.DATE_ADDED,
-                    SUM(CAPTION_VOTE.VALUE) AS TOTAL_VOTE
+                USER
+            LEFT JOIN(
+                SELECT 
+                    SUM(CAPTION_VOTE.VALUE) AS TOTAL_VOTE,
+                    CAPTION.USER_ID
                 FROM
-                    USER
-                LEFT JOIN
                     CAPTION
-                ON
-                    USER.ID = CAPTION.USER_ID
                 LEFT JOIN
                     CAPTION_VOTE
                 ON
                     CAPTION.ID = CAPTION_VOTE.CAPTION_ID
-                WHERE CAPTION.DELETED=0
-                GROUP BY USER.ID, USERNAME, USER.DATE_ADDED, USER.DELETED) AS USER
+                WHERE
+                    CAPTION.DELETED=0
+                GROUP BY
+                    USER_ID) AS CAPTION_VOTE
+            ON
+                CAPTION_VOTE.USER_ID = USER.ID
             LEFT JOIN
                 (SELECT
                     MOMENT.USER_ID,
@@ -65,9 +64,9 @@ const getUser = {
             ON
                 USER.ID = CAPTION.USER_ID
             WHERE
-                USERNAME = 'justin' AND
+                USERNAME = ? AND
                 USER.DELETED=0
-            GROUP BY ID, USERNAME, DATE_ADDED, TOTAL_VOTE;        
+            GROUP BY ID, USERNAME, DATE_ADDED, TOTAL_VOTE;
         `;
 
         return databaseUtil.sendQuery(query, [request.params.username]).then((result) => {
