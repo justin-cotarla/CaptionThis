@@ -1,5 +1,101 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
+.logReg-container {
+  margin: 34px;
+  padding: 15px; 
+  font-size: 15px;    
+  font-style: normal;
+  width: 600px;
+  font-variant: normal;
+  font-weight: 300;
+  background-color: #696969;
+  box-shadow: 0 3px 0 black;
+  border-radius: 3px;
+  margin:auto;
+}
+
+.input-label {
+  float: center;
+  display: block;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  font-family: 'Teko';
+  letter-spacing: 2px;
+  font-size: 26px;
+  color:#1DE28F;
+}
+
+.input-field {
+  float: center;
+  opacity: 0.8;
+  border: 0;
+  outline: 0; 
+  background: transparent;
+  width:400px;
+  border-bottom: #1DE28F 2px solid;
+  text-align: left;
+  font-family: 'Teko';
+  letter-spacing: 2px;
+  font-size: 20px;
+  color:#FFFFFF;
+}
+.input-field:hover{
+  opacity: 1;
+}
+
+.signUpNow-button {
+  font-family: 'Teko';
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin-top:1px;
+  color:#1DE28F;
+}
+.signUpNow-button a {
+  text-align: center;
+  position: relative;
+  color: #FFFFFF;
+}
+
+.login-verify-error {
+  height: 10px;
+  font-family: 'Teko';
+  letter-spacing: 2px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #ff0000;
+}
+
+div.loginToAccount-button {
+  opacity: 0.8;
+  text-align: center;
+  width: 300px;
+  font-family: 'Teko';
+  font-size: 36px;
+  letter-spacing: 2px;
+  float: none;
+  margin: 0 auto;
+  margin-bottom: -10px;
+  margin-top: 25px;
+  padding: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  color:#1DE28F;
+  }
+div.loginToAccount-button:hover {
+    opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+
 .defined-style-components {
   --BackgroundColor: #202020;
   --themeColor: #1DE28F;
@@ -24,14 +120,6 @@
   padding-top: 60px;
 }
 
-.login-verify-error {
-  height: 10px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 400;
-  color: #ff0000;
-}
-
 div.signup-button {
    opacity: 0.8;
    text-align: center;
@@ -50,25 +138,6 @@ div.signup-button {
   div.signup-button:hover {
     opacity: 1;
   }
-  div.login2-button {
-    opacity: 0.8;
-    text-align: center;
-    width: 300px;
-    font-family: var(--FontFamily);
-    font-size: 32px;
-    letter-spacing: 2px;
-    float: none;
-    margin: 0 auto;
-    margin-bottom: -5px;
-    margin-top: 25px;
-    padding: 5px;
-    color: var(--themeColor);
-    font-weight: bold;
-    cursor: pointer;
-    }
-div.login2-button:hover {
-      opacity: 1;
-}
 
 div.registration-button {
     opacity: 0.8;
@@ -213,11 +282,7 @@ div.logo {
 .registration-button a:active{
     text-decoration: none;
 }
-.registration-button a {
-  text-align: center;
-  position: relative;
-  color: #FFFFFF;
-}
+
 .signup-button a {
   opacity: 0.8;
     text-align: center;
@@ -233,15 +298,6 @@ div.logo {
     font-weight: bold;
     cursor: pointer;
 }
-.registration-button a:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  border-bottom: 2px solid #FFFFFF;
-  transition: 0.4s;
-}
 .signup-button a:after {
   content: '';
   position: absolute;
@@ -250,9 +306,6 @@ div.logo {
   width: 0%;
   border-bottom: 2px solid #FFFFFF;
   transition: 0.4s;
-}
-.registration-button a:hover:after {
-  width: 100%;
 }
 
 .login-redirect-button b{
@@ -272,16 +325,4 @@ div.logo {
 }
 .login-redirect-button b:hover:after {
   width: 100%;
-}
-
-.text--center {
-  font-family: var(--FontFamily);
-  font-size: 22px;
-  line-height: 1.2;
-  font-weight: 200;
-  letter-spacing: 1px;
-  text-align: center;
-  margin-top:1px;
-  margin-left:  40px;
-  margin-right: 26px;
 }
