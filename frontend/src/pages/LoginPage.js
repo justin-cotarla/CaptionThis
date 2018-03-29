@@ -84,10 +84,9 @@ class LoginPage extends Component{
               <img
                   src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
                   alt="Logo"
-
               />
-          </div>
-          <body className="align-user-field">
+            </div>
+            <div className="align-user-field">
                 <form>
                     <div className="user-form-field">
                         {this.state.redirect && <Redirect to={this.state.redirect} />}
@@ -105,7 +104,7 @@ class LoginPage extends Component{
                             placeholder="Username"
                             value={this.state.userField}
                             onChange={this.onUserChange}
-                            />
+                        />
                     </div>
                     <div className="user-form-field">
                         <label for="loginpassword">
@@ -123,7 +122,7 @@ class LoginPage extends Component{
                             value={this.state.passField}
                             onChange={this.onPassChange}
                             onKeyDown={this.onEnterPress}
-                            />
+                        />
                     </div>
                 </form>
                 <div
@@ -131,7 +130,7 @@ class LoginPage extends Component{
                     onClick={this.onSubmit}
                     >
                     Login
-               </div>
+                </div>
                 <div className="registration-button" onClick={this.onRegisterClick}>
                     <p class="text--center"> Not a member ? <a>Sign up now </a></p>
                 </div>
@@ -140,8 +139,8 @@ class LoginPage extends Component{
                   <LoadingDots className="login-loader"/>
                 </div>
                 }
-        </body>
-        </div>
+            </div>
+          </div>
         );
     }
 }
