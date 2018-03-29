@@ -78,7 +78,6 @@ class RegistrationPage extends Component{
                     />
                 </div>
                 <body className="align-user-field">
-                  <div className="grid">
                     <form>
                         <div className="user-form-field">
                             {this.state.redirect && <Redirect to={this.state.redirect} />}
@@ -134,12 +133,12 @@ class RegistrationPage extends Component{
                               onKeyDown={this.onEnterPress}
                               />
                         </div>
-                        <div
-                            className="signup-button"
-                            onClick={this.onSubmit}>
-                            <a>Sign Up</a>
-                      </div>
                     </form>
+                    <div
+                        className="signup-button"
+                        onClick={this.onSubmit}>
+                        <a>Sign Up</a>
+                  </div>
                     <div
                         className="login2-button"
                         onClick={this.onLoginClick}
@@ -151,7 +150,6 @@ class RegistrationPage extends Component{
                       <LoadingDots className="login-loader"/>
                     </div>
                     }
-                    </div>
                     </body>
                 </div>
         );
