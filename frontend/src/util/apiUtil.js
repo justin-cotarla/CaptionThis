@@ -101,3 +101,19 @@ const getCaptionFilterQuery = filter => {
             return {};
     }
 }
+
+export const editCaption = ({ token, captionId, newCaption }) => {
+    const data = { 
+        operation: 'edit', 
+        value: newCaption,
+    };
+    const headers = {
+        'Authorization': `Bearer ${token}`
+    };
+    return axios({
+        method: 'post',
+        url: `http://${process.env.REACT_APP_IP}/api/captions/${captionId}`,
+        data,
+        headers,
+    });
+}
