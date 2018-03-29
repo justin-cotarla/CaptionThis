@@ -20,7 +20,7 @@ class MomentList extends Component {
         };
     };
 
-    componentDidMount() { 
+    componentDidMount() {
         this.onFilterChange(momentFilters[0]);
     }
 
@@ -30,8 +30,8 @@ class MomentList extends Component {
             this.props.fetchMoments(selectedFilter)
             .then(response => {
                 const { moments } = response.data;
-                this.setState({ 
-                    moments, 
+                this.setState({
+                    moments,
                     selectedFilter,
                     loading: false,
                 });
@@ -58,12 +58,12 @@ class MomentList extends Component {
         if (loading) {
             return <Loading/>
         }
-        
+
         return (
             <div className="moment-list-container">
-                <ListFilter 
-                    filters={momentFilters} 
-                    selectedFilter={selectedFilter} 
+                <ListFilter
+                    filters={momentFilters}
+                    selectedFilter={selectedFilter}
                     onFilterChange={this.onFilterChange}/>
                 {
                     (showCount && moments.length === 0) && <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
@@ -85,8 +85,8 @@ class MomentList extends Component {
                                         image={ img }
                                         date={ formatDate(date_added) }
                                         description= {
-                                            top_caption 
-                                                ? `"${(top_caption.length > 30) ? top_caption.slice(0, 30).concat('...') : top_caption}"`
+                                            top_caption
+                                                ? top_caption
                                                 : 'Submit a caption'
                                             }
                                         user={ {...user} }
