@@ -3,14 +3,17 @@
 .caption-container,
 .caption-container-accepted,
 .caption-container-rejected {
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    display: inline-block;
     position: relative;
     margin: 3px 0;
     margin-bottom: 0.5em;
     padding: 0.5em 0;
     background-color: #C4C4C448;
     border-radius: 2px;
+    font-family: 'Teko';
+    font-size: 20px;
 }
 
 .caption-highlighted {
@@ -88,22 +91,15 @@
 .caption-content {
     margin: auto 0px;
 }
+.caption-submitted-by {
+    margin-top: auto;
+    font-size: 16px !important;
+}
 .caption-container h1,
 .caption-container-accepted h1,
 .caption-container-rejected h1 {
   font-family: 'Teko';
   font-size: 18px;
-}
-
-.caption-container > ul,
-.caption-container-accepted > ul,
-.caption-container-rejected > ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    list-style-type: none;
-    font-family: 'Teko';
-    font-size: 20px;
 }
 
 .caption-content h1 {

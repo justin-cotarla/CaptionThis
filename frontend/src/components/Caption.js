@@ -159,15 +159,12 @@ class Caption extends React.Component {
                 <AuthModal
                     open={showAuthModal}
                     onClose={() => this.setState({ showAuthModal: false })}/>
-                <ul>
-                    <li style={{height: '85px', margin: 'auto 0'}}>
                         <CaptionVotes
                             upvotes={caption.total_votes}
                             voteHandler={this.handleVote}
                             id={caption.caption_id}
                             vote_value={this.state.caption.user_vote}/>
-                    </li>
-                    <li className="caption-content">
+                    <div className="caption-content">
                         <Acceptor
                             canAccept={this.props.canAccept}
                             captionId={caption.caption_id}
@@ -182,25 +179,24 @@ class Caption extends React.Component {
                                 </span>
                         }
                         {
-                            editing ? 
+                            editing ?
                                 <CaptionEditor 
                                     key={caption.caption_id}
                                     token={token} 
                                     captionId={caption.caption_id}
                                     caption={caption.caption} 
                                     onSave={this.onSave}
-                                    onCancel={() => this.setState({ editing: false })}/> : <h1 style={{display: 'inline', fontSize: '24px'}}>{caption.caption}</h1>
+                                    onCancel={() => this.setState({ editing: false })}/> : <h1 style={{fontSize: '24px'}}>{caption.caption}</h1>
                         }
                         {
-                            this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>
+                            this.props.showSubmittedBy && <h1 className="caption-submitted-by">
                                 Submitted {timeAgo(caption.date_added)} by <Link className="linked-username" to={`/user/${caption.user.username}`}>{caption.user.username}</Link>
                             </h1>
                         }
                         {
-                            !this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>Posted {timeAgo(caption.date_added)}</h1>
+                            !this.props.showSubmittedBy && <h1 className="caption-submitted-by">Posted {timeAgo(caption.date_added)}</h1>
                         }
-                    </li>
-                </ul>
+                    </div>
             </div>
         )
     }
