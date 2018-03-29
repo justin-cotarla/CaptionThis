@@ -62,7 +62,7 @@ const getCaptionsBuilder = (params) => {
     values.push(range);
 
     return {
-        where: conditions.length ? conditions.join(' AND ') : 'TRUE',
+        where: conditions.join(' AND '),
         values,
         order: `${filter} ${order}`,
     };

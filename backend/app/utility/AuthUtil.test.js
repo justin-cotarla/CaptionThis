@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import databaseUtil from './DatabaseUtil';
+import { INVALID_TOKEN } from './ResponseCodes';
 import * as AuthUtil from './AuthUtil';
 
 bcrypt.hash = jest.fn();
@@ -121,12 +122,12 @@ describe('AuthUtil token handling', () => {
 
     it('handles token generation errors', () => {
         jwt.sign = jest.fn((payload, key, params, callback) => {
-            callback(new Error('some error'));
+            callback(new Error('invalid signature'));
         });
 
         return AuthUtil.generateToken()
             .catch((err) => {
-                expect(err).toEqual(new Error('some error'));
+                expect(err).toEqual(INVALID_TOKEN);
             });
     });
 
