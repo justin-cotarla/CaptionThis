@@ -5,7 +5,7 @@ import Header from './Header';
 import Loading from './Loading';
 import ErrorGraphic from './ErrorGraphic';
 
-import { momentFilters } from '../util/apiUtil';
+import { momentFilters } from '../util/ApiUtil';
 import '../styles/MomentsList.css';
 
 class MomentList extends Component {

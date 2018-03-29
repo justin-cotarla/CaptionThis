@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import classnames from 'classnames';
 
-import LoadingDots from './LoadingDots';
+import CaptionEditor from './CaptionEditor';
 import CaptionVotes from './CaptionVotes';
 import Acceptor from './Acceptor';
 import AuthModal from './AuthModal';
@@ -11,8 +11,7 @@ import AuthModal from './AuthModal';
 import '../styles/CaptionEditor.css';
 import '../styles/Caption.css';
 
-import { timeAgo } from '../util/dateUtil';
-import { editCaption } from '../util/apiUtil';
+import { timeAgo } from '../util/DateUtil';
 
 class Caption extends React.Component {
     constructor(props){
@@ -135,14 +134,14 @@ class Caption extends React.Component {
         this.setState({ editing: true });
     }
 
-    onSave = (editedCaption) => {
+    onSave = (newCaption) => {
         this.setState(prevState => {
             return {
                 ...prevState,
                 editing: false,
                 caption: {
                     ...prevState.caption,
-                    caption: editedCaption,
+                    caption: newCaption,
                 },
             }
         });
@@ -198,79 +197,6 @@ class Caption extends React.Component {
                         }
                     </div>
             </div>
-        )
-    }
-}
-
-class CaptionEditor extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            currentCaption: props.caption,
-            editedCaption: props.caption,
-            token: props.token,
-            isEditing: false,
-            error: '',
-        }
-    }
-
-    componentDidMount(){
-        const { Textarea } = this;
-        Textarea.focus();
-    }
-
-    onEdit = event => {
-        event.preventDefault();
-        const editedCaption = event.target.value;
-        this.setState({ editedCaption });
-    }
-
-    onSave = event => {
-        event.preventDefault();
-        const { token, editedCaption } = this.state;
-        const { captionId } = this.props;
-        this.setState({ isEditing: true });
-        editCaption({ token, captionId, editedCaption })
-        .then(() => this.props.onSave(editedCaption))
-        .catch(error => {
-            console.log(error)
-            this.setState({ 
-                isEditing: false,
-                error: 'There was a problem editing your caption. Please try again',
-            });
-        });
-    }
-
-    onCancel = event => {
-        event.preventDefault();
-        this.props.onCancel();
-    }
-
-    render() {
-        const { token, currentCaption, editedCaption, isEditing, error } = this.state;
-        return (
-                <div className="caption-editor-container">
-                    <textarea
-                        ref={(textarea) => this.Textarea = textarea}
-                        className="caption-editor-input" 
-                        type="text"
-                        value={editedCaption}
-                        onChange={this.onEdit}/>
-                    { error && <h1 style={{ color: '#ff5e56', fontWeight: 200, fontSize: '16px', marginTop: '0.2em' }}>{error}</h1> }
-                    <button 
-                        className="caption-editor-btn" 
-                        style={{ marginRight: '0.5em'}}
-                        onClick={this.onSave} 
-                        disabled={token && (editedCaption.length === 0 || currentCaption === editedCaption)}>Save</button>
-                    <button
-                        className="caption-editor-btn"
-                        onClick={this.onCancel}>
-                        Cancel
-                    </button>
-                    { isEditing && <div className="is-editing">
-                            <LoadingDots/>
-                        </div> }
-                </div>
         )
     }
 }

@@ -5,7 +5,7 @@ import CaptionList from '../components/CaptionList';
 import NavBar from '../components/NavBar';
 import ErrorGraphic from '../components/ErrorGraphic';
 
-import { fetchUser, fetchCaptions, fetchMoments, RequestTypes } from '../util/apiUtil';
+import { fetchUser, fetchCaptions, fetchMoments, RequestTypes } from '../util/ApiUtil';
 
 import '../styles/ProfilePage.css';
 

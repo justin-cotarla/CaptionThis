@@ -7,7 +7,7 @@ import Header from './Header';
 import ErrorGraphic from './ErrorGraphic';
 import ConditionalWrap from './ConditionalWrap';
 
-import { captionFilters } from '../util/apiUtil';
+import { captionFilters } from '../util/ApiUtil';
 
 import '../styles/CaptionList.css';
 
@@ -25,6 +25,10 @@ class CaptionList extends React.Component {
 
     componentDidMount() {
         this.fetchCaptions();
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.scrollTimeout);
     }
 
     componentDidUpdate = () => {
@@ -60,7 +64,7 @@ class CaptionList extends React.Component {
             duration: 1000
         });
         if (this.state.scrolled === false) {
-            setTimeout(() => this.setState({ scrolled: true }), 5000);
+            this.scrollTimeout = setTimeout(() => this.setState({ scrolled: true }), 5000);
         }
     }
 

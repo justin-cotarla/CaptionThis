@@ -102,10 +102,10 @@ const getCaptionFilterQuery = filter => {
     }
 }
 
-export const editCaption = ({ token, captionId, editedCaption }) => {
+export const editCaption = ({ token, captionId, newCaption }) => {
     const data = { 
         operation: 'edit', 
-        value: editedCaption,
+        value: newCaption,
     };
     const headers = {
         'Authorization': `Bearer ${token}`
