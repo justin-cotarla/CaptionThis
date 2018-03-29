@@ -105,7 +105,7 @@ class LoginPage extends Component{
         const { loginError, userError, passError, verifyError } = this.state.errors;
 
         return (
-          <div className="defined-style-components">
+          <div>
           <NavBar user={this.state.user}/>                    
             <div className="logo">
               <img
@@ -113,54 +113,48 @@ class LoginPage extends Component{
                   alt="Logo"
 
               />
-          </div>
-          <body className="align-user-field">
-            <div className="grid">
-                <form>
-                    <div className="user-form-field">
-                        {this.state.redirect && <Redirect to={this.state.redirect} />}
-                        <label for="login_username">
-                            <img
-                                src={`http://${process.env.REACT_APP_IP}/res/username.png`}
-                                alt="username"
-                            />
-                        </label>
-                        <input
-                            id="login_username"
-                            type="username"
-                            name="username"
-                            className="user-form-field"
-                            placeholder="Username"
-                            value={this.state.userField}
-                            onChange={this.onUserChange}
-                            style={ (userError || loginError) ? errorIndicator : {} }/>
-                        </div>
+            </div>
+            <div className="logReg-container">
+            <form>
+                    {this.state.redirect && <Redirect to={this.state.redirect} />}
+                    <label className="input-label">
+                        <img
+                            src={`http://${process.env.REACT_APP_IP}/res/username.png`}
+                        />
+                        Username
+                    </label>
+                    <input
+                        id="login_username"
+                        type="username"
+                        name="username"
+                        className="input-field"
+                        value={this.state.userField}
+                        onChange={this.onUserChange}
+                        style={ (userError || loginError) ? errorIndicator : {} }/>    
                         {
-                            <h1 className="modal-verify-error">{userError}</h1>
+                            <h1 className="login-verify-error">{userError}</h1>
                         }
-                    <div className="user-form-field">
-                        <label for="loginpassword">
+                    
+                        <label className="input-label">
                             <img
                                 src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                 alt="password"
                             />
-                        </label>
+                        Password</label>
                         <input
                             id="loginpassword"
                             type="password"
                             name="password"
-                            className="user-form-field"
-                            placeholder="Password"
+                            className="input-field"
                             value={this.state.passField}
                             onChange={this.onPassChange}
                             onKeyDown={this.onEnterPress}
                             style={ (passError || loginError) ? errorIndicator : {} }/>
-                        </div>
                         {
-                            <h1 className="modal-verify-error">{passError || loginError}</h1>
+                            <h1 className="login-verify-error">{passError || loginError}</h1>
                         }
                     <div
-                        className="login2-button"
+                        className="loginToAccount-button"
                         onClick={this.onSubmit}
                         >
                         Login
@@ -169,7 +163,7 @@ class LoginPage extends Component{
                 <div 
                     className="registration-button" 
                     onClick={this.onRegisterClick}>
-                    <p class="text--center"> Not a member ? <a>Sign up now </a></p>
+                    <p class="signUpNow-button"> Not a member ? <a>Sign up now </a></p>
                 </div>
                 {this.state.loggingin &&
                 <div className="login-loader-holder">
@@ -177,8 +171,7 @@ class LoginPage extends Component{
                 </div>
                 }
             </div>
-        </body>
-        </div>
+            </div>
         );
     }
 }
