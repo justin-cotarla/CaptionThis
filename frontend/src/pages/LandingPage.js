@@ -3,7 +3,7 @@ import MomentList from '../components/MomentList';
 import ScrollApp from '../components/ScrollerComponents'
 import NavBar from '../components/NavBar';
 
-import { fetchMoments } from '../util/apiUtil';
+import { fetchMoments } from '../util/ApiUtil';
 
 import '../styles/LandingPage.css';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { timeAgo } from '../util/dateUtil';
+import { timeAgo } from '../util/DateUtil';
 import ConditionalWrap from './ConditionalWrap';
 import '../styles/Moment.css';
 

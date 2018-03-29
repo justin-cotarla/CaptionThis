@@ -7,7 +7,7 @@ import Header from './Header';
 import ErrorGraphic from './ErrorGraphic';
 import ConditionalWrap from './ConditionalWrap';
 
-import { captionFilters } from '../util/apiUtil';
+import { captionFilters } from '../util/ApiUtil';
 
 import '../styles/CaptionList.css';
 
@@ -25,6 +25,10 @@ class CaptionList extends React.Component {
 
     componentDidMount() {
         this.fetchCaptions();
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.scrollTimeout);
     }
 
     componentDidUpdate = () => {
@@ -60,7 +64,7 @@ class CaptionList extends React.Component {
             duration: 1000
         });
         if (this.state.scrolled === false) {
-            setTimeout(() => this.setState({ scrolled: true }), 5000);
+            this.scrollTimeout = setTimeout(() => this.setState({ scrolled: true }), 5000);
         }
     }
 
@@ -80,7 +84,7 @@ class CaptionList extends React.Component {
 
     render () {
         const { captions, selectedFilter, scrolled, error } = this.state;
-        const { user, momentCreatorId, showSubmittedBy, showCount, isLinkedToMoment, scrollTo, token } = this.props;
+        const { user, momentCreatorId, showSubmittedBy, showCount, isLinkedToMoment, scrollTo, isInteractive, token } = this.props;
 
         if (error) {
             return <div className="caption-list-container">
@@ -112,6 +116,7 @@ class CaptionList extends React.Component {
                                             && (momentCreatorId === user.id) // The logged-on user created the moment
                                             && (user.id !== caption.user.id) // The logged-on user did not create the caption
                                         } 
+                                        canEdit={user && isInteractive && (user.id === caption.user.id)}
                                         token={token} />
                                 </ConditionalWrap>
                             </li>

@@ -5,7 +5,7 @@ import CaptionList from '../components/CaptionList';
 import NavBar from '../components/NavBar';
 import ErrorGraphic from '../components/ErrorGraphic';
 
-import { fetchUser, fetchCaptions, fetchMoments, RequestTypes } from '../util/apiUtil';
+import { fetchUser, fetchCaptions, fetchMoments, RequestTypes } from '../util/ApiUtil';
 
 import '../styles/ProfilePage.css';
 
@@ -106,6 +106,7 @@ class ProfilePage extends React.Component {
                                     showSubmittedBy={false} 
                                     showCount={false}
                                     isLinkedToMoment={true} 
+                                    isInteractive={false}
                                     momentCreatorId={null}
                                     user={this.props.user}
                                     token={token}>
