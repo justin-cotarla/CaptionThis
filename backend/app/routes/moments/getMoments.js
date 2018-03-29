@@ -50,7 +50,7 @@ const queryBuilder = (params) => {
         : 'DESC';
 
     return {
-        where: conditions.length ? conditions.join(' AND ') : 'TRUE',
+        where: conditions.join(' AND '),
         values,
         order: `${filter} ${order}`,
     };
