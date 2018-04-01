@@ -105,7 +105,6 @@ class MomentViewPage extends Component{
                             momentId: moment.moment_id }
                         )}
                         showSubmittedBy={true}
-                        showCount={true}
                         isInteractive={true}
                         isLinkedToMoment={false}
                         scrollTo={scrollTo}

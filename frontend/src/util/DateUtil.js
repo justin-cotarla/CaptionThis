@@ -19,3 +19,7 @@ export const timeAgo = dateString => {
     const date = moment(dateString).subtract(4, 'hours').toLocaleString();
     return <TimeAgo date={date} live={true} minPeriod={60} formatter={formatter}/>;
 }
+
+export const formatJoinDate = dateString => {
+    return moment(dateString).format('MMMM D, YYYY');
+}
