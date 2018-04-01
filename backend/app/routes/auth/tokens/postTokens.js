@@ -1,9 +1,10 @@
 import * as AuthUtil from '../../../utility/AuthUtil';
+import DatabaseUtil from '../../../utility/DatabaseUtil';
 import {
     INVALID_INPUT,
     GOOD,
-    INVALID_TOKEN,
     UNKNOWN_ERROR,
+    USER_DOES_NOT_EXIST,
 } from '../../../utility/ResponseCodes';
 
 const postTokens = {
@@ -24,23 +25,32 @@ const postTokens = {
                 .code(INVALID_INPUT.http);
         }
 
+        const query = `
+            SELECT
+                DELETED
+            FROM
+                USER
+            WHERE
+                ID=?;
+        `;
+
         return AuthUtil.validateToken(token)
-            .then(({ id, username }) => AuthUtil.generateToken({ id, username }))
-            .then(newToken => reply
-                .response({ code: GOOD.code, newToken })
-                .code(GOOD.http))
-            .catch((err) => {
-                if (err.message === 'invalid signature') {
-                    return reply
-                        .response({ code: INVALID_TOKEN.code })
-                        .code(INVALID_TOKEN.http);
+            .then(({ username, id }) => Promise.all([
+                DatabaseUtil.sendQuery(query, [id]),
+                AuthUtil.generateToken({ username, id }),
+            ]))
+            .then(([result, newToken]) => {
+                if (result.rows[0].DELETED === 1) {
+                    throw USER_DOES_NOT_EXIST;
                 }
                 return reply
-                    .response({ code: UNKNOWN_ERROR.code })
-                    .code(UNKNOWN_ERROR.http);
-            });
+                    .response({ code: GOOD.code, newToken })
+                    .code(GOOD.http);
+            })
+            .catch(error => (error.code ?
+                reply.response({ code: error.code }).code(error.http) :
+                reply.response({ code: UNKNOWN_ERROR.code }).code(UNKNOWN_ERROR.http)));
     },
 };
 
 export default postTokens;
-

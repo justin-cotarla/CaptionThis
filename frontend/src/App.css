@@ -1,10 +1,33 @@
-body, h1 {
+h1 {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
   font-weight: 100;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body{
+  height: 100%;
+  background: #202020;
+  /* #272525 #303030;*/
+}
+
+body{
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+  font-weight: 100;
+  padding-top: 53px;
+  
+}
+
 ul {
   list-style-type: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .linked-username {

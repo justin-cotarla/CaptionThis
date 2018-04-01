@@ -7,9 +7,10 @@ import CaptionCreatorForm from '../components/CaptionCreatorForm';
 import CaptionList from '../components/CaptionList';
 import NavBar from '../components/NavBar';
 
-import Header from '../components/Header';
 import Loading from '../components/Loading';
 import ErrorGraphic from '../components/ErrorGraphic';
+
+import { fetchCaptions, RequestTypes } from '../util/ApiUtil';
 
 class MomentViewPage extends Component{
     constructor(props){
@@ -17,7 +18,6 @@ class MomentViewPage extends Component{
         this.state = {
             token: null,
             moment: null,
-            captions: [],
             loading: true,
             user: props.user,
             error: null,
@@ -43,9 +43,9 @@ class MomentViewPage extends Component{
             let moment = response.data.moment;
             this.setState({
                 moment,
+                loading: false,
             });
         })
-        .then(() => this.fetchCaptions(momentID))
         .catch((error) => {
             console.log(error);
             this.setState({
@@ -54,52 +54,25 @@ class MomentViewPage extends Component{
         });
     }
 
-    fetchCaptions = (momentid) => {
-        const token = this.state.token;
-        const headers = {
-            'Authorization': `Bearer ${token}`
-        };
-        axios({
-            method: 'get',
-            url: `http://${process.env.REACT_APP_IP}/api/captions?moment-id=${momentid}`,
-            headers: token ? headers : {}
-        })
-        .then(response => {
-            this.setState({
-                captions: response.data.captions,
-                loading: false,
-            });
-        })
-        .catch(error => {
-            console.log(error);
-            this.setState({
-                error,
-                loading: false,
-            });
-        })
-    }
-
-    // A callback to update the caption list after a vote or acception/rejection
-    onCaptionUpdate = (newcaption) => {
-        this.setState({
-            captions: this.state.captions.map(caption => {
-                if(newcaption.caption_id === caption.caption_id){
-                    return newcaption;
-                }
-                return caption;
-            }),
-        })
+    onCaptionSubmit = (momentId) => {
+        const CaptionList = this.CaptionList;
+        CaptionList.fetchCaptions();
     }
 
     render() {
-        const { token, moment, captions, loading, error } = this.state;
+        const { token, moment, loading, error } = this.state;
+        const locationState = this.props.location.state;
+        let scrollTo;
+        if (locationState) {
+            scrollTo = locationState.scrollTo;
+        }
+
         if(error) {
             return (
                 <div>
                     <NavBar user={this.state.user}/>
                     <ErrorGraphic message={error}/>
                 </div>
-                
             )
         }
 
@@ -111,32 +84,36 @@ class MomentViewPage extends Component{
 
         return (
             <div>
-            <NavBar user={this.state.user}/>
-            <div className="moment-view-container">
-                <Moment
-                    image={ moment.img_url }
-                    date={ formatDate(moment.date_added) }
-                    description={ moment.description }
-                    showSubmittedBy={ true }
-                    username={ moment.user.username }/>
-                <CaptionCreatorForm
-                    momentId={this.props.match.params.momentID}
-                    onCaptionSubmit={this.fetchCaptions}
-                    token={token}/>
-                <CaptionList
-                    captions={captions}
-                    showSubmittedBy={true}
-                    isLinkedToMoment={false}
-                    momentCreatorId={moment.user.user_id}
-                    user={this.props.user}
-                    token={token}
-                    onCaptionUpdate={this.onCaptionUpdate}>
-                    {
-                        captions.length > 0 ? <Header textSize={3} text={`${captions.length} Caption${captions.length > 1 ? 's' : ''}`}/>
-                        : <Header textSize={3} text="Looks like there's nothing here (yet) :("/>
-                    }
-                </CaptionList>
-            </div>
+                <NavBar user={this.state.user}/>
+                <div className="moment-view-container">
+                    <Moment
+                        image={ moment.img_url }
+                        date={ formatDate(moment.date_added) }
+                        description={ moment.description }
+                        showSubmittedBy={ true }
+                        user={ {...moment.user} }/>
+                    <CaptionCreatorForm
+                        momentId={this.props.match.params.momentID}
+                        onCaptionSubmit={() => this.onCaptionSubmit()}
+                        token={token}/>
+                    <CaptionList
+                        ref={(CaptionList) => this.CaptionList = CaptionList}
+                        fetchCaptions={(filter) => fetchCaptions({ 
+                            token, 
+                            type: RequestTypes.BY_MOMENT, 
+                            filter, 
+                            momentId: moment.moment_id }
+                        )}
+                        showSubmittedBy={true}
+                        showCount={true}
+                        isInteractive={true}
+                        isLinkedToMoment={false}
+                        scrollTo={scrollTo}
+                        momentId={moment.moment_id}
+                        momentCreatorId={moment.user.id}
+                        user={this.props.user}
+                        token={token}/>
+                </div>
             </div>
         )
     }

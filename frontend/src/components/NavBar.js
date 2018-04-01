@@ -72,7 +72,7 @@ class NavBar extends Component{
                               onClick={this.onLogoutClick}>
                               <img
                                   alt="Logout"
-                                  src={`http://${process.env.REACT_APP_IP}/res/logout.png`}
+                                  src={`http://${process.env.REACT_APP_IP}/res/exit.png`}
                               />
                         </div>
                     }
@@ -102,7 +102,10 @@ class NavBar extends Component{
                         className="createMoment-button"
                         onClick={this.onCreateMomentClick}
                         >
-                        CREATE MOMENT
+                        <img
+                            alt="Home"
+                            src={`http://${process.env.REACT_APP_IP}/res/createMoment.png`}
+                        />
                         </div>
                     }
 

@@ -11,13 +11,62 @@ const getUser = {
     handler: (request, reply) => {
         const query = `
             SELECT
-                ID,
+                USER.ID,
                 USERNAME,
-                DATE_ADDED
+                USER.DATE_ADDED,
+                COUNT(DISTINCT MOMENT.ID) AS MOMENT_COUNT,
+                COUNT(DISTINCT CAPTION.ID) AS CAPTION_COUNT,
+                COUNT(DISTINCT CAPTION.ID, case SELECTED when 1 then 1 else null end) AS ACCEPT_COUNT,
+                COUNT(DISTINCT CAPTION.ID, case SELECTED when -1 then 1 else null end) AS REJECT_COUNT,
+                COALESCE(CAPTION_VOTE.TOTAL_VOTE, 0) AS TOTAL_VOTE
             FROM
                 USER
+            LEFT JOIN(
+                SELECT 
+                    SUM(CAPTION_VOTE.VALUE) AS TOTAL_VOTE,
+                    CAPTION.USER_ID
+                FROM
+                    CAPTION
+                LEFT JOIN
+                    CAPTION_VOTE
+                ON
+                    CAPTION.ID = CAPTION_VOTE.CAPTION_ID
+                WHERE
+                    CAPTION.DELETED=0
+                GROUP BY
+                    USER_ID) AS CAPTION_VOTE
+            ON
+                CAPTION_VOTE.USER_ID = USER.ID
+            LEFT JOIN
+                (SELECT
+                    MOMENT.USER_ID,
+                    ID
+                FROM
+                    MOMENT
+                WHERE
+                    MOMENT.DELETED = 0) AS MOMENT
+            ON
+                USER.ID = MOMENT.USER_ID
+            LEFT JOIN
+                (SELECT
+                    CAPTION.USER_ID,
+                    CAPTION.ID,
+                    SELECTED
+                FROM
+                    CAPTION
+                JOIN
+                    MOMENT
+                ON
+                    CAPTION.MOMENT_ID = MOMENT.ID
+                WHERE
+                    CAPTION.DELETED = 0 AND
+                    MOMENT.DELETED = 0) AS CAPTION
+            ON
+                USER.ID = CAPTION.USER_ID
             WHERE
-                USERNAME = ?;
+                USERNAME = ? AND
+                USER.DELETED=0
+            GROUP BY ID, USERNAME, DATE_ADDED, TOTAL_VOTE;
         `;
 
         return databaseUtil.sendQuery(query, [request.params.username]).then((result) => {
@@ -31,6 +80,11 @@ const getUser = {
                 id: result.rows[0].ID,
                 username: result.rows[0].USERNAME,
                 dateAdded: result.rows[0].DATE_ADDED,
+                momentCount: result.rows[0].MOMENT_COUNT,
+                captionCount: result.rows[0].CAPTION_COUNT,
+                acceptCount: result.rows[0].ACCEPT_COUNT,
+                rejectCount: result.rows[0].REJECT_COUNT,
+                totalVote: result.rows[0].TOTAL_VOTE,
             };
 
             return reply

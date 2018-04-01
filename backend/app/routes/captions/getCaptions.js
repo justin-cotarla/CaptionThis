@@ -7,42 +7,64 @@ import {
 // Function to build the where clause for the getCaptions endpoint, and all values for the query
 const getCaptionsBuilder = (params) => {
     const conditions = [];
-    let order = 'SELECTED DESC, DATE_ADDED DESC';
     const values = [];
 
-    // To get captions by moment id, user-id, with a limit
     const momentid = params['moment-id'];
     const captionsByUser = params['user-id'];
-    const usedOrder = params['order'];
 
-    let { limit } = params;
+    let {
+        start,
+        range,
+        filter,
+        order,
+    } = params;
+
+    conditions.push('CAPTION.DELETED=0');
+    conditions.push('MOMENT.DELETED=0');
 
     if (!(momentid === undefined || momentid === '' || momentid === 0 || !/^\d+$/.test(momentid))) {
         conditions.push('MOMENT_ID=?');
         values.push(momentid);
     }
 
-    if (usedOrder == 'total-votes') {
-        order = 'TOTAL_VOTES DESC';
+    switch (filter) {
+    case 'votes':
+        filter = 'TOTAL_VOTES';
+        break;
+    case 'acceptance':
+        filter = 'SELECTED';
+        break;
+    default:
+        filter = 'DATE_ADDED';
     }
+
+    order = (order === 'asc')
+        ? 'ASC'
+        : 'DESC';
 
     if (!(captionsByUser === undefined || captionsByUser === '' || captionsByUser === 0 || !/^\d+$/.test(captionsByUser))) {
         conditions.push('CAPTION.USER_ID=?');
         values.push(captionsByUser);
     }
 
-    if (limit === undefined || limit === '' || !/^\d+$/.test(limit)) {
-        limit = 20; // Default value for limit is 20
+    if (start === undefined || start === '' || !/^\d+$/.test(start)) {
+        start = 0; // Default value for start is 0
     }
 
-    // Parse limit to number
-    limit = parseInt(limit, 10);
-    values.push(limit);
+    if (range === undefined || range === '' || !/^\d+$/.test(range)) {
+        range = 20; // Default value for range is 20
+    }
+
+    start = parseInt(start, 10);
+    values.push(start);
+
+    range = parseInt(range, 10);
+    values.push(range);
 
     return {
-        where: conditions.length ? conditions.join(' AND ') : 'TRUE',
-        order_values: order,
+        where: conditions.join(' AND '),
         values,
+        order: `${filter} ${order}`,
     };
 };
 
@@ -50,7 +72,7 @@ const getCaptions = {
     method: 'GET',
     path: '/api/captions',
     handler: (request, reply) => {
-        const { where, order_values, values } = getCaptionsBuilder(request.query);
+        const { where, values, order } = getCaptionsBuilder(request.query);
 
         const userId = (request.auth.credentials)
             ? parseInt(request.auth.credentials.user.id, 10)
@@ -60,8 +82,8 @@ const getCaptions = {
         const query = `
         SELECT
             MOMENT_ID,
-            CAPTION.USER_ID AS USER_ID,
-            USERNAME,
+            IF(USER.DELETED=0, CAPTION.USER_ID, null) AS USER_ID,
+            IF(USER.DELETED=0, USERNAME, null) AS USERNAME,
             CAPTION.ID AS CAPTION_ID,
             CONTENT,
             SELECTED,
@@ -82,6 +104,10 @@ const getCaptions = {
             CAPTION_VOTE UV
         ON
             UV.CAPTION_ID = CAPTION. ID AND UV.USER_ID = ?
+        LEFT JOIN
+            MOMENT
+        ON
+            MOMENT.ID = CAPTION.MOMENT_ID
         WHERE
             ${where}
         GROUP BY
@@ -93,8 +119,8 @@ const getCaptions = {
             DATE_ADDED,
             USERNAME
         ORDER BY
-            ${order_values}
-        LIMIT ?
+            ${order}
+        LIMIT ?, ?
         `;
 
         const allQueryValues = [userId].concat(values);
@@ -103,7 +129,7 @@ const getCaptions = {
                 const captions = result.rows.map(caption => ({
                     moment_id: caption.MOMENT_ID,
                     user: {
-                        user_id: caption.USER_ID,
+                        id: caption.USER_ID,
                         username: caption.USERNAME,
                     },
                     caption_id: caption.CAPTION_ID,
@@ -125,12 +151,9 @@ const getCaptions = {
                     .response(data)
                     .code(GOOD.http);
             })
-            .catch((error) => {
-                console.log(error);
-                return reply
-                    .response({ code: UNKNOWN_ERROR.code })
-                    .code(UNKNOWN_ERROR.http);
-            });
+            .catch(() => reply
+                .response({ code: UNKNOWN_ERROR.code })
+                .code(UNKNOWN_ERROR.http));
     },
 };
 

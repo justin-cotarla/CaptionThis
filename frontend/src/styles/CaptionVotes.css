@@ -1,16 +1,20 @@
 .caption-votes-container {
+    height: 85px;
     width: 50px;
 }
 
 .caption-votes-container li {
-    font-weight: 600;
-    margin: 3px 0;
+    font-weight: bold;
+    font-size: 22px;
+    margin: 1px 0;
+    height: 25px;
 }
 
 .caption-votes-container > ul {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     list-style-type: none;
     text-align: center;
     padding: 0;
@@ -20,20 +24,10 @@
     font-size: 16px;
 }
 
-.vote-ticker {
+.vote-ticker-plus, .vote-ticker-minus {
     font-size: 12px;
 }
 
-.vote-ticker:hover, .vote-up:hover, .vote-down:hover{
+.vote-ticker-plus:hover, .vote-ticker-minus:hover {
     cursor: pointer;
-}
-
-.vote-up{
-    color: #1DE28F;
-    font-size: 12px;
-}
-
-.vote-down{
-    color: #f44b42;
-    font-size: 12px;
 }

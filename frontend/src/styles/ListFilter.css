@@ -1,0 +1,14 @@
+.list-filter {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    height: 40px;
+}
+
+.list-filter li {
+    font-size: 30px;
+    margin-right: .6em;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-family: 'Teko';
+}

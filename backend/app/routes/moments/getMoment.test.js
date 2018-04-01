@@ -1,5 +1,10 @@
 import databaseUtil from '../../utility/DatabaseUtil';
 import getMoment from './getMoment.js';
+import {
+    GOOD,
+    MOMENT_DOES_NOT_EXIST,
+    UNKNOWN_ERROR,
+} from '../../utility/ResponseCodes';
 
 const request = {
     params: {
@@ -22,7 +27,7 @@ describe('/api/getMoments endpoint', () => {
         databaseUtil.sendQuery = jest.fn(() => new Promise((resolve) => {
             resolve({
                 rows: [{
-                    ID: 1,
+                    MOMENT_ID: 1,
                     IMG_URL: 'test',
                     DESCRIPTION: 'test',
                     DATE_ADDED: 1,
@@ -35,7 +40,7 @@ describe('/api/getMoments endpoint', () => {
         return getMoment.handler(request, reply)
             .then(() => {
                 expect(reply.response.mock.calls[0][0]).toEqual({
-                    code: 1,
+                    code: GOOD.code,
                     moment: {
                         moment_id: 1,
                         img_url: 'test',
@@ -43,7 +48,7 @@ describe('/api/getMoments endpoint', () => {
                         date_added: 1,
                         user: {
                             username: 'test',
-                            user_id: 1,
+                            id: 1,
                         },
                     },
                 });
@@ -58,7 +63,7 @@ describe('/api/getMoments endpoint', () => {
         }));
         return getMoment.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(3);
+                expect(reply.response.mock.calls[0][0].code).toBe(MOMENT_DOES_NOT_EXIST.code);
             });
     });
     it('Handle unknown error', () => {
@@ -67,7 +72,7 @@ describe('/api/getMoments endpoint', () => {
         }));
         return getMoment.handler(request, reply)
             .then(() => {
-                expect(reply.response.mock.calls[0][0].code).toBe(4);
+                expect(reply.response.mock.calls[0][0].code).toBe(UNKNOWN_ERROR.code);
             });
     });
 });

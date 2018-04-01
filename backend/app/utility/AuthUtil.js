@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+
 import databaseUtil from './DatabaseUtil';
+import { INVALID_TOKEN } from './ResponseCodes';
 
 const SALT_ROUNDS = 10;
 
@@ -51,7 +53,8 @@ const authenticate = (username, password) => new Promise((resolve, reject) => {
         FROM
             USER
         WHERE
-            USERNAME = ?;
+            USERNAME = ? AND
+            DELETED=0;
     `;
 
     let user;
@@ -66,7 +69,6 @@ const authenticate = (username, password) => new Promise((resolve, reject) => {
                 id: result.rows[0].ID,
                 username: result.rows[0].USERNAME,
             };
-
             return bcrypt.compare(password, result.rows[0].HASH);
         })
         .then((match) => {
@@ -83,8 +85,8 @@ const authenticate = (username, password) => new Promise((resolve, reject) => {
 
 const generateToken = payload => new Promise((resolve, reject) => {
     jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '1w' }, (err, token) => {
-        if (err) {
-            reject(err);
+        if (err && err.message === 'invalid signature') {
+            reject(INVALID_TOKEN);
         }
         resolve(token);
     });
