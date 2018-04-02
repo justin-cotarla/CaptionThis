@@ -1,21 +1,36 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
-.logReg-container {
+.login-container {
   margin: 34px;
   padding: 15px; 
   font-size: 15px;    
   font-style: normal;
-  width: 600px;
+  width: 540px;
   font-variant: normal;
   font-weight: 300;
-  background-color: #696969;
-  box-shadow: 0 3px 0 black;
+  background-color: #484848;
+  box-shadow: 0 6px 0 black;
+  border-radius: 3px;
+  margin:auto;
+}
+
+.registration-container {
+  margin: 34px;
+  padding: 15px; 
+  font-size: 15px;    
+  font-style: normal;
+  width: 540px;
+  font-variant: normal;
+  font-weight: 300;
+  background-color: #484848;
+  box-shadow: 0 6px 0 black;
   border-radius: 3px;
   margin:auto;
 }
 
 .input-label {
   float: center;
+  padding-left: 70px;
   display: block;
   padding-top: 15px;
   padding-bottom: 5px;
@@ -38,24 +53,30 @@
   letter-spacing: 2px;
   font-size: 20px;
   color:#FFFFFF;
+  margin-left: 70px;
 }
 .input-field:hover{
   opacity: 1;
 }
 
 .signUpNow-button {
+  opacity: 0.8;
   font-family: 'Teko';
   font-size: 22px;
   line-height: 1.2;
   letter-spacing: 0.5px;
   text-align: center;
-  margin-top:1px;
+  margin-top: 30px;
   color:#1DE28F;
+  cursor: pointer;
 }
 .signUpNow-button a {
   text-align: center;
   position: relative;
   color: #FFFFFF;
+}
+.signUpNow-button:hover{
+  opacity: 1;
 }
 
 .login-verify-error {
@@ -65,12 +86,13 @@
   font-size: 18px;
   font-weight: 400;
   color: #ff0000;
+  margin-left: 70px;
 }
 
-div.loginToAccount-button {
+div.loginSignUp-button {
   opacity: 0.8;
   text-align: center;
-  width: 300px;
+  width: 400px;
   font-family: 'Teko';
   font-size: 36px;
   letter-spacing: 2px;
@@ -82,87 +104,19 @@ div.loginToAccount-button {
   font-weight: bold;
   cursor: pointer;
   color:#1DE28F;
+  background-color: #696969;
+  box-shadow: 0 2px 0 black;
+  border-radius: 3px;
   }
-div.loginToAccount-button:hover {
+div.loginSignUp-button:hover {
     opacity: 1;
 }
 
-
-
-
-
-
-
-
-
-
-.defined-style-components {
-  --BackgroundColor: #202020;
-  --themeColor: #1DE28F;
-  --bodyColor: var(--baseColor);
-  --FontFamily: 'Teko';
-  --FontSize: 14px;
-  --FontWeight: 300;
-  --LineHeight: 1.5;
-}
-.align-user-field {
-  background-color: var(--BackgroundColor);
-  color: var(--bodyColor);
-  font-family: var(--FontFamily);
-  font-size: var(--FontSize);
-  font-weight: var(--FontWeight);
-  height: 100%;
-  line-height: var(--LineHeight);
-  margin: 0;
-  min-height: 60px;
-}
-.grid-components form{
-  padding-top: 60px;
+.logReg-form {
+  margin: 0 auto 1em;
+  width: 80%;
 }
 
-div.signup-button {
-   opacity: 0.8;
-   text-align: center;
-   width: 175px;
-   font-family: var(--FontFamily);
-   font-size: 34px;
-   letter-spacing: 2px;
-   float: none;
-   margin: 0 auto;
-   margin-top: 40px;
-   padding: 5px;
-   color:#FFFFFF;
-   font-weight: bold;
-   cursor: pointer;
-  }
-  div.signup-button:hover {
-    opacity: 1;
-  }
-
-div.registration-button {
-    opacity: 0.8;
-    width: 200px;
-    float: none;
-    margin: 0 auto;
-    margin-top: 20px;
-    padding: 5px;
-    color:var(--themeColor);
-    font-weight: bold;
-    cursor: pointer;
-}
-div.registration-button:hover {
-    opacity: 1;
-}
-div.registration2-button {
-    width: 65px;
-    float: none;
-    margin: 0 auto;
-    margin-top: 5px;
-    padding: 5px;
-    color: var(--themeColor);
-    font-weight: bold;
-    cursor: pointer;
-  }
 div.logo img {
   text-align: center;
   width: 420px;
@@ -173,6 +127,7 @@ div.logo {
   text-align: center;
   margin-top: 0px;
 }
+
 .login-loader-holder {
   text-align: center;
   width: 80px;
@@ -182,147 +137,4 @@ div.logo {
 }
 .login-loader {
   margin:auto;
-}
-.align-user-field {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: -30px;
-  max-width: var(--gridMaxWidth);
-  width: var(--gridWidth);
-}
-.user-form-field input:before{
-  visibility: hidden;
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
-  -webkit-transition: all .8s ease-in-out 0s;
-  transition: all .8s ease-in-out 0s;
-  transition: box-shadow 0.3s ease-in-out;
-}
-.user-form-field input:focus ,
-.user-form-field input[type="username"]:hover,
-.user-form-field input[type="password"]:hover,
-.user-form-field input[type="password1"]:hover,
-.user-form-field input[type="password2"]:hover  {
-  visibility: visible;
-  -webkit-transform: scaleX(1);
-  transform: scaleX(1);
-  border-bottom: 1px solid #FFFFFF;
-  box-shadow: 0px 1.8px 0px #000000;
-}
-.user-form-field input {
-  background-color:var(--BackgroundColor);
-  border: 0;
-  color: #FFFFFF;
-  font: inherit;
-  margin: auto;
-  outline: 0;
-  padding: 0;
-  transition: background-color 0.3s;
-}
-.user-form-field input[type='submit'] {
-  cursor: pointer;
-}
-.form {
-  margin: calc(var(--formFieldMargin) * -1);
-}
-.form input[type='password'],
-.form input[type='password1'],
-.form input[type='password2'],
-.form input[type='username'],
-.form input[type='submit'] {
-  width: 100%;
-}
-.user-form-field {
-  display: flex;
-  height:38px;
-  margin: 8px;
-  width: 30px;
-}
-.user-form-field input {
-  width: 300px;
-  letter-spacing: 1px;
-  flex: 1;
-  font-size: 30px;
-  font-family: var(--FontFamily);
-  border-bottom: 1px solid #AAAAAA;
-}
-.login label,
-.login input[type='username'],
-.login input[type='password'],
-.login input[type='password1'],
-.login input[type='password2'],
-.login input[type='submit'] {
-  border-radius: var(--loginBorderRad);
-  padding: 26px;
-}
-.login label {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-.login input[type='password'],
-.login input[type='password1'],
-.login input[type='password2'],
-.login input[type='username'] {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-.signup-button a:hover,
-.signup-button a:visited,
-.signup-button a:link,
-.signup-button a:active{
-    text-decoration: none;
-}
-.registration-button a:hover,
-.registration-button a:visited,
-.registration-button a:link,
-.registration-button a:active{
-    text-decoration: none;
-}
-
-.signup-button a {
-  opacity: 0.8;
-    text-align: center;
-    width: 175px;
-    font-family: var(--FontFamily);
-    font-size: 32px;
-    letter-spacing: 2px;
-    float: none;
-    margin: 0 auto;
-    margin-top: 25px;
-    padding: 5px;
-    color: var(--themeColor);
-    font-weight: bold;
-    cursor: pointer;
-}
-.signup-button a:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  border-bottom: 2px solid #FFFFFF;
-  transition: 0.4s;
-}
-
-.login-redirect-button b{
-  text-align: center;
-  position: relative;
-  color: #FFFFFF;
-  cursor: pointer;
-}
-.login-redirect-button b:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  border-bottom: 2px solid #FFFFFF;
-  transition: 0.4s;
-}
-.login-redirect-button b:hover:after {
-  width: 100%;
 }

@@ -102,7 +102,7 @@ class LoginPage extends Component{
         const errorIndicator = {
             borderBottom: '2px solid #ff0000',
         };
-        const { loginError, userError, passError, verifyError } = this.state.errors;
+        const { loginError, userError, passError} = this.state.errors;
 
         return (
           <div>
@@ -114,8 +114,8 @@ class LoginPage extends Component{
 
               />
             </div>
-            <div className="logReg-container">
-            <form>
+            <div className="login-container">
+            <logReg-form>
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <label className="input-label">
                         <img
@@ -140,7 +140,8 @@ class LoginPage extends Component{
                                 src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                 alt="password"
                             />
-                        Password</label>
+                            Password
+                        </label>
                         <input
                             id="loginpassword"
                             type="password"
@@ -150,18 +151,17 @@ class LoginPage extends Component{
                             onChange={this.onPassChange}
                             onKeyDown={this.onEnterPress}
                             style={ (passError || loginError) ? errorIndicator : {} }/>
-                        {
-                            <h1 className="login-verify-error">{passError || loginError}</h1>
-                        }
+                            {
+                                <h1 className="login-verify-error">{passError || loginError}</h1>
+                            }
                     <div
-                        className="loginToAccount-button"
+                        className="loginSignUp-button"
                         onClick={this.onSubmit}
                         >
                         Login
                    </div>
-                </form>
+                </logReg-form>
                 <div 
-                    className="registration-button" 
                     onClick={this.onRegisterClick}>
                     <p class="signUpNow-button"> Not a member ? <a>Sign up now </a></p>
                 </div>
