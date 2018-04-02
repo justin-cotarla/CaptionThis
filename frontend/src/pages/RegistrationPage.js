@@ -156,6 +156,7 @@ class RegistrationPage extends Component{
                     </div>
                     }
                 </div>
+            </div>
         );
     }
 }
