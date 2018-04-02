@@ -133,11 +133,6 @@ class RegistrationPage extends Component{
                                 onKeyDown={this.onEnterPress}
                             />
                         </div>
-                        <div
-                            className="signup-button"
-                            onClick={this.onSubmit}>
-                            <a>Sign Up</a>
-                      </div>
                     </form>
                     <div
                         className="signup-button"
