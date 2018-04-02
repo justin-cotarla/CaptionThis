@@ -20,10 +20,6 @@
   margin: 0;
   min-height: 60px;
 }
-.grid-components form{
-  padding-top: 60px;
-}
-
 div.signup-button {
    opacity: 0.8;
    text-align: center;
@@ -51,6 +47,7 @@ div.signup-button {
     letter-spacing: 2px;
     float: none;
     margin: 0 auto;
+    margin-top: 15px;
     padding: 5px;
     color: var(--themeColor);
     font-weight: bold;
@@ -112,7 +109,43 @@ div.logo {
   max-width: var(--gridMaxWidth);
   width: var(--gridWidth);
 }
+.user-form-field {
+  display: flex;
+  height: 38px;
+  margin: 8px;
+  width: 250px;
+}
+.align-user-field form .user-form-field ::placeholder{
+  font-family: 'Teko';
+  font-weight: 200;
+  font-size: 28px;
+  word-spacing: 1px;
+  letter-spacing: 1.5px;
+}
+.user-form-field label{
+  height: 10px;
+  margin-top: 7px;
+}
+.user-form-field input {
+  background-color:var(--BackgroundColor);
+  border: 0;
+  color: #FFFFFF;
+  width: 210px;
+  letter-spacing: 1px;
+  flex: 1;
+  font-size: 24px;
+  font-family: var(--FontFamily);
+  font-weight: 200;
+  border-bottom: 1px solid #AAAAAA;
+  outline: 0;
+  transition: background-color 0.3s;
+}
+.user-form-field input[type='submit'] {
+  cursor: pointer;
+}
 .user-form-field input:before{
+  font-family: 'Teko';
+  width: 400px;
   visibility: hidden;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
@@ -125,24 +158,12 @@ div.logo {
 .user-form-field input[type="password"]:hover,
 .user-form-field input[type="password1"]:hover,
 .user-form-field input[type="password2"]:hover  {
+  font-family: 'Teko';
   visibility: visible;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   border-bottom: 1px solid #FFFFFF;
   box-shadow: 0px 1.8px 0px #000000;
-}
-.user-form-field input {
-  background-color:var(--BackgroundColor);
-  border: 0;
-  color: #FFFFFF;
-  font: inherit;
-  margin: 0;
-  outline: 0;
-  padding: 0;
-  transition: background-color 0.3s;
-}
-.user-form-field input[type='submit'] {
-  cursor: pointer;
 }
 .form {
   margin: calc(var(--formFieldMargin) * -1);
@@ -153,20 +174,6 @@ div.logo {
 .form input[type='username'],
 .form input[type='submit'] {
   width: 100%;
-}
-.user-form-field {
-  display: flex;
-  height:38px;
-  margin: 8px;
-  width: 30px;
-}
-.user-form-field input {
-  width: 210px;
-  letter-spacing: 1px;
-  flex: 1;
-  font-size: 30px;
-  font-family: var(--FontFamily);
-  border-bottom: 1px solid #AAAAAA;
 }
 .login label,
 .login input[type='username'],

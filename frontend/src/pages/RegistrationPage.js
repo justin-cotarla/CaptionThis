@@ -77,8 +77,7 @@ class RegistrationPage extends Component{
                         alt="Logo"
                     />
                 </div>
-                <body className="align-user-field">
-                  <div className="grid">
+                <div className="align-user-field">
                     <form>
                         <div className="user-form-field">
                             {this.state.redirect && <Redirect to={this.state.redirect} />}
@@ -98,22 +97,22 @@ class RegistrationPage extends Component{
                                 value={this.state.userField}
                                 onChange={this.onUserChange}
                             />
-                      </div>
-                      <div className="user-form-field">
-                          <label for="registerpassword1">
-                              <img
-                                  src={`http://${process.env.REACT_APP_IP}/res/password.png`}
-                                  alt="password"
-                              />
-                             </label>
-                        <input
-                            id="password1"
-                            type="password"
-                            className="user-form-field"
-                            name="password1"
-                            placeholder="Password"
-                            onChange={this.onPassChange}
-                            onKeyDown={this.onEnterPress}
+                        </div>
+                        <div className="user-form-field">
+                            <label for="registerpassword1">
+                                <img
+                                    src={`http://${process.env.REACT_APP_IP}/res/password.png`}
+                                    alt="password"
+                                />
+                            </label>
+                            <input
+                                id="password1"
+                                type="password"
+                                className="user-form-field"
+                                name="password1"
+                                placeholder="Password"
+                                onChange={this.onPassChange}
+                                onKeyDown={this.onEnterPress}
                             />
                         </div>
                         <div className="user-form-field">
@@ -122,24 +121,24 @@ class RegistrationPage extends Component{
                                     src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                     alt="password"
                                 />
-                           </label>
-                           <input
-                              id="password2"
-                              type="password"
-                              className="user-form-field"
-                              name="password2"
-                              placeholder="Confirm Password"
-                              value={this.state.passField2}
-                              onChange={this.onPassChange}
-                              onKeyDown={this.onEnterPress}
-                              />
+                            </label>
+                            <input
+                                id="password2"
+                                type="password"
+                                className="user-form-field"
+                                name="password2"
+                                placeholder="Confirm Password"
+                                value={this.state.passField2}
+                                onChange={this.onPassChange}
+                                onKeyDown={this.onEnterPress}
+                            />
                         </div>
-                        <div
-                            className="signup-button"
-                            onClick={this.onSubmit}>
-                            <a>Sign Up</a>
-                      </div>
                     </form>
+                    <div
+                        className="signup-button"
+                        onClick={this.onSubmit}>
+                        <a>Sign Up</a>
+                   </div>
                     <div
                         className="login2-button"
                         onClick={this.onLoginClick}
@@ -151,9 +150,8 @@ class RegistrationPage extends Component{
                       <LoadingDots className="login-loader"/>
                     </div>
                     }
-                    </div>
-                    </body>
                 </div>
+            </div>
         );
     }
 }
