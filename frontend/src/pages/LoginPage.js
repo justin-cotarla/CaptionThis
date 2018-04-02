@@ -84,11 +84,9 @@ class LoginPage extends Component{
               <img
                   src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
                   alt="Logo"
-
               />
-          </div>
-          <body className="align-user-field">
-            <div className="grid">
+            </div>
+            <div className="align-user-field">
                 <form>
                     <div className="user-form-field">
                         {this.state.redirect && <Redirect to={this.state.redirect} />}
@@ -106,7 +104,7 @@ class LoginPage extends Component{
                             placeholder="Username"
                             value={this.state.userField}
                             onChange={this.onUserChange}
-                            />
+                        />
                     </div>
                     <div className="user-form-field">
                         <label for="loginpassword">
@@ -124,15 +122,15 @@ class LoginPage extends Component{
                             value={this.state.passField}
                             onChange={this.onPassChange}
                             onKeyDown={this.onEnterPress}
-                            />
+                        />
                     </div>
-                    <div
-                        className="login2-button"
-                        onClick={this.onSubmit}
-                        >
-                        Login
-                   </div>
                 </form>
+                <div
+                    className="login2-button"
+                    onClick={this.onSubmit}
+                    >
+                    Login
+                </div>
                 <div className="registration-button" onClick={this.onRegisterClick}>
                     <p class="text--center"> Not a member ? <a>Sign up now </a></p>
                 </div>
@@ -142,8 +140,7 @@ class LoginPage extends Component{
                 </div>
                 }
             </div>
-        </body>
-        </div>
+          </div>
         );
     }
 }
