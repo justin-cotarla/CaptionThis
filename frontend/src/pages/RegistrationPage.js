@@ -11,7 +11,14 @@ class RegistrationPage extends Component{
         this.state = {
             userField: '',
             passField: '',
+            passConfirmField: '',
             redirect: null,
+            errors: {
+                loginError: '',
+                userError: '',
+                passError: '',
+                verifyError: '',
+            },
         }
     }
 
@@ -32,10 +39,31 @@ class RegistrationPage extends Component{
         });
     }
 
+    onInputChange = (event) => {
+        const value = event.target.value;
+        const name = event.target.name;
+        const { fields } = this.state;
+        fields[name] = value;
+        this.setState({ fields });
+        this.validateInput(name, value);
+    }
+
     onPassChange = (event) => {
         this.setState({
             passField: event.target.value,
         });
+    }
+
+    onPassConfirmChange = (event) => {
+        this.setState({
+            passConfirmField: event.target.value,
+        });
+    }
+
+    onComparePasswords = () => {
+        if(this.state.passField === this.state.passConfirmField){
+            return true;
+        }
     }
 
     onLoginClick = () => {
@@ -47,6 +75,30 @@ class RegistrationPage extends Component{
     onEnterPress = (event) => {
         if(event.keyCode === 13 && event.shiftKey === false) {
           this.onSubmit();
+        }
+    }
+
+    validateInput = (name, value) => {
+        const { userField, passField, passConfirmField } = this.state.fields;
+        const { errors, showRegisterForm } = this.state;
+        if (showRegisterForm) {
+            switch (name) {
+                case 'username':
+                    if (userField === '') errors.userError = 'Username cannot be empty.'
+                    else errors.userError = '';
+                    break;
+                case 'password':
+                    if (passField === '') errors.passError = 'Password cannot be empty.';
+                    else errors.passError = ''
+                    break;
+                case 'passwordConfirm':
+                    if (passConfirmField === '') errors.verifyError = 'Please confirm your password.';
+                    else if (passConfirmField !== passField) errors.verifyError = 'The passwords do not match!';
+                    else if (passConfirmField === passField) errors.verifyError = ''
+                    break;
+                default: break;
+            }
+            this.setState({ errors });
         }
     }
 
@@ -67,9 +119,21 @@ class RegistrationPage extends Component{
                     redirect: '/',
                 })
             }
+        })
+        .catch(error => {
+            const { errors } = this.state;
+            errors.loginError = 'Invalid username or password!';
+            this.setState({
+                errors,
+                loggingin: false,
+            });
         });
     }
     render() {
+        const errorIndicator = {
+            borderBottom: '2px solid #ff0000',
+        };
+        const { loginError, userError, passError, verifyError } = this.state.errors;
         return (
             <div className="defined-style-components">
             <NavBar user={this.state.user}/>  
@@ -79,73 +143,73 @@ class RegistrationPage extends Component{
                         alt="Logo"
                     />
                 </div>
-                <div className="align-user-field">
-                    <form>
-                        <div className="user-form-field">
-                            {this.state.redirect && <Redirect to={this.state.redirect} />}
-                            <form onSubmit={this.onSubmit}/>
-                            <label>
-                                <img
-                                    src={`http://${process.env.REACT_APP_IP}/res/username.png`}
-                                    alt="username"
-                                />
-                            </label>
-                            <input
-                                id="register_username"
-                                type="username"
-                                name="username"
-                                className="user-form-field"
-                                placeholder="Username"
-                                value={this.state.userField}
-                                onChange={this.onUserChange}
+                  <div className="registration-container">
+                    <logReg-form>
+                        {this.state.redirect && <Redirect to={this.state.redirect} />}
+                        <form onSubmit={this.onSubmit}/>
+                        <label className="input-label">
+                            <img
+                               src={`http://${process.env.REACT_APP_IP}/res/username.png`}
                             />
-                        </div>
-                        <div className="user-form-field">
-                            <label for="registerpassword1">
-                                <img
-                                    src={`http://${process.env.REACT_APP_IP}/res/password.png`}
-                                    alt="password"
-                                />
-                            </label>
-                            <input
-                                id="password1"
-                                type="password"
-                                className="user-form-field"
-                                name="password1"
-                                placeholder="Password"
-                                onChange={this.onPassChange}
-                                onKeyDown={this.onEnterPress}
+                            Username
+                        </label>
+                        <input
+                            id="register_username"
+                            type="username"
+                            name="username"
+                            className="input-field"
+                            value={this.state.userField}
+                            onChange={this.onUserChange}
+                            style={ (userError || loginError) ? errorIndicator : {} }/>
+                            {
+                                userError && <h1 className="modal-verify-error">{userError}</h1>
+                            }
+                        <label className="input-label">
+                            <img
+                                src={`http://${process.env.REACT_APP_IP}/res/password.png`}
+                                alt="password"
                             />
-                        </div>
-                        <div className="user-form-field">
-                            <label for="registerpassword2">
-                                <img
-                                    src={`http://${process.env.REACT_APP_IP}/res/password.png`}
-                                    alt="password"
-                                />
-                            </label>
-                            <input
-                                id="password2"
-                                type="password"
-                                className="user-form-field"
-                                name="password2"
-                                placeholder="Confirm Password"
-                                value={this.state.passField2}
-                                onChange={this.onPassChange}
-                                onKeyDown={this.onEnterPress}
+                        Password
+                        </label>
+                        <input
+                            id="password1"
+                            type="password"
+                            className="input-field"
+                            name="password"
+                            value={this.state.passField}
+                            onChange={this.onPassChange}
+                            style={ (passError || loginError) ? errorIndicator : {} }/>
+                            {
+                                (passError || loginError) && <h1 className="modal-verify-error">{passError || loginError}</h1>
+                            }
+                        <label className="input-label">
+                            <img
+                                src={`http://${process.env.REACT_APP_IP}/res/password.png`}
+                                alt="password"
                             />
-                        </div>
-                    </form>
-                    <div
-                        className="signup-button"
-                        onClick={this.onSubmit}>
-                        <a>Sign Up</a>
-                   </div>
-                    <div
-                        className="login2-button"
-                        onClick={this.onLoginClick}
-                        >
-                        Login
+                        Confirm Password
+                        </label>
+                        <input
+                            id="password2"
+                            type="password"
+                            className="input-field"
+                            name="passwordConfirm"
+                            value={this.state.passConfirmField}
+                            onChange={this.onPassConfirmChange}
+                            onKeyDown={this.onEnterPress}
+                            style={ verifyError ? errorIndicator : {} }/>
+                            { 
+                                verifyError && <h1 className="modal-verify-error">{verifyError}</h1> 
+                            } 
+                        <div
+                            className="loginSignUp-button"
+                            onClick={this.onSubmit}>
+                            <a>Sign Up</a>
+                      </div>
+                    </logReg-form>
+                    <div 
+                        onClick={this.onLoginClick}>
+                        <p class="signUpNow-button"> Already have an account ? <a>Login</a></p>
                     </div>
                     {this.state.loggingin &&
                     <div className="login-loader-holder">
