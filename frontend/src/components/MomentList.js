@@ -47,7 +47,7 @@ class MomentList extends Component {
 
     render() {
         const { selectedFilter, moments, loading, error } = this.state;
-        const { showCount } = this.props;
+        const { count } = this.props;
 
         if (error) {
             return <div className="moment-list-container">
@@ -61,13 +61,16 @@ class MomentList extends Component {
 
         return (
             <div className="moment-list-container">
+                {
+                    moments.length === 0 
+                        ? <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
+                        : count && <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>{count} Moments</h1>
+
+                }
                 <ListFilter
                     filters={momentFilters}
                     selectedFilter={selectedFilter}
                     onFilterChange={this.onFilterChange}/>
-                {
-                    (showCount && moments.length === 0) && <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
-                }
                 <ul className="Moments-list">
                     {
                         moments.map(moment => {
@@ -83,7 +86,7 @@ class MomentList extends Component {
                                     <Moment className="Moment-component"
                                         showSubmittedBy={this.props.showSubmittedBy}
                                         image={ img }
-                                        date={ formatDate(date_added) }
+                                        date={ date_added }
                                         description= {
                                             top_caption
                                                 ? top_caption
@@ -99,11 +102,6 @@ class MomentList extends Component {
             </div>
         )
     }
-}
-
-// Exact formatting of date will be handled later
-const formatDate = date => {
-    return date.split('T')[0];
 }
 
 export default MomentList;

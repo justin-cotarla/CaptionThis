@@ -6,6 +6,7 @@ import NavBar from '../components/NavBar';
 import ErrorGraphic from '../components/ErrorGraphic';
 
 import { fetchUser, fetchCaptions, fetchMoments, RequestTypes } from '../util/ApiUtil';
+import { formatJoinDate } from '../util/DateUtil';
 
 import '../styles/ProfilePage.css';
 
@@ -87,7 +88,7 @@ class ProfilePage extends React.Component {
                             {views.map(view => {
                                 return <li  key={view}
                                             className="header-section"
-                                            style={view === selectedView ? {color: '#1DE28F'} : null}
+                                            style={view === selectedView ? {color: '#1DE28F'} : {cursor: 'pointer'}}
                                             onClick={this.updateView.bind(null, view)}>
                                             { (token && user.id === profileUser.id ? 'My ' : '') + view.charAt(0).toUpperCase() + view.slice(1) }
                                     </li>
@@ -104,20 +105,19 @@ class ProfilePage extends React.Component {
                                         userId: profileUser.id 
                                     })}
                                     showSubmittedBy={false} 
-                                    showCount={false}
+                                    count={profileUser.captionCount}
                                     isLinkedToMoment={true} 
                                     isInteractive={false}
                                     momentCreatorId={null}
                                     user={this.props.user}
-                                    token={token}>
-                                </CaptionList>
+                                    token={token}/>
                             )
                         }
                         {
                             selectedView === views[1]
                             && (
                                 <MomentList 
-                                    showCount={false}
+                                    count={profileUser.momentCount}
                                     showSubmittedBy={true}
                                     fetchMoments={(filter) => fetchMoments({ 
                                         token,
@@ -130,6 +130,12 @@ class ProfilePage extends React.Component {
                         }
                     </div>
                     <div className="profile-page-sidebar">
+                        <h1 className="header-section">About { (token && user.id === profileUser.id ? 'Me' : profileUser.username) }</h1>
+                        <h1 className="header-info">Joined: { formatJoinDate(profileUser.dateAdded) }</h1>
+                        <h1 className="header-section">Stats</h1>
+                        <h1 className="header-info">Score: {profileUser.totalVote}</h1>
+                        <h1 className="header-info">Accepted captions: {profileUser.acceptCount}</h1>
+                        <h1 className="header-info">Rejected captions: {profileUser.rejectCount}</h1>
                     </div>
                 </div>
             </div>

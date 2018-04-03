@@ -7,12 +7,6 @@
     padding: 1em 2em;
     text-align: left;
     background: #202020;
-}
-
-.profile-page-content {
-    flex-grow: 3;
-    padding: 0 1em;
-    font-family: 'Teko';
     -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
     -moz-animation: fadein 1s; /* Firefox < 16 */
     -ms-animation: fadein 1s; /* Internet Explorer */
@@ -20,9 +14,41 @@
     animation: fadein 1s;
 }
 
+.profile-page-container .list-filter {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+.profile-page-container .caption-list-container {
+    margin-top: 0;
+    margin-left: 2em;
+}
+
+.profile-page-container .moment-list-container {
+    margin-top: 0;
+    margin-left: 2em;
+}
+
+.profile-page-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 3;
+    flex-basis: 600px;
+    padding: 0 1em;
+    font-family: 'Teko';
+}
+
 .profile-page-sidebar {
-    flex-grow: 1;
-    margin: 0 1em;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    flex-basis: 300px;
+    margin-top: 11.4em;
+    padding-left: 0.5em;
+}
+
+.profile-page-sidebar .header-info {
+    padding-left: 1em;
 }
 
 .profile-page-sidebar h1 {
@@ -42,6 +68,8 @@
 .views {
     display: flex;
     flex-direction: row;
+    position: relative;
+    bottom: 0.5em;
 }
 
 .header-username {
@@ -63,8 +91,11 @@
     color: #FFFFFF;
 }
 
-.header-section:hover{
-    cursor: pointer;
+.header-info {
+    font-family: 'Teko';
+    font-size: 26px;
+    color: #FFFFFF;
+    letter-spacing: 1px;
 }
 
 .line-separator{

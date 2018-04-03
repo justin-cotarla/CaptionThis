@@ -83,8 +83,8 @@ class CaptionList extends React.Component {
     }
 
     render () {
-        const { captions, selectedFilter, scrolled, error } = this.state;
-        const { user, momentCreatorId, showSubmittedBy, showCount, isLinkedToMoment, scrollTo, isInteractive, token } = this.props;
+        const { captions, selectedFilter, scrolled, loading, error } = this.state;
+        const { user, momentCreatorId, showSubmittedBy, count, isLinkedToMoment, scrollTo, isInteractive, token } = this.props;
 
         if (error) {
             return <div className="caption-list-container">
@@ -94,10 +94,12 @@ class CaptionList extends React.Component {
 
         return ( 
             <div className="caption-list-container">
-                <ListFilter filters={captionFilters} selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
                 {
-                    (showCount && captions.length === 0) && <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
+                    (captions.length === 0 && !loading)
+                        ? <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
+                        : count && <h1 style={{fontSize: '26px'}}>{count} Captions</h1>                 
                 }
+                <ListFilter filters={captionFilters} selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
                 <ul>
                     { 
                         captions.map(caption => {
