@@ -95,11 +95,17 @@ class CaptionList extends React.Component {
         return ( 
             <div className="caption-list-container">
                 {
-                    (captions.length === 0 && !loading)
-                        ? <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
-                        : count && <h1 style={{fontSize: '26px'}}>{count} Captions</h1>                 
+                    count > 0 && 
+                    <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>
+                        {count} Caption{count > 1 ? 's' : ''}
+                    </h1>
                 }
                 <ListFilter filters={captionFilters} selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
+                {
+                    !loading && captions.length === 0 && <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>
+                        Looks like there's nothing here (yet) :(
+                    </h1>
+                }
                 <ul>
                     { 
                         captions.map(caption => {
