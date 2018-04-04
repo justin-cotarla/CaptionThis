@@ -11,6 +11,8 @@ import { formatJoinDate } from '../util/DateUtil';
 import '../styles/ProfilePage.css';
 
 class ProfilePage extends React.Component {
+    MOMENT_RANGE = 10;
+
     constructor(props){
         super(props);
         this.state = {
@@ -131,12 +133,13 @@ class ProfilePage extends React.Component {
                                 <MomentList 
                                     count={profileUser.momentCount}
                                     showSubmittedBy={true}
-                                    fetchMoments={(filter) => fetchMoments({ 
+                                    fetchMoments={(filter, page) => fetchMoments({
                                         token,
                                         type: RequestTypes.BY_USER, 
                                         filter,
                                         userId: profileUser.id, 
-                                        range: 30, 
+                                        range: this.MOMENT_RANGE,
+                                        start: this.MOMENT_RANGE * page,
                                     })}/>
                             )
                         }
