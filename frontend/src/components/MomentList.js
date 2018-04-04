@@ -94,17 +94,21 @@ class MomentList extends Component {
 
         return (
             <div className="moment-list-container">
-
                 {
-                    !loading && moments.length === 0
-                        ? <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
-                        : count && <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>{count} Moments</h1>
-
+                    count > 0 && 
+                    <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>
+                        {count} Moment{count > 1 ? 's' : ''}
+                    </h1>
                 }
                 <ListFilter
                     filters={momentFilters}
                     selectedFilter={selectedFilter}
                     onFilterChange={this.onFilterChange}/>
+                {
+                    !loading && moments.length === 0 && <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>
+                        Looks like there's nothing here (yet) :(
+                    </h1>
+                }
                 <ul className="Moments-list">
                     {
                         moments.map(moment => {
