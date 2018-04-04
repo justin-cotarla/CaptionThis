@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import scrollToComponent from 'react-scroll-to-component';
 import ListFilter from '../components/ListFilter';
 import Caption from './Caption';
-import Header from './Header';
 import ErrorGraphic from './ErrorGraphic';
 import ConditionalWrap from './ConditionalWrap';
 

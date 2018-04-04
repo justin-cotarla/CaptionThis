@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import ListFilter from './ListFilter';
 import Moment from './Moment';
-import Header from './Header';
 import Loading from './Loading';
 import ErrorGraphic from './ErrorGraphic';
 import { momentFilters } from '../util/ApiUtil';
