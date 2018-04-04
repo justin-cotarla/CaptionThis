@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { timeAgo } from '../util/dateUtil';
+import { timeAgo } from '../util/DateUtil';
 import ConditionalWrap from './ConditionalWrap';
 import '../styles/Moment.css';
 
@@ -9,7 +9,7 @@ const Moment = props => {
         <div
           className="Moment-preview-container"
           style={{backgroundImage: `url(http://${process.env.REACT_APP_IP}/res/polaroid_texture.png)`}}>
-          { (props.currentUser.username == props.username) && <h1 className="delete-button" onClick={props.onClick}>X</h1> }
+          { (props.currentUser.username == props.user.username) && <h1 className="delete-button" onClick={props.onClick}>X</h1> }
             <ConditionalWrap
                 condition={props.momentId}
                 wrap={children =>  <Link to={`/moment/${props.momentId}`}>{children}</Link>}
@@ -20,7 +20,12 @@ const Moment = props => {
                 <h1 style={{fontSize: '20px'}}>Posted {timeAgo(props.date)}</h1>
                 {
                     props.showSubmittedBy && <h1 className="header-medium-2" style={{ marginTop: '8px'}}>
-                        Submitted by <Link className="linked-username" to={`/user/${props.username}`}>{props.username}</Link>
+                        Submitted by <ConditionalWrap
+                                    condition={props.user.id !== null}
+                                    wrap={children => <Link className="linked-username" to={`/user/${props.user.username}`}>{children}</Link>}
+                                >
+                            {(props.user.id === null) ? '[deleted]' : props.user.username}
+                        </ConditionalWrap>
                     </h1>
                 }
         </div>

@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import classnames from 'classnames';
 
-import Header from './Header';
 import CaptionVotes from './CaptionVotes';
 import Acceptor from './Acceptor';
-
-import '../styles/Caption.css';
 import AuthModal from './AuthModal';
-import { timeAgo } from '../util/dateUtil';
+import LoadingDots from './LoadingDots';
+
+import '../styles/CaptionEditor.css';
+import ConditionalWrap from './ConditionalWrap';
+import '../styles/Caption.css';
+
+import { editCaption } from '../util/ApiUtil';
+import { timeAgo } from '../util/DateUtil';
 
 class Caption extends React.Component {
     constructor(props){
@@ -17,8 +21,20 @@ class Caption extends React.Component {
         this.state = {
             caption: props.caption,
             isHighlighted: props.scrollTo === props.caption.caption_id,
+            editing: false,
+            editor: {
+                newCaption: props.caption.caption,
+                isEditing: false,
+                editError: '',
+            },
             token: props.token,
             showAuthModal: false,
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.Textarea) {
+            this.Textarea.focus();
         }
     }
 
@@ -126,8 +142,64 @@ class Caption extends React.Component {
         .catch(error => console.log(error));
     }
 
+    onEditClick = event => {
+        event.preventDefault();
+        this.setState({ editing: true });
+    }
+
+    onEdit = event => {
+        event.preventDefault();
+        const newCaption = event.target.value;
+        const { editor } = this.state;
+
+        editor.newCaption = newCaption;
+        this.setState({ editor });
+    }
+
+    onCancelEdit = () => {
+        const { caption, editor } = this.state;
+        editor.newCaption = caption.caption;
+        this.setState({ 
+            editor,
+            editing: false,
+        });
+    }
+
+    onSave = (event) => {
+        event.preventDefault();
+        const { token, caption, editor } = this.state;
+        const { newCaption } = editor;
+        const captionId = caption.caption_id;
+
+        editor.isEditing = true;
+        this.setState({ editor });
+
+        editCaption({ token, captionId, newCaption })
+        .then(() => {
+            editor.isEditing = false;
+            this.setState(prevState => {
+                return {
+                    ...prevState,
+                    editing: false,
+                    editor,
+                    caption: {
+                        ...prevState.caption,
+                        caption: newCaption,
+                    },
+                }
+            });
+        })
+        .catch(error => {
+            editor.isEditing = false;
+            editor.error = 'There was a problem editing your caption. Please try again';
+            this.setState({ editor });
+        });
+    }
+
     render(){
-        const { caption, isHighlighted, showAuthModal } = this.state;
+        const { caption, isHighlighted, editing, token, showAuthModal } = this.state;
+        const { newCaption, isEditing, editError } = this.state.editor;
+        const { canEdit } = this.props;
         const acceptorClasses = ["caption-container-rejected", "caption-container", "caption-container-accepted"];
         return (
             <div
@@ -136,31 +208,68 @@ class Caption extends React.Component {
                 <AuthModal
                     open={showAuthModal}
                     onClose={() => this.setState({ showAuthModal: false })}/>
-                <ul>
-                    <li>
-                        <CaptionVotes
-                            upvotes={caption.total_votes}
-                            voteHandler={this.handleVote}
-                            id={caption.caption_id}
-                            vote_value={this.state.caption.user_vote}/>
-                    </li>
-                    <li className="caption-content">
-                        <Acceptor
-                            canAccept={this.props.canAccept}
-                            captionId={caption.caption_id}
-                            status={caption.selected}
-                            acceptHandler={this.handleAccept} />
-                        <Header textSize={4} text={caption.caption}/>
-                        {
-                            this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>
-                                Submitted {timeAgo(caption.date_added)} by <Link className="linked-username" to={`/user/${caption.user.username}`}>{caption.user.username}</Link>
-                            </h1>
-                        }
-                        {
-                            !this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>Posted {timeAgo(caption.date_added)}</h1>
-                        }
-                    </li>
-                </ul>
+                    <CaptionVotes
+                        upvotes={caption.total_votes}
+                        voteHandler={this.handleVote}
+                        id={caption.caption_id}
+                        vote_value={this.state.caption.user_vote}/>
+                <div className="caption-content">
+                    <Acceptor
+                        canAccept={this.props.canAccept}
+                        captionId={caption.caption_id}
+                        status={caption.selected}
+                        acceptHandler={this.handleAccept} />
+                    { 
+                        canEdit && !editing
+                        && <span 
+                            className="edit-caption"
+                            onClick={this.onEditClick}>
+                                edit
+                            </span>
+                    }
+                    {
+                        editing 
+                            ? <div className="caption-editor-container">
+                                <textarea
+                                    ref={(textarea) => this.Textarea = textarea}
+                                    className="caption-editor-input" 
+                                    type="text"
+                                    value={newCaption}
+                                    onChange={this.onEdit}/>
+                                { 
+                                    editError && <h1 style={{ color: '#ff5e56', fontWeight: 200, fontSize: '16px', marginTop: '0.2em' }}>{editError}</h1> 
+                                }
+                                <button 
+                                    className="caption-editor-btn" 
+                                    style={{ marginRight: '0.5em'}}
+                                    onClick={this.onSave} 
+                                    disabled={((token) && (newCaption.length === 0 || caption.caption === newCaption)) || isEditing}>Save</button>
+                                <button
+                                    className="caption-editor-btn"
+                                    onClick={this.onCancelEdit}
+                                    disabled={isEditing}>
+                                    Cancel
+                                </button>
+                                { 
+                                    isEditing && <div className="is-editing"><LoadingDots/></div> 
+                                }
+                            </div> 
+                        : <h1 style={{fontSize: '24px'}}>{caption.caption}</h1>
+                    }
+                    {
+                        this.props.showSubmittedBy && <h1 style={{ fontSize: '16px' }}>
+                            Submitted {timeAgo(caption.date_added)} by <ConditionalWrap
+                                condition={caption.user.id !== null}
+                                wrap={children => <Link className="linked-username" to={`/user/${caption.user.username}`}>{children}</Link>}
+                            >
+                                {(caption.user.id === null) ? '[deleted]' : caption.user.username}
+                            </ConditionalWrap>
+                        </h1>
+                    }
+                    {
+                        !this.props.showSubmittedBy && <h1 className="caption-submitted-by">Posted {timeAgo(caption.date_added)}</h1>
+                    }
+                </div>
             </div>
         )
     }

@@ -7,7 +7,7 @@ import Header from './Header';
 import ErrorGraphic from './ErrorGraphic';
 import ConditionalWrap from './ConditionalWrap';
 
-import { captionFilters } from '../util/apiUtil';
+import { captionFilters } from '../util/ApiUtil';
 
 import '../styles/CaptionList.css';
 
@@ -25,6 +25,10 @@ class CaptionList extends React.Component {
 
     componentDidMount() {
         this.fetchCaptions();
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.scrollTimeout);
     }
 
     componentDidUpdate = () => {
@@ -60,7 +64,7 @@ class CaptionList extends React.Component {
             duration: 1000
         });
         if (this.state.scrolled === false) {
-            setTimeout(() => this.setState({ scrolled: true }), 5000);
+            this.scrollTimeout = setTimeout(() => this.setState({ scrolled: true }), 5000);
         }
     }
 
@@ -79,8 +83,8 @@ class CaptionList extends React.Component {
     }
 
     render () {
-        const { captions, selectedFilter, scrolled, error } = this.state;
-        const { user, momentCreatorId, showSubmittedBy, showCount, isLinkedToMoment, scrollTo, token } = this.props;
+        const { captions, selectedFilter, scrolled, loading, error } = this.state;
+        const { user, momentCreatorId, showSubmittedBy, count, isLinkedToMoment, scrollTo, isInteractive, token } = this.props;
 
         if (error) {
             return <div className="caption-list-container">
@@ -90,10 +94,12 @@ class CaptionList extends React.Component {
 
         return ( 
             <div className="caption-list-container">
-                <ListFilter filters={captionFilters} selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
                 {
-                    (showCount && captions.length === 0) && <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
+                    (captions.length === 0 && !loading)
+                        ? <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
+                        : count && <h1 style={{fontSize: '26px'}}>{count} Captions</h1>                 
                 }
+                <ListFilter filters={captionFilters} selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
                 <ul>
                     { 
                         captions.map(caption => {
@@ -110,8 +116,9 @@ class CaptionList extends React.Component {
                                         canAccept={
                                             (user) // The user is logged on
                                             && (momentCreatorId === user.id) // The logged-on user created the moment
-                                            && (user.id !== caption.user.user_id) // The logged-on user did not create the caption
+                                            && (user.id !== caption.user.id) // The logged-on user did not create the caption
                                         } 
+                                        canEdit={user && isInteractive && (user.id === caption.user.id)}
                                         token={token} />
                                 </ConditionalWrap>
                             </li>

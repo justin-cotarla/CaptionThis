@@ -16,6 +16,8 @@ const queryBuilder = (params) => {
         start,
     } = params;
 
+    conditions.push('MOMENT.DELETED=0');
+
     if (!(userid === undefined || userid === '' || userid === 0 || !/^\d+$/.test(userid))) {
         conditions.push('MOMENT.USER_ID=?');
         values.push(userid);
@@ -48,7 +50,7 @@ const queryBuilder = (params) => {
         : 'DESC';
 
     return {
-        where: conditions.length ? conditions[0] : 'TRUE',
+        where: conditions.join(' AND '),
         values,
         order: `${filter} ${order}`,
     };
@@ -71,7 +73,8 @@ const getMoments = {
         ON
             TV.CAPTION_ID = CAPTION.ID
         WHERE
-            MOMENT_ID=MOMENT.ID
+            MOMENT_ID=MOMENT.ID AND
+            CAPTION.DELETED=0
         GROUP BY
             CONTENT
         ORDER BY
@@ -86,8 +89,8 @@ const getMoments = {
             IMG_URL,
             DESCRIPTION,
             MOMENT.DATE_ADDED,
-            USER.USERNAME,
-            USER.ID AS USER_ID,
+            IF(USER.DELETED=0, USERNAME, null) AS USERNAME,
+            IF(USER.DELETED=0, USER.ID, null) AS USER_ID,
             COUNT(C_CAPTION.ID) AS CAPTION_COUNT,
             (${subQuery}) AS TOP_CAPTION
         FROM
@@ -113,7 +116,7 @@ const getMoments = {
             const moments = result.rows.map(moment => ({
                 moment_id: moment.MOMENT_ID,
                 user: {
-                    user_id: moment.USER_ID,
+                    id: moment.USER_ID,
                     username: moment.USERNAME,
                 },
                 img: moment.IMG_URL,
@@ -133,8 +136,8 @@ const getMoments = {
                 .response(data)
                 .code(GOOD.http);
         })
-            .catch(() => reply
-                .response({ code: UNKNOWN_ERROR.code })
+            .catch(error => reply
+                .response({ error, code: UNKNOWN_ERROR.code })
                 .code(UNKNOWN_ERROR.http));
     },
 };

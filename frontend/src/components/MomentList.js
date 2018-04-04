@@ -5,7 +5,7 @@ import Header from './Header';
 import Loading from './Loading';
 import ErrorGraphic from './ErrorGraphic';
 
-import { momentFilters } from '../util/apiUtil';
+import { momentFilters } from '../util/ApiUtil';
 import '../styles/MomentsList.css';
 
 class MomentList extends Component {
@@ -20,7 +20,7 @@ class MomentList extends Component {
         };
     };
 
-    componentDidMount() { 
+    componentDidMount() {
         this.onFilterChange(momentFilters[0]);
     }
 
@@ -30,8 +30,8 @@ class MomentList extends Component {
             this.props.fetchMoments(selectedFilter)
             .then(response => {
                 const { moments } = response.data;
-                this.setState({ 
-                    moments, 
+                this.setState({
+                    moments,
                     selectedFilter,
                     loading: false,
                 });
@@ -47,7 +47,7 @@ class MomentList extends Component {
 
     render() {
         const { selectedFilter, moments, loading, error } = this.state;
-        const { showCount } = this.props;
+        const { count } = this.props;
 
         if (error) {
             return <div className="moment-list-container">
@@ -58,32 +58,43 @@ class MomentList extends Component {
         if (loading) {
             return <Loading/>
         }
-        
+
         return (
             <div className="moment-list-container">
-                <ListFilter 
-                    filters={momentFilters} 
-                    selectedFilter={selectedFilter} 
-                    onFilterChange={this.onFilterChange}/>
                 {
-                    (showCount && moments.length === 0) && <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
+                    moments.length === 0 
+                        ? <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
+                        : count && <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>{count} Moments</h1>
+
                 }
+                <ListFilter
+                    filters={momentFilters}
+                    selectedFilter={selectedFilter}
+                    onFilterChange={this.onFilterChange}/>
                 <ul className="Moments-list">
                     {
                         moments.map(moment => {
+                            const {
+                                moment_id,
+                                img,
+                                date_added,
+                                top_caption,
+                                user,
+                            } = moment;
                             return (
-                                <li key={moment.moment_id}>
+                                <li key={moment_id}>
                                     <Moment className="Moment-component"
                                         showSubmittedBy={this.props.showSubmittedBy}
-                                        image={ moment.img }
-                                        date={ formatDate(moment.date_added) }
+                                        image={ img }
+                                        date={ date_added }
                                         description= {
-                                            moment.top_caption 
-                                                ? `"${(moment.top_caption.length > 30) ? moment.top_caption.slice(0, 30).concat('...') : moment.top_caption}"`
+                                            top_caption
+                                                ? top_caption
                                                 : 'Submit a caption'
                                             }
-                                        username={ moment.user.username }
-                                        momentId={ moment.moment_id }
+                                            
+                                        user={ {...user} }
+                                        momentId={moment_id}
                                         currentUser={ this.props.user }/>
                                 </li>
                             )
@@ -93,11 +104,6 @@ class MomentList extends Component {
             </div>
         )
     }
-}
-
-// Exact formatting of date will be handled later
-const formatDate = date => {
-    return date.split('T')[0];
 }
 
 export default MomentList;

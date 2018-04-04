@@ -19,6 +19,9 @@ const getCaptionsBuilder = (params) => {
         order,
     } = params;
 
+    conditions.push('CAPTION.DELETED=0');
+    conditions.push('MOMENT.DELETED=0');
+
     if (!(momentid === undefined || momentid === '' || momentid === 0 || !/^\d+$/.test(momentid))) {
         conditions.push('MOMENT_ID=?');
         values.push(momentid);
@@ -59,7 +62,7 @@ const getCaptionsBuilder = (params) => {
     values.push(range);
 
     return {
-        where: conditions.length ? conditions.join(' AND ') : 'TRUE',
+        where: conditions.join(' AND '),
         values,
         order: `${filter} ${order}`,
     };
@@ -79,8 +82,8 @@ const getCaptions = {
         const query = `
         SELECT
             MOMENT_ID,
-            CAPTION.USER_ID AS USER_ID,
-            USERNAME,
+            IF(USER.DELETED=0, CAPTION.USER_ID, null) AS USER_ID,
+            IF(USER.DELETED=0, USERNAME, null) AS USERNAME,
             CAPTION.ID AS CAPTION_ID,
             CONTENT,
             SELECTED,
@@ -101,6 +104,10 @@ const getCaptions = {
             CAPTION_VOTE UV
         ON
             UV.CAPTION_ID = CAPTION. ID AND UV.USER_ID = ?
+        LEFT JOIN
+            MOMENT
+        ON
+            MOMENT.ID = CAPTION.MOMENT_ID
         WHERE
             ${where}
         GROUP BY
@@ -122,7 +129,7 @@ const getCaptions = {
                 const captions = result.rows.map(caption => ({
                     moment_id: caption.MOMENT_ID,
                     user: {
-                        user_id: caption.USER_ID,
+                        id: caption.USER_ID,
                         username: caption.USERNAME,
                     },
                     caption_id: caption.CAPTION_ID,

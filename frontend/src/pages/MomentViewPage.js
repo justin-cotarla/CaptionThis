@@ -10,7 +10,7 @@ import NavBar from '../components/NavBar';
 import Loading from '../components/Loading';
 import ErrorGraphic from '../components/ErrorGraphic';
 
-import { fetchCaptions, RequestTypes } from '../util/apiUtil';
+import { fetchCaptions, RequestTypes } from '../util/ApiUtil';
 
 class MomentViewPage extends Component{
     constructor(props){
@@ -91,7 +91,7 @@ class MomentViewPage extends Component{
                         date={ formatDate(moment.date_added) }
                         description={ moment.description }
                         showSubmittedBy={ true }
-                        username={ moment.user.username }/>
+                        user={ {...moment.user} }/>
                     <CaptionCreatorForm
                         momentId={this.props.match.params.momentID}
                         onCaptionSubmit={() => this.onCaptionSubmit()}
@@ -105,11 +105,11 @@ class MomentViewPage extends Component{
                             momentId: moment.moment_id }
                         )}
                         showSubmittedBy={true}
-                        showCount={true}
+                        isInteractive={true}
                         isLinkedToMoment={false}
                         scrollTo={scrollTo}
                         momentId={moment.moment_id}
-                        momentCreatorId={moment.user.user_id}
+                        momentCreatorId={moment.user.id}
                         user={this.props.user}
                         token={token}/>
                 </div>

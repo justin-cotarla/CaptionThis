@@ -59,7 +59,7 @@ describe('/api/captions GET Endpoint', () => {
                     captions: [{
                         moment_id: 1,
                         user: {
-                            user_id: 1,
+                            id: 1,
                             username: 'TEST',
                         },
                         caption_id: 1,
