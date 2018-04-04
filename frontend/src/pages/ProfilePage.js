@@ -120,13 +120,14 @@ class ProfilePage extends React.Component {
                                     count={profileUser.momentCount}
                                     showSubmittedBy={true}
                                     user={this.props.user}
+                                    token = {this.props.token}
                                     fetchMoments={(filter) => fetchMoments({ 
                                         token,
                                         type: RequestTypes.BY_USER, 
                                         filter,
                                         userId: profileUser.id, 
                                         range: 30, 
-                                    })}/>
+                                    })} />
                             )
                         }
                     </div>

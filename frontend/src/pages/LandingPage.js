@@ -42,6 +42,7 @@ class LandingPage extends Component {
                 <MomentList 
                     showSubmittedBy={true}
                     user={this.state.user}
+                    token = {this.state.token}
                     fetchMoments={(filter) => fetchMoments({ 
                         token, 
                         filter, 

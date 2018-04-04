@@ -92,10 +92,11 @@ class MomentList extends Component {
                                                 ? top_caption
                                                 : 'Submit a caption'
                                             }
-                                            
+
                                         user={ {...user} }
                                         momentId={moment_id}
-                                        currentUser={ this.props.user }/>
+                                        currentUser={ this.props.user }
+                                        token = {this.props.token} />
                                 </li>
                             )
                         })

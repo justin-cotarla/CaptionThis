@@ -43,6 +43,14 @@ export const fetchCaptions = ({ token, type, filter, momentId, userId, start, ra
     });
 }
 
+export const deleteMoment = ({ token, momentId }) => {
+    return axios({
+        method: 'DELETE',
+        url: `http://${process.env.REACT_APP_IP}/api/moment/${momentId}`,
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+    });
+}
+
 export const fetchUser = (username) => {
     return axios({
         method: 'get',
