@@ -188,7 +188,7 @@ class AuthModal extends React.Component {
 
         const formValid = username.length > 0
             && password.length > 0
-            && userError.concat(passError).length === 0
+            && userError.concat(passError, verifyError).length === 0
             && (showRegisterForm ? verify.length > 0 : true);
 
         return (

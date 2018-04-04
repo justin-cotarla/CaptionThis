@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
+import { Link, Redirect } from 'react-router-dom';
 
 import '../styles/NavBar.css';
 import * as AuthUtil from '../util/AuthUtil';
@@ -32,13 +32,6 @@ class NavBar extends Component{
             loggingOut: true,
         })
         AuthUtil.logout();
-    }
-
-    onProfileClick = () => {
-        this.setState({
-            redirect: `/user/${this.state.user.username}`,
-            allowBack: true,
-        })
     }
 
     onHomeClick = () => {
@@ -78,14 +71,14 @@ class NavBar extends Component{
                     }
 
                     {this.props.user &&
-                        <div
-                            className="profile-button"
-                            onClick={this.onProfileClick}>
-                            <img
-                                alt="Profile"
-                                src={`http://${process.env.REACT_APP_IP}/res/personIcon.png`}
-                            />
-                        </div>
+                        <Link to={`/user/${this.state.user.username}`}>
+                            <div className="profile-button">
+                                <img
+                                    alt="Profile"
+                                    src={`http://${process.env.REACT_APP_IP}/res/personIcon.png`}
+                                />
+                            </div>
+                        </Link>
                     }
 
                         <div

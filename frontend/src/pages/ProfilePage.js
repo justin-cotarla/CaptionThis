@@ -27,8 +27,20 @@ class ProfilePage extends React.Component {
 
     componentDidMount(){
         const { username } = this.props.match.params;
-        let profileUser;
+        this.fetchUser(username)
+    }
 
+    componentWillReceiveProps(nextProps){
+        const currentProfileUser = this.state.profileUser.username;
+        const nextProfileUser = nextProps.match.params.username;
+        if (nextProfileUser !== currentProfileUser) {
+            window.location.reload();
+        }
+    }
+
+    fetchUser = username => {
+        let profileUser;
+        
         fetchUser(username)
         .then(response => {
             profileUser = response.data.user;
@@ -99,7 +111,7 @@ class ProfilePage extends React.Component {
                         {
                             selectedView === views[0]
                             && (
-                                <CaptionList 
+                                <CaptionList
                                     fetchCaptions={(filter) => fetchCaptions({ 
                                         token, 
                                         type: RequestTypes.BY_USER, 
