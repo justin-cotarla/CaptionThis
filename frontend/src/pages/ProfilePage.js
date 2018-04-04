@@ -109,8 +109,7 @@ class ProfilePage extends React.Component {
                         {
                             selectedView === views[0]
                             && (
-                                <CaptionList 
-                                    ref={CaptionList => this.CaptionList = CaptionList}
+                                <CaptionList
                                     fetchCaptions={(filter) => fetchCaptions({ 
                                         token, 
                                         type: RequestTypes.BY_USER, 
