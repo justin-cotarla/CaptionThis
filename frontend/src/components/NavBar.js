@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import '../styles/NavBar.css';
 import * as AuthUtil from '../util/AuthUtil';
@@ -11,21 +11,10 @@ class NavBar extends Component{
     constructor(props){
         super(props);
         this.state = {
-            moments: null,
-            error: null,
-            redirect: null,
-            allowBack: false,
             user: this.props.user,
             loggingOut: false,
         };
     };
-
-    onLoginClick = () => {
-        this.setState({
-            redirect: '/login',
-            allowBack: true,
-        })
-    }
 
     onLogoutClick = () => {
         this.setState({
@@ -34,32 +23,11 @@ class NavBar extends Component{
         AuthUtil.logout();
     }
 
-    onHomeClick = () => {
-        this.setState({
-            redirect: '/',
-            allowBack: true,
-        })
-    }
-
-    onLoginClick = () => {
-        this.setState({
-            redirect: '/login',
-            allowBack: true,
-        })
-    }
-
-    onCreateMomentClick = () => {
-        this.setState({
-            redirect: '/submit',
-            allowBack: true,
-        })
-    }
-
     render() {
         return (
                 <div className="navbar-container">
-                    {this.state.redirect && <Redirect push={this.state.allowBack} to={this.state.redirect} />}
-                    {this.props.user &&
+                    {
+                        this.props.user &&
                         <div
                               className="logout-button"
                               onClick={this.onLogoutClick}>
@@ -69,8 +37,8 @@ class NavBar extends Component{
                               />
                         </div>
                     }
-
-                    {this.props.user &&
+                    {
+                        this.props.user &&
                         <Link to={`/user/${this.state.user.username}`}>
                             <div className="profile-button">
                                 <img
@@ -81,45 +49,34 @@ class NavBar extends Component{
                         </Link>
                     }
 
-                        <div
-                        className="home-button"
-                        onClick={this.onHomeClick}>
-                        <img
-                            alt="Home"
-                            src={`http://${process.env.REACT_APP_IP}/res/homeicon.png`}
-                        />
+                    <Link to="/">
+                        <div className="home-button">
+                            <img alt="Home" src={`http://${process.env.REACT_APP_IP}/res/homeicon.png`}/>
                         </div>
+                    </Link>
 
-                    {this.props.user &&
-                        <div
-                        className="createMoment-button"
-                        onClick={this.onCreateMomentClick}
-                        >
-                        <img
-                            alt="Home"
-                            src={`http://${process.env.REACT_APP_IP}/res/createMoment.png`}
-                        />
-                        </div>
+                    {
+                        this.props.user &&
+                        <Link to="/submit">
+                            <div className="createMoment-button">
+                                <img alt="Home" src={`http://${process.env.REACT_APP_IP}/res/createMoment.png`}/>
+                            </div>
+                        </Link>
                     }
-
-                    {this.props.user === null &&
-                        <div
-                            className="login-button"
-                            onClick={this.onLoginClick}>
-                            <img
-                                alt="Login"
-                                src={`http://${process.env.REACT_APP_IP}/res/login.png`}
-                            />
-
-                        </div>
+                    {
+                        this.props.user === null &&
+                        <Link to="/login">
+                            <div className="login-button">
+                                <img alt="Login" src={`http://${process.env.REACT_APP_IP}/res/login.png`}/>
+                            </div>
+                        </Link>
                     }
-
-                    {this.state.loggingOut &&
+                    {
+                        this.state.loggingOut &&
                         <div className="logout-loader-holder">
                             <LoadingDots />
                         </div>
                     }
-
             </div>
         )
     }
