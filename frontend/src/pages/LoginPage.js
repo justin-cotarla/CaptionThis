@@ -117,14 +117,15 @@ class LoginPage extends Component{
             <div className="login-container">
             <logReg-form>
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
+                    <label className="container-label"> Log in to your account </label>
                     <label className="input-label">
                         <img
                             src={`http://${process.env.REACT_APP_IP}/res/username.png`}
+                            alt="username"
                         />
                         Username
                     </label>
                     <input
-                        id="login_username"
                         type="username"
                         name="username"
                         className="input-field"
@@ -143,7 +144,6 @@ class LoginPage extends Component{
                             Password
                         </label>
                         <input
-                            id="loginpassword"
                             type="password"
                             name="password"
                             className="input-field"

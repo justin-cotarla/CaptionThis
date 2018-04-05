@@ -6,6 +6,7 @@
   font-size: 15px;    
   font-style: normal;
   width: 540px;
+  height: 430px;
   font-variant: normal;
   font-weight: 300;
   background-color: #484848;
@@ -20,12 +21,25 @@
   font-size: 15px;    
   font-style: normal;
   width: 540px;
+  height: 505px;
   font-variant: normal;
   font-weight: 300;
   background-color: #484848;
   box-shadow: 0 6px 0 black;
   border-radius: 3px;
   margin:auto;
+}
+
+.container-label {
+  float: center;
+  padding-left: 70px;
+  display: block;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  font-family: 'Teko';
+  letter-spacing: 2px;
+  font-size: 40px;
+  color:#1DE28F;
 }
 
 .input-label {
