@@ -86,8 +86,8 @@ class RegistrationPage extends Component{
             url: `http://${process.env.REACT_APP_IP}/api/auth/register`,
             method: 'post',
             data: {
-                username: this.state.username,
-                password: this.state.password,
+                username: this.state.fields.username,
+                password: this.state.fields.password,
             },
         })
         .then(({ data }) => {
@@ -134,15 +134,15 @@ class RegistrationPage extends Component{
                     />
                 </div>
                   <div className="registration-container">
-                    <logReg-form>
                         {this.state.redirect && <Redirect to={this.state.redirect} />}
                         <form onSubmit={this.onSubmit}/>
                         <label className="container-label"> Sign up for CaptionThis </label>
 
                         <label className="input-label">
                             <img
-                               src={`http://${process.env.REACT_APP_IP}/res/username.png`}
-                               alt="username"
+                                className="move-icons"
+                                src={`http://${process.env.REACT_APP_IP}/res/username.png`}
+                                alt="username"
                             />
                             Username
                         </label>
@@ -159,6 +159,7 @@ class RegistrationPage extends Component{
 
                         <label className="input-label">
                             <img
+                                className="move-icons"
                                 src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                 alt="password"
                             />
@@ -177,6 +178,7 @@ class RegistrationPage extends Component{
 
                         <label className="input-label">
                             <img
+                                className="move-icons"
                                 src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                 alt="password"
                             />
@@ -198,7 +200,6 @@ class RegistrationPage extends Component{
                             onClick={this.onSubmit}>
                             <a>Sign Up</a>
                        </div>
-                    </logReg-form>
                     <div 
                         onClick={this.onLoginClick}>
                         <p className="signUpNow-button"> Already have an account ? <a>Login</a></p>

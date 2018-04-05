@@ -68,7 +68,6 @@ class LoginPage extends Component{
         this.setState({
             loggingin: true,
         });
-
         axios({
             url: `http://${process.env.REACT_APP_IP}/api/auth/login`,
             method: 'post',
@@ -105,62 +104,59 @@ class LoginPage extends Component{
         const { loginError, userError, passError} = this.state.errors;
 
         return (
-          <div>
-          <NavBar user={this.state.user}/>                    
+          <div> <NavBar user={this.state.user}/>                    
             <div className="logo">
-              <img
-                  src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
-                  alt="Logo"
-
-              />
+                <img
+                    src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
+                    alt="Logo"
+                />
             </div>
             <div className="login-container">
-            <logReg-form>
-                    {this.state.redirect && <Redirect to={this.state.redirect} />}
-                    <label className="container-label"> Log in to your account </label>
-                    <label className="input-label">
-                        <img
-                            src={`http://${process.env.REACT_APP_IP}/res/username.png`}
-                            alt="username"
-                        />
-                        Username
-                    </label>
+                {this.state.redirect && <Redirect to={this.state.redirect} />}
+                <label className="container-label"> Log in to your account </label>
+                <label className="input-label">
+                    <img
+                        className="move-icons"
+                        src={`http://${process.env.REACT_APP_IP}/res/username.png`}
+                        alt="username"
+                    />
+                    Username
+                </label>
+                <input
+                    type="username"
+                    name="username"
+                    className="input-field"
+                    value={this.state.userField}
+                    onChange={this.onUserChange}
+                    style={ (userError || loginError) ? errorIndicator : {} }/>    
+                    {
+                        <h1 className="login-verify-error">{userError}</h1>
+                    }
+                <label className="input-label">
+                    <img
+                        className="move-icons"
+                        src={`http://${process.env.REACT_APP_IP}/res/password.png`}
+                        alt="password"
+                    />
+                    Password
+                </label>
                     <input
-                        type="username"
-                        name="username"
+                        type="password"
+                        name="password"
                         className="input-field"
-                        value={this.state.userField}
-                        onChange={this.onUserChange}
-                        style={ (userError || loginError) ? errorIndicator : {} }/>    
+                        value={this.state.passField}
+                        onChange={this.onPassChange}
+                        onKeyDown={this.onEnterPress}
+                        style={ (passError || loginError) ? errorIndicator : {} }/>
                         {
-                            <h1 className="login-verify-error">{userError}</h1>
+                            <h1 className="login-verify-error">{passError || loginError}</h1>
                         }
-                    
-                        <label className="input-label">
-                            <img
-                                src={`http://${process.env.REACT_APP_IP}/res/password.png`}
-                                alt="password"
-                            />
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            name="password"
-                            className="input-field"
-                            value={this.state.passField}
-                            onChange={this.onPassChange}
-                            onKeyDown={this.onEnterPress}
-                            style={ (passError || loginError) ? errorIndicator : {} }/>
-                            {
-                                <h1 className="login-verify-error">{passError || loginError}</h1>
-                            }
-                    <div
-                        className="loginSignUp-button"
-                        onClick={this.onSubmit}
-                        >
-                        Login
-                   </div>
-                </logReg-form>
+                <div
+                    className="loginSignUp-button"
+                    onClick={this.onSubmit}
+                    >
+                    Login
+                </div>
                 <div 
                     onClick={this.onRegisterClick}>
                     <p class="signUpNow-button"> Not a member ? <a>Sign up now </a></p>
