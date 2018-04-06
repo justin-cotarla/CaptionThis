@@ -16,7 +16,7 @@ const ListFilter = props => {
                 props.filters.map(filter => {
                     return <li  key={filter} 
                                 style={filter === props.selectedFilter ? selectedFilterStyle : null}
-                                onClick={() => props.onFilterChange(filter)}>
+                                onClick={filter !== props.selectedFilter ? () => props.onFilterChange(filter) : null}>
                             { filter }
                         </li>
                 })
