@@ -22,13 +22,6 @@ class LoginPage extends Component{
         }
     }
 
-    onHomeClick = () => {
-        this.setState({
-            redirect: '/',
-            allowBack: true,
-        })
-    }
-
     componentDidMount(){
         const cookies = new Cookies();
         const token = cookies.get('token');
@@ -159,7 +152,7 @@ class LoginPage extends Component{
                 </div>
                 <div 
                     onClick={this.onRegisterClick}>
-                    <p class="signUpNow-button"> Not a member ? <a>Sign up now </a></p>
+                    <p className="signUpNow-button"> Not a member ? <a>Sign up now </a></p>
                 </div>
                 {this.state.loggingin &&
                 <div className="login-loader-holder">
