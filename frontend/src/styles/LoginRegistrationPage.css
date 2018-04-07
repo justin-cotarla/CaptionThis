@@ -6,7 +6,7 @@
   font-size: 15px;    
   font-style: normal;
   width: 540px;
-  height: 430px;
+  height: 420px;
   font-variant: normal;
   font-weight: 300;
   background-color: #484848;
@@ -20,7 +20,7 @@
   font-size: 15px;    
   font-style: normal;
   width: 540px;
-  height: 505px;
+  height: 500px;
   font-variant: normal;
   font-weight: 300;
   background-color: #484848;
@@ -33,21 +33,17 @@
   padding-left: 70px;
   display: block;
   padding-top: 15px;
-  padding-bottom: 5px;
   font-family: 'Teko';
-  letter-spacing: 2px;
-  font-size: 40px;
-  color:#1DE28F;
+  font-size: 48px;
+  color:white;
 }
 .input-label {
-  padding-left: 70px;
+  padding-left: 63px;
   display: inline-block;
   padding-top: 15px;
-  padding-bottom: 5px;
   font-family: 'Teko';
-  letter-spacing: 2px;
   font-size: 26px;
-  color:#1DE28F;
+  color:white;
 }
 .input-field {
   float: center;
@@ -59,7 +55,6 @@
   border-bottom: #1DE28F 2px solid;
   text-align: left;
   font-family: 'Teko';
-  letter-spacing: 2px;
   font-size: 20px;
   color:#FFFFFF;
   margin-left: 70px;
@@ -68,53 +63,51 @@
   opacity: 1;
 }
 .signUpNow-button {
-  opacity: 0.8;
+  opacity: 1;
   font-family: 'Teko';
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.2;
-  letter-spacing: 0.5px;
   text-align: center;
-  margin-top: 30px;
-  color:#1DE28F;
-  cursor: pointer;
+  margin-top: 0.5em;
+  color: white;
 }
 .signUpNow-button a {
+  margin-left: 3px;
   text-align: center;
   position: relative;
-  color: #FFFFFF;
+  color: #1DE28F;
+  cursor: pointer;
 }
-.signUpNow-button:hover{
-  opacity: 1;
+
+.signUpNow-button a:hover {
+  text-decoration: underline;
 }
+
 .login-verify-error {
   height: 10px;
   font-family: 'Teko';
-  letter-spacing: 2px;
   font-size: 18px;
   font-weight: 400;
-  color: #ff0000;
+  color: rgb(255, 73, 73);
   margin-left: 70px;
+  margin-top: 2px;
 }
-div.loginSignUp-button {
-  opacity: 0.8;
+.loginSignUp-button {
+  display: block;
   text-align: center;
   width: 400px;
   font-family: 'Teko';
-  font-size: 36px;
-  letter-spacing: 2px;
+  font-size: 20px;
   float: none;
   margin: 0 auto;
-  margin-bottom: -10px;
-  margin-top: 25px;
-  padding: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  color:#1DE28F;
-  background-color: #696969;
+  margin-top: 1.5em;
+  padding: 10px;
   box-shadow: 0 2px 0 black;
   border-radius: 3px;
-  }
-div.loginSignUp-button:hover {
+  border: none;
+  outline: none;
+}
+.loginSignUp-button:hover {
     opacity: 1;
 }
 div.signup-button {
@@ -123,7 +116,6 @@ div.signup-button {
    width: 175px;
    font-family: var(--FontFamily);
    font-size: 34px;
-   letter-spacing: 2px;
    float: none;
    margin: 0 auto;
    margin-top: 40px;
@@ -141,7 +133,6 @@ div.signup-button {
     width: 300px;
     font-family: var(--FontFamily);
     font-size: 32px;
-    letter-spacing: 2px;
     float: none;
     margin: 0 auto;
     margin-top: 15px;
@@ -155,9 +146,8 @@ div.login2-button:hover {
 }
 div.logo img {
   text-align: center;
-  width: 420px;
-  padding-top: 40px;
-  padding-bottom: 50px;
+  width: 320px;
+  padding-bottom: 2em;
 }
 div.logo {
   text-align: center;
@@ -165,14 +155,13 @@ div.logo {
 }
 .login-loader-holder {
   text-align: center;
-  width: 80px;
-  float: none;
-  margin: 0 auto;
-  height: 50px;
+  margin: 4px auto;
 }
+
 .login-loader {
   margin:auto;
 }
 .move-icons {
-  margin-bottom: -5px;
+  margin-bottom: -3px;
+  margin-right: 3px;
 }
