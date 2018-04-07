@@ -57,7 +57,7 @@ class LoginPage extends Component{
         }
     }
 
-    onSubmit = event => {
+    onSubmit = (event) => {
         event.preventDefault();
         this.setState({
             isAuthenticating: true,
