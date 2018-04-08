@@ -241,10 +241,10 @@ class AuthModal extends React.Component {
                     </button>
                     <span className="modal-select-form">
                         { showRegisterForm ? 'Already have an account? ' : 'Don\'t have an account? '}
+                        <Link to="#" className="modal-select-form" onClick={this.showRegisterForm}>
+                            { showRegisterForm ? 'Log in!' : 'Sign up!' }
+                        </Link>
                     </span>
-                    <Link to="#" className="modal-select-form" onClick={this.showRegisterForm}>
-                        { showRegisterForm ? 'Log in!' : 'Sign up!' }
-                    </Link>
                     {
                         isAuthenticating && <div className="login-working"><LoadingDots/></div>
                     }
