@@ -74,13 +74,10 @@ class RegistrationPage extends Component{
         });
     }
 
-    onEnterPress = (event) => {
-        if(event.keyCode === 13 && event.shiftKey === false) {
-          this.onSubmit();
-        }
-    }
 
-    onSubmit = () => {
+
+    onSubmit = (event) => {
+        event.preventDefault();
         this.setState({ isAuthenticating: true });
         axios({
             url: `http://${process.env.REACT_APP_IP}/api/auth/register`,
@@ -140,7 +137,7 @@ class RegistrationPage extends Component{
                         alt="Logo"
                     />
                 </div>
-                <form className="registration-container">         
+                <form className="registration-container" onSubmit={this.onSubmit}>         
                     <label className="container-label">Sign up for CaptionThis</label>
                     <label className="input-label">
                         <img
@@ -201,7 +198,6 @@ class RegistrationPage extends Component{
                     } 
                     <button
                         className="loginSignUp-button"
-                        onClick={this.onSubmit}
                         disabled={!formValid || this.state.isAuthenticating}>
                         Create My Account!
                     </button>
@@ -209,13 +205,13 @@ class RegistrationPage extends Component{
                         onClick={this.onLoginClick}>
                         <p className="signUpNow-button">Already have an account?<a>Log in!</a></p>
                     </div>
-                    {
-                        this.state.isAuthenticating && 
-                        <div className="login-loader-holder">
-                            <LoadingDots className="login-loader"/>
-                        </div>
-                    }
                 </form>
+                {
+                    this.state.isAuthenticating && 
+                    <div className="login-loader-holder">
+                        <LoadingDots className="login-loader"/>
+                    </div>
+                }
             </div>
         );
     }

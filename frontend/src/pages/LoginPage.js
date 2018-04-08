@@ -51,12 +51,6 @@ class LoginPage extends Component{
         });
     }
 
-    onEnterPress = (event) => {
-        if(event.keyCode === 13 && event.shiftKey === false) {
-          this.onSubmit();
-        }
-    }
-
     onSubmit = (event) => {
         event.preventDefault();
         this.setState({
@@ -158,12 +152,13 @@ class LoginPage extends Component{
                         onClick={this.onRegisterClick}>
                         <p className="signUpNow-button">Don't have an account?<a>Sign up!</a></p>
                     </div>
-                    {this.state.isAuthenticating &&
-                    <div className="login-loader-holder">
-                    <LoadingDots className="login-loader"/>
-                    </div>
-                    }
                 </form>
+                {
+                    this.state.isAuthenticating &&
+                        <div className="login-loader-holder">
+                            <LoadingDots className="login-loader"/>
+                        </div>
+                }
             </div>
         );
     }

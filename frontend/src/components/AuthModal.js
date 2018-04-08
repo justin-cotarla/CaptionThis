@@ -84,13 +84,6 @@ class AuthModal extends React.Component {
         }
     }
 
-    onEnterPress = (event) => {
-        const { keyCode, shiftKey } = event;
-        if(keyCode === 13 && shiftKey === false) {
-          this.onSubmit(event);
-        }
-    }
-
     onSubmit = (event) => {
         event.preventDefault();
         const { showRegisterForm } = this.state;

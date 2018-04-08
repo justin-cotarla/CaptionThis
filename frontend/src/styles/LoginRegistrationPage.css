@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
 .login-container {
+  display: block;
   margin: 34px;
   padding: 15px; 
   font-size: 15px;    
   font-style: normal;
   width: 540px;
-  height: 420px;
   font-variant: normal;
   font-weight: 300;
   background-color: #484848;
@@ -20,7 +20,6 @@
   font-size: 15px;    
   font-style: normal;
   width: 540px;
-  height: 500px;
   font-variant: normal;
   font-weight: 300;
   background-color: #484848;
@@ -155,7 +154,7 @@ div.logo {
 }
 .login-loader-holder {
   text-align: center;
-  margin: 4px auto;
+  margin: 1em auto;
 }
 
 .login-loader {
