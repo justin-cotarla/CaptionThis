@@ -1,9 +1,28 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
-.login-container {
+.header-join {
+  width: 540px;
+  margin: auto;
+  margin-top: 1em;
+  font-size: 56px;
+  font-family: 'Teko';
+  color: white;
+}
+
+.header-join-message {
+  width: 540px;
+  margin: auto;
+  margin-bottom: 0.5em;
+  font-size: 26px;
+  font-family: 'Teko';
+  color: white;
+}
+
+.login-container, .registration-container {
   display: block;
   margin: 34px;
-  padding: 15px; 
+  padding-top: 1.2em;
+  padding-bottom: 2em; 
   font-size: 15px;    
   font-style: normal;
   width: 540px;
@@ -14,24 +33,11 @@
   border-radius: 3px;
   margin:auto;
 }
-.registration-container {
-  margin: 34px;
-  padding: 15px; 
-  font-size: 15px;    
-  font-style: normal;
-  width: 540px;
-  font-variant: normal;
-  font-weight: 300;
-  background-color: #484848;
-  box-shadow: 0 6px 0 black;
-  border-radius: 3px;
-  margin:auto;
-}
+
 .container-label {
   float: center;
   padding-left: 70px;
   display: block;
-  padding-top: 15px;
   font-family: 'Teko';
   font-size: 48px;
   color:white;

@@ -98,14 +98,8 @@ class LoginPage extends Component{
             <div>
                 <NavBar user={this.state.user}/>  
                 {this.state.redirect && <Redirect to={this.state.redirect} />}                  
-                <div className="logo">
-                    <img
-                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
-                        alt="Logo"
-                    />
-                </div>
+                <h1 className="header-join"> Log in to your account </h1>
                 <form className="login-container" onSubmit={this.onSubmit}>
-                    <label className="container-label"> Log in to your account </label>
                     <label className="input-label">
                         <img
                             className="move-icons"
@@ -146,7 +140,7 @@ class LoginPage extends Component{
                         className="loginSignUp-button"
                         style={this.state.isAuthenticating ? { opacity: 0.8 } : null}
                         disabled={!formValid || this.state.isAuthenticating}>
-                        Log In
+                        Log in
                     </button>
                     <div 
                         onClick={this.onRegisterClick}>

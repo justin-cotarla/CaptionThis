@@ -130,15 +130,10 @@ class RegistrationPage extends Component{
         return (
             <div>
                 <NavBar user={this.state.user}/>
-                {this.state.redirect && <Redirect to={this.state.redirect} />}  
-                <div className="logo">
-                    <img
-                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
-                        alt="Logo"
-                    />
-                </div>
+                {this.state.redirect && <Redirect to={this.state.redirect} />}
+                <h1 className="header-join">Join CaptionThis!</h1>
+                <h1 className="header-join-message">A Moment is worth 64 characters... Make then count.</h1>
                 <form className="registration-container" onSubmit={this.onSubmit}>         
-                    <label className="container-label">Sign up for CaptionThis</label>
                     <label className="input-label">
                         <img
                             className="move-icons"
@@ -199,7 +194,7 @@ class RegistrationPage extends Component{
                     <button
                         className="loginSignUp-button"
                         disabled={!formValid || this.state.isAuthenticating}>
-                        Create My Account!
+                        Create my account!
                     </button>
                     <div 
                         onClick={this.onLoginClick}>
