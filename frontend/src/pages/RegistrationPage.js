@@ -131,82 +131,88 @@ class RegistrationPage extends Component{
             <div>
                 <NavBar user={this.state.user}/>
                 {this.state.redirect && <Redirect to={this.state.redirect} />}
-                <h1 className="header-join">Join CaptionThis!</h1>
-                <h1 className="header-join-message">A Moment is worth 64 characters... Make then count.</h1>
-                <form className="registration-container" onSubmit={this.onSubmit}>         
-                    <label className="input-label">
-                        <img
-                            className="move-icons"
-                            style={{marginBottom: '-6px'}}
-                            src={`http://${process.env.REACT_APP_IP}/res/username.png`}
-                            alt="username"
-                        />
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        name="username"
-                        className="input-field"
-                        value={this.state.username}
-                        onChange={this.onInputChange}
-                        style={ (userError || loginError) ? errorIndicator : {} }/>
-                            {
-                                userError && <h1 className="login-verify-error">{userError}</h1>
-                            }
+                <div className="registration-container">
+                    <h1 className="header-join">Join CaptionThis!</h1>
+                    <h1 className="header-join-message">A Moment is worth 64 characters...</h1>
+                    <h1 className="header-join-message" style={{display: 'inline-block'}}>Make them count.</h1>
+                    <div className="registration-form-container">
+                        <form className="registration-page-form" onSubmit={this.onSubmit}>         
+                            <label className="input-label">
+                                <img
+                                    className="move-icons"
+                                    style={{marginBottom: '-6px'}}
+                                    src={`http://${process.env.REACT_APP_IP}/res/username.png`}
+                                    alt="username"
+                                />
+                                Username
+                            </label>
+                            <input
+                                type="text"
+                                name="username"
+                                className="input-field"
+                                value={this.state.username}
+                                onChange={this.onInputChange}
+                                style={ (userError || loginError) ? errorIndicator : {} }/>
+                                    {
+                                        userError && <h1 className="login-verify-error">{userError}</h1>
+                                    }
 
-                    <label className="input-label">
-                        <img
-                            className="move-icons"
-                            src={`http://${process.env.REACT_APP_IP}/res/password.png`}
-                            alt="password"
-                        />
-                    Password
-                    </label>
-                    <input
-                        type="password"
-                        className="input-field"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.onInputChange}
-                        style={ (passError || loginError) ? errorIndicator : {} }/>
+                            <label className="input-label">
+                                <img
+                                    className="move-icons"
+                                    src={`http://${process.env.REACT_APP_IP}/res/password.png`}
+                                    alt="password"
+                                />
+                            Password
+                            </label>
+                            <input
+                                type="password"
+                                className="input-field"
+                                name="password"
+                                value={this.state.password}
+                                onChange={this.onInputChange}
+                                style={ (passError || loginError) ? errorIndicator : {} }/>
+                            {
+                                (passError || loginError) && <h1 className="login-verify-error">{passError || loginError}</h1>
+                            }
+                            <label className="input-label">
+                                <img
+                                    className="move-icons"
+                                    src={`http://${process.env.REACT_APP_IP}/res/password.png`}
+                                    alt="password"
+                                />
+                            Confirm Password
+                            </label>
+                            <input
+                                type="password"
+                                className="input-field"
+                                name="verify"
+                                value={this.state.verify}
+                                onChange={this.onInputChange}
+                                onKeyDown={this.onEnterPress}
+                                style={ verifyError ? errorIndicator : {} }/>
+                            { 
+                                verifyError && <h1 className="login-verify-error">{verifyError}</h1> 
+                            } 
+                            <button
+                                className="loginSignUp-button"
+                                style={verifyError ? {marginTop: '1em'} : null}
+                                disabled={!formValid || this.state.isAuthenticating}>
+                                Create my account!
+                            </button>
+                            <div 
+                                onClick={this.onLoginClick}>
+                                <p className="signUpNow-button">Already have an account?<a>Log in!</a></p>
+                            </div>
+                        </form>
+                    </div>
                     {
-                        (passError || loginError) && <h1 className="login-verify-error">{passError || loginError}</h1>
+                        this.state.isAuthenticating && 
+                        <div className="login-loader-holder">
+                            <LoadingDots className="login-loader"/>
+                        </div>
                     }
-                    <label className="input-label">
-                        <img
-                            className="move-icons"
-                            src={`http://${process.env.REACT_APP_IP}/res/password.png`}
-                            alt="password"
-                        />
-                    Confirm Password
-                    </label>
-                    <input
-                        type="password"
-                        className="input-field"
-                        name="verify"
-                        value={this.state.verify}
-                        onChange={this.onInputChange}
-                        onKeyDown={this.onEnterPress}
-                        style={ verifyError ? errorIndicator : {} }/>
-                    { 
-                        verifyError && <h1 className="login-verify-error">{verifyError}</h1> 
-                    } 
-                    <button
-                        className="loginSignUp-button"
-                        disabled={!formValid || this.state.isAuthenticating}>
-                        Create my account!
-                    </button>
-                    <div 
-                        onClick={this.onLoginClick}>
-                        <p className="signUpNow-button">Already have an account?<a>Log in!</a></p>
-                    </div>
-                </form>
-                {
-                    this.state.isAuthenticating && 
-                    <div className="login-loader-holder">
-                        <LoadingDots className="login-loader"/>
-                    </div>
-                }
+                </div>
             </div>
         );
     }

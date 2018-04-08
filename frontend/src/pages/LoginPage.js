@@ -14,11 +14,7 @@ class LoginPage extends Component{
             passField: '',
             redirect: null,
             isAuthenticating: false,
-            errors: {
-                loginError: '',
-                userError: '',
-                passError: '',
-            },
+            loginError: '',
         }
     }
 
@@ -76,10 +72,9 @@ class LoginPage extends Component{
             }
         })
         .catch(error => {
-            const { errors } = this.state;
-            errors.loginError = 'Incorrect username or password!';
+            const loginError = 'Incorrect username or password!';
             this.setState({
-                errors,
+                loginError,
                 isAuthenticating: false,
             });
         });
@@ -89,70 +84,74 @@ class LoginPage extends Component{
         const errorIndicator = {
             borderBottom: '2px solid rgb(255, 73, 73)',
         };
-        const { loginError, userError, passError} = this.state.errors;
-        const formValid = this.state.userField.length > 0
-        && this.state.passField.length > 0
-        && userError.concat(passError).length === 0;
+        const { userField, passField, loginError } = this.state;
+        const formValid = userField.length > 0
+        && passField.length > 0
+        && loginError.length === 0;
 
         return (
             <div>
                 <NavBar user={this.state.user}/>  
-                {this.state.redirect && <Redirect to={this.state.redirect} />}                  
-                <h1 className="header-join"> Log in to your account </h1>
-                <form className="login-container" onSubmit={this.onSubmit}>
-                    <label className="input-label">
-                        <img
-                            className="move-icons"
-                            style={{marginBottom: '-6px'}}
-                            src={`http://${process.env.REACT_APP_IP}/res/username.png`}
-                            alt="username"
-                        />
-                        Username
-                    </label>
-                    <input
-                        type="username"
-                        name="username"
-                        className="input-field"
-                        value={this.state.userField}
-                        onChange={this.onUserChange}
-                        style={ (userError || loginError) ? errorIndicator : {} }/>
-                    <label className="input-label">
-                        <img
-                            className="move-icons"
-                            src={`http://${process.env.REACT_APP_IP}/res/password.png`}
-                            alt="password"
-                        />
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        name="password"
-                        className="input-field"
-                        value={this.state.passField}
-                        onChange={this.onPassChange}
-                        onKeyDown={this.onEnterPress}
-                        style={ (passError || loginError) ? errorIndicator : {} }/>
-                        {
-                            (passError || loginError) && <h1 className="login-verify-error">{passError || loginError}</h1>
-                        }
-                    <button
-                        type="submit"
-                        className="loginSignUp-button"
-                        style={this.state.isAuthenticating ? { opacity: 0.8 } : null}
-                        disabled={!formValid || this.state.isAuthenticating}>
-                        Log in
-                    </button>
-                    <div 
-                        onClick={this.onRegisterClick}>
-                        <p className="signUpNow-button">Don't have an account?<a>Sign up!</a></p>
+                {this.state.redirect && <Redirect to={this.state.redirect} />}    
+                <div className="login-container">            
+                    <h1 className="header-join"> Log in to CaptionThis</h1>
+                    <div className="login-form-container">
+                        <form className="login-page-form" onSubmit={this.onSubmit}>
+                            <label className="input-label">
+                                <img
+                                    className="move-icons"
+                                    style={{marginBottom: '-6px'}}
+                                    src={`http://${process.env.REACT_APP_IP}/res/username.png`}
+                                    alt="username"
+                                />
+                                Username
+                            </label>
+                            <input
+                                type="username"
+                                name="username"
+                                className="input-field"
+                                value={this.state.userField}
+                                onChange={this.onUserChange}
+                                style={ loginError ? errorIndicator : {} }/>
+                            <label className="input-label">
+                                <img
+                                    className="move-icons"
+                                    src={`http://${process.env.REACT_APP_IP}/res/password.png`}
+                                    alt="password"
+                                />
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                name="password"
+                                className="input-field"
+                                value={this.state.passField}
+                                onChange={this.onPassChange}
+                                onKeyDown={this.onEnterPress}
+                                style={ loginError ? errorIndicator : {} }/>
+                                {
+                                    loginError && <h1 className="login-verify-error">{loginError}</h1>
+                                }
+                            <button
+                                type="submit"
+                                className="loginSignUp-button"
+                                style={loginError ? {marginTop: '1em'} : null}
+                                disabled={!formValid || this.state.isAuthenticating}>
+                                Log in
+                            </button>
+                            <div 
+                                onClick={this.onRegisterClick}>
+                                <p className="signUpNow-button">Don't have an account?<a>Sign up!</a></p>
+                            </div>
+                        </form>
                     </div>
-                </form>
                 {
                     this.state.isAuthenticating &&
                         <div className="login-loader-holder">
                             <LoadingDots className="login-loader"/>
                         </div>
                 }
+                </div>
             </div>
         );
     }

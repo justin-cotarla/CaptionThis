@@ -1,138 +1,163 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
 .header-join {
-  width: 540px;
-  margin: auto;
-  margin-top: 1em;
-  font-size: 56px;
-  font-family: 'Teko';
-  color: white;
+    display: inline;
+    max-width: 540px;
+    margin: auto;
+    font-size: 56px;
+    font-family: 'Teko';
+    color: white;
 }
 
 .header-join-message {
-  width: 540px;
-  margin: auto;
-  margin-bottom: 0.5em;
-  font-size: 26px;
-  font-family: 'Teko';
-  color: white;
+    display: inline-block;
+    max-width: 540px;
+    margin: auto;
+    margin-right: 5px;
+    font-size: 26px;
+    font-family: 'Teko';
+    color: white;
 }
 
 .login-container, .registration-container {
-  display: block;
-  margin: 34px;
-  padding-top: 1.2em;
-  padding-bottom: 2em; 
-  font-size: 15px;    
-  font-style: normal;
-  width: 540px;
-  font-variant: normal;
-  font-weight: 300;
-  background-color: #484848;
-  box-shadow: 0 6px 0 black;
-  border-radius: 3px;
-  margin:auto;
+    max-width: 540px;
+    margin: auto;
+    margin-top: 1em;
+    padding: 0 2em;
+}
+
+@media only screen and (max-width: 426px) {
+    .header-join {
+        font-size: 42px;
+    }
+    .header-join-message {
+        font-size: 22px;
+    }
+}
+
+.login-form-container, .registration-form-container {
+    display: block;
+    padding-top: 1.2em;
+    padding-bottom: 2em; 
+    max-width: 540px;
+    background-color: #484848;
+    box-shadow: 0 6px 0 black;
+    border-radius: 3px;
+    margin: auto;
+    margin-top: 0.5em;
+}
+
+.login-page-form, .registration-page-form {
+    width: 70%;
+    margin: auto;
 }
 
 .container-label {
-  float: center;
-  padding-left: 70px;
-  display: block;
-  font-family: 'Teko';
-  font-size: 48px;
-  color:white;
+    width: 100%;
+    margin: auto;
+    display: block;
+    font-family: 'Teko';
+    font-size: 48px;
+    color:white;
 }
+
 .input-label {
-  padding-left: 63px;
-  display: inline-block;
-  padding-top: 15px;
-  font-family: 'Teko';
-  font-size: 26px;
-  color:white;
+    display: inline-block;
+    width: 100%;
+    margin: auto;
+    padding-top: 15px;
+    font-family: 'Teko';
+    font-size: 26px;
+    color:white;
 }
 .input-field {
-  float: center;
-  opacity: 0.8;
-  border: 0;
-  outline: 0; 
-  background: transparent;
-  width:400px;
-  border-bottom: #1DE28F 2px solid;
-  text-align: left;
-  font-family: 'Teko';
-  font-size: 20px;
-  color:#FFFFFF;
-  margin-left: 70px;
+    display: block;
+    width: 100%;
+    margin: auto;
+    opacity: 0.8;
+    border: 0;
+    outline: 0; 
+    background: transparent;
+    border-bottom: #1DE28F 2px solid;
+    text-align: left;
+    font-family: 'Teko';
+    font-size: 20px;
+    color:#FFFFFF;
 }
 .input-field:hover{
-  opacity: 1;
+    opacity: 1;
 }
 .signUpNow-button {
-  opacity: 1;
-  font-family: 'Teko';
-  font-size: 20px;
-  line-height: 1.2;
-  text-align: center;
-  margin-top: 0.5em;
-  color: white;
+    opacity: 1;
+    font-family: 'Teko';
+    font-size: 20px;
+    line-height: 1.2;
+    text-align: center;
+    margin-top: 1em;
+    color: white;
 }
+
+@media only screen and (max-width: 331px) {
+    .signUpNow-button a {
+        display: block;
+    }
+}
+
 .signUpNow-button a {
-  margin-left: 3px;
-  text-align: center;
-  position: relative;
-  color: #1DE28F;
-  cursor: pointer;
+    margin-left: 3px;
+    text-align: center;
+    position: relative;
+    color: #1DE28F;
+    cursor: pointer;
 }
 
 .signUpNow-button a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .login-verify-error {
-  height: 10px;
-  font-family: 'Teko';
-  font-size: 18px;
-  font-weight: 400;
-  color: rgb(255, 73, 73);
-  margin-left: 70px;
-  margin-top: 2px;
+    font-family: 'Teko';
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(255, 73, 73);
+    margin-top: 2px;
 }
+
 .loginSignUp-button {
-  display: block;
-  text-align: center;
-  width: 400px;
-  font-family: 'Teko';
-  font-size: 20px;
-  float: none;
-  margin: 0 auto;
-  margin-top: 1.5em;
-  padding: 10px;
-  box-shadow: 0 2px 0 black;
-  border-radius: 3px;
-  border: none;
-  outline: none;
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-family: 'Teko';
+    font-size: 20px;
+    margin: 0 auto;
+    margin-top: 1.5em;
+    padding: 10px;
+    box-shadow: 0 2px 0 black;
+    border-radius: 3px;
+    border: none;
+    outline: none;
 }
 .loginSignUp-button:hover {
     opacity: 1;
 }
 div.signup-button {
-   opacity: 0.8;
-   text-align: center;
-   width: 175px;
-   font-family: var(--FontFamily);
-   font-size: 34px;
-   float: none;
-   margin: 0 auto;
-   margin-top: 40px;
-   padding: 5px;
-   color:#FFFFFF;
-   font-weight: bold;
-   cursor: pointer;
-  }
-  div.signup-button:hover {
+    opacity: 0.8;
+    text-align: center;
+    width: 175px;
+    font-family: var(--FontFamily);
+    font-size: 34px;
+    float: none;
+    margin: 0 auto;
+    margin-top: 40px;
+    padding: 5px;
+    color:#FFFFFF;
+    font-weight: bold;
+    cursor: pointer;
+}
+div.signup-button:hover {
     opacity: 1;
-  }
-  div.login2-button {
+}
+div.login2-button {
     opacity: 0.8;
     text-align: center;
     width: 300px;
@@ -145,28 +170,28 @@ div.signup-button {
     color: var(--themeColor);
     font-weight: bold;
     cursor: pointer;
-    }
+}
 div.login2-button:hover {
-      opacity: 1;
+    opacity: 1;
 }
 div.logo img {
-  text-align: center;
-  width: 320px;
-  padding-bottom: 2em;
+    text-align: center;
+    width: 320px;
+    padding-bottom: 2em;
 }
 div.logo {
-  text-align: center;
-  margin-top: 0px;
+    text-align: center;
+    margin-top: 0px;
 }
 .login-loader-holder {
-  text-align: center;
-  margin: 1em auto;
+    text-align: center;
+    margin: 1em auto;
 }
 
 .login-loader {
-  margin:auto;
+    margin:auto;
 }
 .move-icons {
-  margin-bottom: -3px;
-  margin-right: 3px;
+    margin-bottom: -3px;
+    margin-right: 3px;
 }
