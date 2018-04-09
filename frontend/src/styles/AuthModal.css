@@ -72,8 +72,12 @@
     font-size: 20px;
 }
 
-a.modal-select-form {
+.modal-select-form a {
     color: #1DE28F;
+}
+
+.modal-select-form a:hover {
+    text-decoration: underline;
 }
 
 .modal-auth-btn {
