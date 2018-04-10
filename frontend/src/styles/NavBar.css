@@ -60,7 +60,6 @@ div.logout-button {
     }
 
     div.createMoment-button {
-      display: inline-block;
       opacity: 0.8;
       width: 170px;
     }
