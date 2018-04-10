@@ -121,8 +121,13 @@ class MomentCreation extends Component {
                             style={{marginLeft: '10px'}}
                             onClick={this.onClear}
                             disabled={this.state.isUploading}/>
-                        { this.state.isUploading && <LoadingDots/> }
                     </form>
+                    { 
+                        this.state.isUploading 
+                        && <div className="moment-uploading-dots">
+                                <LoadingDots/> 
+                            </div>
+                    }
                 </div>
             </div>
         );
