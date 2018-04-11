@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { timeAgo } from '../util/DateUtil';
 import { Redirect } from 'react-router';
 import ConditionalWrap from './ConditionalWrap';
-import { deleteMoment } from '../util/ApiUtil';
+import DeleteModal from './DeleteModal';
 import '../styles/Moment.css';
 
 class Moment extends Component {
@@ -11,23 +11,14 @@ class Moment extends Component {
         super(props);
         this.state = {
             toHome: false,
+            showAuthModal: false,
         };
         
     };
 
     deleteMoment = () => {
-        const token = this.props.token;
-        const momentId = this.props.momentId;
-        console.log(this.props);
-        deleteMoment({ token, momentId })
-        .then((response) => {
-            this.setState({
-                toHome: true,
-            });
-            window.location.reload();
-        })
-        .catch((error) => {
-            console.log(error);
+        this.setState({
+            showDeleteModal: true,
         });
     }
 
@@ -37,6 +28,11 @@ class Moment extends Component {
             <div
             className="Moment-preview-container"
             style={{backgroundImage: `url(http://${process.env.REACT_APP_IP}/res/polaroid_texture.png)`}}>
+            <DeleteModal
+                    open={this.state.showDeleteModal}
+                    token={this.props.token}
+                    momentId={this.props.momentId}
+                    onClose={() => this.setState({ toHome: true })}/>
             {this.state.toHome && <Redirect to={'/'} />}
             { (props.currentUser ? props.currentUser.username === props.user.username : false) && <h1 className="delete-button" onClick={this.deleteMoment}>X</h1> }
                 <ConditionalWrap
