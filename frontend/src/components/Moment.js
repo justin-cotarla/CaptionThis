@@ -32,7 +32,7 @@ class Moment extends Component {
                     open={this.state.showDeleteModal}
                     token={this.props.token}
                     momentId={this.props.momentId}
-                    onClose={() => this.setState({  })}/>
+                    onClose={() => this.setState({ showDeleteModal: false })}/>
             {this.state.toHome && <Redirect to={'/'} />}
             { (props.currentUser ? props.currentUser.username === props.user.username : false) && <h1 className="delete-button" onClick={this.deleteMoment}>X</h1> }
                 <ConditionalWrap

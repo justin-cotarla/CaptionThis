@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Teko');
+
+.modal-container {
+    width: 500px;
+    padding: 1.2rem 2rem !important;
+    border-radius: 3px;
+    background-image: url("http://localhost/res/polaroid_texture.png") !important;
+    transform: rotate(0.1deg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.modal-overlay {
+    background: rgba(0, 0, 0, .5) !important;
+}
+
+.modal-confirm-btn, .modal-cancel-btn {
+    width: 45%;
+    padding: 10px;
+    margin-bottom: .5em;
+    margin-top: 1em;
+    border-radius: 3px;
+    font-size: 20px;
+    border: none;
+    font-family: 'Teko';
+    box-shadow: 0 2px 0 black;
+}
+
+.modal-confirm-btn:active, .modal-cancel-btn:active {
+    border: 1px solid #1DE28F;
+}
+
+.modal-cancel-btn {
+    float:right;
+}
+
+.modal-delete-title {
+    font-family: 'Teko';
+    font-size: 26px;
+    text-align: center;
+}
+
+.login-working {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    margin: 0 1.2em .5em 0;
+}

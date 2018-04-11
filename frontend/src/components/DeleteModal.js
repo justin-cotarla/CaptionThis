@@ -3,6 +3,7 @@ import Modal from 'react-responsive-modal';
 import { deleteMoment } from '../util/ApiUtil';
 import LoadingDots from './LoadingDots';
 import { Redirect } from 'react-router';
+import '../styles/DeleteModal.css';
 
 class DeleteModal extends React.Component {
     constructor(props){
@@ -34,6 +35,7 @@ class DeleteModal extends React.Component {
             console.log(error);
         });
     }
+    
     render(){
         return (
             <div>
@@ -45,10 +47,11 @@ class DeleteModal extends React.Component {
                     onClose={this.onClose}
                     classNames={{ overlay: 'modal-overlay', modal: 'modal-container' }} 
                     little>
-                    <button className="modal-auth-btn" onClick={this.onConfirm}>
+                    <h1 className="modal-delete-title">Are you sure you want to delete this moment?</h1>
+                    <button className="modal-confirm-btn" onClick={this.onConfirm}>
                         {'Confirm'}
                     </button>
-                    <button className="modal-auth-btn" onClick={this.onClose}>
+                    <button className="modal-cancel-btn" onClick={this.onClose}>
                         {'Cancel'}
                     </button>
                     {
