@@ -7,17 +7,17 @@ export const RequestTypes = {
 }
 
 export const momentFilters = [
-    'Recent', 
-    'Oldest', 
+    'Recent',
+    'Oldest',
     'Popular'
 ];
 
 export const captionFilters = [
-    'Recent', 
-    'Oldest', 
-    'Top', 
-    'Worst', 
-    'Accepted', 
+    'Recent',
+    'Oldest',
+    'Top',
+    'Worst',
+    'Accepted',
     'Rejected'
 ];
 
@@ -101,18 +101,18 @@ const getCaptionFilterQuery = filter => {
             return { filter: 'votes' };
         case Worst:
             return { filter: 'votes', order: 'asc' };
-        case Accepted: 
+        case Accepted:
             return { filter: 'acceptance' };
         case Rejected:
             return { filter: 'acceptance', order: 'asc' };
-        default: 
+        default:
             return {};
     }
 }
 
 export const editCaption = ({ token, captionId, newCaption }) => {
-    const data = { 
-        operation: 'edit', 
+    const data = {
+        operation: 'edit',
         value: newCaption,
     };
     const headers = {
@@ -121,6 +121,19 @@ export const editCaption = ({ token, captionId, newCaption }) => {
     return axios({
         method: 'post',
         url: `http://${process.env.REACT_APP_IP}/api/captions/${captionId}`,
+        data,
+        headers,
+    });
+}
+
+export const editMoment = ({ token, momentId, newDesc }) => {
+    const data = {
+        description: newDesc,
+    };
+    const headers = token ? { 'Authorization': `Bearer ${token}` }: {};
+    return axios({
+        method: 'POST',
+        url: `http://${process.env.REACT_APP_IP}/api/moments/${momentId}`,
         data,
         headers,
     });
