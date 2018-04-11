@@ -7,10 +7,10 @@ import { Redirect } from 'react-router';
 class DeleteModal extends React.Component {
     constructor(props){
         super(props);
-        this.setState({
+        this.state={
             isDeleting: false,
             toHome: false,
-        })
+        }
     }
 
     onClose = () => {
@@ -45,10 +45,10 @@ class DeleteModal extends React.Component {
                     onClose={this.onClose}
                     classNames={{ overlay: 'modal-overlay', modal: 'modal-container' }} 
                     little>
-                    <button className="modal-auth-btn">
+                    <button className="modal-auth-btn" onClick={this.onConfirm}>
                         {'Confirm'}
                     </button>
-                    <button className="modal-delete-cancel">
+                    <button className="modal-auth-btn" onClick={this.onClose}>
                         {'Cancel'}
                     </button>
                     {
