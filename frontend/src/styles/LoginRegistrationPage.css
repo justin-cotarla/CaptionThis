@@ -1,50 +1,168 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
-.defined-style-components {
-  --BackgroundColor: #202020;
-  --themeColor: #1DE28F;
-  --bodyColor: var(--baseColor);
-  --FontFamily: 'Teko';
-  --FontSize: 14px;
-  --FontWeight: 300;
-  --LineHeight: 1.5;
+.header-join {
+    display: inline;
+    max-width: 540px;
+    margin: auto;
+    font-size: 56px;
+    font-family: 'Teko';
+    color: white;
 }
-.align-user-field {
-  background-color: var(--BackgroundColor);
-  color: var(--bodyColor);
-  font-family: var(--FontFamily);
-  font-size: var(--FontSize);
-  font-weight: var(--FontWeight);
-  height: 100%;
-  line-height: var(--LineHeight);
-  margin: 0;
-  min-height: 60px;
+
+.header-join-message {
+    display: inline-block;
+    max-width: 540px;
+    margin: auto;
+    margin-right: 5px;
+    font-size: 26px;
+    font-family: 'Teko';
+    color: white;
+}
+
+.login-container, .registration-container {
+    max-width: 540px;
+    margin: auto;
+    margin-top: 1em;
+    padding: 0 2em;
+}
+
+@media only screen and (max-width: 426px) {
+    .header-join {
+        font-size: 42px;
+    }
+    .header-join-message {
+        font-size: 22px;
+    }
+}
+
+.login-form-container, .registration-form-container {
+    display: block;
+    padding-top: 1.2em;
+    padding-bottom: 2em; 
+    max-width: 540px;
+    background-color: #484848;
+    box-shadow: 0 6px 0 black;
+    border-radius: 3px;
+    margin: auto;
+    margin-top: 0.5em;
+}
+
+.login-page-form, .registration-page-form {
+    width: 70%;
+    margin: auto;
+}
+
+.container-label {
+    width: 100%;
+    margin: auto;
+    display: block;
+    font-family: 'Teko';
+    font-size: 48px;
+    color:white;
+}
+
+.input-label {
+    display: inline-block;
+    width: 100%;
+    margin: auto;
+    padding-top: 15px;
+    font-family: 'Teko';
+    font-size: 26px;
+    color:white;
+}
+.input-field {
+    display: block;
+    width: 100%;
+    margin: auto;
+    opacity: 0.8;
+    border: 0;
+    outline: 0; 
+    background: transparent;
+    border-bottom: #1DE28F 2px solid;
+    text-align: left;
+    font-family: 'Teko';
+    font-size: 20px;
+    color:#FFFFFF;
+}
+.input-field:hover{
+    opacity: 1;
+}
+.signUpNow-button {
+    opacity: 1;
+    font-family: 'Teko';
+    font-size: 20px;
+    line-height: 1.2;
+    text-align: center;
+    margin-top: 1em;
+    color: white;
+}
+
+@media only screen and (max-width: 331px) {
+    .signUpNow-button a {
+        display: block;
+    }
+}
+
+.signUpNow-button a {
+    margin-left: 3px;
+    text-align: center;
+    position: relative;
+    color: #1DE28F;
+    cursor: pointer;
+}
+
+.signUpNow-button a:hover {
+    text-decoration: underline;
+}
+
+.login-verify-error {
+    font-family: 'Teko';
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(255, 73, 73);
+    margin-top: 2px;
+}
+
+.loginSignUp-button {
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-family: 'Teko';
+    font-size: 20px;
+    margin: 0 auto;
+    margin-top: 1.5em;
+    padding: 10px;
+    box-shadow: 0 2px 0 black;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+}
+.loginSignUp-button:hover {
+    opacity: 1;
 }
 div.signup-button {
-   opacity: 0.8;
-   text-align: center;
-   width: 175px;
-   font-family: var(--FontFamily);
-   font-size: 34px;
-   letter-spacing: 2px;
-   float: none;
-   margin: 0 auto;
-   margin-top: 20px;
-   padding: 5px;
-   color:#FFFFFF;
-   font-weight: bold;
-   cursor: pointer;
-  }
-  div.signup-button:hover {
-    opacity: 1;
-  }
-  div.login2-button {
     opacity: 0.8;
     text-align: center;
     width: 175px;
     font-family: var(--FontFamily);
+    font-size: 34px;
+    float: none;
+    margin: 0 auto;
+    margin-top: 40px;
+    padding: 5px;
+    color:#FFFFFF;
+    font-weight: bold;
+    cursor: pointer;
+}
+div.signup-button:hover {
+    opacity: 1;
+}
+div.login2-button {
+    opacity: 0.8;
+    text-align: center;
+    width: 300px;
+    font-family: var(--FontFamily);
     font-size: 32px;
-    letter-spacing: 2px;
     float: none;
     margin: 0 auto;
     margin-top: 15px;
@@ -52,205 +170,28 @@ div.signup-button {
     color: var(--themeColor);
     font-weight: bold;
     cursor: pointer;
-    }
+}
 div.login2-button:hover {
-      opacity: 1;
-}
-div.registration-button {
-    width: 200px;
-    float: none;
-    margin: 0 auto;
-    margin-top: 20px;
-    padding: 5px;
-    color:var(--themeColor);
-    font-weight: bold;
-    cursor: pointer;
-}
-div.registration-button:hover {
     opacity: 1;
 }
-div.registration2-button {
-    width: 65px;
-    float: none;
-    margin: 0 auto;
-    margin-top: 5px;
-    padding: 5px;
-    color: var(--themeColor);
-    font-weight: bold;
-    cursor: pointer;
-  }
 div.logo img {
-  text-align: center;
-  width: 420px;
-  padding-top: 40px;
-  padding-bottom: 50px;
+    text-align: center;
+    width: 320px;
+    padding-bottom: 2em;
 }
 div.logo {
-  text-align: center;
-  margin-top: 0px;
+    text-align: center;
+    margin-top: 0px;
 }
 .login-loader-holder {
-  text-align: center;
-  width: 80px;
-  float: none;
-  margin: 0 auto;
-  height: 50px;
+    text-align: center;
+    margin: 1em auto;
 }
+
 .login-loader {
-  margin:auto;
+    margin:auto;
 }
-.align-user-field {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: var(--gridMaxWidth);
-  width: var(--gridWidth);
-}
-.user-form-field {
-  display: flex;
-  height: 38px;
-  margin: 8px;
-  width: 250px;
-}
-.align-user-field form .user-form-field ::placeholder{
-  font-family: 'Teko';
-  font-weight: 200;
-  font-size: 28px;
-  word-spacing: 1px;
-  letter-spacing: 1.5px;
-}
-.user-form-field label{
-  height: 10px;
-  margin-top: 7px;
-}
-.user-form-field input {
-  background-color:var(--BackgroundColor);
-  border: 0;
-  color: #FFFFFF;
-  width: 210px;
-  letter-spacing: 1px;
-  flex: 1;
-  font-size: 24px;
-  font-family: var(--FontFamily);
-  font-weight: 200;
-  border-bottom: 1px solid #AAAAAA;
-  outline: 0;
-  transition: background-color 0.3s;
-}
-.user-form-field input[type='submit'] {
-  cursor: pointer;
-}
-.user-form-field input:before{
-  font-family: 'Teko';
-  width: 400px;
-  visibility: hidden;
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
-  -webkit-transition: all .8s ease-in-out 0s;
-  transition: all .8s ease-in-out 0s;
-  transition: box-shadow 0.3s ease-in-out;
-}
-.user-form-field input:focus ,
-.user-form-field input[type="username"]:hover,
-.user-form-field input[type="password"]:hover,
-.user-form-field input[type="password1"]:hover,
-.user-form-field input[type="password2"]:hover  {
-  font-family: 'Teko';
-  visibility: visible;
-  -webkit-transform: scaleX(1);
-  transform: scaleX(1);
-  border-bottom: 1px solid #FFFFFF;
-  box-shadow: 0px 1.8px 0px #000000;
-}
-.form {
-  margin: calc(var(--formFieldMargin) * -1);
-}
-.form input[type='password'],
-.form input[type='password1'],
-.form input[type='password2'],
-.form input[type='username'],
-.form input[type='submit'] {
-  width: 100%;
-}
-.login label,
-.login input[type='username'],
-.login input[type='password'],
-.login input[type='password1'],
-.login input[type='password2'],
-.login input[type='submit'] {
-  border-radius: var(--loginBorderRad);
-  padding: 26px;
-}
-.login label {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-.login input[type='password'],
-.login input[type='password1'],
-.login input[type='password2'],
-.login input[type='username'] {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-.signup-button a:hover,
-.signup-button a:visited,
-.signup-button a:link,
-.signup-button a:active{
-    text-decoration: none;
-}
-.registration-button a:hover,
-.registration-button a:visited,
-.registration-button a:link,
-.registration-button a:active{
-    text-decoration: none;
-}
-.registration-button a {
-  text-align: center;
-  position: relative;
-  color: #FFFFFF;
-}
-.signup-button a {
-  text-align: center;
-  position: relative;
-  color: #FFFFFF;
-}
-.registration-button a:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  border-bottom: 2px solid #FFFFFF;
-  transition: 0.4s;
-}
-.signup-button a:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  border-bottom: 2px solid #FFFFFF;
-  transition: 0.4s;
-}
-.registration-button a:hover:after {
-  width: 100%;
-}
-.signup-button a:hover:after {
-  width: 100%;
-}
-.text--center {
-  font-family: var(--FontFamily);
-  font-size: 22px;
-  line-height: 1.2;
-  font-weight: 200;
-  letter-spacing: 1px;
-  text-align: center;
-  margin-top:1px;
-  margin-left:  40px;
-  margin-right: 26px;
+.move-icons {
+    margin-bottom: -3px;
+    margin-right: 3px;
 }

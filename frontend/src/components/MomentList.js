@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+
 import ListFilter from './ListFilter';
 import Moment from './Moment';
-import Header from './Header';
 import Loading from './Loading';
 import ErrorGraphic from './ErrorGraphic';
-
 import { momentFilters } from '../util/ApiUtil';
 import '../styles/MomentsList.css';
+
 
 class MomentList extends Component {
     constructor(props){
@@ -17,23 +17,28 @@ class MomentList extends Component {
             switchPages: false,
             loading: true,
             error: '',
+            page: 0,
         };
     };
 
     componentDidMount() {
+        window.addEventListener('scroll', this.onScroll, false);
         this.onFilterChange(momentFilters[0]);
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.onScroll, false);
+    }
+
     onFilterChange = (selectedFilter) => {
-        const currentFilter = this.state.selectedFilter;
-        if (selectedFilter !== currentFilter) {
-            this.props.fetchMoments(selectedFilter)
+        this.props.fetchMoments(selectedFilter, 0)
             .then(response => {
                 const { moments } = response.data;
                 this.setState({
                     moments,
                     selectedFilter,
                     loading: false,
+                    page: 0,
                 });
             })
             .catch(error => {
@@ -42,6 +47,37 @@ class MomentList extends Component {
                     loading: false,
                 });
             });
+    }
+
+    onScroll = () => {
+        var height = Math.max( document.body.scrollHeight, document.body.offsetHeight );
+
+        if ((window.innerHeight + window.scrollY) >= (height - 500)
+            && this.state.moments.length
+            && !this.state.loading
+            && this.state.page !== 'max') {
+
+                this.setState({
+                    loading: true,
+                })
+
+                const { page, selectedFilter, moments: oldMoments } = this.state;
+                this.props.fetchMoments(selectedFilter, page + 1)
+                .then(response => {
+                    const { moments } = response.data;
+                    this.setState({
+                        moments: oldMoments.concat(moments),
+                        selectedFilter,
+                        loading: false,
+                        page: moments.length ? page + 1 : 'max',
+                    });
+                })
+                .catch(error => {
+                    this.setState({
+                        error: 'Failed to load moments :( Please try again!',
+                        loading: false,
+                    });
+                });
         }
     }
 
@@ -55,22 +91,23 @@ class MomentList extends Component {
                 </div>
         }
 
-        if (loading) {
-            return <Loading/>
-        }
-
         return (
             <div className="moment-list-container">
                 {
-                    moments.length === 0 
-                        ? <Header textSize={4} text="Looks like there's nothing here (yet) :("/>
-                        : count && <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>{count} Moments</h1>
-
+                    count > 0 && 
+                    <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>
+                        {count} Moment{count > 1 ? 's' : ''}
+                    </h1>
                 }
                 <ListFilter
                     filters={momentFilters}
                     selectedFilter={selectedFilter}
                     onFilterChange={this.onFilterChange}/>
+                {
+                    !loading && moments.length === 0 && <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>
+                        Looks like there's nothing here (yet) :(
+                    </h1>
+                }
                 <ul className="Moments-list">
                     {
                         moments.map(moment => {
@@ -102,6 +139,9 @@ class MomentList extends Component {
                         })
                     }
                 </ul>
+                {loading &&
+                    <Loading/>
+                }
             </div>
         )
     }

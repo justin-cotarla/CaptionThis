@@ -3,13 +3,25 @@ import { Redirect } from 'react-router';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import LoadingDots from '../components/LoadingDots'
+import NavBar from '../components/NavBar';
+import { GOOD, USER_EXISTS, UNKNOWN_ERROR } from '../util/ResponseCodes';
 
 class RegistrationPage extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            userField: '',
-            passField: '',
+            fields: {
+                username: '',
+                password: '',
+                verify: '',
+            },
+            errors: {
+                loginError: '',
+                userError: '',
+                passError: '',
+                verifyError: '',
+            },
+            isAuthenticating: false,
             redirect: null,
         }
     }
@@ -25,16 +37,35 @@ class RegistrationPage extends Component{
         }
     }
 
-    onUserChange = (event) => {
-        this.setState({
-            userField: event.target.value,
-        });
+    onInputChange = (event) => {
+        const value = event.target.value;
+        const name = event.target.name;
+        const { fields } = this.state;
+        fields[name] = value;
+        this.setState({ fields });
+        this.validateInput(name, value);
     }
 
-    onPassChange = (event) => {
-        this.setState({
-            passField: event.target.value,
-        });
+    validateInput = (name, value) => {
+        const { password } = this.state.fields;
+        const { errors } = this.state;
+        switch (name) {
+            case 'username':
+                if (value === '') errors.userError = 'Username cannot be empty.'
+                else errors.userError = '';
+                break;
+            case 'password':
+                if (value === '') errors.passError = 'Password cannot be empty.';
+                else errors.passError = ''
+                break;
+            case 'verify':
+                if (value === '') errors.verifyError = 'Please confirm your password.';
+                else if (value !== password) errors.verifyError = 'The passwords do not match!';
+                else if (value === password) errors.verifyError = ''
+                break;
+            default: break;
+        }
+        this.setState({ errors });
     }
 
     onLoginClick = () => {
@@ -43,112 +74,143 @@ class RegistrationPage extends Component{
         });
     }
 
-    onEnterPress = (event) => {
-        if(event.keyCode === 13 && event.shiftKey === false) {
-          this.onSubmit();
-        }
-    }
 
-    onSubmit = () => {
+
+    onSubmit = (event) => {
+        event.preventDefault();
+        this.setState({ isAuthenticating: true });
         axios({
             url: `http://${process.env.REACT_APP_IP}/api/auth/register`,
             method: 'post',
             data: {
-                username: this.state.userField,
-                password: this.state.passField,
+                username: this.state.fields.username,
+                password: this.state.fields.password,
             },
         })
         .then(({ data }) => {
-            if (data.code === 1) {
+            if (data.code === GOOD.code) {
                 const cookies = new Cookies();
                 cookies.set('token', data.token);
                 this.setState({
                     redirect: '/',
                 })
+            } else {
+                console.log(data);
             }
+        })
+        .catch(error => {
+            const { code } = error.response.data;
+            const { fields, errors } = this.state;
+            fields.password = '';
+            fields.verify = '';
+            if (code === USER_EXISTS.code) {
+                errors.userError = 'That username is already taken! Pick another one.';
+            } else if (code === UNKNOWN_ERROR.code) {
+                errors.loginError = 'There was an error while creating your account. Please try again.'
+            }
+            this.setState({
+                fields,
+                errors,
+                isAuthenticating: false,
+            });
         });
     }
+
     render() {
+        const errorIndicator = {
+            borderBottom: '2px solid rgb(255, 73, 73)',
+        };
+        const { username, password, verify } = this.state.fields;
+        const { loginError, userError, passError, verifyError } = this.state.errors;
+        const formValid = username.length > 0
+            && password.length > 0
+            && verify.length
+            && userError.concat(passError, verifyError).length === 0;
+
         return (
-            <div className="defined-style-components">
-                <div className="logo">
-                    <img
-                        src={`http://${process.env.REACT_APP_IP}/res/logo.png`}
-                        alt="Logo"
-                    />
-                </div>
-                <div className="align-user-field">
-                    <form>
-                        <div className="user-form-field">
-                            {this.state.redirect && <Redirect to={this.state.redirect} />}
-                            <form onSubmit={this.onSubmit}/>
-                            <label>
+            <div>
+                <NavBar user={this.state.user}/>
+                {this.state.redirect && <Redirect to={this.state.redirect} />}
+                <div className="registration-container">
+                    <h1 className="header-join">Join CaptionThis!</h1>
+                    <h1 className="header-join-message">A Moment is worth 64 characters...</h1>
+                    <h1 className="header-join-message" style={{display: 'inline-block'}}>Make them count.</h1>
+                    <div className="registration-form-container">
+                        <form className="registration-page-form" onSubmit={this.onSubmit}>         
+                            <label className="input-label">
                                 <img
+                                    className="move-icons"
+                                    style={{marginBottom: '-6px'}}
                                     src={`http://${process.env.REACT_APP_IP}/res/username.png`}
                                     alt="username"
                                 />
+                                Username
                             </label>
                             <input
-                                id="register_username"
-                                type="username"
+                                type="text"
                                 name="username"
-                                className="user-form-field"
-                                placeholder="Username"
-                                value={this.state.userField}
-                                onChange={this.onUserChange}
-                            />
-                        </div>
-                        <div className="user-form-field">
-                            <label for="registerpassword1">
+                                className="input-field"
+                                value={this.state.username}
+                                onChange={this.onInputChange}
+                                style={ (userError || loginError) ? errorIndicator : {} }/>
+                                    {
+                                        userError && <h1 className="login-verify-error">{userError}</h1>
+                                    }
+
+                            <label className="input-label">
                                 <img
+                                    className="move-icons"
                                     src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                     alt="password"
                                 />
+                            Password
                             </label>
                             <input
-                                id="password1"
                                 type="password"
-                                className="user-form-field"
-                                name="password1"
-                                placeholder="Password"
-                                onChange={this.onPassChange}
-                                onKeyDown={this.onEnterPress}
-                            />
-                        </div>
-                        <div className="user-form-field">
-                            <label for="registerpassword2">
+                                className="input-field"
+                                name="password"
+                                value={this.state.password}
+                                onChange={this.onInputChange}
+                                style={ (passError || loginError) ? errorIndicator : {} }/>
+                            {
+                                (passError || loginError) && <h1 className="login-verify-error">{passError || loginError}</h1>
+                            }
+                            <label className="input-label">
                                 <img
+                                    className="move-icons"
                                     src={`http://${process.env.REACT_APP_IP}/res/password.png`}
                                     alt="password"
                                 />
+                            Confirm Password
                             </label>
                             <input
-                                id="password2"
                                 type="password"
-                                className="user-form-field"
-                                name="password2"
-                                placeholder="Confirm Password"
-                                value={this.state.passField2}
-                                onChange={this.onPassChange}
+                                className="input-field"
+                                name="verify"
+                                value={this.state.verify}
+                                onChange={this.onInputChange}
                                 onKeyDown={this.onEnterPress}
-                            />
+                                style={ verifyError ? errorIndicator : {} }/>
+                            { 
+                                verifyError && <h1 className="login-verify-error">{verifyError}</h1> 
+                            } 
+                            <button
+                                className="loginSignUp-button"
+                                style={verifyError ? {marginTop: '1em'} : null}
+                                disabled={!formValid || this.state.isAuthenticating}>
+                                Create my account!
+                            </button>
+                            <div 
+                                onClick={this.onLoginClick}>
+                                <p className="signUpNow-button">Already have an account?<a>Log in!</a></p>
+                            </div>
+                        </form>
+                    </div>
+                    {
+                        this.state.isAuthenticating && 
+                        <div className="login-loader-holder">
+                            <LoadingDots className="login-loader"/>
                         </div>
-                    </form>
-                    <div
-                        className="signup-button"
-                        onClick={this.onSubmit}>
-                        <a>Sign Up</a>
-                   </div>
-                    <div
-                        className="login2-button"
-                        onClick={this.onLoginClick}
-                        >
-                        Login
-                    </div>
-                    {this.state.loggingin &&
-                    <div className="login-loader-holder">
-                      <LoadingDots className="login-loader"/>
-                    </div>
                     }
                 </div>
             </div>

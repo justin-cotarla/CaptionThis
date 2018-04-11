@@ -8,6 +8,8 @@ import { fetchMoments } from '../util/ApiUtil';
 import '../styles/LandingPage.css';
 
 class LandingPage extends Component {
+    MOMENT_RANGE = 30;
+
     constructor(props){
         super(props);
         this.state = {
@@ -39,14 +41,15 @@ class LandingPage extends Component {
                         alt="Logo"
                         width="340"
                         onClick={this.onLogoClick} />
-                <MomentList 
+                <MomentList
                     showSubmittedBy={true}
                     user={this.state.user}
                     token = {this.state.token}
-                    fetchMoments={(filter) => fetchMoments({ 
-                        token, 
-                        filter, 
-                        range: 30, 
+                    fetchMoments={(filter, page) => fetchMoments({ 
+                        token,
+                        filter,
+                        range: this.MOMENT_RANGE,
+                        start: this.MOMENT_RANGE * page,
                     })}/>          
                 <ScrollApp id="app"/>
             </div>

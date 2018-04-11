@@ -11,6 +11,8 @@ import { formatJoinDate } from '../util/DateUtil';
 import '../styles/ProfilePage.css';
 
 class ProfilePage extends React.Component {
+    MOMENT_RANGE = 10;
+
     constructor(props){
         super(props);
         this.state = {
@@ -25,8 +27,20 @@ class ProfilePage extends React.Component {
 
     componentDidMount(){
         const { username } = this.props.match.params;
-        let profileUser;
+        this.fetchUser(username)
+    }
 
+    componentWillReceiveProps(nextProps){
+        const currentProfileUser = this.state.profileUser.username;
+        const nextProfileUser = nextProps.match.params.username;
+        if (nextProfileUser !== currentProfileUser) {
+            window.location.reload();
+        }
+    }
+
+    fetchUser = username => {
+        let profileUser;
+        
         fetchUser(username)
         .then(response => {
             profileUser = response.data.user;
@@ -97,7 +111,7 @@ class ProfilePage extends React.Component {
                         {
                             selectedView === views[0]
                             && (
-                                <CaptionList 
+                                <CaptionList
                                     fetchCaptions={(filter) => fetchCaptions({ 
                                         token, 
                                         type: RequestTypes.BY_USER, 
@@ -121,13 +135,14 @@ class ProfilePage extends React.Component {
                                     showSubmittedBy={true}
                                     user={this.props.user}
                                     token = {this.props.token}
-                                    fetchMoments={(filter) => fetchMoments({ 
+                                    fetchMoments={(filter, page) => fetchMoments({
                                         token,
                                         type: RequestTypes.BY_USER, 
                                         filter,
                                         userId: profileUser.id, 
-                                        range: 30, 
-                                    })} />
+                                        range: this.MOMENT_RANGE,
+                                        start: this.MOMENT_RANGE * page,
+                                    })}/>
                             )
                         }
                     </div>

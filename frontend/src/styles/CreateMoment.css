@@ -1,42 +1,81 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
-.CreateMoment {
-    text-align: center;
-    font-size: 30px;
-    margin: 1em auto;
-    padding-left: 0px;
-    padding-top: 0px;
-    height: 20%;
+@media only screen and (max-width: 475px) {
+    .desc-textarea {
+        margin-top: 3px;
+    }
 }
 
-.createMoment-header img{
-  text-align: center;
-  max-width: 400px;
+@media only screen and (max-width: 426px) {
+    .create-moment-container {
+        margin: 1em 1em 0;
+    }
+    .upload-moment-banner {
+        width: 90%
+    }
+    .moment-create-form {
+        padding: 0;
+    }
+
+    body .moment-create-button {
+        margin: 0.5em 0 0 !important;
+        width: 100%;
+    }
+
+    body .moment-create-form {
+        padding: 0.5em 1em 1em;
+    }
+}
+
+@media only screen and (min-width: 426px) {
+    .create-moment-container {
+        margin: 0 1em;
+        margin-top: 1em;
+    }
+    .upload-moment-banner {
+        width: 100%;
+    }
+    .moment-create-form {
+        padding: 0.5em 1.5em;
+    }
+}
+
+.create-moment-container {
+    text-align: center;
+    font-size: 30px;
+}
+
+.createMoment-header img {
+    text-align: center;
+    max-width: 400px;
 }
 
 .upload-moment-banner {
-  display: block;
-  margin: 1em auto;
-  max-width: 400px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5em;
+    max-width: 380px;
+    min-width: 250px;
 }
 
 .moment-create-label {
-  display: block;
-  text-align: left;
-  font-family: 'Teko';
-  color: #1DE28F;
-  font-size: 48px;
-  position: relative;
-  right: 2px;
+    display: block;
+    text-align: left;
+    font-family: 'Teko';
+    color: #1DE28F;
+    font-size: 48px;
+    position: relative;
+    right: 2px;
 }
 
 .moment-create-form {
     display: block;
-    margin: auto;
+    margin: 1em auto 0;
     max-width: 450px;
-    padding: 0 1em;
-    margin: auto;
     text-align: left;
+    background: #484848;
+    border-radius: 3px;
+    box-shadow: 0 6px 0 black;
 }
 
 .moment-create-button {
@@ -52,21 +91,21 @@
     padding: 2px 0;
 }
 
-.moment-create-button:hover{
-  background-color: #1DE28F;
-  box-shadow: 0px 5px 0px #000000;
-  border-color: #1DE28F;
+.moment-create-button:hover {
+    background-color: #1DE28F;
+    box-shadow: 0px 2px 0px #000000;
+    border-color: #1DE28F;
 }
 
 .inputfile {
-  display: none;
+    display: none;
 }
 
-.moment-create-form img{
-  height: 33px;
-  position: relative;
-  top: 9.5px;
-  padding-left: 7px;
+.moment-create-form img {
+    height: 33px;
+    position: relative;
+    top: 9.5px;
+    padding-left: 7px;
 }
 
 .upload-button {
@@ -74,11 +113,11 @@
     cursor: pointer;
     font-size: 30px;
     font-weight: 700;
-    height:50px;
-    width: 200px;
+    height: 50px;
+    max-width: 200px;
     font-family: 'Teko';
     font-weight: 200;
-    text-align:center;
+    text-align: center;
     background-color: #FFFFFF;
     border-radius: 2px;
     border-width: thin;
@@ -86,34 +125,33 @@
 }
 
 .upload-button:hover {
-  background-color: #1DE28F;
-  box-shadow: 0px 5px 0 #000000;
+    background-color: #1DE28F;
+    box-shadow: 0px 2px 0 #000000;
 }
 
 .desc-textarea {
-  text-indent: .5px;
-  display: block;
-  margin: 0;
-  padding: 10px 10px;
-  width: 100%;
-  height: 100px;
-  font-family: "Teko", sans-serif;
-  font-size: 24px;
-  font-weight: 300;
-  line-height: 1.1;
-  border: none;
-  border-radius: 3px;
-  box-sizing: border-box;
-  resize: none;
+    text-indent: .5px;
+    display: block;
+    padding: 10px 10px;
+    width: 100%;
+    height: 100px;
+    font-family: "Teko", sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1.1;
+    border: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    resize: none;
 }
 
 .desc-textarea:focus {
-  outline: none;
-  box-shadow: 0px 7px 0px #000000;
+    outline: none;
+    box-shadow: 0px 5px 0px #000000;
 }
 
 .moment-desc-hint {
-  font-family: Teko;
-  font-size: 18px;
-  color: white;
+    font-family: Teko;
+    font-size: 18px;
+    color: white;
 }

@@ -79,12 +79,12 @@ class MomentCreation extends Component {
         return(
             <div>
                 <NavBar user={this.state.user}/>
-                <img
-                    className="upload-moment-banner"
-                    alt="UploadMoment"
-                    src={`http://${process.env.REACT_APP_IP}/res/uploadyourmoment.png`}
-                />
-                <div className = "CreateMoment">
+                <div className="create-moment-container">
+                    <img
+                        className="upload-moment-banner"
+                        alt="UploadMoment"
+                        src={`http://${process.env.REACT_APP_IP}/res/uploadyourmoment.png`}
+                    />
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
                     <form className="moment-create-form" onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
                         <label className="moment-create-label">Upload</label>
@@ -121,8 +121,13 @@ class MomentCreation extends Component {
                             style={{marginLeft: '10px'}}
                             onClick={this.onClear}
                             disabled={this.state.isUploading}/>
-                        { this.state.isUploading && <LoadingDots/> }
                     </form>
+                    { 
+                        this.state.isUploading 
+                        && <div className="moment-uploading-dots">
+                                <LoadingDots/> 
+                            </div>
+                    }
                 </div>
             </div>
         );

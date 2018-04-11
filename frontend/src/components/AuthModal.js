@@ -84,13 +84,6 @@ class AuthModal extends React.Component {
         }
     }
 
-    onEnterPress = (event) => {
-        const { keyCode, shiftKey } = event;
-        if(keyCode === 13 && shiftKey === false) {
-          this.onSubmit(event);
-        }
-    }
-
     onSubmit = (event) => {
         event.preventDefault();
         const { showRegisterForm } = this.state;
@@ -188,7 +181,7 @@ class AuthModal extends React.Component {
 
         const formValid = username.length > 0
             && password.length > 0
-            && userError.concat(passError).length === 0
+            && userError.concat(passError, verifyError).length === 0
             && (showRegisterForm ? verify.length > 0 : true);
 
         return (
@@ -244,14 +237,14 @@ class AuthModal extends React.Component {
                         showRegisterForm && verifyError && <h1 className="modal-verify-error">{verifyError}</h1> 
                     } 
                     <button className="modal-auth-btn" disabled={!formValid || isAuthenticating}>
-                        { showRegisterForm ? 'Create My Account!' : 'Log In' }
+                        { showRegisterForm ? 'Create my account!' : 'Log in' }
                     </button>
                     <span className="modal-select-form">
                         { showRegisterForm ? 'Already have an account? ' : 'Don\'t have an account? '}
+                        <Link to="#" className="modal-select-form" onClick={this.showRegisterForm}>
+                            { showRegisterForm ? 'Log in!' : 'Sign up!' }
+                        </Link>
                     </span>
-                    <Link to="#" className="modal-select-form" onClick={this.showRegisterForm}>
-                        { showRegisterForm ? 'Log in!' : 'Sign up!' }
-                    </Link>
                     {
                         isAuthenticating && <div className="login-working"><LoadingDots/></div>
                     }
