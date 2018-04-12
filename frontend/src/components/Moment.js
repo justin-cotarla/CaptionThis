@@ -99,7 +99,9 @@ class Moment extends Component {
             {this.state.toHome && <Redirect to={'/'} />}
             { (props.currentUser ? props.currentUser.username === props.user.username : false) && <h1 className="delete-button" onClick={this.deleteMoment}>X</h1> }
             {
-                (props.currentUser ? props.currentUser.username === props.user.username : false) && !editing &&
+                (props.currentUser ? props.currentUser.username === props.user.username : false) &&
+                !editing &&
+                window.location.pathname === `/moment/${props.momentId}` &&
                 <img
                     className="edit-button"
                     src={`http://${process.env.REACT_APP_IP}/res/edit.png`}
