@@ -94,17 +94,18 @@ class MomentViewPage extends Component{
                         user={ {...moment.user} }
                         currentUser={ this.props.user }
                         token = { this.state.token }
-                        momentId = { this.props.match.params.momentID }/>
+                        momentId = { this.props.match.params.momentID }
+                        editable = { true }/>
                     <CaptionCreatorForm
                         momentId={this.props.match.params.momentID}
                         onCaptionSubmit={() => this.onCaptionSubmit()}
                         token={token}/>
                     <CaptionList
                         ref={(CaptionList) => this.CaptionList = CaptionList}
-                        fetchCaptions={(filter) => fetchCaptions({ 
-                            token, 
-                            type: RequestTypes.BY_MOMENT, 
-                            filter, 
+                        fetchCaptions={(filter) => fetchCaptions({
+                            token,
+                            type: RequestTypes.BY_MOMENT,
+                            filter,
                             momentId: moment.moment_id }
                         )}
                         showSubmittedBy={true}

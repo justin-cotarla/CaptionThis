@@ -101,7 +101,7 @@ class Moment extends Component {
             {
                 (props.currentUser ? props.currentUser.username === props.user.username : false) &&
                 !editing &&
-                window.location.pathname === `/moment/${props.momentId}` &&
+                props.editable &&
                 <img
                     className="edit-button"
                     src={`http://${process.env.REACT_APP_IP}/res/edit.png`}
@@ -124,7 +124,7 @@ class Moment extends Component {
                                 value={newDesc}
                                 onChange={this.onEdit}/>
                             {
-                                editError && <h1 style={{ color: '#ff5e56', fontWeight: 200, fontSize: '16px', marginTop: '0.2em' }}>{editError}</h1>
+                                editError && <h1 className="edit-error">{editError}</h1>
                             }
                             <button
                                 className="moment-editor-btn"

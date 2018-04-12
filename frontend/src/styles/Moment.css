@@ -142,3 +142,10 @@
     font-family: 'Gloria Hallelujah', cursive;
     font-size: 15px;
 }
+
+.edit-error {
+    color: #ff5e56;
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 0.2em;
+}
