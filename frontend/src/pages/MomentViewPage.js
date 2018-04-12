@@ -12,6 +12,8 @@ import ErrorGraphic from '../components/ErrorGraphic';
 
 import { fetchCaptions, RequestTypes } from '../util/ApiUtil';
 
+import '../styles/MomentView.css';
+
 class MomentViewPage extends Component{
     constructor(props){
         super(props);
@@ -92,6 +94,7 @@ class MomentViewPage extends Component{
                         description={ moment.description }
                         showSubmittedBy={ true }
                         user={ {...moment.user} }/>
+                    <div className="moment-view-separator"></div>
                     <CaptionCreatorForm
                         momentId={this.props.match.params.momentID}
                         onCaptionSubmit={() => this.onCaptionSubmit()}

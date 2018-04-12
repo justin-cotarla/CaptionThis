@@ -1,44 +1,74 @@
 @import url('https://fonts.googleapis.com/css?family=Teko');
 
-.accept-reject h1{
-    font-family: 'Teko';
-    font-size: 20px;
-}
-.caption-creator-input::placeholder{
-  font-family: 'Teko';
-  font-size: 23px;
-  letter-spacing: 0.8px;
-}
-.caption-creator-submit {
-   cursor: pointer;
-    width: 15%;
-    font-size: 28px;
-    border-radius: 3px;
-    border: none;
-    font-family: 'Teko';
-}
-.caption-creator-submit:active{
-    box-shadow: 1px 1.8px 1px #000000;
-    color:#1DE28F;
-}
-.caption-container .caption-content h1 a{
-  font-family: 'Teko';
-  font-size: 18px;
-}
-.caption-container h1, .caption-container-accepted h1,.caption-container-rejected h1 {
-  font-family: 'Teko';
-  font-size: 18px;
-}
-.caption-container , .caption-container-accepted , .caption-container-rejected {
-    padding-bottom: 0px;
-    margin-bottom:8px;
-    background-color: rgba(196, 196, 196, 0.31);
+/* for mobile */
+@media only screen and (max-width: 426px) {
+    .moment-view-container {
+        width: 100%;
+    }
+    .moment-view-separator {
+        margin: 1em auto;
+    }
 }
 
-.caption-list-container h1{
-  font-family: 'Teko';
-  color: #FFFFFF;
-  font-size: 34px;
-  letter-spacing: 1px;
-  font-weight: 200;
+/* for tablets */
+@media only screen and (min-width: 426px) and (max-width: 769px) {
+    .moment-view-container {
+        width: 90%;
+    }
+    .moment-view-separator {
+        margin: 2em auto;
+    }
+}
+
+/* laptops */
+@media only screen and (min-width: 769px) {
+    .moment-view-container {
+        width: 80%;
+    }
+    .moment-view-separator {
+        margin: 2em auto;
+    }
+}
+
+.moment-view-container {
+    margin: auto;
+}
+
+.moment-view-container .Moment-preview-container img {
+    max-height: 320px;
+    height: 100%;
+}
+
+.moment-view-container .Moment-preview-container {
+    max-width: 405px;
+    width: initial;
+    transform: rotate(0deg);
+    margin-bottom: 0;
+}
+
+.moment-view-container .Moment-preview-container:hover {
+    transform: translateY(-3px);
+    transition: 0s; 
+    -webkit-transition: 0s;
+}
+
+@media only screen and (min-width: 531px) {
+    .moment-view-container .Moment-preview-container {
+        margin: 1.5em auto;
+    }
+}
+
+@media only screen and (max-width: 531px) {
+    .moment-view-container .Moment-preview-container {
+        margin: 1.5em;
+    }
+}
+
+.moment-view-separator {
+    width: 4px;
+    height: 4px;
+    padding: 1px;
+    border-radius: 3px;
+    background: #69696996;
+    box-shadow: 0 1px 0 black;
 }

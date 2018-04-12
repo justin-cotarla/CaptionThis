@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import scrollToComponent from 'react-scroll-to-component';
+import MediaQuery from 'react-responsive';
+import DropdownListFilter from './DropdownListFilter';
 import ListFilter from '../components/ListFilter';
 import Caption from './Caption';
 import ErrorGraphic from './ErrorGraphic';
@@ -99,7 +101,21 @@ class CaptionList extends React.Component {
                         {count} Caption{count > 1 ? 's' : ''}
                     </h1>
                 }
-                <ListFilter filters={captionFilters} selectedFilter={selectedFilter} onFilterChange={this.onFilterChange}/>
+                <MediaQuery maxDeviceWidth={769}>
+                    {
+                        matches => (
+                            matches 
+                            ? <DropdownListFilter     
+                                filters={captionFilters} 
+                                selectedFilter={selectedFilter} 
+                                onFilterChange={this.onFilterChange}/> 
+                            : <ListFilter     
+                            filters={captionFilters} 
+                            selectedFilter={selectedFilter} 
+                            onFilterChange={this.onFilterChange}/>
+                        )
+                    }
+                </MediaQuery>
                 {
                     !loading && captions.length === 0 && <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>
                         Looks like there's nothing here (yet) :(

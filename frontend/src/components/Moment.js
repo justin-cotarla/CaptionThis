@@ -16,9 +16,9 @@ const Moment = props => {
                 <img className="Moment-thumbnail" src={props.image} alt="moment" onClick={props.onClick}/>
                 <h1 className="top-caption">{ props.description }</h1>
             </ConditionalWrap>
-                <h1 style={{fontSize: '20px'}}>Posted {timeAgo(props.date)}</h1>
+                <h1 className="moment-date">Posted {timeAgo(props.date)}</h1>
                 {
-                    props.showSubmittedBy && <h1 className="header-medium-2" style={{ marginTop: '8px'}}>
+                    props.showSubmittedBy && <h1 className="moment-submitted-by" style={{ marginTop: '8px'}}>
                         Submitted by <ConditionalWrap
                                     condition={props.user.id !== null}
                                     wrap={children => <Link className="linked-username" to={`/user/${props.user.username}`}>{children}</Link>}
