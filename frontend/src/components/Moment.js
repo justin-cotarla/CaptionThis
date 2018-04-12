@@ -12,6 +12,7 @@ class Moment extends Component {
     constructor(props){
         super(props);
         this.state = {
+            description: props.description,
             toHome: false,
             showAuthModal: false,
             showDeleteModal: false,
@@ -47,7 +48,7 @@ class Moment extends Component {
 
     onCancelEdit = () => {
         const { editor } = this.state;
-        editor.newDesc = this.props.description;
+        editor.newDesc = this.state.description;
         this.setState({
             editor,
             editing: false,
@@ -71,6 +72,7 @@ class Moment extends Component {
                     ...prevState,
                     editing: false,
                     editor,
+                    description: newDesc,
                 }
             });
         })
@@ -137,7 +139,7 @@ class Moment extends Component {
                                 isEditing && <div className="is-editing"><LoadingDots/></div>
                             }
                         </div>
-                        : <h1 className="top-caption">{ props.description }</h1>
+                        : <h1 className="top-caption">{ this.state.description }</h1>
                     }
                 </ConditionalWrap>
                     <h1 style={{fontSize: '20px'}}>Posted {timeAgo(props.date)}</h1>
