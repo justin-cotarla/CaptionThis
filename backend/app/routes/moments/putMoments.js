@@ -15,7 +15,7 @@ const putMoments = {
             output: 'stream',
             parse: 'true',
             allow: 'multipart/form-data',
-            maxBytes: 5 * 1000 * 1000, // Max upload size 5MB
+            maxBytes: 10 * 1000 * 1000, // Max upload size 10MB
         },
     },
     handler: (request, reply) => {
