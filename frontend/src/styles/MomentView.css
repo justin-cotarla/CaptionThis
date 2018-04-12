@@ -34,7 +34,7 @@
     margin: auto;
 }
 
-.moment-view-container .Moment-preview-container img {
+.moment-view-container .Moment-thumbnail {
     max-height: 320px;
     height: 100%;
 }

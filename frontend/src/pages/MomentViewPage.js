@@ -93,7 +93,11 @@ class MomentViewPage extends Component{
                         date={ formatDate(moment.date_added) }
                         description={ moment.description }
                         showSubmittedBy={ true }
-                        user={ {...moment.user} }/>
+                        user={ {...moment.user} }
+                        currentUser={ this.props.user }
+                        token = { this.state.token }
+                        momentId = { this.props.match.params.momentID }
+                        editable = { true }/>
                     <div className="moment-view-separator"></div>
                     <CaptionCreatorForm
                         momentId={this.props.match.params.momentID}
@@ -101,10 +105,10 @@ class MomentViewPage extends Component{
                         token={token}/>
                     <CaptionList
                         ref={(CaptionList) => this.CaptionList = CaptionList}
-                        fetchCaptions={(filter) => fetchCaptions({ 
-                            token, 
-                            type: RequestTypes.BY_MOMENT, 
-                            filter, 
+                        fetchCaptions={(filter) => fetchCaptions({
+                            token,
+                            type: RequestTypes.BY_MOMENT,
+                            filter,
                             momentId: moment.moment_id }
                         )}
                         showSubmittedBy={true}
