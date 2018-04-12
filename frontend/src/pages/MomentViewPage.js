@@ -88,7 +88,7 @@ class MomentViewPage extends Component{
                 <div className="moment-view-container">
                     <Moment
                         image={ moment.img_url }
-                        date={ formatDate(moment.date_added) }
+                        date={ moment.date_added }
                         description={ moment.description }
                         showSubmittedBy={ true }
                         user={ {...moment.user} }
@@ -120,11 +120,6 @@ class MomentViewPage extends Component{
             </div>
         )
     }
-}
-
-// Exact formatting of date will be handled later
-const formatDate = date => {
-    return date.split('T')[0];
 }
 
 export default MomentViewPage;
