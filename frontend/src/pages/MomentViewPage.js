@@ -88,20 +88,24 @@ class MomentViewPage extends Component{
                 <div className="moment-view-container">
                     <Moment
                         image={ moment.img_url }
-                        date={ formatDate(moment.date_added) }
+                        date={ moment.date_added }
                         description={ moment.description }
                         showSubmittedBy={ true }
-                        user={ {...moment.user} }/>
+                        user={ {...moment.user} }
+                        currentUser={ this.props.user }
+                        token = { this.state.token }
+                        momentId = { this.props.match.params.momentID }
+                        editable = { true }/>
                     <CaptionCreatorForm
                         momentId={this.props.match.params.momentID}
                         onCaptionSubmit={() => this.onCaptionSubmit()}
                         token={token}/>
                     <CaptionList
                         ref={(CaptionList) => this.CaptionList = CaptionList}
-                        fetchCaptions={(filter) => fetchCaptions({ 
-                            token, 
-                            type: RequestTypes.BY_MOMENT, 
-                            filter, 
+                        fetchCaptions={(filter) => fetchCaptions({
+                            token,
+                            type: RequestTypes.BY_MOMENT,
+                            filter,
                             momentId: moment.moment_id }
                         )}
                         showSubmittedBy={true}
@@ -116,11 +120,6 @@ class MomentViewPage extends Component{
             </div>
         )
     }
-}
-
-// Exact formatting of date will be handled later
-const formatDate = date => {
-    return date.split('T')[0];
 }
 
 export default MomentViewPage;
