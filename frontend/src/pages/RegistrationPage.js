@@ -124,8 +124,8 @@ class RegistrationPage extends Component{
         const { loginError, userError, passError, verifyError } = this.state.errors;
         const formValid = username.length > 0
             && password.length > 0
-            && verify.length
-            && userError.concat(passError, verifyError).length === 0;
+            && verify.length > 0
+            && userError.concat(passError, verifyError).length === 0; 
 
         return (
             <div>
@@ -150,7 +150,7 @@ class RegistrationPage extends Component{
                                 type="text"
                                 name="username"
                                 className="input-field"
-                                value={this.state.username}
+                                value={username}
                                 onChange={this.onInputChange}
                                 style={ (userError || loginError) ? errorIndicator : {} }/>
                                     {
@@ -169,7 +169,7 @@ class RegistrationPage extends Component{
                                 type="password"
                                 className="input-field"
                                 name="password"
-                                value={this.state.password}
+                                value={password}
                                 onChange={this.onInputChange}
                                 style={ (passError || loginError) ? errorIndicator : {} }/>
                             {
@@ -187,7 +187,7 @@ class RegistrationPage extends Component{
                                 type="password"
                                 className="input-field"
                                 name="verify"
-                                value={this.state.verify}
+                                value={verify}
                                 onChange={this.onInputChange}
                                 onKeyDown={this.onEnterPress}
                                 style={ verifyError ? errorIndicator : {} }/>
