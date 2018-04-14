@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
+import MediaQuery from 'react-responsive';
 import ListFilter from './ListFilter';
+import DropdownListFilter from './DropdownListFilter';
 import Moment from './Moment';
 import Loading from './Loading';
 import ErrorGraphic from './ErrorGraphic';
@@ -99,10 +101,21 @@ class MomentList extends Component {
                         {count} Moment{count > 1 ? 's' : ''}
                     </h1>
                 }
-                <ListFilter
-                    filters={momentFilters}
-                    selectedFilter={selectedFilter}
-                    onFilterChange={this.onFilterChange}/>
+                <MediaQuery maxDeviceWidth={769}>
+                    {
+                        matches => (
+                            matches 
+                            ? <DropdownListFilter     
+                                filters={momentFilters} 
+                                selectedFilter={selectedFilter} 
+                                onFilterChange={this.onFilterChange}/> 
+                            : <ListFilter     
+                            filters={momentFilters} 
+                            selectedFilter={selectedFilter} 
+                            onFilterChange={this.onFilterChange}/>
+                        )
+                    }
+                </MediaQuery>
                 {
                     !loading && moments.length === 0 && <h1 style={{fontSize: '26px', fontFamily: 'Teko', color: 'white', letterSpacing: '1px'}}>
                         Looks like there's nothing here (yet) :(

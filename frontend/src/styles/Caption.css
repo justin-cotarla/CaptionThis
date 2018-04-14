@@ -89,7 +89,9 @@
     border: solid 1px rgba(65, 65, 65, 0.8);
 }
 .caption-content {
+    width: 100%;
     margin: auto 0px;
+    padding-right: 1em;
 }
 .caption-submitted-by {
     margin-top: auto;

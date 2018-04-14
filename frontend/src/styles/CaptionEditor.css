@@ -19,7 +19,8 @@
 .caption-editor-input {
     display: block;
     box-sizing: border-box;
-    width: 375px;
+    max-width: 375px;
+    width: 100%;
     border-radius: 3px;
     outline-color: #1DE28F;
     padding: 0.5em;
