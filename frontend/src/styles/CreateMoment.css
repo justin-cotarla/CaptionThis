@@ -40,6 +40,14 @@
     }
 }
 
+.file-error {
+    font-family: 'Teko';
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(255, 73, 73);
+    margin-top: 2px;
+}
+
 .create-moment-container {
     text-align: center;
     font-size: 30px;
@@ -66,6 +74,7 @@
     font-size: 48px;
     position: relative;
     right: 2px;
+    top: 15px;
 }
 
 .moment-create-form {
@@ -91,7 +100,11 @@
     padding: 2px 0;
 }
 
-.moment-create-button:hover {
+.moment-create-button:disabled {
+    cursor: default;
+}
+
+.moment-create-button:hover:not([disabled]) {
     background-color: #1DE28F;
     box-shadow: 0px 2px 0px #000000;
     border-color: #1DE28F;
@@ -150,7 +163,7 @@
     box-shadow: 0px 5px 0px #000000;
 }
 
-.moment-desc-hint {
+.moment-desc-hint, .moment-file-hint{
     font-family: Teko;
     font-size: 18px;
     color: white;
