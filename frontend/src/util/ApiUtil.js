@@ -21,6 +21,22 @@ export const captionFilters = [
     'Rejected'
 ];
 
+export const uploadMoment = ({ token, file, description }) => {
+    const data = new FormData();
+    data.append('file', file);
+    data.append('description', description);
+    
+    return axios({
+        method: 'put',
+        url: `http://${process.env.REACT_APP_IP}/api/moments`,
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+        },
+        data,
+    })
+}
+
 export const fetchMoments = ({ token, type, filter, userId, start, range }) => {
     const baseParams = getRequestTypeQuery(type, null, userId);
     const filterParams = getMomentsFilterQuery(filter);

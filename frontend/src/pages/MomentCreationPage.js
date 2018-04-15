@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Cookies from 'universal-cookie';
+
+import { uploadMoment } from '../util/ApiUtil';
 import NavBar from '../components/NavBar';
 import LoadingDots from '../components/LoadingDots';
 import '../styles/CreateMoment.css';
@@ -13,53 +14,63 @@ class MomentCreation extends Component {
             redirect: null,
             user: props.user,
             description: '',
+            file: null,
             filename: '',
             isUploading: false,
+            fileError: null,
         }
     }
 
     componentDidMount() {
-        const cookies = new Cookies();
-        const token = cookies.get('token');
-        if(token) {
-            this.setState({
-                token: cookies.get('token'),
-            });
-        } else {
+        if(!this.props.token) {
             this.setState({
                 redirect: '/',
             })
-        }
+        }        
     }
 
-    handleSubmit = (event) => {
+    onSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.target);
+        
         this.setState({ isUploading: true });
-        fetch(`http://${process.env.REACT_APP_IP}/api/moments`, {
-            method: 'PUT',
-            body: data,
-            // Hardcoded to user 'test'
-            headers: {'Authorization': `Bearer ${this.state.token}`}
-        }).then(() => {
-            this.setState({ redirect: '/' });
+        uploadMoment({
+            token: this.props.token,
+            file: this.state.file,
+            description: this.state.description,
         })
-        .catch(error => {
-            console.log(error);
-        });
+            .then(() => {
+                this.setState({ redirect: '/' });
+            })
+            .catch(error => {                
+                this.setState({
+                    uploadError: 'Could not upload image',
+                    isUploading: false,
+                })
+            });
     }
 
-    handleChange = (event) => {
-        const image = event.target.files[0];
-        if (image) {
-            let filename = event.target.files[0].name;
-            if (filename.length > 10) {
-                filename = filename.slice(0, 11).concat('...');
-            }
+    onFileChange = (event) => {
+        const file = event.target.files[0];
 
-            this.setState({ filename });
-            this.refs.fileInput.blur();
+        let filename = file.name;
+        if (filename.length > 10) {
+            filename = filename.slice(0, 11).concat('...');
         }
+
+        if (file.size > 10 * 1000 * 1000) {
+            this.setState({
+                fileError: 'The picture you selected is too large!',
+                filename,
+            });
+            return;
+        }
+
+        this.setState({ 
+            file,
+            filename,
+            fileError: null,
+        });
+        this.refs.fileInput.blur();
     }
 
     onDescriptionChange = (event) => {
@@ -71,7 +82,9 @@ class MomentCreation extends Component {
         this.refs.fileInput.value = null;
         this.setState({
             description: '', 
-            filename: ''
+            filename: '',
+            file: null,
+            fileError: null,
         }); 
     }
 
@@ -86,15 +99,18 @@ class MomentCreation extends Component {
                         src={`http://${process.env.REACT_APP_IP}/res/uploadyourmoment.png`}
                     />
                     {this.state.redirect && <Redirect to={this.state.redirect} />}
-                    <form className="moment-create-form" onSubmit={this.handleSubmit} encType="multipart/form-data" noValidate>
+                    <form className="moment-create-form" onSubmit={this.onSubmit} encType="multipart/form-data" noValidate>
                         <label className="moment-create-label">Upload</label>
+                        <h1 className = "moment-file-hint">
+                            Upload a picture (up to 10mb).
+                        </h1>
                         <input 
                             type="file" 
                             name="file" 
                             ref="fileInput" 
                             id="file" 
                             className="inputfile" 
-                            onChange={this.handleChange} 
+                            onChange={this.onFileChange} 
                             accept="image/*" required/>
                         <label 
                             htmlFor="file"
@@ -102,8 +118,11 @@ class MomentCreation extends Component {
                             { this.state.filename ? this.state.filename : 'Select Image' }
                             <img alt="inputFile" src={`http://${process.env.REACT_APP_IP}/res/uploadicon.png`}/>
                         </label>
-                        <label className = "moment-create-label" style={{top: '15px'}}>Description</label>
-                        <h1 className = "moment-desc-hint">
+                        {
+                            this.state.fileError && <h1 className="file-error">{this.state.fileError}</h1>
+                        }
+                        <label className="moment-create-label">Description</label>
+                        <h1 className="moment-desc-hint">
                             Provide context to help others come up with the ideal caption!
                         </h1>
                         <textarea 
@@ -113,7 +132,11 @@ class MomentCreation extends Component {
                             id="input" 
                             name="description" 
                             className="desc-textarea"/>
-                        <input type="submit" className="moment-create-button" disabled={this.state.isUploading}></input>
+                        <input
+                            type="submit"
+                            className="moment-create-button"
+                            disabled={this.state.isUploading || this.state.fileError}
+                        />
                         <input 
                             type="reset" 
                             className="moment-create-button" 
