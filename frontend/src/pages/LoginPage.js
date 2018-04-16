@@ -73,7 +73,9 @@ class LoginPage extends Component{
         })
         .catch(error => {
             const loginError = 'Incorrect username or password!';
+            const passField = '';
             this.setState({
+                passField,
                 loginError,
                 isAuthenticating: false,
             });
@@ -84,10 +86,8 @@ class LoginPage extends Component{
         const errorIndicator = {
             borderBottom: '2px solid rgb(255, 73, 73)',
         };
-        const { userField, passField, loginError } = this.state;
-        const formValid = userField.length > 0
-        && passField.length > 0
-        && loginError.length === 0;
+        const { userField, passField, loginError, isAuthenticating } = this.state;
+        const formValid = userField.length > 0 && passField.length > 0;
 
         return (
             <div>
@@ -136,7 +136,7 @@ class LoginPage extends Component{
                                 type="submit"
                                 className="loginSignUp-button"
                                 style={loginError ? {marginTop: '1em'} : null}
-                                disabled={!formValid || this.state.isAuthenticating}>
+                                disabled={!formValid || isAuthenticating}>
                                 Log in
                             </button>
                             <div 

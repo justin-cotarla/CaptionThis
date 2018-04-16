@@ -20,6 +20,13 @@ class CaptionCreatorForm extends React.Component {
         event.preventDefault();
     }
 
+    onEnterPress = (event) => {
+        const { keyCode, shiftKey } = event;
+        if(keyCode === 13 && shiftKey === false) {
+          this.onSubmit(event);
+        }
+    }
+
     onSubmit = (event) => {
         event.preventDefault();
         const token = this.props.token;
@@ -63,12 +70,13 @@ class CaptionCreatorForm extends React.Component {
                             this.setState({ showAuthModal: false });
                         }}/>
                 <form className="caption-creator-form" onSubmit={this.onSubmit}>
-                    <input 
+                    <textarea 
                         className="caption-creator-input" 
                         type="text" value={caption} 
                         disabled={!token} 
                         placeholder="Write something good..." 
-                        onChange={this.handleChange}/>
+                        onChange={this.handleChange}
+                        onKeyDown={this.onEnterPress}/>
                     <button 
                         className="caption-creator-submit" 
                         type="submit" 

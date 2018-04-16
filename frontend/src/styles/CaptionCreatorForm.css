@@ -16,22 +16,50 @@
     font-family: 'Teko';
 } */
 
+/* for mobile */
+@media only screen and (max-width: 769px) {
+    .caption-creator-form {
+        flex-direction: column;
+    }
+    body .caption-creator-input {
+        height: 100px;
+        margin-right: 0;
+    }
+    body .caption-creator-submit {
+        min-width: 100px;
+        width: fit-content;
+        margin-top: 10px;
+        padding: 10px;
+        align-self: flex-end;
+    }
+}
+
+@media only screen and (min-width: 769px) {
+    .caption-creator-form {
+        flex-direction: row;
+    }
+    .caption-creator-input {
+        height: 40px;
+    }
+}
+
 .caption-creator-form {
     display: flex;
-    flex-direction: row;
     margin: 20px;
     font-family: 'Teko';
 }
 
 .caption-creator-input {
     display: flex;
-    flex-grow: 3;
+    flex-grow: 10;
     font-size: 23px;
     border-radius: 3px;
     margin-right: 1em;
     padding: 0.5em;
+    padding-bottom: 0.2em;
     font-family: 'Teko';
     outline-color: #1DE28F;
+    resize: none;
 }
 
 .caption-creator-input:focus {
@@ -46,11 +74,15 @@
 
 .caption-creator-submit {
     display: flex;
-    font-size: 22px;
+    flex-shrink: 0;
+    flex-grow: 1;
+    justify-content: center;
+    font-size: 20px;
     border-radius: 3px;
     border: none;
     font-family: 'Teko';
-    padding: 0 1em;
+    padding: 10px;
+    box-shadow: 0 2px 0 black;
 }
 
 .caption-creator-submit:active{

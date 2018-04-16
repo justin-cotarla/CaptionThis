@@ -27,6 +27,12 @@ class Moment extends Component {
 
     };
 
+    componentDidUpdate() {
+        if (this.Textarea) {
+            this.Textarea.focus();
+        }
+    }
+
     deleteMoment = () => {
         this.setState({
             showDeleteModal: true,
@@ -89,30 +95,31 @@ class Moment extends Component {
         const { newDesc, isEditing, editError } = this.state.editor;
         return (
             <div
-            className="Moment-preview-container"
-            style={{backgroundImage: `url(http://${process.env.REACT_APP_IP}/res/polaroid_texture.png)`}}>
-            <DeleteModal
-                    open={this.state.showDeleteModal}
-                    token={this.props.token}
-                    momentId={this.props.momentId}
-                    onClose={() => this.setState({ showDeleteModal: false })}/>
-            {this.state.toHome && <Redirect to={'/'} />}
-            { (props.currentUser ? props.currentUser.username === props.user.username : false) && <h1 className="delete-button" onClick={this.deleteMoment}>X</h1> }
-            {
-                (props.currentUser ? props.currentUser.username === props.user.username : false) &&
-                !editing &&
-                props.editable &&
-                <img
-                    className="edit-button"
-                    src={`http://${process.env.REACT_APP_IP}/res/edit.png`}
-                    alt="edit"
-                    onClick={this.onEditClick}
-                />
-            }
+                className="Moment-preview-container"
+                style={{backgroundImage: `url(http://${process.env.REACT_APP_IP}/res/polaroid_texture.png)`}}>
+                <DeleteModal
+                        open={this.state.showDeleteModal}
+                        token={this.props.token}
+                        momentId={this.props.momentId}
+                        onClose={() => this.setState({ showDeleteModal: false })}/>
+                {this.state.toHome && <Redirect to={'/'} />}
+                { 
+                    (props.currentUser ? props.currentUser.username === props.user.username : false) && 
+                    <h1 className="delete-button" onClick={this.deleteMoment}>X</h1>     
+                }
+                {
+                    (props.currentUser ? props.currentUser.username === props.user.username : false) &&
+                    !editing &&
+                    props.editable &&
+                    <img
+                        className="edit-button"
+                        src={`http://${process.env.REACT_APP_IP}/res/edit.png`}
+                        alt="edit"
+                        onClick={this.onEditClick}/>
+                }
                 <ConditionalWrap
-                    condition={this.props.momentId}
-                    wrap={children =>  <Link to={`/moment/${props.momentId}`}>{children}</Link>}
-                >
+                    condition={!props.editable}
+                    wrap={children =>  <Link to={`/moment/${props.momentId}`}>{children}</Link>}>
                     <img className="Moment-thumbnail" src={props.image} alt="moment"/>
                     {
                         editing ?
@@ -144,14 +151,15 @@ class Moment extends Component {
                         : <h1 className="top-caption">{ this.state.description }</h1>
                     }
                 </ConditionalWrap>
-                    <h1 style={{fontSize: '20px'}}>Posted {timeAgo(props.date)}</h1>
+                    <h1 className="moment-date">Posted {timeAgo(props.date)}</h1>
                     {
-                        this.props.showSubmittedBy && <h1 className="header-medium-2" style={{ marginTop: '8px'}}>
+                        this.props.showSubmittedBy && <h1 className="moment-submitted-by" style={{ marginTop: '8px'}}>
                             Submitted by <ConditionalWrap
                                         condition={props.user.id !== null}
-                                        wrap={children => <Link className="linked-username" to={`/user/${props.user.username}`}>{children}</Link>}
-                                    >
-                                {(props.user.id === null) ? '[deleted]' : props.user.username}
+                                        wrap={children => <Link className="linked-username" to={`/user/${props.user.username}`}>{children}</Link>}>
+                                {
+                                    (props.user.id === null) ? '[deleted]' : props.user.username
+                                }
                             </ConditionalWrap>
                         </h1>
                     }
